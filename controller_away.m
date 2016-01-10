@@ -45,8 +45,8 @@ function v_c=controller_away_(uu,P)
     v1 = skill_follow_ball_on_line(robot(:,1), ball, -P.field_width/3, P);
  
     % robot #2 stays on line, following the ball, facing the goal
-    v2 = skill_follow_ball_on_line(robot(:,2), ball, -2*P.field_width/3, P);
-
+    %v2 = skill_follow_ball_on_line(robot(:,2), ball, -2*P.field_width/3, P);
+    v2 = play_rush_goal(robot(:,2), ball, P);
     
     % output velocity commands to robots
     v1 = utility_saturate_velocity(v1,P);

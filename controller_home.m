@@ -44,10 +44,45 @@ function v_c=controller_home_(uu,P)
 
     % robot #1 positions itself behind ball and rushes the goal.
     v1 = play_rush_goal(robot(:,1), ball, P);
+    %v1 = skill_follow_ball_on_line(robot(:,1), ball, -P.field_width/3, P);
  
     % robot #2 stays on line, following the ball, facing the goal
-    v2 = skill_follow_ball_on_line(robot(:,2), ball, -2*P.field_width/3, P);
+%     v2 = skill_follow_ball_on_line(robot(:,2), ball, -2*P.field_width/3, P);
 
+    vb = utility_get_ball_info(ball, P);
+    
+    persistent position
+    goallie = 1;
+    offense = 2;
+    regroup = 3;
+    if isempty(position),
+        position = goallie;
+    end;
+    
+    switch position
+        case goallie
+            v2 = skill_goalie(robot(:,2), ball, -9*P.field_length/24, P);
+        case offense
+            v2 = play_rush_goal(robot(:,2), ball, P);
+        case regroup
+            v2 = skill_go_to_point(robot(:,2), -P.goal, P);
+    end;
+    vb(1)
+    if (vb(2)>0 && ball(1)>-P.field_length/4),
+        position = offense;
+    elseif (position==offense) && (robot(1,2)<0 || vb(1)<0.2),
+        position = regroup;
+    elseif (position==regroup && robot(1,2)<-9*P.field_length/24)
+        position = goallie;
+    end;
+
+%     if (vb(2)>0 && ball(1)>-P.field_length/4)
+%         v2 = play_rush_goal(robot(:,2), ball, P);
+%     elseif robot(1,2)>=-9*P.field_length/24,
+%         v2 = skill_go_to_point(robot(:,2), -P.goal, P);
+%     else
+%         v2 = skill_goalie(robot(:,2), ball, -9*P.field_length/24, P);
+%     end;
     
     % output velocity commands to robots
     v1 = utility_saturate_velocity(v1,P);
@@ -99,6 +134,45 @@ function v=skill_follow_ball_on_line(robot, ball, x_pos, P)
     v = [vx; vy; omega];
 end
 
+
+function v=skill_goalie(robot, ball, x_pos, P)
+
+    % control x position to stay on current line
+    % unless ball gets behind you]
+    if(ball(1)<robot(1)+0.2),
+        vx = -P.control_k_vx*(robot(1)-ball(1)+0.1);
+    else
+        vx = -P.control_k_vx*(robot(1)-x_pos);
+    end
+    
+    
+    
+    % control y position to match the ball's y-position
+    if (abs(ball(2))<P.field_width/3),
+        vy = -P.control_k_vy*(robot(2)-ball(2));
+    else
+        vy = -P.control_k_vy*(robot(2)-sign(ball(2))*P.field_width/3);
+    end
+    
+
+    % control angle to -pi/2
+    theta_d = atan2(ball(2)-robot(2), ball(1)-robot(1));
+    
+    omega = -P.control_k_phi*(robot(3) - theta_d);
+    if robot(3) > 3*pi/8 && omega > 0,
+        omega = 0;
+    elseif robot(3) < -3*pi/8 && omega < 0,
+         omega = 0;
+    end;
+    
+    if abs(ball(2))<P.field_width/4,
+        omega =  -P.control_k_phi*(robot(3));
+    end;
+    
+    v = [vx; vy; omega];
+end
+
+
 %-----------------------------------------
 % skill - go to point
 %   follows the y-position of the ball, while maintaining x-position at
@@ -117,6 +191,72 @@ function v=skill_go_to_point(robot, point, P)
     omega = -P.control_k_phi*(robot(3) - theta_d); 
     
     v = [vx; vy; omega];
+end
+
+
+function v = utility_get_ball_info(ball, P)
+    % Persisitent Variables
+    persistent first_run;
+    persistent position_x_prev;
+    persistent position_y_prev;
+    persistent velocity_x;
+    persistent velocity_y;
+    persistent magnitude_prev;
+    persistent direction_prev;
+    
+    %parsing ball
+    position_x = ball(1);
+    position_y = ball(2);
+    
+    %initialize variables
+    if isempty(first_run),
+        position_x_prev = position_x;
+        position_y_prev = position_y;
+        velocity_x = 0;
+        velocity_y = 0;
+        magnitude_prev = 0;
+        direction_prev = 0;
+        first_run = 0;
+    end
+    
+    % Estiamate the x and y velocity of the ball
+    tau = 1/(30*2*pi);
+    velocity_x = (2*tau -P.control_sample_rate)/...
+        (2*tau+P.control_sample_rate)*velocity_x +...
+        2/(2*tau+P.control_sample_rate)*(position_x - position_x_prev);
+    velocity_y = (2*tau -P.control_sample_rate)/...
+        (2*tau+P.control_sample_rate)*velocity_y +...
+        2/(2*tau+P.control_sample_rate)*(position_y - position_y_prev);
+    
+    % Calculate Velocity
+    magnitude = norm([velocity_x;velocity_y]);
+    
+    % Calculate Direction
+    direction = atan2(velocity_y,velocity_x);
+    
+    % validate the estimated data
+    estimated_magnitude = -P.ball_mu*magnitude_prev*...
+        P.control_sample_rate + magnitude_prev;
+    magdiff = abs(magnitude - estimated_magnitude);
+    dirdiff = abs(direction - direction_prev);
+        
+    information_valid = 1;
+    
+    if dirdiff > .01 * abs(direction_prev) || ...
+            magdiff > .01 * abs(magnitude_prev),
+        information_valid = 0;
+    end
+    
+    % Save variables
+    position_x_prev = position_x;
+    position_y_prev = position_y;
+    magnitude_prev = magnitude;
+    direction_prev = direction;
+    
+    % Set output
+    v(1) = magnitude;
+    v(2) = direction;
+    v(3) = information_valid;
 end
 
 
