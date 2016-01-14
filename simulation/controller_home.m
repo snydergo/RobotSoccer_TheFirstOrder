@@ -44,6 +44,9 @@ function v_c=controller_home_(uu,P)
 
     % robot #1 positions itself behind ball and rushes the goal.
     v1 = play_rush_goal(robot(:,1), ball, P);
+%     v = strategy_split_field(robot(:,1), robot(:,2), ball, P);
+%     v1 = v(1:3);
+%     v2 = v(4:6);
     %v1 = skill_follow_ball_on_line(robot(:,1), ball, -P.field_width/3, P);
  
     % robot #2 stays on line, following the ball, facing the goal
@@ -64,10 +67,13 @@ function v_c=controller_home_(uu,P)
             v2 = skill_goalie(robot(:,2), ball, -9*P.field_length/24, P);
         case offense
             v2 = play_rush_goal(robot(:,2), ball, P);
+            v = strategy_split_field(robot(:,1), robot(:,2), ball, P);
+            v1 = v(1:3);
+            v2 = v(4:6);
         case regroup
             v2 = skill_go_to_point(robot(:,2), -P.goal, P);
     end;
-    vb(1)
+    
     if (vb(2)>0 && ball(1)>-P.field_length/4),
         position = offense;
     elseif (position==offense) && (robot(1,2)<0 || vb(1)<0.2),
@@ -76,19 +82,53 @@ function v_c=controller_home_(uu,P)
         position = goallie;
     end;
 
-%     if (vb(2)>0 && ball(1)>-P.field_length/4)
-%         v2 = play_rush_goal(robot(:,2), ball, P);
-%     elseif robot(1,2)>=-9*P.field_length/24,
-%         v2 = skill_go_to_point(robot(:,2), -P.goal, P);
-%     else
-%         v2 = skill_goalie(robot(:,2), ball, -9*P.field_length/24, P);
-%     end;
+    if (vb(2)>0 && ball(1)>-P.field_length/4)
+        v2 = play_rush_goal(robot(:,2), ball, P);
+    elseif robot(1,2)>=-9*P.field_length/24,
+        v2 = skill_go_to_point(robot(:,2), -P.goal, P);
+    else
+        v2 = skill_goalie(robot(:,2), ball, -9*P.field_length/24, P);
+    end;
     
     % output velocity commands to robots
     v1 = utility_saturate_velocity(v1,P);
     v2 = utility_saturate_velocity(v2,P);
     v_c = [v1; v2];
 end
+
+%-----------------------------------------
+% strategy - both robots rush goals
+% Robot1 stays in the top 75% of the field and Robot 2 stays in the bottom 75%
+function v=strategy_split_field(robot1, robot2, ball, P)
+
+% normal vector from ball to goal
+n = P.goal-ball;
+n = n/norm(n);
+% compute position 10cm behind ball, but aligned with goal.
+position = ball - 0.2*n;
+
+temp = position;
+
+if norm(position-robot1(1:2))<.21,
+    v1 = skill_go_to_point(robot1, P.goal, P);
+else
+    if position(2) <= -P.field_width/16,
+       temp(2) = -P.field_width/16;
+    end
+    v1 = skill_go_to_point(robot1, temp, P);
+end
+
+if norm(position-robot2(1:2))<.21,
+    v2 = skill_go_to_point(robot2, P.goal, P);
+else
+    if position(2) >= P.field_width/16,
+        position(2) = P.field_width/16;
+    end
+    v2 = skill_go_to_point(robot2, position, P);
+end
+v = [v1; v2];
+end
+
 
 %-----------------------------------------
 % play - rush goal
