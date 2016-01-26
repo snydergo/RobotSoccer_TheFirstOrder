@@ -19,10 +19,10 @@ int main(int argc, char** argv)
     int iLowH = 140;
     int iHighH = 179;
 
-    int iLowS = 40; 
-    int iHighS = 170;
+    int iLowS = 25; 
+    int iHighS = 200;
 
-    int iLowV = 180;
+    int iLowV = 241;
     int iHighV = 255;
 
     //Create trackbars in "Control" window
