@@ -1,1 +1,0 @@
-/home/ecestudent/workspace/RobotSoccer_TheFirstOrder/vision/color_detection_test/build/CMakeFiles/ColorDetection.dir
