@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 2.8)
+project( RobotVision )
+find_package( OpenCV REQUIRED )
+add_executable( RobotVision main.cpp hsvcolorsubspace.h undefinedcvobject.h utils.h )
+target_link_libraries( RobotVision ${OpenCV_LIBS} )
+add_definitions(-std=c++11)
