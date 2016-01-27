@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 2.8)
+project( MultiobjectDetection )
+find_package( OpenCV REQUIRED )
+add_executable( MultiobjectDetection multiobjectdetection.cpp )
+target_link_libraries( MultiobjectDetection ${OpenCV_LIBS} )
