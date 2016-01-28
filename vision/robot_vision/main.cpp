@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "hsvcolorsubspace.h"
 #include "utils.h"
+#include "objectdetection.h"
 
 int main( int argc, char** argv )
 {
