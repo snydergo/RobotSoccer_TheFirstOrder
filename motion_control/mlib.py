@@ -92,4 +92,15 @@ def SetEncM(motor,cnt):
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
+def moveX(speed):
+	ForwardBackM(1,-speed)
+	ForwardBackM(2,speed)
+	return
+
+def stop():
+	motors = [1,2,3]
+	for m in motors:
+		ForwardBackM(m,0)
+	return
+
 #def SetMVelocityPID(address,p,i,d,qpps):
