@@ -26,6 +26,12 @@ roboclaw.Open("/dev/ttySAC0",38400)
 
 addr1 = 0x80
 addr2 = 0x81
+# motor ticks per second
+mtps = 19288
+
+# scale ticks per second so that a value of 1 corresponds to 1 rotations per second.
+def scaleMtps(omega):
+	return omega*mtps
 
 # Move Motor Forward.
 # @param motor: 1 => Front-Left, 2 => Front-Right, 3 => Back
@@ -62,13 +68,16 @@ def ForwardBackM(motor,val):
 		print("This should never happen")
 		return		
 
+# @param val should be given in rotations/second
 def SpeedM(motor,val):
+	# Convert to rotations/second
+	omega = scaleMpts(val)
 	if motor == 1:
-		return roboclaw.SpeedM1(addr1,val)
+		return roboclaw.SpeedM1(addr1,omega)
 	elif motor == 2:
-		return roboclaw.SpeedM2(addr1,val)
+		return roboclaw.SpeedM2(addr1,omega)
 	elif motor == 3:
-		return roboclaw.SpeedM1(addr2,val)
+		return roboclaw.SpeedM1(addr2,omega)
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
@@ -92,10 +101,17 @@ def SetEncM(motor,cnt):
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
-def moveX(speed):
-	ForwardBackM(1,-speed)
+# Based on wheel speed instead of distance
+def moveBodyX(speed):
+	ForwardBackM(1,-speed) # Maybe use speed instead, since it specifies omega instead of arbitrary motor power
 	ForwardBackM(2,speed)
 	return
+
+# Based on wheel speed instead of distance
+def rotate(speed):
+	x = [1,2,3]
+	for n in x:
+		ForwardBackM(n,speed)
 
 def stop():
 	motors = [1,2,3]
