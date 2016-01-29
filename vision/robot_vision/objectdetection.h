@@ -25,6 +25,5 @@ vector<Moments> GetMoments(contour_vector_t contours);
 
 Point2f GetMomentCenter(Moments moments);
 
-vector<double> GetMomentArea(Moments moments);
-
+double GetMomentArea(Moments moments);
 

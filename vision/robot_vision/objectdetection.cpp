@@ -87,17 +87,12 @@ vector<Moments> GetMoments(contour_vector_t contours)
 
 Point2f GetMomentCenter(Moments moments)
 {
-    ///  Get the mass centers:
-    vector<Point2f> mc( moments.size() );
-    for( int i = 0; i < moments.size(); i++ )
-    { mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 ); }
+    ///  Get the mass center:
+    mc[i] = Point2f(moments.m10/moments.m00, moments.m01/moments.m00);
 
 }
 
-vector<double> GetMomentArea(Moments moments)
+double GetMomentArea(Moments moments)
 {
-    vector<double> mc( moments.size() );
-    for( int i = 0; i < moments.size(); i++ )
-    double dArea = oMoments.m00;
-
+    return moments.m00;
 }
