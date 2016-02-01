@@ -2,11 +2,21 @@ import time
 import roboclaw
 import sys
 from enum import Enum
+import mat
 
+#Linux comport name
+roboclaw.Open("/dev/ttySAC0",38400)
 
 # mlib.py (motor library)
 # Defines abstraction for the motors
 
+addr1 = 0x80
+addr2 = 0x81
+
+#Set (default) velocity pids
+roboclaw.SetM1VelocityPID(addr1,1,.5,.25,180000)
+roboclaw.SetM2VelocityPID(addr1,1,.5,.25,180000)
+roboclaw.SetM1VelocityPID(addr2,1,.5,.25,180000)
 
 class e_type(Enum):
 	motorNumOff = 1
@@ -21,20 +31,17 @@ class mlibExcept(Exception):
 		else:
 			return "Iunno"
 
-#Linux comport name
-roboclaw.Open("/dev/ttySAC0",38400)
 
-addr1 = 0x80
-addr2 = 0x81
+
 # motor ticks per second
-mtps = 19288
+mtps = 19820
 
 # scale ticks per second so that a value of 1 corresponds to 1 rotations per second.
 def scaleMtps(omega):
-	return omega*mtps
+	return int(omega*mtps)
 
 # Move Motor Forward.
-# @param motor: 1 => Front-Left, 2 => Front-Right, 3 => Back
+# @param motor: 1 => Front-Right, 2 => Front-Left, 3 => Back
 # @param val: 	a number between 1-128 (i think)
 def ForwardM(motor,val):
 	if motor == 1:
@@ -71,7 +78,7 @@ def ForwardBackM(motor,val):
 # @param val should be given in rotations/second
 def SpeedM(motor,val):
 	# Convert to rotations/second
-	omega = scaleMpts(val)
+	omega = scaleMtps(val)
 	if motor == 1:
 		return roboclaw.SpeedM1(addr1,omega)
 	elif motor == 2:
@@ -103,8 +110,8 @@ def SetEncM(motor,cnt):
 
 # Based on wheel speed instead of distance
 def moveBodyX(speed):
-	ForwardBackM(1,-speed) # Maybe use speed instead, since it specifies omega instead of arbitrary motor power
-	ForwardBackM(2,speed)
+	ForwardBackM(1,speed) # Maybe use speed instead, since it specifies omega instead of arbitrary motor power
+	ForwardBackM(2,-speed)
 	return
 
 # Based on wheel speed instead of distance
