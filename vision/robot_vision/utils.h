@@ -1,11 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-struct Coord {
-    int xPos;
-    int yPos;
-};
-
 struct Range {
     int low;
     int high;
@@ -32,7 +27,6 @@ Color ConvertHueRangeToColor(Range hueRange)
 {
     int hue = (hueRange.high + hueRange.low)/2;
     if (hue < orangeHue.low) return Color::undefined;
-
     if (hue < orangeHue.high) return Color::orange;
     if (hue < yellowHue.high) return Color::yellow;
     if (hue < greenHue.high ) return Color::green;
