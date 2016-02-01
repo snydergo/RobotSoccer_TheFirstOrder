@@ -21,7 +21,7 @@ class Point(object):
     def __str__(self):
         return "[%d,%d]\n" %(self.x,self.y)
 
-class FieldObject():
+class FieldObject(object):
     location = Point(0,0)
     v = Direction(0,0)
     def __init__(self, gvnLocation: Point, velocity: Direction) -> object:
@@ -42,6 +42,13 @@ class FieldObject():
 
     def setVelocity(self, velocity: Direction):
         v = velocity
+
+class Robot(FieldObject):
+    theta = 0
+    address = 0
+    def __init__(self, gvnLocation: Point, velocity: Direction, theta, ):
+        FieldObject.__init__(gvnLocation, velocity)
+        self.theta = theta
 
 
 
