@@ -2,8 +2,7 @@
 Contains the data received from Vision. It will have the Soccer ball and its location and velocity and predicted
 value, alongside with the robots and their locations along with any other important parameters.
 """
-
-import array
+from AI.Gameplay.utilities import Direction
 
 class VisionAI(Exception):
     errorType = 0;
@@ -24,8 +23,8 @@ class Point(object):
 
 class FieldObject():
     location = Point(0,0)
-    v = array(0,0)
-    def __init__(self, gvnLocation: Point, velocity: array) -> object:
+    v = Direction(0,0)
+    def __init__(self, gvnLocation: Point, velocity: Direction) -> object:
         self.location = gvnLocation
         self.v = velocity
 
@@ -35,24 +34,24 @@ class FieldObject():
     def getVelArray(self):
         return self.v
 
-    def getLocation(self):
+    def getLocation(self) -> Point:
         return self.location
 
     def setLocation(self, x, y):
         location = Point(x,y)
 
-    def setVelocity(self, velocity: array):
+    def setVelocity(self, velocity: Direction):
         v = velocity
 
 
 
 
 class GameStatus(object):
-    allyRobot1 = FieldObject(Point(0,0),array(0,0))
-    allyRobot2 = FieldObject(Point(0,0),array(0,0))
-    enemyRobot1 = FieldObject(Point(0,0),array(0,0))
-    enemyRobot2 = FieldObject(Point(0,0),array(0,0))
-    ball = FieldObject(Point(0,0),array(0,0))
+    allyRobot1 = FieldObject(Point(0,0),Direction(0,0))
+    allyRobot2 = FieldObject(Point(0,0),Direction(0,0))
+    enemyRobot1 = FieldObject(Point(0,0),Direction(0,0))
+    enemyRobot2 = FieldObject(Point(0,0),Direction(0,0))
+    ball = FieldObject(Point(0,0),Direction(0,0))
 
     def __init__(self, allyRobot1: FieldObject, allyRobot2: FieldObject, enemyRobot1: FieldObject, enemyRobot2: FieldObject, ball: FieldObject):
         self.allyRobot1 = allyRobot1

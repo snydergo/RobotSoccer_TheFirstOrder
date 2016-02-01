@@ -1,5 +1,5 @@
 """Program Contains the Skills that are built upon the utilities that talk with the hardware"""
-from utilities.py import Utilities
+from AI.Gameplay.utilities import Utilities
 
 class  Skills(object):
     name = ""
@@ -14,24 +14,24 @@ class  Skills(object):
         self.name = name
         self.role = role;
         utilities = Utilities(self.robotNum, self.name, self.role)
-        print "Num = %d name = %s role = %s" % (self.robotNum, self.name, self.role)
+        print ("Num = %d name = %s role = %s" % (self.robotNum, self.name, self.role))
 
 
     """kick ball to a certain location"""
     def splitField(self, Location):
-        print "splitting field"
+        print ("splitting field")
 
     """tells a certain robot to push goal"""
     def pushGoal(self, direction, distance):
-        print "direction = %d angle = %d." % (direction, distance)
+        print ("direction = %d angle = %d." % (direction, distance))
 
     def playGoalie(self):
-        print "Playing Goal!"
+        print ("Playing Goal!")
 
     def splitPlayGoalie(self):
-        print "Splitting Goal"
+        print ("Splitting Goal")
 
 
 
 if __name__=="__main__":
- 
+    print ("in main of Skills")
