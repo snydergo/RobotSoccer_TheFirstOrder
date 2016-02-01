@@ -1,15 +1,24 @@
 """Contains all of the utilities that a Robot should be able to perform.
    This File has the actual embedded programming that talks with the hardware
+   This will be using functions that the Motion Control guy uses
 """
 #import enum
 
+
+from AI.visiondata.GameStatus import Point
 from enum import Enum
-class Direction(Enum):
-    Forward = 1
-    Backward = -1
-    Left = -2
-    Right = 2
-    Still = 0
+
+class Direction():
+    x_dir = 0
+    y_dir = 0
+
+    def __init__(self, x, y):
+        self.x_dir = x
+        self.y_dir= y
+
+    def __str__(self):
+        return "[%d,%d]\n" %(self.x_dir,self.y_dir)
+
 
 class Rotation(Enum):
     CCW = -1
@@ -17,7 +26,7 @@ class Rotation(Enum):
     noRotation = 0
 
 class MtrCtrlParam(Exception):
-    errorType = 0;
+    errorType = 0
     def __init__(self, errorType):
         self.errorType = errorType
     def __str__(self):
@@ -34,7 +43,7 @@ class  Utilities(object):
         self.robotNum = robotNum
         self.name = name
         self.role = role;
-        print "Number = %d, name = %s, role = %s" % (self.robotNum, self.name, self.role)
+        print ("Number = %d, name = %s, role = %s" % (self.robotNum, self.name, self.role))
 
 
     """angle is in degrees and direction is CW = -1 and CCW = -1"""
@@ -42,20 +51,23 @@ class  Utilities(object):
         if (rotation == Rotation.CCW):
             raise MtrCtrlParam(1)
         else:
-            print "direction = %d angle = %d." % (rotation, angle)
+            print ("direction = %d angle = %d." % (rotation, angle))
 
     """
     move in a specified direction enumerated right, left, back, forward
     also moves a certain distance measured in feet
     """
+    def moveToPoint(self, point : Point):
+        print("moving to point [%d,%d]" %(point.x, point.y))
+
     def move(self, direction, distance):
-        print "direction = %d angle = %d." % (direction, distance)
+        print ("direction = %d angle = %d." % (direction, distance))
 
     def kick(self):
-        print "ball Kicked!"
+        print ("ball Kicked!")
 
     def followBall(self):
-        print "Following Ball"
+        print ("Following Ball")
 
 
 
@@ -65,7 +77,7 @@ if __name__=="__main__":
    try:
        robot1.rotate(rotation, 90)
    except MtrCtrlParam as e:
-       print e
+       print (e)
 
    robot1.move(Direction.Right, 20)
    robot1.kick()
