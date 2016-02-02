@@ -50,8 +50,10 @@ class DataImporter(object):
 
     def importAllyRobots(self, string : str, starKiller : StarKillerMainControl):
         print("importing Data")
-        if '__type__' in str and str['__type__'] == 'ball':
-            return FieldObject(Point(str['posX'],str['posY']), Direction(str['velX'],str['velY']))
+        if '__type__' in str and str['__type__'] == 'teamRobot1':
+            firstOrderRobot1 = Robot(Point(str['posX'],str['posY']), Direction(str['velX'],str['velY']), str['theta'])
+            starKiller.gameStatus.allyRobot1 = firstOrderRobot1
+            return firstOrderRobot1
         else:
             raise VisionAIException(AIException.parsingData)
 
