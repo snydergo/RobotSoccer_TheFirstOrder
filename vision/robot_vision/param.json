@@ -4,7 +4,8 @@
             "fieldCenterX_pixel": 500,
             "fieldCenterY_pixel": 500,
             "referenceDistance_cm": 500,
-            "referenceDistance_pixel": 500
+            "referenceDistance_pixel": 500,
+            "invertDirectionX": false
         },
         "crop": {
             "left": 0,
