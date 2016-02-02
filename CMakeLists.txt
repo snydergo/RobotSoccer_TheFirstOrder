@@ -131,27 +131,28 @@ add_definitions(-std=c++11)
 find_package( OpenCV REQUIRED )
 
 ## Declare a C++ executable
-add_executable( CalibrateField src/vision/calibrate_field/calibratefield.cpp )
+add_executable( CalibrateField vision/calibrate_field/calibratefield.cpp )
 target_link_libraries( CalibrateField ${OpenCV_LIBS} )
 
-add_executable( CenterField src/vision/center_field/centerfield.cpp )
+add_executable( CenterField vision/center_field/centerfield.cpp )
 target_link_libraries( CenterField ${OpenCV_LIBS} )
 
-add_executable( ColorDetection src/vision/color_detection_test/colordetection.cpp )
+add_executable( ColorDetection vision/color_detection_test/colordetection.cpp )
 target_link_libraries( ColorDetection ${OpenCV_LIBS} )
 
-add_executable( MultiobjectDetection src/vision/multiobject_detection_test/multiobjectdetection.cpp )
+add_executable( MultiobjectDetection vision/multiobject_detection_test/multiobjectdetection.cpp )
 target_link_libraries( MultiobjectDetection ${OpenCV_LIBS} )
 
-add_executable( ObjectTracking src/vision/object_tracking_test/objecttracking.cpp )
+add_executable( ObjectTracking vision/object_tracking_test/objecttracking.cpp )
 target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 
-add_executable( RobotVision src/vision/robot_vision/main.cpp
-src/vision/robot_vision/hsvcolorsubspace.h
-src/vision/robot_vision/undefinedcvobject.h
-src/vision/robot_vision/utils.h
-src/vision/robot_vision/objectdetection.h
-src/vision/robot_vision/config.h)
+add_executable( RobotVision 
+vision/robot_vision/main.cpp
+vision/robot_vision/hsvcolorsubspace.h
+vision/robot_vision/undefinedcvobject.h
+vision/robot_vision/utils.h
+vision/robot_vision/objectdetection.h
+vision/robot_vision/config.h)
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 include_directories(~/imports/rapidjson/include)
 
