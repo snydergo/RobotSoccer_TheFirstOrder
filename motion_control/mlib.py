@@ -108,17 +108,22 @@ def SetEncM(motor,cnt):
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
-# Based on wheel speed instead of distance
-def moveBodyX(speed):
-	ForwardBackM(1,speed) # Maybe use speed instead, since it specifies omega instead of arbitrary motor power
-	ForwardBackM(2,-speed)
-	return
+# # Based on wheel speed instead of distance
+# def moveBodyX(speed):
+# 	ForwardBackM(1,speed) # Maybe use speed instead, since it specifies omega instead of arbitrary motor power
+# 	ForwardBackM(2,-speed)
+# 	return
 
 # Based on wheel speed instead of distance
 def rotate(speed):
 	x = [1,2,3]
 	for n in x:
 		ForwardBackM(n,speed)
+
+def goXYOmega(x,y,omega)
+	v1,v2,v3 = mat.getWheelVel(x,y,omega)
+	s1 = scaleMtps(v1)
+
 
 def stop():
 	motors = [1,2,3]
