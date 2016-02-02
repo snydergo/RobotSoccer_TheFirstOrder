@@ -149,9 +149,6 @@ target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 add_executable( Talker vision/talker_test/talker.cpp )
 target_link_libraries( Talker ${OpenCV_LIBS} )
 
-add_executable( HoughCircle vision/hough_circle_test/houghcircle.cpp )
-target_link_libraries( HoughCircle ${OpenCV_LIBS} )
-
 add_executable( RobotVision 
 vision/robot_vision/main.cpp
 vision/robot_vision/hsvcolorsubspace.h

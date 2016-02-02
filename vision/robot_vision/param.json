@@ -2,8 +2,8 @@
     "param": {
         "cameraUrl": "http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg",
         "calibration": {
-            "fieldCenterX_pixel": 500,
-            "fieldCenterY_pixel": 500,
+            "fieldCenterX_pixel": 312,
+            "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 500,
             "referenceDistance_pixel": 500,
             "invertDirectionX": false
