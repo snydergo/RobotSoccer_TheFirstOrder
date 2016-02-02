@@ -14,11 +14,36 @@ using namespace std;
 using namespace cv;
 
 void loadConfigData(int argc, char** argv);
+vector<Moments> locateCvObjects(const Mat& frame, const HsvColorSubSpace& colorSegment) 
 
 int main(int argc, char** argv)
 {
     if (argc != 2) { cout << "no param file. Usage: program [param.json]\n"; return 1; }
     loadConfigData(argv);
+    
+    VideoCapture camera = ConnectCamera();
+    
+    while (true) {
+        Mat frame = ReadFrame(camera);
+        
+        /// find our robots
+        vector<Moments> teamMoments = locateCvObjects(frame, teamRobotPrimaryColor);
+        // find their robots
+        vector<Moments> opponetMoments = locateCvObjects(frame, oppoentRobotPrimaryColor);
+        //find the ball
+        vector<Moments> balls = locateCvObjects(frame, ballColor);
+        
+        
+    }
+    
+    return 0;
+}
+
+vector<Moments> locateCvObjects(const Mat& frame, const HsvColorSubSpace& colorSegment) 
+{
+    mat segment = ColorSegmentImage(frame, colorSegment);
+    contour_vector_t contours = EdgeDetectImage(segment);
+    return GetMoments(contours);
 }
 
 void loadConfigData(char** argv)
