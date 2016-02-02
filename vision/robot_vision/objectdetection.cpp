@@ -29,7 +29,7 @@ VideoCapture ConnectCamera(std::string uri)
     return cap;
 }
 
-Mat ReadFrame(VideoCapture camera)
+Mat ReadFrame(VideoCapture& camera)
 {
     Mat img;
     bool bSuccess = camera.read(img); // read a new frame from video
