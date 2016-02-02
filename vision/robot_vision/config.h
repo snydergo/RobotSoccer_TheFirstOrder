@@ -26,6 +26,8 @@ extern int opponentRobotCount;
 extern HsvColorSubSpace opponentRobotPrimaryColor;
 extern HsvColorSubSpace opponentRobotSecondaryColor;
 
+extern std::string cameraUrl;
+
 
 } // namespace config
 

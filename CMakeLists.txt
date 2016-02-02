@@ -146,13 +146,23 @@ target_link_libraries( MultiobjectDetection ${OpenCV_LIBS} )
 add_executable( ObjectTracking vision/object_tracking_test/objecttracking.cpp )
 target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 
+add_executable( Talker vision/talker_test/talker.cpp )
+target_link_libraries( Talker ${OpenCV_LIBS} )
+
+add_executable( HoughCircle vision/hough_circle_test/houghcircle.cpp )
+target_link_libraries( HoughCircle ${OpenCV_LIBS} )
+
 add_executable( RobotVision 
 vision/robot_vision/main.cpp
 vision/robot_vision/hsvcolorsubspace.h
 vision/robot_vision/undefinedcvobject.h
 vision/robot_vision/utils.h
+vision/robot_vision/utils.cpp
 vision/robot_vision/objectdetection.h
-vision/robot_vision/config.h)
+vision/robot_vision/objectdetection.cpp
+vision/robot_vision/config.h
+vision/robot_vision/config.cpp
+)
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 include_directories(~/imports/rapidjson/include)
 

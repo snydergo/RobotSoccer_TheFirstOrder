@@ -3,7 +3,7 @@
 
 using namespace cv;
 
-void CreateControlWindow(const HsvColorSubSpace& colorSegment)
+void CreateControlWindow(HsvColorSubSpace& colorSegment)
 {
     namedWindow("Control", CV_WINDOW_AUTOSIZE); //create a window called "Control"
 
@@ -23,8 +23,8 @@ VideoCapture ConnectCamera(std::string uri)
     VideoCapture cap((uri == "default") ? "http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg" : uri); //capture the video from web cam
 
     if (!cap.isOpened()) { // if not success, exit program
-        cout << "Cannot open the web cam" << endl;
-        return -1;
+        std::cout << "Cannot open the web cam" << std::endl;
+        throw -1;
     }
     return cap;
 }
@@ -35,8 +35,7 @@ Mat ReadFrame(VideoCapture& camera)
     bool bSuccess = camera.read(img); // read a new frame from video
 
     if (!bSuccess) { //if not success, break loop
-        cout << "Cannot read a frame from video stream" << endl;
-        break;
+        std::cout << "Cannot read a frame from video stream" << std::endl;
     }
     Mat imgHSV;
 
@@ -88,7 +87,7 @@ vector<Moments> GetMoments(contour_vector_t contours)
 Point2f GetMomentCenter(Moments moments)
 {
     ///  Get the mass center:
-    mc[i] = Point2f(moments.m10/moments.m00, moments.m01/moments.m00);
+    return Point2f(moments.m10/moments.m00, moments.m01/moments.m00);
 
 }
 

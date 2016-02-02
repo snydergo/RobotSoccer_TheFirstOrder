@@ -32,12 +32,12 @@ int main(int argc, char** argv)
             cout << "Cannot read a frame from video stream" << endl;
             break;
         }
-
         /// Convert it to gray
         cvtColor( src, src_gray, CV_BGR2GRAY );
 
         /// Reduce the noise so we avoid false circle detection
         medianBlur ( src_gray, src_gray, 3 );
+        //img_gray.convertTo(src_gray, -1, 2, 0);
 
         vector<Vec3f> circles;
 
@@ -47,9 +47,10 @@ int main(int argc, char** argv)
         Point center;
 
         /// find the center of the circle detected
-        if (circles.size() == 1)
+        //if (circles.size() == 1)
+        for (auto c: circles)
         {
-            center = Point2f(cvRound(circles[0][0]), cvRound(circles[0][1]));
+            center = Point2f(cvRound(c[0]), cvRound(c[1]));
 
             if (center.x < 450 && center.x > 390) {
                 if (center.x > xMax) {
@@ -69,18 +70,24 @@ int main(int argc, char** argv)
             }
             averagedCenter.x = (xMax + xMin)/2;
             averagedCenter.y = (yMax + yMin)/2;
+            circle( src, center, cvRound(c[2]), Scalar(0,0,255), 3, 8, 0 );
+            circle( src, center, 3, Scalar(0,255,0), -1, 8, 0 );
         }
         /// circle center
         circle( src, averagedCenter, 3, Scalar(0,255,0), -1, 8, 0 );
 
+
         /// Show in a window
         std::string str("x: " + to_string((int)std::round(averagedCenter.x))
                         + " y: " + to_string((int)std::round(averagedCenter.y))
+                        + "x: " + to_string((int)std::round(xMax))
+                        + " y: " + to_string((int)std::round(xMin))
+                        + "x: " + to_string((int)std::round(yMax))
+                        + " y: " + to_string((int)circles.size())
                         );
         putText(src, str.c_str(), cvPoint(30,30),
             FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 1, CV_AA);
         imshow( "Hough Circle Transform", src );
-        imshow( "src gray", src_gray );
 
         if (waitKey(5) == 27) { //wait for 'esc' key press for 10ms. If 'esc' key is pressed, break loop
             cout << "esc key is pressed by user" << endl;
