@@ -8,6 +8,7 @@ namespace config {
 
 extern cv::Point2i fieldCenter_px;
 extern double cmPerPixelConversionFactor;
+extern bool invertX;
 
 extern int cropTop;
 extern int cropBottom;

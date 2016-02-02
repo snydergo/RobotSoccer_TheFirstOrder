@@ -3,13 +3,25 @@ Contains the data received from Vision. It will have the Soccer ball and its loc
 value, alongside with the robots and their locations along with any other important parameters.
 """
 from AI.Gameplay.utilities import Direction
+from enum import Enum
 
-class VisionAI(Exception):
+class AIException(Enum):
+    parsingData = 0
+    catchData = 1
+
+class VisionAIException(Exception):
     errorType = 0;
     def __init__(self, errorType):
         self.errorType = errorType
+
     def __str__(self):
-        return "incorrect parameters passed in"
+        switcher = {
+            0: "Problem with parsing data\n",
+            1: "unable to get data from Vision\n",
+        }
+        # Get the string that correlates with Exception
+        return switcher.get(self.errorType, "untyped Exception")
+
 
 class Point(object):
     x = 0;
@@ -21,6 +33,7 @@ class Point(object):
     def __str__(self):
         return "[%d,%d]\n" %(self.x,self.y)
 
+#class that contains location and velocity of a certain object on field
 class FieldObject(object):
     location = Point(0,0)
     v = Direction(0,0)
@@ -43,21 +56,27 @@ class FieldObject(object):
     def setVelocity(self, velocity: Direction):
         v = velocity
 
+#Robot Class inherits from FieldObject so it has all parameters and adds a theta and maybe address
 class Robot(FieldObject):
     theta = 0
-    address = 0
-    def __init__(self, gvnLocation: Point, velocity: Direction, theta, ):
+    def __init__(self, gvnLocation: Point, velocity: Direction, theta):
         FieldObject.__init__(gvnLocation, velocity)
         self.theta = theta
+
+    def setTheta(self, theta):
+        self.theta = theta
+
+    def getTheta(self):
+        return self.theta
 
 
 
 
 class GameStatus(object):
-    allyRobot1 = FieldObject(Point(0,0),Direction(0,0))
-    allyRobot2 = FieldObject(Point(0,0),Direction(0,0))
-    enemyRobot1 = FieldObject(Point(0,0),Direction(0,0))
-    enemyRobot2 = FieldObject(Point(0,0),Direction(0,0))
+    allyRobot1 = Robot(Point(0,0),Direction(0,0),0)
+    allyRobot2 = Robot(Point(0,0),Direction(0,0),0)
+    enemyRobot1 = Robot(Point(0,0),Direction(0,0),0)
+    enemyRobot2 = Robot(Point(0,0),Direction(0,0),0)
     ball = FieldObject(Point(0,0),Direction(0,0))
 
     def __init__(self, allyRobot1: FieldObject, allyRobot2: FieldObject, enemyRobot1: FieldObject, enemyRobot2: FieldObject, ball: FieldObject):

@@ -4,7 +4,8 @@
             "fieldCenterX_pixel": 500,
             "fieldCenterY_pixel": 500,
             "referenceDistance_cm": 500,
-            "referenceDistance_pixel": 500
+            "referenceDistance_pixel": 500,
+            "invertDirectionX": false
         },
         "crop": {
             "left": 0,
@@ -14,50 +15,50 @@
         },
         "ball": {
             "color": {
-                "LowH": 0,
-                "HighH": 0,
-                "LowS": 0,
-                "HighS": 0,
-                "LowV": 0,
-                "HighV": 0
+                "lowH": 0,
+                "highH": 0,
+                "lowS": 0,
+                "highS": 0,
+                "lowV": 0,
+                "highV": 0
             }
         },
         "teamRobots": {
             "count": 1,
             "primaryColor": {
-                "LowH": 0,
-                "HighH": 0,
-                "LowS": 0,
-                "HighS": 0,
-                "LowV": 0,
-                "HighV": 0
+                "lowH": 0,
+                "highH": 0,
+                "lowS": 0,
+                "highS": 0,
+                "lowV": 0,
+                "highV": 0
             },
             "secondaryColor": {
-                "LowH": 0,
-                "HighH": 0,
-                "LowS": 0,
-                "HighS": 0,
-                "LowV": 0,
-                "HighV": 0
+                "lowH": 0,
+                "highH": 0,
+                "lowS": 0,
+                "highS": 0,
+                "lowV": 0,
+                "highV": 0
             }
         },
         "opponentRobots": {
             "count": 1,
             "primaryColor": {
-                "LowH": 0,
-                "HighH": 0,
-                "LowS": 0,
-                "HighS": 0,
-                "LowV": 0,
-                "HighV": 0
+                "lowH": 0,
+                "highH": 0,
+                "lowS": 0,
+                "highS": 0,
+                "lowV": 0,
+                "highV": 0
             },
             "secondaryColor": {
-                "LowH": 0,
-                "HighH": 0,
-                "LowS": 0,
-                "HighS": 0,
-                "LowV": 0,
-                "HighV": 0
+                "lowH": 0,
+                "highH": 0,
+                "lowS": 0,
+                "highS": 0,
+                "lowV": 0,
+                "highV": 0
             }
         }
     }

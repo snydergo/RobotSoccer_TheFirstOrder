@@ -4,6 +4,7 @@ namespace config {
 
 cv::Point2i fieldCenter_px;
 double cmPerPixelConversionFactor;
+bool invertX;
 
 int cropTop;
 int cropBottom;
