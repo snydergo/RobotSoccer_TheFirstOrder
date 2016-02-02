@@ -15,7 +15,7 @@ void CreateControlWindow(const HsvColorSubSpace& colorSegment);
 
 VideoCapture ConnectCamera(std::string uri = "default");
 
-Mat ReadFrame(VideoCapture camera);//frame in HSV
+Mat ReadFrame(VideoCapture& camera);//frame in HSV
 
 Mat ColorSegmentImage(const Mat& src, const HsvColorSubSpace& colorSegment);
 
