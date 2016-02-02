@@ -1,6 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project( CalibrateField )
-find_package( OpenCV REQUIRED )
-add_executable( CalibrateField calibratefield.cpp )
-target_link_libraries( CalibrateField ${OpenCV_LIBS} )
-add_definitions(-std=c++11)
