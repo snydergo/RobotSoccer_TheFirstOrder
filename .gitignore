@@ -37,7 +37,4 @@
 ehthumbs.db
 Thumbs.db
 
-$GIT_DIR/vision/color_detection_test/build/
-$GIT_DIR/vision/object_tracking_test/build/
-
 
