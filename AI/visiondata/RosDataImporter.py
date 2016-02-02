@@ -37,42 +37,99 @@
 }}
 """
 import json
-from AI import StarKillerMainControl
+
+from AI.StarKillerMainControl import *
 from AI.visiondata.GameStatus import *
+from AI.dataClasses import *
 from string import *
 
 
 
 class DataImporter(object):
 
-    def __init__(self):
-        print("initstuff")
+     def __init__(self):
+         print("initstuff")
 
-    def importAllyRobots(self, string : str, starKiller : StarKillerMainControl):
-        print("importing Data")
-        if '__type__' in str and str['__type__'] == 'teamRobot1':
-            firstOrderRobot1 = Robot(Point(str['posX'],str['posY']), Direction(str['velX'],str['velY']), str['theta'])
-            starKiller.gameStatus.allyRobot1 = firstOrderRobot1
-            return firstOrderRobot1
-        else:
-            raise VisionAIException(AIException.parsingData)
+     def importBallInfo(self, string : str, starKiller : StarKillerData) -> FieldObject:
+         print("Importing ball info")
+         createdBall = FieldObject("ball",Point(string['posX'],string['posY']),Direction(string['velX'],string['velY']))
+         starKiller.gameStatus.ball = createdBall
+         print(createdBall)
+         return createdBall
 
-    def importRebelRobots(self, string : str, starKiller : StarKillerMainControl):
-        print("importing Rebel Robots info")
-        if '__type__' in str and str['__type__'] == 'opponentRobot1':
-            rebel1 = Robot(Point(str['posX'],str['posY']), Direction(str['velX'],str['velY']), str['theta'])
-            starKiller.gameStatus.enemyRobot1 = rebel1
-            return rebel1
-        else:
-            raise VisionAIException(AIException.parsingData)
 
-    def importBallInfo(self, string : str, starKiller : StarKillerMainControl) -> FieldObject:
-        print("importing ball info")
-        if '__type__' in str and str['__type__'] == 'ball':
-            ball = FieldObject(Point(str['posX'],str['posY']), Direction(str['velX'],str['velY']))
-            starKiller.gameStatus.ball = ball
-            return ball
-        else:
-            raise VisionAIException(AIException.parsingData)
+     def importAllyRobots(self, robot1 : str, robot2 : str,starKiller : StarKillerData) -> str:
+         print("Importing Ally Robots")
+         #need to make sure the wanted data is passed in
+         ally1 = Robot("ally1",Point(robot1['posX'],robot1['posY']),Direction(robot1['velX'],robot1['velY']),robot1['theta'])
+         starKiller.gameStatus.allyRobot1 = ally1
+         print(ally1)
+         ally2 = Robot("ally2",Point(robot2['posX'],robot2['posY']),Direction(robot2['velX'],robot2['velY']),robot2['theta'])
+         starKiller.gameStatus.allyRobot2 = ally2
+         print(ally2)
+         return ally1.__str__() + ally2.__str__()
+
+     def importRebelRobots(self, robot1 : str, robot2 : str,starKiller : StarKillerData) -> str:
+         print("Importing Rebel Robots")
+         #need to make sure the wanted data is passed in
+         enemy1 = Robot("enemy1",Point(robot1['posX'],robot1['posY']),Direction(robot1['velX'],robot1['velY']),robot1['theta'])
+         starKiller.gameStatus.enemyRobot1 = enemy1
+         print(enemy1)
+         enemy2 = Robot("enemy2",Point(robot2['posX'],robot2['posY']),Direction(robot2['velX'],robot2['velY']),robot2['theta'])
+         starKiller.gameStatus.enemyRobot2 = enemy2
+         print(enemy2)
+         return enemy1.__str__() + enemy2.__str__()
+
+     def importGameStatus(self, Filename: str, starKiller : StarKillerData):
+         with open(Filename) as json_file:
+             json_data = json.load(json_file)
+             balljson = json_data['vision_data']['ball']
+             allyRobot1 = json_data['vision_data']['teamRobot1']
+             allyRobot2 = json_data['vision_data']['teamRobot2']
+             rebelRobot1 = json_data['vision_data']['opponentRobot1']
+             rebelRobot2 = json_data['vision_data']['opponentRobot2']
+             #need to initialize data
+             importer = DataImporter
+             importer.importBallInfo(importer, balljson, starKiller)
+             importer.importAllyRobots(importer, allyRobot1, allyRobot2, starKiller)
+             importer.importRebelRobots(importer,rebelRobot1,rebelRobot2,starKiller)
+
+
+
+
+
+if __name__=="__main__":
+    with open("dataExample.json") as json_file:
+        json_data = json.load(json_file)
+        print(json_data)
+        balljson = json_data['vision_data']['ball']
+        print(balljson)
+        allyRobot1 = json_data['vision_data']['teamRobot1']
+        print(allyRobot1)
+        allyRobot2 = json_data['vision_data']['teamRobot2']
+        print(allyRobot2)
+        rebelRobot1 = json_data['vision_data']['opponentRobot1']
+        print(rebelRobot1)
+        rebelRobot2 = json_data['vision_data']['opponentRobot2']
+        theta = rebelRobot2['theta']
+        print(rebelRobot2)
+        print(theta)
+
+        #need to initialize data
+        importer = DataImporter
+        ally1 = Robot("ally1",Point(0,0),Direction(0,0),0)
+        ally2 = Robot("ally2",Point(0,0),Direction(0,0),0)
+        enemy1 = Robot("enemy1",Point(0,0),Direction(0,0),0)
+        enemy2= Robot("enemy2",Point(0,0),Direction(0,0),0)
+        ball = FieldObject("ball",Point(0,0),Direction(0,0))
+        gameStat = GameStatus(ally1,ally2,enemy1,enemy2,ball)
+        deathstar = StarKillerData(gameStat)
+        importer.importGameStatus(importer,"dataExample.json", deathstar)
+        """
+        importer.importBallInfo(importer, balljson, deathstar)
+        importer.importAllyRobots(importer, allyRobot1, allyRobot2, deathstar)
+        importer.importRebelRobots(importer,rebelRobot1,rebelRobot2,deathstar)
+        """
+
 
 

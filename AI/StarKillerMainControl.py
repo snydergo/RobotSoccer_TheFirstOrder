@@ -5,8 +5,8 @@ from AI.Gameplay.strategies import *
 from AI.visiondata.GameStatus import *
 
 class StarKillerData(object):
-    robots = FieldObject(Point(0,0), Direction(0,0))
-    ball = FieldObject(Point(0,0), Direction(0,0))
+    robots = FieldObject("robot",Point(0,0), Direction(0,0))
+    ball = FieldObject("ball",Point(0,0), Direction(0,0))
     gameStatus = GameStatus(robots, robots, robots, robots, ball)
 
     def __init__(self, gameStatus : GameStatus ):

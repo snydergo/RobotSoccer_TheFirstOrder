@@ -5,20 +5,8 @@
 #import enum
 
 
-from AI.visiondata.GameStatus import Point
+from AI.dataClasses import *
 from enum import Enum
-
-class Direction():
-    x_dir = 0
-    y_dir = 0
-
-    def __init__(self, x, y):
-        self.x_dir = x
-        self.y_dir= y
-
-    def __str__(self):
-        return "[%d,%d]\n" %(self.x_dir,self.y_dir)
-
 
 class Rotation(Enum):
     CCW = -1
