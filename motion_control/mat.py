@@ -80,6 +80,11 @@ def getBodyXYOmega(x,y,omega,theta):
   	desired = R(theta)*desired
   	return desired
 
+def getBodyXYOmegaAsTuple(x, y, omega, theta):
+    desired = getRobotXYOmega(x, y, omega, theta)
+    asArray = desired.getA()
+    return asArray[0][0], asArray[1][0], asArray[2][0]
+
 # Wheel speeds from world frame data.
 def getWheelVelTheta(x,y,omega,theta):
   	desired = getBodyXYOmega(x, y, omega, theta)
@@ -87,3 +92,20 @@ def getWheelVelTheta(x,y,omega,theta):
   	result = M*desired
 
   	return result.getA()[0][0], result.getA()[1][0], result.getA()[2][0]
+
+# Will get the wheel omegas required for world frame movement.
+# @param vx_w: Velocity in the x in the world frame
+# @param vy_w: Velocity in the y in the world frame
+# @param omega: Angular velocity in the world (any) frame
+# @param theta: Angle (degrees) between body and world frames
+# @return: Wheel velocities as array [Omega1,Omega2,Omega3]
+def getWheelVelFromWorld(vx_w,vy_w,omega=0,theta=0):
+    # Desired velocities
+    desVel = matrix([[vx_w],
+                      [vy_w],
+                      [omega]])
+    transferMatrix = M*R(theta)
+    # Not sure why this needs to be negative.
+    wheelVels = -transferMatrix*desVel
+
+    return wheelVels
