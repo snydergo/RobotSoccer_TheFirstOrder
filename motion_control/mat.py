@@ -7,7 +7,7 @@ import math
 # Measurements in meters
 
 # radius of wheel
-s = .02712 #tune me #meters
+R = .02712 #tune me #meters
 #radius from center of robot to wheel
 r = .066 #tune me. #meters
  
@@ -27,22 +27,22 @@ r3x = math.cos(r3theta)*r # Cartesian x
 r3y = math.sin(r3theta)*r # Cartedsian y
 
 # Wheel 1 velocity vector 
-s1theta = r1theta - math.pi/2 # angular position vector
+s1theta = r1theta + math.pi/2 # angular position vector
 s1x = math.cos(s1theta) # Cartesian x
 s1y = math.sin(s1theta) # Cartedsian y
 
 # Wheel 2 velocity vector 
-s2theta = r2theta - math.pi/2 # angular position vector
+s2theta = r2theta + math.pi/2 # angular position vector
 s2x = math.cos(s2theta) # Cartesian x
 s2y = math.sin(s2theta) # Cartedsian y
 
 # Wheel 3 velocity vector 
-s3theta = r3theta - math.pi/2 # angular position vector
+s3theta = r3theta + math.pi/2 # angular position vector
 s3x = math.cos(s3theta) # Cartesian x
 s3y = math.sin(s3theta) # Cartedsian y
 
 # Converts body frame velocities (x,y,omega) to wheel omegas
-M = (1.0/s)*matrix( [[s1x,s1y,(s1y*r1x - s1x*r1y)],
+M = (1.0/R)*matrix( [[s1x,s1y,(s1y*r1x - s1x*r1y)],
                 [s2x,s2y,(s2y*r2x - s2x*r2y)],
                 [s3x,s3y,(s3y*r3x - s3x*r3y)]] )
 
@@ -80,6 +80,11 @@ def getBodyXYOmega(x,y,omega,theta):
   	desired = R(theta)*desired
   	return desired
 
+def getBodyXYOmegaAsTuple(x, y, omega, theta):
+    desired = getRobotXYOmega(x, y, omega, theta)
+    asArray = desired.getA()
+    return asArray[0][0], asArray[1][0], asArray[2][0]
+
 # Wheel speeds from world frame data.
 def getWheelVelTheta(x,y,omega,theta):
   	desired = getBodyXYOmega(x, y, omega, theta)
@@ -87,3 +92,19 @@ def getWheelVelTheta(x,y,omega,theta):
   	result = M*desired
 
   	return result.getA()[0][0], result.getA()[1][0], result.getA()[2][0]
+
+# Will get the wheel omegas required for world frame movement.
+# @param vx_w: Velocity in the x in the world frame
+# @param vy_w: Velocity in the y in the world frame
+# @param omega: Angular velocity in the world (any) frame
+# @param theta: Angle (degrees) between body and world frames
+# @return: Wheel velocities as array [Omega1,Omega2,Omega3]
+def getWheelVelFromWorld(vx_w,vy_w,omega=0,theta=0):
+    # Desired velocities
+    desVel = matrix([[vx_w],
+                      [vy_w],
+                      [omega]])
+    transferMatrix = M*R(theta)
+    wheelVels = transferMatrix*desVel
+
+    return wheelVels
