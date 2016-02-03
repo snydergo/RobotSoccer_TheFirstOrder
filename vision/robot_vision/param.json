@@ -6,7 +6,7 @@
             "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 500,
             "referenceDistance_pixel": 500,
-            "invertDirectionX": false
+            "invertDirectionX": true
         },
         "crop": {
             "left": 0,
@@ -27,12 +27,12 @@
         "teamRobots": {
             "count": 1,
             "primaryColor": {
-                "lowH": 0,
-                "highH": 0,
-                "lowS": 0,
-                "highS": 0,
-                "lowV": 0,
-                "highV": 0
+                "lowH": 60,
+                "highH": 90,
+                "lowS": 30,
+                "highS": 145,
+                "lowV": 130,
+                "highV": 255
             },
             "secondaryColor": {
                 "lowH": 0,

@@ -2,7 +2,7 @@
 
 namespace config {
 
-cv::Point2i fieldCenter_px;
+cv::Point2f fieldCenter_px;
 double cmPerPixelConversionFactor;
 bool invertX;
 
