@@ -27,8 +27,15 @@ if __name__=="__main__":
     enemy2= Robot("enemy2",Point(0,0),Direction(0,0),0)
     ball = FieldObject("ball",Point(0,0),Direction(0,0))
     glob_gameStatus = GameStatus(ally1,ally2,enemy1,enemy2,ball)
-    toCenter = directionToPoint(ally1.getLocation(), Point(0,0))
+    ##spin in circle
+
+    ##go forward
     
+    ##go in square
+
+    #go to the center
+    toCenter = directionToPoint(ally1.getLocation(), Point(0,0))
+
 
     #importer.importGameStatus(importer,"dataExample.json", deathstar)
     #NEED to Initialize GameStatus
