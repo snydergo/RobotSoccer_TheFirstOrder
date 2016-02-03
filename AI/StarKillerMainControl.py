@@ -6,6 +6,7 @@ from AI.Gameplay.strategies import *
 from AI.visiondata.GameStatus import *
 from AI.MathFunctions import *
 from motion_control.mlib import *
+from time import sleep
 
 #global that is updated by AI/visiondata/listener.py by vision and is updated periodically
 glob_gameStatus = object()
@@ -30,11 +31,25 @@ if __name__=="__main__":
     ball = FieldObject("ball",Point(0,0),Direction(0,0))
     glob_gameStatus = GameStatus(ally1,ally2,enemy1,enemy2,ball)
     ##spin in circle
-
+    goXYOmegaWorld(0,0,.5)
+    sleep(2)
+    stop()
+    sleep(2)
 
     ##go forward
-
+    goXYOmegaWorld(.1,0)
+    sleep(1)
+    stop()
+    sleep(1)
     ##go in square
+    goXYOmegaWorld(.1,0)
+    sleep(.2)
+    goXYOmegaWorld(-.1,0)
+    sleep(.2)
+    goXYOmegaWorld(0,-.1)
+    sleep(.2)
+    stop()
+
 
     #go to the center
     while(1):

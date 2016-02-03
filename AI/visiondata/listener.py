@@ -7,6 +7,7 @@ from AI.StarKillerMainControl import *
 def callback(data):
     importer = DataImporter()
     importer.importVisionData(importer, data, glob_gameStatus)
+    glob_gameStatusUpdated = 1
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
 def listener():
