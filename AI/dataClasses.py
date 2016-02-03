@@ -3,7 +3,7 @@ Contains the Data Classes that contain information about Robots, Field and etc.
 It contains Direction, Point, FieldObject and etc classes
 Also it contains all of the necessary enums
 """
-
+from AI.Gameplay.utilities import Utilities
 class Point(object):
     x = 0;
     y = 0;
@@ -53,6 +53,8 @@ class FieldObject(object):
 #Robot Class inherits from FieldObject so it has all parameters and adds a theta and maybe address
 class Robot(FieldObject):
     theta = 0
+    utils = object()
+
     def __init__(self,tag: str, gvnLocation: Point, velocity: Direction, theta):
         FieldObject.__init__(self,tag, gvnLocation, velocity)
         self.theta = theta
@@ -66,3 +68,6 @@ class Robot(FieldObject):
 
     def getTheta(self):
         return self.theta
+
+    def addUtilities(self, utilities: Utilities):
+        self.utils = utilities

@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
+from AI.visiondata.RosDataImporter import *
+from AI.StarKillerMainControl import *
 
 def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    importer = DataImporter()
+    importer.importVisionData(importer, data, glob_gameStatus)
+    #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
 def listener():
 
