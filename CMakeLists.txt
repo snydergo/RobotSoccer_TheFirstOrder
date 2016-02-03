@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -126,6 +126,22 @@ include_directories(
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 # add_dependencies(robot_soccer ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+# Find necessary packages
+#find_package( PythonLibs 2.7 REQUIRED )
+#include_directories( ${PYTHON_INCLUDE_DIRS} )
+
+#set_target_properties(python_module_library
+#  PROPERTIES LIBRARY_OUTPUT_DIRECTORY #${CATKIN_DEVEL_PREFIX}/${CATKIN_PACKAGE_PYTHON_DESTINATION})
+
+#install(TARGETS python_module_library
+#  ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+#  LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+#)
+
+catkin_install_python(PROGRAMS
+AI/visiondata/*
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 add_definitions(-std=c++11)
 find_package( OpenCV REQUIRED )
