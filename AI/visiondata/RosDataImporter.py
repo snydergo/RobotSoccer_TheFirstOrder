@@ -36,6 +36,7 @@
     }
 }}
 """
+
 import json
 
 from AI.StarKillerMainControl import *

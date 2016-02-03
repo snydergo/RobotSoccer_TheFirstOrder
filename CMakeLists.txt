@@ -140,7 +140,19 @@ include_directories(
 #)
 
 catkin_install_python(PROGRAMS
-AI/visiondata/*
+AI/visiondata/__init__.py
+AI/visiondata/GameStatus.py
+AI/visiondata/listener.py
+AI/visiondata/RosDataImporter.py
+AI/Gameplay/__init__.py
+AI/Gameplay/plays.py
+AI/Gameplay/skills.py
+AI/Gameplay/strategies.py
+AI/Gameplay/utilities.py
+AI/__init__.py
+AI/dataClasses.py
+AI/MathFunctions.py
+AI/StarKillerMainControl.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 add_definitions(-std=c++11)
