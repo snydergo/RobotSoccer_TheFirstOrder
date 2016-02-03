@@ -7,7 +7,7 @@ using namespace std;
 
  int main( int argc, char** argv )
  {
-    VideoCapture cap("http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
+    VideoCapture cap("http://192.168.1.36:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
 
     if (!cap.isOpened()) { // if not success, exit program 
         cout << "Cannot open the web cam" << endl;

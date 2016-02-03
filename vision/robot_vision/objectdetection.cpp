@@ -59,6 +59,8 @@ Mat ColorSegmentImage(const Mat& src, const HsvColorSubSpace& colorSegment)
     //morphological closing (fill small holes in the foreground)
     dilate(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
     erode( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+    return imgThresholded;
 }
 
 contour_vector_t EdgeDetectImage(const Mat& src)

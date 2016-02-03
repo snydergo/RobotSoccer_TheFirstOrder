@@ -44,9 +44,9 @@ int main(int argc, char** argv)
         /// find our robots
         vector<cv::Moments> teamMoments = locateCvObjects(frame, config::teamRobotPrimaryColor);
         // find their robots
-        //vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
+        vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
         //find the ball
-        //vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
+        vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
 
         Moments rear;
         Moments front;

@@ -16,7 +16,7 @@ cv::VideoCapture ConnectCamera(std::string uri);
 
 cv::Mat ReadFrame(cv::VideoCapture& camera);//frame in HSV
 
-cv::Mat ColorSegmentImage(const cv::Mat& src, const HsvColorSubSpace& colorSegment);
+cv::Mat ColorSegmentImage(const cv::Mat &src, const HsvColorSubSpace& colorSegment);
 
 contour_vector_t EdgeDetectImage(const cv::Mat& src);
 
