@@ -44,7 +44,6 @@ from AI.dataClasses import *
 from string import *
 
 
-
 class DataImporter(object):
 
      def __init__(self):

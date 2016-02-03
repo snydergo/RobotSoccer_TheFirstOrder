@@ -4,13 +4,13 @@
 """
 #import enum
 
-
+from AI.MathFunctions import *
 from AI.dataClasses import *
 from enum import Enum
 
 class Rotation(Enum):
-    CCW = -1
-    CW = 1
+    CCW = 1
+    CW = -1
     noRotation = 0
 
 class MtrCtrlParam(Exception):
@@ -57,7 +57,9 @@ class  Utilities(object):
     def followBall(self):
         print ("Following Ball")
 
-
+    def moveToCenter(self, allyRobot: Robot):
+        movVector = directionToPoint(allyRobot.getLocation(), Point(0,0))
+        
 
 if __name__=="__main__":
    robot1 = Utilities( "Supreme Leader", 1, "Goalie")

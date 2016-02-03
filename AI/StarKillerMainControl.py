@@ -3,6 +3,8 @@ all information of the Field. This is the main control of all First Order forces
 """
 from AI.Gameplay.strategies import *
 from AI.visiondata.GameStatus import *
+from AI.MathFunctions import *
+
 
 class StarKillerData(object):
     robots = FieldObject("robot",Point(0,0), Direction(0,0))
@@ -15,4 +17,15 @@ class StarKillerData(object):
 
 
 if __name__=="__main__":
-    print("peform needed Commands")
+    #perfrom all necessary inits
+    ally1 = Robot("ally1",Point(0,0),Direction(0,0),0)
+    ally2 = Robot("ally2",Point(0,0),Direction(0,0),0)
+    enemy1 = Robot("enemy1",Point(0,0),Direction(0,0),0)
+    enemy2= Robot("enemy2",Point(0,0),Direction(0,0),0)
+    ball = FieldObject("ball",Point(0,0),Direction(0,0))
+    gameStat = GameStatus(ally1,ally2,enemy1,enemy2,ball)
+    currentStat = StarKillerData(gameStat)
+
+    #importer.importGameStatus(importer,"dataExample.json", deathstar)
+    #NEED to Initialize GameStatus
+
