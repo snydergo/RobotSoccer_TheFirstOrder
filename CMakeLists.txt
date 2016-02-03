@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -43,12 +44,13 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * uncomment the generate_messages entry below
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
+
+
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  visiondata.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -65,10 +67,10 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -100,10 +102,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES robot_soccer
-#  CATKIN_DEPENDS roscpp rospy std_msgs
-#  DEPENDS system_lib
+  CATKIN_DEPENDS message_runtime
 )
 
 ###########
@@ -116,6 +115,7 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
 
 ## Declare a C++ library
 # add_library(robot_soccer
@@ -147,6 +147,7 @@ add_executable( ObjectTracking vision/object_tracking_test/objecttracking.cpp )
 target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 
 add_executable( Talker vision/talker_test/talker.cpp )
+target_link_libraries( Talker ${catkin_LIBRARIES})
 target_link_libraries( Talker ${OpenCV_LIBS} )
 
 add_executable( RobotVision 
@@ -161,6 +162,7 @@ vision/robot_vision/config.h
 vision/robot_vision/config.cpp
 )
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
+target_link_libraries( RobotVision ${catkin_LIBRARIES})
 include_directories(~/imports/rapidjson/include)
 
 

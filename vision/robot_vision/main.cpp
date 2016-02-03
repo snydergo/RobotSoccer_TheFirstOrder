@@ -1,41 +1,89 @@
-#include <stdio.h>
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "robot_soccer/visiondata.h"
+
+#include "rapidjson/document.h"
+#include "rapidjson/writer.h"
+#include "rapidjson/stringbuffer.h"
+#include "rapidjson/filereadstream.h"
+
 #include "hsvcolorsubspace.h"
 #include "utils.h"
 #include "objectdetection.h"
 #include "config.h"
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-#include <rapidjson/filereadstream.h>
+#include <stdio.h>
+#include <sstream>
 
 using namespace rapidjson;
 using namespace std;
+using namespace cv;
 
 void loadConfigData(char** argv);
 vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace& colorSegment);
+Point2f trasformCameraFrameToWorldFrame(Point2f point);
 
 int main(int argc, char** argv)
 {
     if (argc != 2) { cout << "no param file. Usage: program [param.json]\n"; return 1; }
     loadConfigData(argv);
-    
+
+    ros::init(argc, argv, "vision_data_pub");
+    ros::NodeHandle n;
+    ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
+    ros::Rate loop_rate(30);
+
     cv::VideoCapture camera = ConnectCamera(config::cameraUrl);
     
-    while (true) {
+    while (ros::ok()) {
         cv::Mat frame = ReadFrame(camera);
         
         /// find our robots
         vector<cv::Moments> teamMoments = locateCvObjects(frame, config::teamRobotPrimaryColor);
         // find their robots
-        vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
+        //vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
         //find the ball
-        vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
-        
-        
+        //vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
+
+        Moments rear;
+        Moments front;
+        rear.m00 = 0;
+        front.m00 = 0;
+        for (auto m: teamMoments) {
+            if (GetMomentArea(rear) <= GetMomentArea(m)) {
+                rear = m;
+            } else if (GetMomentArea(front) <= GetMomentArea(m)) {
+                front = m;
+            }
+        }
+
+        Point2f frontCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(front));
+        Point2f rearCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(rear));
+
+        Point2f robotCenter;
+        robotCenter.x = (frontCenter.x + rearCenter.x)/2;
+        robotCenter.y = (frontCenter.y + rearCenter.y)/2;
+
+        robot_soccer::visiondata msg;
+        visionDataPub.publish(msg);
+        ros::spinOnce();
+        loop_rate.sleep();
     }
     
     return 0;
+}
+
+Point2f trasformCameraFrameToWorldFrame(Point2f point)
+{
+    Point2f retVal;
+    retVal.x = point.x - config::fieldCenter_px.x;
+    retVal.y = point.y - config::fieldCenter_px.y;
+    if (config::invertX) {
+        retVal.x = -retVal.x;
+    } else {
+        retVal.y = -retVal.y;
+    }
+    return retVal;
 }
 
 vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace& colorSegment)

@@ -1,0 +1,14 @@
+float32 tm0_x
+float32 tm0_y
+float32 tm0_w
+float32 tm1_x
+float32 tm1_y
+float32 tm1_w
+float32 op0_x
+float32 op0_y
+float32 op0_w
+float32 op1_x
+float32 op1_y
+float32 op1_w
+float32 ball_x
+float32 ball_y
