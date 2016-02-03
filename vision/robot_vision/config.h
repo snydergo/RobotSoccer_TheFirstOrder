@@ -6,7 +6,7 @@
 
 namespace config {
 
-extern cv::Point2i fieldCenter_px;
+extern cv::Point2f fieldCenter_px;
 extern double cmPerPixelConversionFactor;
 extern bool invertX;
 

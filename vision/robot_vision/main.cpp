@@ -14,6 +14,9 @@
 
 #include <stdio.h>
 #include <sstream>
+#include <math.h>
+
+#define PI 3.14159265
 
 using namespace rapidjson;
 using namespace std;
@@ -57,14 +60,18 @@ int main(int argc, char** argv)
             }
         }
 
+        robot_soccer::visiondata msg;
+
         Point2f frontCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(front));
         Point2f rearCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(rear));
 
-        Point2f robotCenter;
-        robotCenter.x = (frontCenter.x + rearCenter.x)/2;
-        robotCenter.y = (frontCenter.y + rearCenter.y)/2;
+        msg.tm0_x = ((frontCenter.x + rearCenter.x)/2) * config::cmPerPixelConversionFactor;
+        msg.tm0_y = ((frontCenter.y + rearCenter.y)/2) * config::cmPerPixelConversionFactor;
 
-        robot_soccer::visiondata msg;
+        float deltaX = frontCenter.x - rearCenter.x;
+        float deltaY = frontCenter.y - rearCenter.y;
+        msg.tm0_w = std::atan2(deltaY, deltaX) * 180 / PI;
+
         visionDataPub.publish(msg);
         ros::spinOnce();
         loop_rate.sleep();
@@ -106,8 +113,8 @@ void loadConfigData(char** argv)
 
     Value& calibrate = root["calibration"];
 
-    config::fieldCenter_px.x = calibrate["fieldCenterX_pixel"].GetInt();
-    config::fieldCenter_px.y = calibrate["fieldCenterY_pixel"].GetInt();
+    config::fieldCenter_px.x = calibrate["fieldCenterX_pixel"].GetDouble();
+    config::fieldCenter_px.y = calibrate["fieldCenterY_pixel"].GetDouble();
 
     config::cmPerPixelConversionFactor = calibrate["referenceDistance_cm"].GetDouble() /
                                          calibrate["referenceDistance_pixel"].GetDouble();

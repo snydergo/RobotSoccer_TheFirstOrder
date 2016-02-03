@@ -19,10 +19,10 @@ using namespace std;
     int iLowH = 60;// calibrated for green construction paper
     int iHighH = 90;
 
-    int iLowS = 20;
-    int iHighS = 255;
+    int iLowS = 30;
+    int iHighS = 145;
 
-    int iLowV = 190;
+    int iLowV = 130;
     int iHighV = 255;
 
     //Create trackbars in "Control" window
