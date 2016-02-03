@@ -95,19 +95,19 @@ class DataImporter(object):
              importer.importRebelRobots(importer,rebelRobot1,rebelRobot2,starKiller)
 
      def importVisionData(self, vision_data, gameStatus : GameStatus):
-         ally1 = Robot("ally1",Point(vision_data,vision_data),Direction(vision_data,vision_data),vision_data)
+         ally1 = Robot("ally1",Point(vision_data.tm0_x,vision_data.tm0_y),Direction(vision_data.tm0_x,vision_data.tm0_y),vision_data.tm0_w)
          gameStatus.allyRobot1 = ally1
          print(ally1)
-         ally2 = Robot("ally2",Point(vision_data,vision_data),Direction(vision_data,vision_data),vision_data)
+         ally2 = Robot("ally2",Point(vision_data.tm1_x,vision_data.tm1_y),Direction(vision_data.tm1_x,vision_data.tm1_y),vision_data.tm1_w)
          gameStatus.allyRobot2 == ally2
          print(ally2)
-         enemy1 = Robot("enemy1",Point(vision_data,vision_data),Direction(vision_data,vision_data),vision_data)
+         enemy1 = Robot("enemy1",Point(vision_data.op0_x,vision_data.op0_y),Direction(vision_data.op0_x,vision_data.op0_y),vision_data.op0_w)
          gameStatus.enemyRobot1 = enemy1
          print(enemy1)
-         enemy2 = Robot("enemy2",Point(vision_data,vision_data),Direction(vision_data,vision_data),vision_data)
+         enemy2 = Robot("enemy2",Point(vision_data.op1_x,vision_data.op1_y),Direction(vision_data.op1_x,vision_data.op1_y),vision_data.op1_w)
          gameStatus.enemyRobot2 == enemy2
          print(enemy2)
-         createdBall = FieldObject("ball",Point(vision_data,vision_data),Direction(vision_data,vision_data))
+         createdBall = FieldObject("ball",Point(vision_data.ball_x,vision_data.ball_y),Direction(vision_data.ball_x,vision_data.ball_y))
          gameStatus.ball = createdBall
          print(createdBall)
 
