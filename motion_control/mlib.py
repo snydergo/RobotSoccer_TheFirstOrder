@@ -1,8 +1,10 @@
+#!/usr/bin/env python
 import time
 import roboclaw
 import sys
 from enum import Enum
-import mat
+# BECAUSE I HAD TO MAKE A NEW MAT
+import mat2 as mat
 
 #Linux comport name
 roboclaw.Open("/dev/ttySAC0",38400)
@@ -159,7 +161,9 @@ def goXYOmegaWorld(vx_w,vy_w,omega=0,theta=0):
 		k = k+1
 	return
 
-
+def goDisXYOmegaWorld(x_w,y_w,time,omega=0,theta=0):
+	#goXYOmegaWorld()
+	return
 
 def goXYOmegaAccel(x,y,theta,time=1):
 	return
