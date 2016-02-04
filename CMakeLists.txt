@@ -35,8 +35,8 @@ include_directories(
 #  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 catkin_install_python(PROGRAMS
-bin/hello
 AI/visiondata/listener.py
+AI/main_control/StarKillerMainControl.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 
