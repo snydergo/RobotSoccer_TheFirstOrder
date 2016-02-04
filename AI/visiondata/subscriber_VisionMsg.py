@@ -5,6 +5,9 @@ from rosDataImporter import *
 from main_control import *
 from robot_soccer.msg import visiondata
 
+#pycharm imports
+from AI.maincontrol.StarKillerMainControl import updateVisionData
+
 def callback(data):
     importer = DataImporter()
 
@@ -22,7 +25,7 @@ def listener():
     # run simultaneously.
     rospy.init_node('vision_data_sub', anonymous=True)
 
-    rospy.Subscriber('vision_data', visiondata, callback)
+    rospy.Subscriber('vision_data', visiondata, updateVisionData)
     print('hello james')
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
