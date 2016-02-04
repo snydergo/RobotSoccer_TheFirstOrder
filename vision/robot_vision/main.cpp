@@ -12,6 +12,10 @@
 #include "objectdetection.h"
 #include "config.h"
 
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+
+#include <iostream>
 #include <stdio.h>
 #include <sstream>
 #include <math.h>
@@ -29,34 +33,53 @@ Point2f trasformCameraFrameToWorldFrame(Point2f point);
 int main(int argc, char** argv)
 {
     if (argc != 2) { cout << "no param file. Usage: program [param.json]\n"; return 1; }
+    cout << "loading param file..." << endl;
     loadConfigData(argv);
-
+    cout << "param file successfully loaded" << endl;
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
     ros::Rate loop_rate(30);
 
-    cv::VideoCapture camera = ConnectCamera(config::cameraUrl);
-    
+    VideoCapture camera(config::cameraUrl);
+
+    if (!camera.isOpened()) { // if not success, exit program
+        cout << "Cannot open the web cam" << endl;
+        return -1;
+    }
+
+    cout << "starting video feed" << endl;
     while (ros::ok()) {
-        cv::Mat frame = ReadFrame(camera);
-        
+        Mat frame;
+
+        if (!camera.read(frame)) { //if not success, break loop
+            cout << "Cannot read frame from video stream" << endl;
+            break;
+        }
+        Mat frameHSV;
+
+        cvtColor(frame, frameHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
+
         /// find our robots
-        vector<cv::Moments> teamMoments = locateCvObjects(frame, config::teamRobotPrimaryColor);
+        vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::teamRobotPrimaryColor);
         // find their robots
-        vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
+        //vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
         //find the ball
-        vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
+        //vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
+        for (auto m: teamMoments) {
+            circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
+        }
 
         Moments rear;
         Moments front;
         rear.m00 = 0;
         front.m00 = 0;
-        for (auto m: teamMoments) {
-            if (GetMomentArea(rear) <= GetMomentArea(m)) {
-                rear = m;
-            } else if (GetMomentArea(front) <= GetMomentArea(m)) {
-                front = m;
+        for (int i = 0; i < teamMoments.size(); i+=2) {
+            if (GetMomentArea(rear) <= GetMomentArea(teamMoments[i])) {
+                front = rear;
+                rear = teamMoments[i];
+            } else if (GetMomentArea(front) <= GetMomentArea(teamMoments[i]) ) {
+                front = teamMoments[i];
             }
         }
 
@@ -72,9 +95,20 @@ int main(int argc, char** argv)
         float deltaY = frontCenter.y - rearCenter.y;
         msg.tm0_w = std::atan2(deltaY, deltaX) * 180 / PI;
 
+
+        std::string str(  "x: " + std::to_string(((int)std::round(msg.tm0_x)))
+                        + " y: " + std::to_string(((int)std::round(msg.tm0_y)))
+                        + " w: " + std::to_string(((int)std::round(msg.tm0_w)))
+                        );
+        putText(frame, str.c_str(), GetMomentCenter(front)
+            ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 0.7, CV_AA);
+
+
         visionDataPub.publish(msg);
-        ros::spinOnce();
-        loop_rate.sleep();
+        //ros::spinOnce();
+        //loop_rate.sleep();
+        imshow("robot view", frame);
+        waitKey(5);
     }
     
     return 0;

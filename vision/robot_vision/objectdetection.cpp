@@ -18,32 +18,6 @@ void CreateControlWindow(HsvColorSubSpace& colorSegment)
     cvCreateTrackbar("HighV", "Control", &colorSegment.value.high, 255);
 }
 
-VideoCapture ConnectCamera(std::string uri)
-{
-    VideoCapture cap((uri == "default") ? "http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg" : uri); //capture the video from web cam
-
-    if (!cap.isOpened()) { // if not success, exit program
-        std::cout << "Cannot open the web cam" << std::endl;
-        throw -1;
-    }
-    return cap;
-}
-
-Mat ReadFrame(VideoCapture& camera)
-{
-    Mat img;
-    bool bSuccess = camera.read(img); // read a new frame from video
-
-    if (!bSuccess) { //if not success, break loop
-        std::cout << "Cannot read a frame from video stream" << std::endl;
-    }
-    Mat imgHSV;
-
-    cvtColor(img, imgHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
-
-    return imgHSV;
-}
-
 Mat ColorSegmentImage(const Mat& src, const HsvColorSubSpace& colorSegment)
 {
     Mat imgThresholded;

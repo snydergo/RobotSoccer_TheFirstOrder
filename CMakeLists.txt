@@ -71,10 +71,6 @@ target_link_libraries( MultiobjectDetection ${OpenCV_LIBS} )
 add_executable( ObjectTracking vision/object_tracking_test/objecttracking.cpp )
 target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 
-add_executable( Talker vision/talker_test/talker.cpp )
-target_link_libraries( Talker ${catkin_LIBRARIES})
-target_link_libraries( Talker ${OpenCV_LIBS} )
-
 add_executable( RobotVision 
 vision/robot_vision/main.cpp
 vision/robot_vision/hsvcolorsubspace.h
