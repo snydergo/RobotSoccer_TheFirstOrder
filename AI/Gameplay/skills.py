@@ -1,5 +1,5 @@
 """Program Contains the Skills that are built upon the utilities that talk with the hardware"""
-from AI.Gameplay.utilities import Utilities
+from AI.gameplay.utilities import Utilities
 
 class  Skills(object):
     name = ""

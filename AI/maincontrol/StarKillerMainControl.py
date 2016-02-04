@@ -2,13 +2,22 @@
 """ StarKillerMainControl.py Contains the most abstract level of Program that controls the Robot and Contains
 all information of the Field. This is the main control of all First Order forces
 """
+#imports for ros
+
 import Gameplay.strategies
 import visiondata.GameStatus
-import MathFunctions
+import mathFunctions
 import mlib
-from time import sleep
 
-#global that is updated by AI/visiondata/listener.py by vision and is updated periodically
+from time import sleep
+"""
+#imports for pycharm
+from AI.maincontrol.dataClasses import *
+from AI.visiondata.gameStatus import GameStatus
+from AI.maincontrol.mathFunctions import *
+from AI.visiondata.rosDataImporter import DataImporter
+"""
+#global that is updated by AI/visiondata/subscriber_VisionMsg.py by vision and is updated periodically
 glob_gameStatus = object()
 glob_gameStatusUpdated = 0
 
@@ -20,7 +29,13 @@ class StarKillerData(object):
     def __init__(self, gameStatus):
         self.gameStatus = GameStatus
 
-
+def updateVisionData(data):
+    importer = DataImporter()
+    importer.importVisionData(importer, data, glob_gameStatus)
+    print("information updated:")
+    print("data is:")
+    print(data)
+    glob_gameStatusUpdated = 1
 
 if __name__=="__main__":
     #perfrom all necessary inits
@@ -30,26 +45,6 @@ if __name__=="__main__":
     enemy2= Robot("enemy2",Point(0,0),Direction(0,0),0)
     ball = FieldObject("ball",Point(0,0),Direction(0,0))
     glob_gameStatus = GameStatus(ally1,ally2,enemy1,enemy2,ball)
-    ##spin in circle
-    goXYOmegaWorld(0,0,.5)
-    sleep(2)
-    stop()
-    sleep(2)
-
-    ##go forward
-    goXYOmegaWorld(.1,0)
-    sleep(1)
-    stop()
-    sleep(1)
-    ##go in square
-    goXYOmegaWorld(.1,0)
-    sleep(.2)
-    goXYOmegaWorld(-.1,0)
-    sleep(.2)
-    goXYOmegaWorld(0,-.1)
-    sleep(.2)
-    stop()
-
 
     #go to the center
     while(1):
@@ -67,8 +62,6 @@ if __name__=="__main__":
                 vy_w = -0.1
             elif(toCenter.y_dir > 3):
                 vy_w = 0.1
-
-            goXYOmegaWorld(vx_w,vy_w)
 
 
 

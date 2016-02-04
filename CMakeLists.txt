@@ -13,6 +13,7 @@ catkin_python_setup()
 add_message_files(
   FILES
   visiondata.msg
+  controldata.msg
 )
 
 generate_messages(
