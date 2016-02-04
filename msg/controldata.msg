@@ -1,3 +1,4 @@
+int8    cmdType
 float64 x_dir
 float64 y_dir
 float64 cur_theta
