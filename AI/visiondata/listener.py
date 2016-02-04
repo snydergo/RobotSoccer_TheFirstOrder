@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-from AI.visiondata.RosDataImporter import *
-from AI.StarKillerMainControl import *
+from RosDataImporter import *
+from main_control import *
+from robot_soccer.msg import visiondata
 
 def callback(data):
     importer = DataImporter()
-    importer.importVisionData(importer, data, glob_gameStatus)
-    glob_gameStatusUpdated = 1
+
+   # importer.importVisionData(importer, data)
+    print(data)
+    #glob_gameStatusUpdated = 1
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
 def listener():
@@ -17,10 +20,10 @@ def listener():
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
-    rospy.init_node('listener', anonymous=True)
+    rospy.init_node('vision_data_sub', anonymous=True)
 
-    rospy.Subscriber("chatter", String, callback)
-
+    rospy.Subscriber('vision_data', visiondata, callback)
+    print('hello james')
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 

@@ -36,6 +36,7 @@ include_directories(
 
 catkin_install_python(PROGRAMS
 bin/hello
+AI/visiondata/listener.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 

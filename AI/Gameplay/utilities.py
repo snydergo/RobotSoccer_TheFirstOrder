@@ -2,13 +2,11 @@
    This File has the actual embedded programming that talks with the hardware
    This will be using functions that the Motion Control guy uses
 """
-#import enum
 
-from AI.MathFunctions import *
-from AI.dataClasses import *
-from enum import Enum
+import MathFunctions
+import dataClasses
 
-class Rotation(Enum):
+class Rotation():
     CCW = 1
     CW = -1
     noRotation = 0
@@ -45,7 +43,7 @@ class  Utilities(object):
     move in a specified direction enumerated right, left, back, forward
     also moves a certain distance measured in feet
     """
-    def moveToPoint(self, point : Point):
+    def moveToPoint(self, point):
         print("moving to point [%d,%d]" %(point.x, point.y))
 
     def move(self, direction, distance):
@@ -57,7 +55,7 @@ class  Utilities(object):
     def followBall(self):
         print ("Following Ball")
 
-    def moveToCenter(self, allyRobot: Robot):
+    def moveToCenter(self, allyRobot):
         movVector = directionToPoint(allyRobot.getLocation(), Point(0,0))
         
 

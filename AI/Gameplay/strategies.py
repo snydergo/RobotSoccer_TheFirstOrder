@@ -4,8 +4,7 @@
 """
 
 #enumerator for defining each strategy that we might want to do
-from enum import Enum
-class Strategy(Enum):
+class Strategy():
     goaliePower_SplitBothAttack = 1
     goaliePower_BothAttack = 2
     goaliePower_Walle = 3

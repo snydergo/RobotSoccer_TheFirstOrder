@@ -2,10 +2,9 @@
 Contains the data received from Vision. It will have the Soccer ball and its location and velocity and predicted
 value, alongside with the robots and their locations along with any other important parameters.
 """
-from AI.dataClasses import *
-from enum import Enum
+from dataClasses import *
 
-class AIException(Enum):
+class AIException():
     parsingData = 0
     catchData = 1
 
@@ -25,47 +24,47 @@ class VisionAIException(Exception):
 
 
 class GameStatus(object):
-    allyRobot1 = Robot("ally1",Point(0,0),Direction(0,0),0)
-    allyRobot2 = Robot("ally2",Point(0,0),Direction(0,0),0)
+    allyRobot1  = Robot("ally1",Point(0,0),Direction(0,0),0)
+    allyRobot2  = Robot("ally2",Point(0,0),Direction(0,0),0)
     enemyRobot1 = Robot("enemy1",Point(0,0),Direction(0,0),0)
     enemyRobot2 = Robot("enemy2",Point(0,0),Direction(0,0),0)
     ball = FieldObject("ball",Point(0,0),Direction(0,0))
 
-    def __init__(self, allyRobot1: FieldObject, allyRobot2: FieldObject, enemyRobot1: FieldObject, enemyRobot2: FieldObject, ball: FieldObject):
+    def __init__(self, allyRobot1, allyRobot2, enemyRobot1, enemyRobot2, ball):
         self.allyRobot1 = allyRobot1
         self.allyRobot2 = allyRobot2
         self.enemyRobot1 = enemyRobot1
         self.enemyRobot2 = enemyRobot2
         self.ball = ball
 
-    def getEnemyRobot1(self) -> FieldObject:
+    def getEnemyRobot1(self):
         return self.enemyRobot1
 
-    def getEnemyRobot2(self) -> FieldObject:
+    def getEnemyRobot2(self):
         return self.enemyRobot2
 
-    def getAllyRobot1(self) -> FieldObject:
+    def getAllyRobot1(self):
         return self.allyRobot1
 
-    def getAllyRobot2(self) -> FieldObject:
+    def getAllyRobot2(self):
         return self.allyRobot2
 
-    def getBall(self) -> FieldObject:
+    def getBall(self):
         return self.ball
 
-    def setEnemyRobot1(self, enemyRobot1: FieldObject):
+    def setEnemyRobot1(self, enemyRobot1):
         self.enemyRobot1 = enemyRobot1
 
-    def setEnemyRobot2(self, enemyRobot2: FieldObject):
+    def setEnemyRobot2(self, enemyRobot2):
         self.enemyRobot2 = enemyRobot2
 
-    def setAllyRobot1(self, allyRobot1: FieldObject):
+    def setAllyRobot1(self, allyRobot1):
         self.allyRobot1 = allyRobot1
 
-    def setAllyRobot2(self, allyRobot2: FieldObject):
+    def setAllyRobot2(self, allyRobot2):
         self.allyRobot2 = allyRobot2
 
-    def setBall(self, ball: FieldObject):
+    def setBall(self, ball):
         self.ball = ball
 
 
