@@ -4,11 +4,11 @@ all information of the Field. This is the main control of all First Order forces
 """
 import Gameplay.strategies
 import visiondata.GameStatus
-import MathFunctions
+import mathFunctions
 import mlib
 from time import sleep
 
-#global that is updated by AI/visiondata/listener.py by vision and is updated periodically
+#global that is updated by AI/visiondata/subscriber_VisionMsg.py by vision and is updated periodically
 glob_gameStatus = object()
 glob_gameStatusUpdated = 0
 

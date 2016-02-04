@@ -39,10 +39,10 @@
 
 import json
 
-from main_control import *
-from visiondata import *
-from string import *
-#from main_control.StarKillerMainControl import glob_gameStatus
+from AI.maincontrol.dataClasses import *
+from AI.visiondata import *
+
+#from maincontrol.StarKillerMainControl import glob_gameStatus
 
 
 class DataImporter(object):

@@ -3,7 +3,7 @@
    These plays are dependent on the desired strategies
 """
 #Center field is origin towards away team and left facing home team is negative
-from AI.Gameplay.skills import Skills
+from AI.gameplay.skills import Skills
 
 class Location():
     x = 0
