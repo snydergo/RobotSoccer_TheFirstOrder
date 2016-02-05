@@ -1,11 +1,18 @@
 """Contains all of the utilities that a Robot should be able to perform.
-   This File has the actual embedded programming that talks with the hardware
-   This will be using functions that the Motion Control guy uses
+   This File has the actual embedded programming sends commands to The Robots
+   This will be using functions that communicates with MotionControl
 """
 
+#imports for ros
 import MathFunctions
 import dataClasses
 
+"""
+#pycharm imports
+from AI.maincontrol.mathFunctions import *
+from AI.maincontrol.dataClasses import *
+from robot_soccer.msg import controldata
+"""
 class Rotation():
     CCW = 1
     CW = -1
@@ -43,20 +50,34 @@ class  Utilities(object):
     move in a specified direction enumerated right, left, back, forward
     also moves a certain distance measured in feet
     """
-    def moveToPoint(self, point):
-        print("moving to point [%d,%d]" %(point.x, point.y))
+    def move(self, robot, direction, des_theta):
+        print ("direction = %d angle = %d." % (direction, des_theta))
+        msg = controldata()
+        msg.x_dir = direction.x_dir
+        msg.y_dir = direction.y_dir
+        msg.cur_theta = robot.theta
+        msg.des_theta = des_theta
 
-    def move(self, direction, distance):
-        print ("direction = %d angle = %d." % (direction, distance))
+    def moveToPoint(self, robot, point):
+        print("moving to point [%d,%d]" %(point.x, point.y))
+        direction = directionToPoint(robot.location, point)
+        self.move(self, robot, direction, 0)
 
     def kick(self):
         print ("ball Kicked!")
 
-    def followBall(self):
+    #robot follows the ball and keeps facing towards the ball
+    def followBall(self, ball, robot):
         print ("Following Ball")
+        movVector = directionToPoint(robot.location, ball.location)
+        #need to determine the theta necessary to turn to
+        self.move(self, robot, movVector, 0)
+
+
 
     def moveToCenter(self, allyRobot):
         movVector = directionToPoint(allyRobot.getLocation(), Point(0,0))
+        self.move(self, allyRobot, movVector, 0)
         
 
 if __name__=="__main__":

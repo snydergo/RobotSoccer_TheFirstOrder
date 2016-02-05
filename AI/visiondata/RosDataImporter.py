@@ -1,40 +1,5 @@
-""" Class that imports information from Ross and Wraps them up to be used in GamePlay. Populates GameStatus
-{"vision_data": {
-    "ball": {
-        "posX": 10,
-        "posY": 10,
-        "velX": 10,
-        "velY": 10
-    },
-    "teamRobot1": {
-        "posX": 10,
-        "posY": 10,
-        "theta": 10,
-        "velX": 10,
-        "velY": 10
-    },
-    "teamRobot2": {
-        "posX": 10,
-        "posY": 10,
-        "theta": 10,
-        "velX": 10,
-        "velY": 10
-    },
-    "opponentRobot1": {
-        "posX": 10,
-        "posY": 10,
-        "theta": 10,
-        "velX": 10,
-        "velY": 10
-    },
-    "opponentRobot2": {
-        "posX": 10,
-        "posY": 10,
-        "theta": 10,
-        "velX": 10,
-        "velY": 10
-    }
-}}
+""" Class that imports information from Ross and Wraps them up to be used in GamePlay.
+Populates Games status with the information that it needs
 """
 
 import json
@@ -94,21 +59,21 @@ class DataImporter(object):
              importer.importAllyRobots(importer, allyRobot1, allyRobot2, starKiller)
              importer.importRebelRobots(importer,rebelRobot1,rebelRobot2,starKiller)
 
-     def importVisionData(self, vision_data):
+     def importVisionData(self, vision_data, gameStatus):
          ally1 = Robot("ally1",Point(vision_data.tm0_x,vision_data.tm0_y),Direction(vision_data.tm0_x,vision_data.tm0_y),vision_data.tm0_w)
-         glob_gameStatus.allyRobot1 = ally1
+         gameStatus.allyRobot1 = ally1
          print(ally1)
          ally2 = Robot("ally2",Point(vision_data.tm1_x,vision_data.tm1_y),Direction(vision_data.tm1_x,vision_data.tm1_y),vision_data.tm1_w)
-         glob_gameStatus.allyRobot2 == ally2
+         gameStatus.allyRobot2 == ally2
          print(ally2)
          enemy1 = Robot("enemy1",Point(vision_data.op0_x,vision_data.op0_y),Direction(vision_data.op0_x,vision_data.op0_y),vision_data.op0_w)
-         glob_gameStatus.enemyRobot1 = enemy1
+         gameStatus.enemyRobot1 = enemy1
          print(enemy1)
          enemy2 = Robot("enemy2",Point(vision_data.op1_x,vision_data.op1_y),Direction(vision_data.op1_x,vision_data.op1_y),vision_data.op1_w)
-         glob_gameStatus.enemyRobot2 == enemy2
+         gameStatus.enemyRobot2 == enemy2
          print(enemy2)
          createdBall = FieldObject("ball",Point(vision_data.ball_x,vision_data.ball_y),Direction(vision_data.ball_x,vision_data.ball_y))
-         glob_gameStatus.ball = createdBall
+         gameStatus.ball = createdBall
          print(createdBall)
 
 
