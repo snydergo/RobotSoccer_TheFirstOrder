@@ -71,7 +71,7 @@ int main(int argc, char** argv)
             circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
         }
 
-        vector<UndefinedCVObject> uObjects(teamMoments.size()/2);
+        vector<UndefinedCVObject> uObjects;
         int j = 0;
         for (int i = 0; i < teamMoments.size(); i+=2) {
             UndefinedCVObject obj(teamMoments[i], config::teamRobotPrimaryColor);
@@ -96,8 +96,8 @@ int main(int argc, char** argv)
         Point2f frontCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(front));
         Point2f rearCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(rear));
 
-        msg.tm0_x = ((frontCenter.x + rearCenter.x)/2) * config::cmPerPixelConversionFactor;
-        msg.tm0_y = ((frontCenter.y + rearCenter.y)/2) * config::cmPerPixelConversionFactor;
+        msg.tm0_x = ((frontCenter.x + rearCenter.x)/2);
+        msg.tm0_y = ((frontCenter.y + rearCenter.y)/2);
 
         float deltaX = frontCenter.x - rearCenter.x;
         float deltaY = frontCenter.y - rearCenter.y;
@@ -125,8 +125,21 @@ int main(int argc, char** argv)
 Point2f trasformCameraFrameToWorldFrame(Point2f point)
 {
     Point2f retVal;
-    retVal.x = point.x - config::fieldCenter_px.x;
-    retVal.y = point.y - config::fieldCenter_px.y;
+    retVal.x = (point.x - config::fieldCenter_px.x) * config::cmPerPixelConversionFactor;
+    retVal.y = (point.y - config::fieldCenter_px.y) * config::cmPerPixelConversionFactor;
+    if (config::invertX) {
+        retVal.x = -retVal.x;
+    } else {
+        retVal.y = -retVal.y;
+    }
+    return retVal;
+}
+
+Point2f transformWorldFrametoCameraFrame(Point2f point)
+{
+    Point2f retVal;
+    retVal.x = (point.x / config::cmPerPixelConversionFactor) + config::fieldCenter_px.x;
+    retVal.y = (point.y / config::cmPerPixelConversionFactor) + config::fieldCenter_px.y;
     if (config::invertX) {
         retVal.x = -retVal.x;
     } else {
