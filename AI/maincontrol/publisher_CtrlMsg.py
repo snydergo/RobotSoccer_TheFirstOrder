@@ -10,6 +10,7 @@ def talker():
     rate = rospy.Rate(10) # 10hz
     while not rospy.is_shutdown():
         cmd1 = controldata()
+        cmd1.cmdType = 'move'
         cmd1.x_dir = 1
         cmd1.y_dir = 2
         cmd1.cur_theta = 3
