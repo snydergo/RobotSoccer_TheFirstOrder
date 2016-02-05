@@ -4,6 +4,8 @@
 #include "opencv2/core/core.hpp"
 #include "hsvcolorsubspace.h"
 
+using cv::Point2f;
+
 namespace config {
 
 extern cv::Point2f fieldCenter_px;

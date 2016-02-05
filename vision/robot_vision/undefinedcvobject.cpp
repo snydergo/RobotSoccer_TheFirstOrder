@@ -1,5 +1,12 @@
 #include "undefinedcvobject.h"
+#include "utils.h"
+#include "objectdetection.h"
 
-UndefinedCVObject::UndefinedCVObject()
+using namespace cv;
+
+UndefinedCVObject::UndefinedCVObject(Moments moment, HsvColorSubSpace _color)
 {
+    center = GetMomentCenter(moment);
+    area = GetMomentArea(moment);
+    color = ConvertHueRangeToColor(_color.hue);
 }

@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "objectdetection.h"
 #include "config.h"
+#include "undefinedcvobject.h"
 
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -68,6 +69,13 @@ int main(int argc, char** argv)
         //vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
         for (auto m: teamMoments) {
             circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
+        }
+
+        vector<UndefinedCVObject> uObjects(teamMoments.size()/2);
+        int j = 0;
+        for (int i = 0; i < teamMoments.size(); i+=2) {
+            UndefinedCVObject obj(teamMoments[i], config::teamRobotPrimaryColor);
+            uObjects.push_back(obj);
         }
 
         Moments rear;
