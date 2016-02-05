@@ -36,7 +36,7 @@ include_directories(
 #  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 catkin_install_python(PROGRAMS
-AI/visiondata/publisher_CtrlMsg.py
+AI/visiondata/subscriber_VisionMsg.py
 AI/main_control/StarKillerMainControl.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
