@@ -188,14 +188,6 @@ void loadConfigData(char** argv)
     config::teamRobotPrimaryColor.saturation.high = teamRobotPrimary["highS"].GetInt();
     config::teamRobotPrimaryColor.value.low       = teamRobotPrimary["lowV"].GetInt();
     config::teamRobotPrimaryColor.value.high      = teamRobotPrimary["highV"].GetInt();
-    
-    Value& teamRobotSecondary = root["teamRobots"]["secondaryColor"];
-    config::teamRobotSecondaryColor.hue.low         = teamRobotSecondary["lowH"].GetInt();
-    config::teamRobotSecondaryColor.hue.high        = teamRobotSecondary["highH"].GetInt();
-    config::teamRobotSecondaryColor.saturation.low  = teamRobotSecondary["lowS"].GetInt();
-    config::teamRobotSecondaryColor.saturation.high = teamRobotSecondary["highS"].GetInt();
-    config::teamRobotSecondaryColor.value.low       = teamRobotSecondary["lowV"].GetInt();
-    config::teamRobotSecondaryColor.value.high      = teamRobotSecondary["highV"].GetInt();
 
     config::opponentRobotCount = root["opponentRobots"]["count"].GetInt();
     
@@ -206,14 +198,7 @@ void loadConfigData(char** argv)
     config::opponentRobotPrimaryColor.saturation.high = opponentRobotPrimary["highS"].GetInt();
     config::opponentRobotPrimaryColor.value.low       = opponentRobotPrimary["lowV"].GetInt();
     config::opponentRobotPrimaryColor.value.high      = opponentRobotPrimary["highV"].GetInt();
-
-    Value& opponentRobotSecondary = root["opponentRobots"]["secondaryColor"];
-    config::opponentRobotSecondaryColor.hue.low         = opponentRobotSecondary["lowH"].GetInt();
-    config::opponentRobotSecondaryColor.hue.high        = opponentRobotSecondary["highH"].GetInt();
-    config::opponentRobotSecondaryColor.saturation.low  = opponentRobotSecondary["lowS"].GetInt();
-    config::opponentRobotSecondaryColor.saturation.high = opponentRobotSecondary["highS"].GetInt();
-    config::opponentRobotSecondaryColor.value.low       = opponentRobotSecondary["lowV"].GetInt();
-    config::opponentRobotSecondaryColor.value.high      = opponentRobotSecondary["highV"].GetInt();
+    
     fclose(file);
 
 }
