@@ -6,7 +6,7 @@
             "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 121.92,
             "referenceDistance_pixel": 255,
-            "invertDirectionX": false
+            "invertDirectionX": true
         },
         "crop": {
             "left": 0,
@@ -33,27 +33,11 @@
                 "highS": 145,
                 "lowV": 130,
                 "highV": 255
-            },
-            "secondaryColor": {
-                "lowH": 0,
-                "highH": 0,
-                "lowS": 0,
-                "highS": 0,
-                "lowV": 0,
-                "highV": 0
             }
         },
         "opponentRobots": {
             "count": 1,
             "primaryColor": {
-                "lowH": 0,
-                "highH": 0,
-                "lowS": 0,
-                "highS": 0,
-                "lowV": 0,
-                "highV": 0
-            },
-            "secondaryColor": {
                 "lowH": 0,
                 "highH": 0,
                 "lowS": 0,
