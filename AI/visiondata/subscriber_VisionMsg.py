@@ -16,7 +16,7 @@ def callback(data):
     #glob_gameStatusUpdated = 1
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
-def listener():
+def VisionListener():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
     # node are launched, the previous one is kicked off. The
@@ -31,4 +31,4 @@ def listener():
     rospy.spin()
 
 if __name__ == '__main__':
-    listener()
+    VisionListener()

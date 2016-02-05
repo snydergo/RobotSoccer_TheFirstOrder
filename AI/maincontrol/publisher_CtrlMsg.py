@@ -3,7 +3,7 @@
 import rospy
 from robot_soccer.msg import controldata
 
-def talker():
+def ControlTalker():
     pub1 = rospy.Publisher('robot1Com', controldata)
     pub2 = rospy.Publisher('robot2Com', controldata)
     rospy.init_node('mainhub', anonymous=True)
@@ -21,6 +21,6 @@ def talker():
 
 if __name__ == '__main__':
     try:
-        talker()
+        ControlTalker()
     except rospy.ROSInterruptException:
         pass
