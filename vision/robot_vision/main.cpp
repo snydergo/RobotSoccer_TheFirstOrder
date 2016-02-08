@@ -92,6 +92,7 @@ int main(int argc, char** argv)
         }
 
         robot_soccer::visiondata msg;
+        msg.sys_time = ros::Time::now();
 
         Point2f frontCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(front));
         Point2f rearCenter = trasformCameraFrameToWorldFrame(GetMomentCenter(rear));
@@ -102,7 +103,6 @@ int main(int argc, char** argv)
         float deltaX = frontCenter.x - rearCenter.x;
         float deltaY = frontCenter.y - rearCenter.y;
         msg.tm0_w = std::atan2(deltaY, deltaX) * 180 / PI;
-
 
         std::string str(  "x: " + std::to_string(((int)std::round(msg.tm0_x)))
                         + " y: " + std::to_string(((int)std::round(msg.tm0_y)))
