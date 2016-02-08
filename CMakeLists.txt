@@ -29,29 +29,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-#catkin_install_python(PROGRAMS
-#bin/hello
-#listener.py
-#AI/StarKillerMainControl.py
-#  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
 catkin_install_python(PROGRAMS
 AI/visiondata/subscriber_VisionMsg.py
-AI/main_control/StarKillerMainControl.py
+AI/maincontrol/StarKillerMainControl.py
+motion_control/library/subscriber_CtrlMsg.py
+AI/maincontrol/publisher_CtrlMsg.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-
-#AI/visiondata/__init__
-#AI/visiondata/GameStatus
-#AI/visiondata/RosDataImporter
-#AI/Gameplay/__init__
-#AI/Gameplay/plays
-#AI/Gameplay/skills
-#AI/Gameplay/strategies
-#AI/Gameplay/utilities
-#AI/__init__
-#AI/dataClasses
-#AI/MathFunctions
 
 add_definitions(-std=c++11)
 find_package( OpenCV REQUIRED )
@@ -76,6 +60,7 @@ add_executable( RobotVision
 vision/robot_vision/main.cpp
 vision/robot_vision/hsvcolorsubspace.h
 vision/robot_vision/undefinedcvobject.h
+vision/robot_vision/undefinedcvobject.cpp
 vision/robot_vision/utils.h
 vision/robot_vision/utils.cpp
 vision/robot_vision/objectdetection.h

@@ -6,8 +6,14 @@ from catkin_pkg.python_setup import generate_distutils_setup
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
 	name='robot_soccer',
-    packages=['visiondata', 'Gameplay', 'roboclaw_python', "main_control"],
-    package_dir={'': 'AI', '': 'motion_control'},
+    packages=['visiondata', 'Gameplay', 'maincontrol'],
+    package_dir={'': 'AI'},
+)
+
+setup_args = generate_distutils_setup(
+	name='robot_soccer',
+    packages=['roboclaw_python'],
+    package_dir={'': 'motion_control'},
 )
 
 setup(**setup_args)
