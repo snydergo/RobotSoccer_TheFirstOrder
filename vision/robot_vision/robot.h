@@ -13,6 +13,8 @@ public:
 private:
   UndefinedCVObject front;
   UndefinedCVObject rear;
+  
+  cv::Point2f center;
 
   float theta;
 };
