@@ -3,9 +3,9 @@
 
 #include <cstddef>
 
-#include "point.h"
-#include "fieldobject.h"
-#include "robot.h"
+#include "dataclasses/point.h"
+#include "dataclasses/fieldobject.h"
+#include "dataclasses/robot.h"
 
 namespace calc {
 Point* directionToPredict(FieldObject* startobj, FieldObject* destobj, double time);

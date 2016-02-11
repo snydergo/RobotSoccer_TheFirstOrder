@@ -5,7 +5,7 @@
 #include <cstddef>
 
 #include "point.h"
-#include "utilities.h"
+#include "../gameplay/utilities.h"
 
 //forward declaration to eliminate circular dependencies
 class Utilities;

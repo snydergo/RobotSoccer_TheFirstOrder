@@ -3,10 +3,10 @@
 
 #include <cstddef>
 #include <string>
-#include "mathfunctions.h"
-#include "point.h"
-#include "fieldobject.h"
-#include "robot.h"
+#include "../mathfunctions.h"
+#include "../dataclasses/point.h"
+#include "../dataclasses/fieldobject.h"
+#include "../dataclasses/robot.h"
 
 Point center = Point(0,0);
 

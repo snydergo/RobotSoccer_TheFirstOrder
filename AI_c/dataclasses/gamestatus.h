@@ -1,13 +1,14 @@
 #ifndef GAMESTATUS_H
 #define GAMESTATUS_H
 
-
 #include <string>
 #include <cstddef>
+
 #include "point.h"
 #include "robot.h"
 #include "fieldobject.h"
-#include "utilities.h"
+#include "../gameplay/utilities.h"
+
 
 class GameStatus{
 public:
