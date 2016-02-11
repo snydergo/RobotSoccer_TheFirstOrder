@@ -93,6 +93,20 @@ def SpeedM(motor,omega):
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
+def speedAccelM(motor,time,speed):
+	# Convert to rotations/second
+	qpps = omega2qpps(speed)
+	accel = qpps/time
+	if motor == 1:
+		return roboclaw.SpeedAccelM1(addr1,accel,qpps)
+	elif motor == 2:
+		return roboclaw.SpeedAccelM2(addr1,accel,qpps)
+	elif motor == 3:
+		return roboclaw.SpeedAccelM1(addr2,accel,qpps)
+	else:
+		raise mlibExcept(e_type.motorNumOff)
+	return
+
 def ReadEncM(motor):
 	if motor == 1:
 		return roboclaw._read4_1(addr1,roboclaw.Cmd.GETM1ENC)
@@ -140,6 +154,8 @@ def rotateRate(speed):
 def rotateDeg(degrees):
 	return
 
+
+
 def goXYOmega(x,y,omega):
 	# Get what the wheel omegas needs to be
 	v1,v2,v3 = mat.getWheelVel(x,y,omega)
@@ -161,11 +177,18 @@ def goXYOmegaWorld(vx_w,vy_w,omega=0,theta=0):
 		k = k+1
 	return
 
-def goDisXYOmegaWorld(x_w,y_w,time,omega=0,theta=0):
-	#goXYOmegaWorld()
+# This function doesn't work well with the roboclaw. they get commands at different times.
+def goXYOmegaWorldAccel(vx_w,vy_w,omega=0,theta=0,time=1):
+	wheelVels = mat.getWheelVelFromWorld(vx_w,vy_w,omega,theta)
+	k = 1
+	# Set speed for each wheel
+	for w in wheelVels:
+		speedAccelM(k,time,w)
+		k = k+1
 	return
 
-def goXYOmegaAccel(x,y,theta,time=1):
+def goDisXYOmegaWorld(x_w,y_w,time,omega=0,theta=0):
+	#goXYOmegaWorld()
 	return
 
 # Hard stop all motors
