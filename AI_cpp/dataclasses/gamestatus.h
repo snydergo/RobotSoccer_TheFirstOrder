@@ -12,14 +12,14 @@
 
 class GameStatus{
 public:
-    Robot* ally1 = NULL;
-    Robot* ally2 = NULL;
-    Robot* enemy1 = NULL;
-    Robot* enemy2 = NULL;
-    FieldObject* ball = NULL;
+    Robot ally1;
+    Robot ally2;
+    Robot enemy1;
+    Robot enemy2;
+    FieldObject ball;
 
     //GameStatus function calls
-    GameStatus(Robot* ally1, Robot *ally2, Robot *enemy1, Robot *enemy2, FieldObject *ball);
+    GameStatus(Robot ally1, Robot ally2, Robot enemy1, Robot enemy2, FieldObject ball);
     GameStatus(){}
 
     std::string toString();

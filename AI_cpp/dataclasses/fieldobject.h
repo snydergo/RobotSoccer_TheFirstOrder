@@ -9,11 +9,11 @@
 class FieldObject{
 public:
   std::string tag = "";
-  Point *location = NULL;
-  Point *velocity = NULL;
-
+  Point location;
+  Point velocity;
+  FieldObject(){}
   //FieldObject Functions
-  FieldObject(std::string tag, Point* loc, Point* vel);
+  FieldObject(std::string tag, Point loc, Point vel);
   std::string toString();
 };
 

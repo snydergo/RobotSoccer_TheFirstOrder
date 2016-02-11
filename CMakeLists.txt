@@ -75,6 +75,10 @@ include_directories(~/imports/rapidjson/include)
 
 add_executable( MainControl 
 AI_cpp/maincontrol.cpp
+AI_cpp/visiondata/subscriber_visionmsg.h
+AI_cpp/visiondata/subscriber_visionmsg.cpp
+AI_cpp/ctrldata/publisher_ctrlmsg.h
+AI_cpp/ctrldata/publisher_ctrlmsg.cpp
 AI_cpp/bookkeeping.h
 AI_cpp/bookkeeping.cpp
 AI_cpp/exceptionAI.h

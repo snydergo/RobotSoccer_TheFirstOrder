@@ -13,9 +13,9 @@ class Robot: public FieldObject{
 public:
     double theta = 0;
     Utilities* utils = NULL;
-
+    Robot(){}
     //Constructors and other functions
-     Robot(std::string tag, Point* loc, Point* vel, double theta, robotType type);
+     Robot(std::string tag, Point loc, Point vel, double theta, robotType type);
         //: FieldObject(tag, loc, vel);
     std::string toString();
 };

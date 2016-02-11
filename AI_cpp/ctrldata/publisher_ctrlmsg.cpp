@@ -1,12 +1,8 @@
-#include "ros/ros.h"
-#include "robot_soccer/controldata.h"
-
-#include <sstream>
-
+#include "publisher_ctrlmsg.h"
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
-int main(int argc, char **argv)
+void chat_ctrl(int argc, char **argv)
 {
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
@@ -44,7 +40,7 @@ int main(int argc, char **argv)
    * than we can send them, the number here specifies how many messages to
    * buffer up before throwing some away.
    */
-  ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
+  ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("chatter", 1000);
 
   ros::Rate loop_rate(10);
 
@@ -64,7 +60,7 @@ int main(int argc, char **argv)
     //ss << "hello world " << count;
     //msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
+    //ROS_INFO("%s", msg.);
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -79,7 +75,4 @@ int main(int argc, char **argv)
     loop_rate.sleep();
     ++count;
   }
-
-
-  return 0;
 }

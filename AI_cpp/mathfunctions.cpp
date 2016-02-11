@@ -1,22 +1,22 @@
 #include "mathfunctions.h"
 
 
-Point* calc::directionToPredict(FieldObject* startobj, FieldObject* destobj, double time){
-    Point* startPoint = startobj->location;
-    Point* predLoc = calc::predictLocation(destobj, time);
+Point calc::directionToPredict(FieldObject startobj, FieldObject destobj, double time){
+    Point startPoint = startobj.location;
+    Point predLoc = calc::predictLocation(destobj, time);
     return calc::directionToPoint(startPoint, predLoc);
 }
 
 
-Point* calc::directionToPoint(Point* startobj, Point* destobj){
-    return new Point(destobj->x - startobj->x, destobj->y - startobj->y);
+Point calc::directionToPoint(Point startobj, Point destobj){
+    return Point(destobj.x - startobj.x, destobj.y - startobj.y);
 }
 
 
-Point* calc::predictLocation(FieldObject* myobj, double time){
-    double newX = myobj->location->x + myobj->velocity->x*time;
-    double newY = myobj->location->y + myobj->velocity->y*time;
-    return new Point(newX,newY);
+Point calc::predictLocation(FieldObject myobj, double time){
+    double newX = myobj.location.x + myobj.velocity.x*time;
+    double newY = myobj.location.y + myobj.velocity.y*time;
+    return Point(newX,newY);
 }
 
 

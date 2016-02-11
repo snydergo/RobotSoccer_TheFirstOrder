@@ -11,7 +11,7 @@ void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);
 }
 
-void Utilities::move(Robot* robot, Point* dir, double des_theta){
+void Utilities::move(Robot robot, Point dir, double des_theta){
     /*robot_soccer::controldata msg = new robot_soccer::controldata();
     msg.cmdType = mov
     msg.x_dir = dir->x;
@@ -21,8 +21,8 @@ void Utilities::move(Robot* robot, Point* dir, double des_theta){
     //send info to Matt
 }
 
-void Utilities::moveToPoint(Robot* robot, Point* point, double theta){
-    Point* dir = calc::directionToPoint(robot->location, point);
+void Utilities::moveToPoint(Robot robot, Point point, double theta){
+    Point dir = calc::directionToPoint(robot.location, point);
     this->move(robot, dir, theta);
 }
 
@@ -31,14 +31,14 @@ void Utilities::kick(double power, double theta){
     //msg.cmdType = kick
 }
 
-void Utilities::moveToCenter(Robot* robot, double theta){
-    Point* movVector = calc::directionToPoint(robot->location, &center);
+void Utilities::moveToCenter(Robot robot, double theta){
+    Point movVector = calc::directionToPoint(robot.location, center);
     this->move(robot, movVector, theta);
 }
 
-void Utilities::followBall(FieldObject* ball, Robot* robot, double theta){
+void Utilities::followBall(FieldObject ball, Robot robot, double theta){
     printf("following ball\n");
-    Point* movVector = calc::directionToPoint(robot->location, ball->location);
+    Point movVector = calc::directionToPoint(robot.location, ball.location);
     this->move(robot, movVector, theta);
 }
 

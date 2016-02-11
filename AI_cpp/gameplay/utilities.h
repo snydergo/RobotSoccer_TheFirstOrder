@@ -17,11 +17,11 @@ class Utilities
    public:
     Utilities(std::string gvnName, robotType num);
     void rotate(double angle);
-    void move(Robot* robot, Point* dir, double des_theta);
-    void moveToPoint(Robot* robot, Point* point, double theta);
+    void move(Robot robot, Point dir, double des_theta);
+    void moveToPoint(Robot robot, Point point, double theta);
     void kick(double power, double theta);
-    void moveToCenter(Robot* robot, double theta);
-    void followBall(FieldObject* ball, Robot* robot, double theta);
+    void moveToCenter(Robot robot, double theta);
+    void followBall(FieldObject ball, Robot robot, double theta);
 
 };
 

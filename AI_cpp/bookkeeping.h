@@ -15,6 +15,6 @@ extern sem ctrlMsg_sem;
 extern GameStatus visionStatus_msg;
 
 //functions
-GameStatus* initGameStatus();
+GameStatus initGameStatus();
 bool pend(sem semaphore);
 void post(sem semaphore);
