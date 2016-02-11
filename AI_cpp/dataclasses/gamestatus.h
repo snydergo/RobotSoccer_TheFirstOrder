@@ -20,6 +20,8 @@ public:
 
     //GameStatus function calls
     GameStatus(Robot* ally1, Robot *ally2, Robot *enemy1, Robot *enemy2, FieldObject *ball);
+    GameStatus(){}
+
     std::string toString();
 };
 

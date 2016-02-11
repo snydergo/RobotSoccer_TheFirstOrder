@@ -71,3 +71,27 @@ vision/robot_vision/config.cpp
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 target_link_libraries( RobotVision ${catkin_LIBRARIES})
 include_directories(~/imports/rapidjson/include)
+
+
+add_executable( MainControl 
+AI_cpp/maincontrol.cpp
+AI_cpp/bookkeeping.h
+AI_cpp/bookkeeping.cpp
+AI_cpp/exceptionAI.h
+AI_cpp/exceptionAI.cpp
+AI_cpp/mathfunctions.h
+AI_cpp/mathfunctions.cpp
+AI_cpp/dataclasses/gamestatus.h
+AI_cpp/dataclasses/gamestatus.cpp
+AI_cpp/dataclasses/point.h
+AI_cpp/dataclasses/point.cpp
+AI_cpp/dataclasses/robot.h
+AI_cpp/dataclasses/robot.cpp
+AI_cpp/dataclasses/fieldobject.h
+AI_cpp/dataclasses/fieldobject.cpp
+AI_cpp/gameplay/fieldcoord.h
+AI_cpp/gameplay/fieldcoord.cpp
+AI_cpp/gameplay/utilities.h
+AI_cpp/gameplay/utilities.cpp
+)
+target_link_libraries( MainControl ${catkin_LIBRARIES})

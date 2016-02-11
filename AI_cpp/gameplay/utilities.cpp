@@ -1,5 +1,7 @@
 #include "utilities.h"
 
+#include "../bookkeeping.h"
+
 Utilities::Utilities(std::string gvnName, robotType num){
     this->robotNum = num;
     this->name = gvnName;

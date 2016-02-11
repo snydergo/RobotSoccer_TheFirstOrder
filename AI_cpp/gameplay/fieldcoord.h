@@ -3,7 +3,7 @@
 
 #include <string>
 #include <cstddef>
-#include "../dataclasses/GameStatus.h"
+#include "../dataclasses/gamestatus.h"
 
 
 class FieldCoord{
@@ -14,6 +14,7 @@ public:
 
 	//constructor
 	FieldCoord();
+    void updateStatus(GameStatus* vision_msg);
 };
 
 

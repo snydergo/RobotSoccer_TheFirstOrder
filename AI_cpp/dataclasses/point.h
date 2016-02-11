@@ -12,6 +12,7 @@ public:
     double x = 0;
     double y = 0;
     //Point Functions
+    Point();
     Point(double x, double y);
     std::string toString();
 };

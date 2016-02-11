@@ -8,8 +8,6 @@
 #include "../dataclasses/fieldobject.h"
 #include "../dataclasses/robot.h"
 
-Point center = Point(0,0);
-
 class Robot;
 class Utilities
 {
