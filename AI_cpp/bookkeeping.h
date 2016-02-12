@@ -1,18 +1,22 @@
 #pragma once
 
 #include "gameplay/fieldcoord.h"
+#include "robot_soccer/controldata.h"
+#include "robot_soccer/visiondata.h"
 
 // Type definitions
-typedef short sem;
+#define TICKS_PER_SEC 10
 
-extern Point center;
+typedef short sem;
 
 // GLOBALS
 extern FieldCoord field;
+extern Point center;
 extern bool visionUpdated;
 extern sem visionMsg_sem;
 extern sem ctrlMsg_sem;
 extern GameStatus visionStatus_msg;
+
 
 //functions
 bool pend(sem semaphore);
