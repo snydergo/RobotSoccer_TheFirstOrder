@@ -1,5 +1,5 @@
 import mlib
-# import sys
+import sys
 import tty
 
 tty.setcbreak(sys.stdin)
