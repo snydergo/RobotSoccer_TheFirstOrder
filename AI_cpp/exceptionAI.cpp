@@ -5,14 +5,13 @@ ExceptionAI::ExceptionAI(errtype err){
 }
 
 std::string ExceptionAI::toString(){
-    std::string str = "";
     switch(err){
-        case parsedata:
+        case errtype::parsedata:
             break;
-        case senddata:
+        case errtype::senddata:
             break;
         default:
             break;
     }
-    return str;
+    return "";
 }

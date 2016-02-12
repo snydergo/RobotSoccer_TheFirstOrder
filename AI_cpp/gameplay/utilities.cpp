@@ -1,6 +1,7 @@
 #include "utilities.h"
 
 #include "../bookkeeping.h"
+#include "../mathfunctions.h"
 
 void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);

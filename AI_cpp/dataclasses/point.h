@@ -2,9 +2,8 @@
 #define POINT_H
 
 #include <string>
-#include <cstddef>
 
-enum robotType {ally1_rt, ally2_rt, enemy1_rt, enemy2_rt, none_rt};
+
 
 class Point
 {

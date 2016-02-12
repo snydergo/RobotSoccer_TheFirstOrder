@@ -2,7 +2,7 @@
 #define FIELDCOORD_H
 
 #include <string>
-#include <cstddef>
+
 #include "../dataclasses/gamestatus.h"
 
 
@@ -12,9 +12,7 @@ public:
 	GameStatus currentStatus;
 	GameStatus visionStatus;
 
-	//constructor
-	FieldCoord();
-    void updateStatus(GameStatus* vision_msg);
+    void updateStatus(const GameStatus &vision_msg);
 };
 
 

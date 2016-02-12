@@ -1,20 +1,20 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 
-#include <cstddef>
 #include <string>
-#include "../mathfunctions.h"
-#include "../dataclasses/point.h"
-#include "../dataclasses/fieldobject.h"
+
 #include "../dataclasses/robot.h"
 
-class Robot;
+class FieldObject;
+class Point;
+
 class Utilities
 {
     std::string name;
-    robotType robotNum = none_rt;
+    robotType robotNum;
 
    public:
+    Utilities(): robotNum(robotType::none){}
     Utilities(std::string gvnName, robotType num)
     : name(gvnName)
     , robotNum(num)

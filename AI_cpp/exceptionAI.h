@@ -4,12 +4,12 @@
 #include <string>
 #include <cstddef>
 
-enum errtype {parsedata, senddata, none};
+enum class errtype {parsedata, senddata, none};
 
 class ExceptionAI
 {
 public:
-    errtype err = none;
+    errtype err;
 
     //Exceptions functions
     ExceptionAI(errtype err);

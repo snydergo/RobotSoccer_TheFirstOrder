@@ -2,7 +2,6 @@
 #define FIELDOBJECT_H
 
 #include <string>
-#include <cstddef>
 
 #include "point.h"
 
@@ -11,7 +10,7 @@ public:
   std::string tag;
   Point location;
   Point velocity;
-  FieldObject(){}
+
   //FieldObject Functions
   FieldObject(std::string tag, Point loc, Point vel)
   : tag(tag)
@@ -19,6 +18,7 @@ public:
   , location(loc)
   {
   }
+
   std::string toString();
 };
 

@@ -1,9 +1,5 @@
 #include "fieldcoord.h"
 
-FieldCoord::FieldCoord(){
-	
-}
-
-void FieldCoord::updateStatus(GameStatus* vision_msg){
-    this->visionStatus = *vision_msg;
+void FieldCoord::updateStatus(const GameStatus &vision_msg){
+    visionStatus = vision_msg;
 }

@@ -2,23 +2,22 @@
 #define ROBOT_H
 
 #include <string>
-#include <cstddef>
 
-#include "point.h"
-#include "../gameplay/utilities.h"
+#include "fieldobject.h"
 
-//forward declaration to eliminate circular dependencies
-class Utilities;
-class Robot: public FieldObject{
+enum class robotType {ally1, ally2, enemy1, enemy2, none};
+
+class Point;
+
+class Robot: public FieldObject
+{
 public:
     double theta;
-    Utilities utils;
 
     //Constructors and other functions
     Robot(std::string tag, Point loc, Point vel, double theta, robotType type)
     : FieldObject(tag, loc, vel)
     , theta(theta)
-    , utils(tag, type)
     {
     }
 
