@@ -8,12 +8,17 @@
 
 class FieldObject{
 public:
-  std::string tag = "";
+  std::string tag;
   Point location;
   Point velocity;
   FieldObject(){}
   //FieldObject Functions
-  FieldObject(std::string tag, Point loc, Point vel);
+  FieldObject(std::string tag, Point loc, Point vel)
+  : tag(tag)
+  , velocity(vel)
+  , location(loc)
+  {
+  }
   std::string toString();
 };
 
