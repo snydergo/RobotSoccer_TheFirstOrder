@@ -11,11 +11,15 @@
 class Robot;
 class Utilities
 {
-    std::string name = "";
+    std::string name;
     robotType robotNum = none_rt;
 
    public:
-    Utilities(std::string gvnName, robotType num);
+    Utilities(std::string gvnName, robotType num)
+    : name(gvnName)
+    , robotNum(num)
+    {
+    }
     void rotate(double angle);
     void move(Robot robot, Point dir, double des_theta);
     void moveToPoint(Robot robot, Point point, double theta);
