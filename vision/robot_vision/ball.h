@@ -3,11 +3,11 @@
 #include "definedcvobject.h"
 #include "undefinedcvobject.h"
 
-public Ball: public DefinedCVObject
+class Ball: public DefinedCVObject
 { 
 public:
-    bool update(std::vector<UndefinedCVObject> cvObjs) override;
-    bool find(std::vector<UndefinedCVObject> cvObjs) override;
+    bool update(std::vector<UndefinedCVObject>& cvObjs) override;
+    bool find(std::vector<UndefinedCVObject>& cvObjs) override;
     
     UndefinedCVObject lastLocation;
     

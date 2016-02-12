@@ -7,8 +7,8 @@ class Robot: public DefinedCVObject
 {
 public:
   
-  bool update(std::vector<UndefinedCVObject> cvObjs) override;
-  bool find(std::vector<UndefinedCVObject> cvObjs) override;
+  bool update(std::vector<UndefinedCVObject>& cvObjs) override;
+  bool find(std::vector<UndefinedCVObject>& cvObjs) override;
   
 private:
   UndefinedCVObject front;

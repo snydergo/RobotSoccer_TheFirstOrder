@@ -1,6 +1,8 @@
 #ifndef UTILS_H
 #define UTILS_H
 
+#include "cmath"
+
 struct Range {
     int low;
     int high;
@@ -24,5 +26,11 @@ enum class Color {
 };
 
 Color ConvertHueRangeToColor(Range hueRange);
+
+template<template<typename> class P, typename T>
+T distance(const P<T>& p1, const P<T>& p2)
+{
+    return std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2));
+}
 
 #endif // UTILS_H

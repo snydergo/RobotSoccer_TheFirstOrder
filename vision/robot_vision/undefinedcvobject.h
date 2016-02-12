@@ -12,8 +12,14 @@ using cv::Moments;
 class UndefinedCVObject
 {
 public:
-    UndefinedCVObject();
+    UndefinedCVObject()
+    : area(0)
+    , color(Color::undefined)
+    {
+    }
+
     UndefinedCVObject(Moments moment, HsvColorSubSpace _color);
+
     Point2f center;
     int area;
     Color color;

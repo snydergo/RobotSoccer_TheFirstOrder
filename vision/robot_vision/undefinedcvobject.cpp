@@ -4,8 +4,6 @@
 
 using namespace cv;
 
-UndefinedCVObject::UndefinedCVObject() {}
-
 UndefinedCVObject::UndefinedCVObject(Moments moment, HsvColorSubSpace _color)
 {
     center = GetMomentCenter(moment);

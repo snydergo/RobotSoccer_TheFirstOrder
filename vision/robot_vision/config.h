@@ -8,7 +8,7 @@ using cv::Point2f;
 
 namespace config {
 
-extern cv::Point2f fieldCenter_px;
+extern Point2f fieldCenter_px;
 extern double cmPerPixelConversionFactor;
 extern bool invertX;
 

@@ -1,7 +1,5 @@
 #include <cstdio>
 
-#include <ros/callback_queue.h>
-
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
 
@@ -41,7 +39,7 @@ int main(int argc, char *argv[])
         }
         //std::cout << "spinning" << std::endl;
         ros::spinOnce();
-        ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.1));
+        loop_rate.sleep();
     }
     return 0;
 }
