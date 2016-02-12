@@ -11,12 +11,17 @@
 class Utilities;
 class Robot: public FieldObject{
 public:
-    double theta = 0;
-    Utilities* utils = NULL;
-    Robot(){}
+    double theta;
+    Utilities utils;
+
     //Constructors and other functions
-     Robot(std::string tag, Point loc, Point vel, double theta, robotType type);
-        //: FieldObject(tag, loc, vel);
+    Robot(std::string tag, Point loc, Point vel, double theta, robotType type)
+    : FieldObject(tag, loc, vel)
+    , theta(theta)
+    , utils(tag, type)
+    {
+    }
+
     std::string toString();
 };
 
