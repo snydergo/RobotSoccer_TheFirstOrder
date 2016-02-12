@@ -9,11 +9,11 @@ enum robotType {ally1_rt, ally2_rt, enemy1_rt, enemy2_rt, none_rt};
 class Point
 {
 public:
-    double x = 0;
-    double y = 0;
+    double x;
+    double y;
     //Point Functions
-    Point();
-    Point(double x, double y);
+    Point(): x(0), y(0) {}
+    Point(double x, double y): x(x), y(y) {}
     std::string toString();
 };
 
