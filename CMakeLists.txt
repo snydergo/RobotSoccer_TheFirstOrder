@@ -30,10 +30,7 @@ include_directories(
 )
 
 catkin_install_python(PROGRAMS
-AI/visiondata/subscriber_VisionMsg.py
-AI/maincontrol/StarKillerMainControl.py
 motion_control/library/subscriber_CtrlMsg.py
-AI/maincontrol/publisher_CtrlMsg.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 
@@ -97,5 +94,10 @@ AI_cpp/gameplay/fieldcoord.h
 AI_cpp/gameplay/fieldcoord.cpp
 AI_cpp/gameplay/utilities.h
 AI_cpp/gameplay/utilities.cpp
+AI_cpp/gameplay/skills.h
+AI_cpp/gameplay/skills.cpp
+AI_cpp/gameplay/strategy.h
+AI_cpp/gameplay/strategy.cpp
+
 )
 target_link_libraries( MainControl ${catkin_LIBRARIES})
