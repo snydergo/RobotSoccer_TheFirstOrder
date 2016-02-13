@@ -1,7 +1,7 @@
 import mlib
 import sys
 import tty
-from Getch import _Getch
+from getch import _Getch
 
 tty.setcbreak(sys.stdin)
 
