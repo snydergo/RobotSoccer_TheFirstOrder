@@ -143,7 +143,7 @@ function v = play_rush_goal(robot, ball, P)
   % normal vector from ball to goal
   n = P.goal-ball;
   n = n/norm(n);
-  % compute position 10cm behind ball, but aligned with goal.
+  % compute position 10 cm behind ball, but aligned with goal.
   position = ball - 0.2*n;
     
   if norm(position-robot(1:2))<.21,
