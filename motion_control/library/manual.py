@@ -6,46 +6,46 @@ from Getch import _Getch
 tty.setcbreak(sys.stdin)
 
 def get_action():
-	getch = _Getch()
-	pressed = getch()
-	if pressed == 'w':
-    	return 'UP'
+    getch = _Getch()
+    pressed = getch()
+    if pressed == 'w':
+        return 'UP'
     elif pressed == 'a':
-    	return 'LEFT'
+        return 'LEFT'
     elif pressed == 's':
-    	return 'DOWN'
+        return 'DOWN'
     elif pressed == 'd':
-    	return 'RIGHT'
+        return 'RIGHT'
     elif pressed == 'q':
-    	return 'SPIN_CCW'
+        return 'SPIN_CCW'
     elif pressed == 'e':
-    	return 'SPIN_CW'
+        return 'SPIN_CW'
     elif pressed == ' ':
-    	return 'STOP'
+        return 'STOP'
     elif pressed == 'k':
-    	return 'KILL'
+        return 'KILL'
 
 def main():
-	while 1:
-		action = get_action()
-		if action == 'UP':
-			mlib.goXYOmegaWorld(.1,0)
-		elif action == 'LEFT'
-			mlib.goXYOmegaWorld(0,.1)
-		elif action == 'DOWN'
-			mlib.goXYOmegaWorld(-.1,0)
-		elif action == 'RIGHT'
-			mlib.goXYOmegaWorld(0,-.1)
-		elif action == 'SPIN_CCW'
-			mlib.goXYOmegaWorld(0,0,1)
-		elif action == 'SPIN_CW'
-			mlib.goXYOmegaWorld(0,0,-1)
-		elif action == 'STOP'
-			mlib.stop()
-		elif action == 'KILL'
-			return
+    while 1:
+        action = get_action()
+        if action == 'UP':
+            mlib.goXYOmegaWorld(.1,0)
+        elif action == 'LEFT'
+            mlib.goXYOmegaWorld(0,.1)
+        elif action == 'DOWN'
+            mlib.goXYOmegaWorld(-.1,0)
+        elif action == 'RIGHT'
+            mlib.goXYOmegaWorld(0,-.1)
+        elif action == 'SPIN_CCW'
+            mlib.goXYOmegaWorld(0,0,1)
+        elif action == 'SPIN_CW'
+            mlib.goXYOmegaWorld(0,0,-1)
+        elif action == 'STOP'
+            mlib.stop()
+        elif action == 'KILL'
+            return
 
-	return
+    return
 
 if __name__ == '__main__':
-	main()
+    main()
