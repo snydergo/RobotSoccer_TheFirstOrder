@@ -5,31 +5,47 @@ from Getch import _Getch
 
 tty.setcbreak(sys.stdin)
 
-def drive():
-	w = 119
-	a = 97
-	s = 115
-	d = 100
-	q = 113
-	e = 101
-	space = 32
+def get_action():
+	getch = _Getch()
+	pressed = getch()
+	if pressed == w:
+    	return 'UP'
+    elif pressed == a:
+    	return 'LEFT'
+    elif pressed == s:
+    	return 'DOWN'
+    elif pressed == d:
+    	return 'RIGHT'
+    elif pressed == q:
+    	return 'SPIN_CCW'
+    elif pressed == e:
+    	return 'SPIN_CW'
+    elif pressed == space:
+    	return 'STOP'
+    elif pressed == k:
+    	return 'KILL'
 
-	while True:
-		getch = _Getch()
-	    pressed = getch()
-	    if pressed == w:
-	    	mlib.goXYOmegaWorld(.1,0)
-	    elif pressed == a:
-	    	mlib.goXYOmegaWorld(0,.1)
-	    elif pressed == s:
-	    	mlib.goXYOmegaWorld(-.1,0)
-	    elif pressed == d:
-	    	mlib.goXYOmegaWorld(-.1,0)
-	    elif pressed == q:
-	    	mlib.goXYOmegaWorld(0,0,1)
-	    elif pressed == e:
-	    	mlib.goXYOmegaWorld(0,0,-1)
-	    elif pressed == space:
-	    	mlib.stop()
+def main():
+	while 1:
+		action = get_action()
+		if action == 'UP':
+			mlib.goXYOmegaWorld(.1,0)
+		elif action == 'LEFT'
+			mlib.goXYOmegaWorld(0,.1)
+		elif action == 'DOWN'
+			mlib.goXYOmegaWorld(-.1,0)
+		elif action == 'RIGHT'
+			mlib.goXYOmegaWorld(0,-.1)
+		elif action == 'SPIN_CCW'
+			mlib.goXYOmegaWorld(0,0,1)
+		elif action == 'SPIN_CW'
+			mlib.goXYOmegaWorld(0,0,-1)
+		elif action == 'STOP'
+			mlib.stop()
+		elif action == 'KILL'
+			return
 
 	return
+
+if __name__ == '__main__':
+	main()
