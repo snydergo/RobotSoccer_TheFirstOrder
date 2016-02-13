@@ -1,6 +1,7 @@
 import mlib
 import sys
 import tty
+from Getch import _Getch
 
 tty.setcbreak(sys.stdin)
 
@@ -14,7 +15,8 @@ def drive():
 	space = 32
 
 	while True:
-	    pressed = ord(sys.stdin.read(1))
+		getch = _Getch()
+	    pressed = getch()
 	    if pressed == w:
 	    	mlib.goXYOmegaWorld(.1,0)
 	    elif pressed == a:
