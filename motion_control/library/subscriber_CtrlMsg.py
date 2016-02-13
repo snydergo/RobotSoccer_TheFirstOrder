@@ -29,15 +29,15 @@ def ControlListener1():
 
     rospy.Subscriber("robot1Com", controldata, callback1)
 
-    #scale factor
-    sf = .01
-    ## Decisions ##
-    while not rospy.is_shutdown():
-        # ignoring theta for now
-        mlib.goXYOmegaWorld(sf*P.x_c,sf*P.y_c)
+    # #scale factor
+    # sf = .01
+    # ## Decisions ##
+    # while not rospy.is_shutdown():
+    #     # ignoring theta for now
+    #     mlib.goXYOmegaWorld(sf*P.x_c,sf*P.y_c)
 
-        rospy.spinOnce()
-        return
+    #     rospy.spinOnce()
+    #     return
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
