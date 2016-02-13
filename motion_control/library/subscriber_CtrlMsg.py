@@ -2,9 +2,19 @@
 import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import controldata
+import mlib
+
+P = ''
 
 def callback1(data):
-    print data
+    P.cmdType = data.cmdType
+    if P.cmdType == 'mov':
+        P.x_c = data.x_dir
+        P.y_c = data.y_dir
+        P.theta = data.cur_theta
+        P.theta_c = data.des_theta
+
+    # print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
 def callback2(data):
@@ -22,6 +32,16 @@ def ControlListener1():
     rospy.init_node('robot1', anonymous=True)
 
     rospy.Subscriber("robot1Com", controldata, callback1)
+
+    #scale factor
+    sf = .01
+    ## Decisions ##
+    while not rospy.is_shutdown():
+        # ignoring theta for now
+        mlib.goXYOmegaWorld(sf*P.x_c,sf*P.y_c)
+
+        rospy.spinOnce()
+        return
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
