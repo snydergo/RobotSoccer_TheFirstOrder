@@ -30,19 +30,19 @@ def main():
         action = get_action()
         if action == 'UP':
             mlib.goXYOmegaWorld(.1,0)
-        elif action == 'LEFT'
+        elif action == 'LEFT':
             mlib.goXYOmegaWorld(0,.1)
-        elif action == 'DOWN'
+        elif action == 'DOWN':
             mlib.goXYOmegaWorld(-.1,0)
-        elif action == 'RIGHT'
+        elif action == 'RIGHT':
             mlib.goXYOmegaWorld(0,-.1)
-        elif action == 'SPIN_CCW'
+        elif action == 'SPIN_CCW':
             mlib.goXYOmegaWorld(0,0,1)
-        elif action == 'SPIN_CW'
+        elif action == 'SPIN_CW':
             mlib.goXYOmegaWorld(0,0,-1)
-        elif action == 'STOP'
+        elif action == 'STOP':
             mlib.stop()
-        elif action == 'KILL'
+        elif action == 'KILL':
             return
 
     return
