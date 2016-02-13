@@ -24,7 +24,7 @@ def get_action():
         return 'STOP'
     elif pressed == ',':
         return 'SPEED_DEC'
-    elif pressed == '.'
+    elif pressed == '.':
         return 'SPEED_INC'
     elif pressed == 'k':
         return 'KILL'
@@ -49,10 +49,10 @@ def main():
             mlib.goXYOmegaWorld(0,0,-1)
         elif action == 'STOP':
             mlib.stop()
-        elif action == 'SPEED_DEC'
+        elif action == 'SPEED_DEC':
             speed = speed - .1
             print("Speed: ",speed)
-        elif action == 'SPEED_INC'
+        elif action == 'SPEED_INC':
             speed = speed + .1
             print("Speed: ",speed)
         elif action == 'KILL':
