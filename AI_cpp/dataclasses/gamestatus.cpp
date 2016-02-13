@@ -17,6 +17,29 @@ GameStatus& GameStatus::operator= (const robot_soccer::visiondata& arg) {
     ball.location.y = arg.ball_y;
 }
 
+/*GameStatus::GameStatus(){
+    this->ally1.location = NULL;
+    this->ally1.tag = "ally1";
+    this->ally1.theta = 0;
+    this->ally1.velocity = NULL;
+    this->ally2.location = NULL;
+    this->ally2.tag = "ally2";
+    this->ally2.theta = 0;
+    this->ally2.velocity = NULL;
+    this->enemy1.location = NULL;
+    this->enemy1.tag = "enemy1";
+    this->enemy1.theta = 0;
+    this->enemy1.velocity = NULL;
+    this->enemy2.location = NULL;
+    this->enemy2.tag = "enemy2";
+    this->enemy2.theta = 0;
+    this->enemy2.velocity = NULL;
+    this->ball.location = NULL;
+    this->ball.tag = NULL;
+    this->ball.velocity = NULL;
+
+}*/
+
 std::string GameStatus::toString() {
     return "null";
 }

@@ -28,3 +28,9 @@ double calc::angleDifference(double currentTheta, double desiredTheta){
     return angle;
 }
 
+Point calc::getVelocity(FieldObject newobj, FieldObject oldobj){
+    double x_vel = newobj.location.x - oldobj.location.x;
+    double y_vel = newobj.location.y - oldobj.location.y;
+    return Point(x_vel, y_vel);
+}
+

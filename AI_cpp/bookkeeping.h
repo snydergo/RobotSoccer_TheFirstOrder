@@ -3,6 +3,8 @@
 #include "gameplay/fieldcoord.h"
 #include "robot_soccer/controldata.h"
 #include "robot_soccer/visiondata.h"
+#include "dataclasses/gamestatus.h"
+#include "mathfunctions.h"
 
 // Type definitions
 #define TICKS_PER_SEC 10
@@ -21,3 +23,4 @@ extern GameStatus visionStatus_msg;
 //functions
 bool pend(sem semaphore);
 void post(sem semaphore);
+

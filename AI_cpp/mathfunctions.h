@@ -9,5 +9,6 @@ namespace calc {
     Point directionToPoint(Point startobj, Point destobj);
     Point predictLocation(FieldObject myobj, double time);
     double angleDifference(double currentTheta, double desiredTheta);
+    Point getVelocity(FieldObject obj1, FieldObject obj2);
 }
 #endif // MATHFUNCTIONS_H

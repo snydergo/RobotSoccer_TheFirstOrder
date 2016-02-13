@@ -21,7 +21,7 @@ def ControlListener1():
     # run simultaneously.
     rospy.init_node('robot1', anonymous=True)
 
-    rospy.Subscriber("robot1Com", controldata, callback)
+    rospy.Subscriber("robot1Com", controldata, callback1)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
@@ -35,7 +35,7 @@ def ControlListener2():
     # run simultaneously.
     rospy.init_node('robot2', anonymous=True)
 
-    rospy.Subscriber("robot2Com", controldata, callback)
+    rospy.Subscriber("robot2Com", controldata, callback2)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()

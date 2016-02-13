@@ -24,16 +24,16 @@ int main(int argc, char *argv[])
             visionUpdated = false;
             std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<
                          visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;
-            field.updateStatus(visionStatus_msg);
+            //field.updateStatus(visionStatus_msg);
         }
 
         if(count){
             robot_soccer::controldata msg;
             msg.cmdType = "mov";
-            msg.x_dir = 1;
-            msg.y_dir = 2;
-            msg.cur_theta = 3;
-            msg.des_theta = 4;
+            msg.x_dir = count;
+            msg.y_dir = count;
+            msg.cur_theta = count;
+            msg.des_theta = count;
             chatter_pub.publish(msg);
             std::cout << "Message sent" << std::endl;
         }
