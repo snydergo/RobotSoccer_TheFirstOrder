@@ -8,21 +8,21 @@ tty.setcbreak(sys.stdin)
 def get_action():
 	getch = _Getch()
 	pressed = getch()
-	if pressed == w:
+	if pressed == 'w':
     	return 'UP'
-    elif pressed == a:
+    elif pressed == 'a':
     	return 'LEFT'
-    elif pressed == s:
+    elif pressed == 's':
     	return 'DOWN'
-    elif pressed == d:
+    elif pressed == 'd':
     	return 'RIGHT'
-    elif pressed == q:
+    elif pressed == 'q':
     	return 'SPIN_CCW'
-    elif pressed == e:
+    elif pressed == 'e':
     	return 'SPIN_CW'
-    elif pressed == space:
+    elif pressed == ' ':
     	return 'STOP'
-    elif pressed == k:
+    elif pressed == 'k':
     	return 'KILL'
 
 def main():
