@@ -7,14 +7,14 @@ import mlib
 P = ''
 
 def callback1(data):
-    P.cmdType = data.cmdType
-    if P.cmdType == 'mov':
-        P.x_c = data.x_dir
-        P.y_c = data.y_dir
-        P.theta = data.cur_theta
-        P.theta_c = data.des_theta
+    # P.cmdType = data.cmdType
+    # if P.cmdType == 'mov':
+    #     P.x_c = data.x_dir
+    #     P.y_c = data.y_dir
+    #     P.theta = data.cur_theta
+    #     P.theta_c = data.des_theta
 
-    # print data
+    print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
     
