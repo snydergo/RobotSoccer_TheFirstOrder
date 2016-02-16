@@ -1,6 +1,6 @@
 {
     "param": {
-        "cameraUrl": "http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg",
+        "cameraUrl": "http://192.168.1.48:8080/stream?topic=/image&dummy=param.mjpg",
         "calibration": {
             "fieldCenterX_pixel": 312,
             "fieldCenterY_pixel": 266,
@@ -22,7 +22,8 @@
                 "highS": 0,
                 "lowV": 0,
                 "highV": 0
-            }
+            },
+            "area": 45
         },
         "teamRobots": {
             "count": 1,
@@ -33,7 +34,9 @@
                 "highS": 145,
                 "lowV": 130,
                 "highV": 255
-            }
+            },
+            "large_area": 420,
+            "small_area": 240
         },
         "opponentRobots": {
             "count": 1,
@@ -44,7 +47,9 @@
                 "highS": 0,
                 "lowV": 0,
                 "highV": 0
-            }
+            },        
+            "large_area": 420,
+            "small_area": 240
         }
     }
 }

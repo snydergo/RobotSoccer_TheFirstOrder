@@ -1,25 +1,50 @@
 
 #include "ball.h"
 
-bool Ball::update(std::vector<UndefinedCVObject> &cvObjs) {// find the closest ojbect within 50 cm
+bool Ball::update(std::vector<UndefinedCVObject> &cvObjs) // find the closest ojbect within 45 cm
+{
     if (cvObjs.empty()) return false;
 
-    int closestIndex = findClosest(lastLocation, cvObjs);
-    if (distance(lastLocation.center, cvObjs[closestIndex].center) < 50.0) {
-        lastLocation = cvObjs[closestIndex];
-        cvObjs.erase(cvObjs.begin() + closestIndex);
+    int closest = -1;
+    float deltaDistance = 500.0;
+    for(int i = 0; i < cvObjs.size(); i++) {
+        float newDistance = distance(lastLocation.center, cvObjs[i].center);
+        if (newDistance < deltaDistance && // we found a new point
+            newDistance < thresholdDistance && // it is within our threshold distance
+            std::abs(cvObjs[closest].area - refSize) < refSize/2) // it is within our threshold size
+        {
+            closest = i;
+            deltaDistance = newDistance;
+        }
+    }
+
+    if (closest > -1) {
+        lastLocation = cvObjs[closest];
+        cvObjs.erase(cvObjs.begin() + closest);
         return true;
     }
 
     return false;
 }
-bool Ball::find(std::vector<UndefinedCVObject>& cvObjs) { // find the largest object on the field
+bool Ball::find(std::vector<UndefinedCVObject>& cvObjs) // find the object closest in size on the field
+{
     if (cvObjs.empty()) return false;
 
-    int largestIndex = findLargest(cvObjs);
-    lastLocation = cvObjs[largestIndex];
-    cvObjs.erase(cvObjs.begin() + largestIndex);
+    int closest = -1;
+    int size = 10000;
+    for(int i = 0; i < cvObjs.size(); i++) {
+        if (std::abs(refSize - cvObjs[i].area) < size &&
+            std::abs(cvObjs[closest].area - refSize) < refSize/2)
+        {
+            closest = i;
+            size = cvObjs[i].area;
+        }
+    }
+    if (closest > -1) {
+        lastLocation = cvObjs[closest];
+        cvObjs.erase(cvObjs.begin() + closest);
+        return true;
+    }
 
-
-    return true;
+    return false;
 }
