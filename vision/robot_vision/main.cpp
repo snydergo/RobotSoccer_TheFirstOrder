@@ -39,7 +39,9 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
-    ros::Rate loop_rate(30);
+    // ros::Rate loop_rate(30);
+    bool robotUpdated = false;
+    Robot robot;
 
     VideoCapture camera(config::cameraUrl);
 
@@ -76,6 +78,16 @@ int main(int argc, char** argv)
             UndefinedCVObject obj(teamMoments[i], config::teamRobotPrimaryColor);
             uObjects.push_back(obj);
         }
+
+
+//        if (robotUpdated) {
+//            robotUpdated = robot.update(uObjects);
+//        }
+
+//        if (!robotUpdated) {
+//            robotUpdated = robot.find(uObjects);
+//        }
+
 
         Moments rear;
         Moments front;

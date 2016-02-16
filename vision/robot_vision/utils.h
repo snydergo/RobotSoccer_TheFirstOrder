@@ -54,4 +54,6 @@ T angleFrom(const P<T>& p1, const P<T>& p2)
     return std::atan2(p2.y - p1.y, p2.x - p1.x) * 180 / PI;
 }
 
+
+
 #endif // UTILS_H
