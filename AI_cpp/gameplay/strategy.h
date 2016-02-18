@@ -1,10 +1,17 @@
 #include "../bookkeeping.h"
+#include "plays.h"
 
 #ifndef STRATEGY_H_
 #define STRATEGY_H_
 
-void strategy_stop();
+class Strategies{
+    public:
+    Plays plays = Plays();
+    Strategies();
 
-void strategy_tick();
+    void strategy_stop();
+    void strategy_tick();
+
+};
 
 #endif /* STRATEGY_H_ */

@@ -11,6 +11,17 @@ Plays::Plays()
 
 }
 
+void Plays::rushGoal(){
+    play_st = play_state::rushgoal_st;
+}
+
+void Plays::playGoalie(){
+    play_st = play_state::playgoalie_st;
+}
+
+void Plays::idle(){
+    play_st = play_state::idle_st;
+}
 
 void Plays::play_tick(){
     //needed changes

@@ -13,11 +13,11 @@ class Robot: public FieldObject
 {
 public:
     double theta;
-
     //Constructors and other functions
     Robot(std::string tag, Point loc, Point vel, double theta, robotType type)
     : FieldObject(tag, loc, vel)
     , theta(theta)
+ //   , plays(type)
     {
     }
 
