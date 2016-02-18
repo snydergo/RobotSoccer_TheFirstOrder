@@ -12,10 +12,12 @@ Plays::Plays()
 }
 
 void Plays::rushGoal(){
+    coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
     play_st = play_state::rushgoal_st;
 }
 
 void Plays::playGoalie(){
+    coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches
     play_st = play_state::playgoalie_st;
 }
 
@@ -35,9 +37,9 @@ void Plays::play_tick(){
     */
     switch(play_st){
             case play_state::idle_st:
+                skill.skill_idle();
                 break;
             case play_state::rushgoal_st:
-                coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
                 switch(coord_st){
                     case coordSkills_st::coordFetchball_st:
                        skill.skill_fetchBall();
@@ -64,7 +66,6 @@ void Plays::play_tick(){
                 break;
             case play_state::playgoalie_st:
                 //always should first go to goal
-                coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches
                 switch(coord_st){
                     case coordSkills_st::coordGotogoal_st:
                         skill.skill_goToPoint(&center);

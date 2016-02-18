@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
     //ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
+    sendCmd_Rob1 = true;
     while (ros::ok())
     {
         count++;
