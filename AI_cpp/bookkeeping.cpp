@@ -15,6 +15,7 @@ void post(sem semaphore) {
 Point center;
 FieldCoord field;
 bool visionUpdated;
+bool sendMessage;
 sem visionMsg_sem = 1;
 sem ctrlMsg_sem = 1;
 GameStatus visionStatus_msg;
