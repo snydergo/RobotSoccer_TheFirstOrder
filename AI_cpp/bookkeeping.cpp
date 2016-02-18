@@ -15,8 +15,11 @@ void post(sem semaphore) {
 Point center;
 FieldCoord field;
 bool visionUpdated;
-bool sendMessage;
 sem visionMsg_sem = 1;
 sem ctrlMsg_sem = 1;
 GameStatus visionStatus_msg;
 
+bool sendCmd_Rob1 = true;
+bool sendCmd_Rob2 = false;
+robot_soccer::controldata cmdRob1;
+robot_soccer::controldata cmdRob2;

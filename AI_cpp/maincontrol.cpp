@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "mainhub");
     ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
     //ros::Rate loop_rate(TICKS_PER_SEC);
-    sendMessage = true;
     int count = 0;
     while (ros::ok())
     {
@@ -27,15 +26,14 @@ int main(int argc, char *argv[])
             field.updateStatus(visionStatus_msg);
         }
 
-        if(sendMessage && count%5==0){
-            robot_soccer::controldata msg;
-            msg.cmdType = "mov";
+        if(sendCmd_Rob1){
+            cmdRob1.cmdType = "mov";
             Point direction = calc::directionToPoint(field.currentStatus.ally1.location, center);
-            msg.x_dir = direction.x;
-            msg.y_dir = direction.y;
-            msg.cur_theta = field.currentStatus.ally1.theta;
-            msg.des_theta = calc::angleDifference(msg.cur_theta, 90);
-            chatter_pub.publish(msg);
+            cmdRob1.x_dir = direction.x;
+            cmdRob1.y_dir = direction.y;
+            cmdRob1.cur_theta = field.currentStatus.ally1.theta;
+            cmdRob1.des_theta = calc::angleDifference(cmdRob1.cur_theta, 90);
+            chatter_pub.publish(cmdRob1);
             std::cout << "Message sent" << std::endl;
         }
         //std::cout << "spinning" << std::endl;

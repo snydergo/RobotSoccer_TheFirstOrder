@@ -103,6 +103,7 @@ AI_cpp/gameplay/skills.h
 AI_cpp/gameplay/skills.cpp
 AI_cpp/gameplay/strategy.h
 AI_cpp/gameplay/strategy.cpp
-
+AI_cpp/gameplay/plays.h
+AI_cpp/gameplay/plays.cpp
 )
 target_link_libraries( MainControl ${catkin_LIBRARIES})

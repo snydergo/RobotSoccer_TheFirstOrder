@@ -1,20 +1,32 @@
 #include "utilities.h"
 
-#include "../bookkeeping.h"
-#include "../mathfunctions.h"
+
+//extern bool sendCmd_Rob1;
+//extern bool sendCmd_Rob2;
+//robot_soccer::controldata cmdRob1;
+//robot_soccer::controldata cmdRob2;
 
 void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);
 }
 
 void Utilities::move(Robot robot, Point dir, double des_theta){
-    /*robot_soccer::controldata msg = new robot_soccer::controldata();
-    msg.cmdType = mov
-    msg.x_dir = dir->x;
-    msg.y_dir = dir->y;
-    msg.cur_theta = robot->theta;
-    msg.des_theta = des_theta;*/
-    //send info to Matt
+    cmdRob1.cmdType = "mov";
+    cmdRob1.x_pos = robot.location.x;
+    cmdRob1.y_pos = robot.location.y;
+    cmdRob1.cur_theta = robot.theta;
+    cmdRob1.x_dir = dir.x;
+    cmdRob1.y_dir = dir.y;
+    cmdRob1.des_theta = des_theta;
+    sendCmd_Rob1 = true;
+}
+
+void Utilities::idle(){
+    cmdRob1.cmdType = "idle";
+}
+
+void Utilities::dribble(){
+    cmdRob1.cmdType = "dribble";
 }
 
 void Utilities::moveToPoint(Robot robot, Point point, double theta){
