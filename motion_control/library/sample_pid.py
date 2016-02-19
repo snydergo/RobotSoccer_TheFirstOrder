@@ -29,15 +29,21 @@ y_g     = ControlVar()
 theta_g = ControlVar()
 P       = Param()
 
-def robot_ctrl(robot):
-    x       = robot.x
-    y       = ronbot.y 
-    theta   = robot.theta
+def robot_ctrl(message):
+    x       = message.x
+    y       = message.y 
+    theta   = message.theta
+
+    x_cmd       = message.x_cmd
+    y_cmd       = message.y_cmd
+    theta_cmd   = message.theat_cmd
     
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,2,P.Ts,P.tau)
     vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,2,P.Ts,P.tau)
     vth = PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,2,P.Ts,P.tau)
+
+    return vx, vy, vth
 
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
