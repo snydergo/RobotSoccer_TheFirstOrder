@@ -7,20 +7,24 @@ import mlib; import sample_pid as pid;
 class Param:
     def __init__(self):
         cmdType = ''
-        x_c = ''
-        y_c = ''
+        x = ''
+        y = ''
         theta = ''
-        theta_c = ''
+        x_cmd = ''
+        y_cmd = ''
+        theta_cmd = ''
         
 P = Param()
 
 def callback1(data):
     P.cmdType = data.cmdType
     if P.cmdType == 'mov':
-        P.x_c = data.x_dir
-        P.y_c = data.y_dir
-        P.theta = data.cur_theta
-        P.theta_c = data.des_theta
+        P.x = data.x
+        P.y = data.y
+        P.theta = data.theta
+        P.x_cmd = data.x_cmd
+        P.y_cmd = data.y_cmd
+        P.theta_cmd = data.theta_cmd
 
     # print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
@@ -45,12 +49,12 @@ def ControlListener1():
     while not rospy.is_shutdown():
         # ignoring theta for now
         # if the commanded values are small enough, we are close enough. Just stop movement.
-        if P.x_c < threshold and P.y_x < threshold:
+        if P.x_cmd < threshold and P.y_cmd < threshold:
             mlib.stop()
         else:
             vx, vy, omega = pid.robot_ctrl(controldata)
             mlib.goXYOmegaWorld(vx,vy,omega,P.theta)
-            
+
         rospy.spinOnce()
         return
 
