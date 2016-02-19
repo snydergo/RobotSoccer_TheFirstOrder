@@ -6,13 +6,13 @@ import mlib; import sample_pid as pid;
 
 class Param:
     def __init__(self):
-        cmdType = ''
-        x = ''
-        y = ''
-        theta = ''
-        x_cmd = ''
-        y_cmd = ''
-        theta_cmd = ''
+        self.cmdType = ''
+        self.x = ''
+        self.y = ''
+        self.theta = ''
+        self.x_cmd = ''
+        self.y_cmd = ''
+        self.theta_cmd = ''
         
 P = Param()
 
