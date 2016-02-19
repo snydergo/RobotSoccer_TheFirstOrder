@@ -2,7 +2,7 @@
 import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import controldata
-import mlib
+import mlib; import sample_pid as pid;
 
 class Param:
     def __init__(self):
@@ -48,8 +48,9 @@ def ControlListener1():
         if P.x_c < threshold and P.y_x < threshold:
             mlib.stop()
         else:
-            mlib.goXYOmegaWorld(sf*P.x_c,sf*P.y_c)
-
+            vx, vy, omega = pid.robot_ctrl(controldata)
+            mlib.goXYOmegaWorld(vx,vy,omega,P.theta)
+            
         rospy.spinOnce()
         return
 
