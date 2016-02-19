@@ -1,7 +1,7 @@
 string  cmdType
-float64 x_pos
-float64 y_pos
-float64 cur_theta
-float64 x_dir
-float64 y_dir
-float64 des_theta
+float64 x
+float64 y
+float64 theta
+float64 x_cmd
+float64 y_cmd
+float64 theta_cmd
