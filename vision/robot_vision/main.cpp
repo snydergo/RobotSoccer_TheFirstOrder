@@ -12,6 +12,7 @@
 #include "objectdetection.h"
 #include "config.h"
 #include "undefinedcvobject.h"
+#include "robot.h"
 
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -20,8 +21,6 @@
 #include <stdio.h>
 #include <sstream>
 #include <math.h>
-
-#define PI 3.14159265
 
 using namespace rapidjson;
 using namespace std;
@@ -40,7 +39,9 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
-    ros::Rate loop_rate(30);
+    // ros::Rate loop_rate(30);
+    bool robotUpdated = false;
+    Robot robot;
 
     VideoCapture camera(config::cameraUrl);
 
@@ -78,6 +79,16 @@ int main(int argc, char** argv)
             uObjects.push_back(obj);
         }
 
+
+//        if (robotUpdated) {
+//            robotUpdated = robot.update(uObjects);
+//        }
+
+//        if (!robotUpdated) {
+//            robotUpdated = robot.find(uObjects);
+//        }
+
+
         Moments rear;
         Moments front;
         rear.m00 = 0;
@@ -100,9 +111,7 @@ int main(int argc, char** argv)
         msg.tm0_x = ((frontCenter.x + rearCenter.x)/2);
         msg.tm0_y = ((frontCenter.y + rearCenter.y)/2);
 
-        float deltaX = frontCenter.x - rearCenter.x;
-        float deltaY = frontCenter.y - rearCenter.y;
-        msg.tm0_w = std::atan2(deltaY, deltaX) * 180 / PI;
+        msg.tm0_w = angleFrom(rearCenter, frontCenter);
 
         std::string str(  "x: " + std::to_string(((int)std::round(msg.tm0_x)))
                         + " y: " + std::to_string(((int)std::round(msg.tm0_y)))

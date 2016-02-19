@@ -10,19 +10,19 @@ RNG rng(12345);
 
  int main( int argc, char** argv )
  {
-//    VideoCapture cap("http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
+    VideoCapture cap("http://192.168.1.48:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
 
-//    if (!cap.isOpened()) { // if not success, exit program
-//        cout << "Cannot open the web cam" << endl;
-//        return -1;
-//    }
+    if (!cap.isOpened()) { // if not success, exit program
+        cout << "Cannot open the web cam" << endl;
+        return -1;
+    }
 
     namedWindow("Control", CV_WINDOW_AUTOSIZE); //create a window called "Control"
 
     int iLowH = 0;
     int iHighH = 179;
 
-    int iLowS = 140;
+    int iLowS = 0;
     int iHighS = 255;
 
     int iLowV = 200;
@@ -41,18 +41,18 @@ RNG rng(12345);
     while (true) {
         Mat imgOriginal;
 
-        //bool bSuccess = cap.read(imgOriginal); // read a new frame from video
-        imgOriginal = imread(argv[1], 1);
-        if ( !imgOriginal.data )
-        {
-            printf("No image data \n");
-            return -1;
-        }
-
-//        if (!bSuccess) { //if not success, break loop
-//            cout << "Cannot read a frame from video stream" << endl;
-//            break;
+        bool bSuccess = cap.read(imgOriginal); // read a new frame from video
+//        imgOriginal = imread(argv[1], 1);
+//        if ( !imgOriginal.data )
+//        {
+//            printf("No image data \n");
+//            return -1;
 //        }
+
+        if (!bSuccess) { //if not success, break loop
+            cout << "Cannot read a frame from video stream" << endl;
+            break;
+        }
         imshow("Original", imgOriginal); //show the original image
 
         Mat imgHSV;
@@ -104,6 +104,9 @@ RNG rng(12345);
             Scalar color = Scalar( 100, 200, 150);
             drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
             circle( drawing, mc[i], 4, color, -1, 8, 0 );
+            std::string str(  " A: " + std::to_string(((int)mu[i].m00)));
+            putText(drawing, str.c_str(), mc[i]
+                ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(0,0,250), 0.7, CV_AA);
         }
 
           /// Show in a window

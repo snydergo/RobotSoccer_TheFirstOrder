@@ -39,10 +39,16 @@ def ControlListener1():
 
     #scale factor
     sf = .01
+    # threshhold for what is considered "close enough"
+    threshold = .05
     ## Decisions ##
     while not rospy.is_shutdown():
         # ignoring theta for now
-        mlib.goXYOmegaWorld(sf*P.x_c,sf*P.y_c)
+        # if the commanded values are small enough, we are close enough. Just stop movement.
+        if P.x_c < threshold and P.y_x < threshold:
+            mlib.stop()
+        else:
+            mlib.goXYOmegaWorld(sf*P.x_c,sf*P.y_c)
 
         rospy.spinOnce()
         return

@@ -83,6 +83,7 @@ AI_cpp/ctrldata/publisher_ctrlmsg.h
 AI_cpp/ctrldata/publisher_ctrlmsg.cpp
 AI_cpp/bookkeeping.h
 AI_cpp/bookkeeping.cpp
+AI_cpp/types.h
 AI_cpp/exceptionAI.h
 AI_cpp/exceptionAI.cpp
 AI_cpp/mathfunctions.h
@@ -103,6 +104,7 @@ AI_cpp/gameplay/skills.h
 AI_cpp/gameplay/skills.cpp
 AI_cpp/gameplay/strategy.h
 AI_cpp/gameplay/strategy.cpp
-
+AI_cpp/gameplay/plays.h
+AI_cpp/gameplay/plays.cpp
 )
 target_link_libraries( MainControl ${catkin_LIBRARIES})

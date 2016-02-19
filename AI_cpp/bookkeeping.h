@@ -14,12 +14,18 @@ typedef short sem;
 // GLOBALS
 extern FieldCoord field;
 extern Point center;
+extern Point enemyGoal;
+extern Point allyGoal;
 extern bool visionUpdated;
 extern sem visionMsg_sem;
 extern sem ctrlMsg_sem;
 extern GameStatus visionStatus_msg;
 
-
+//cmd globals
+extern bool sendCmd_Rob1;
+extern bool sendCmd_Rob2;
+extern robot_soccer::controldata cmdRob1;
+extern robot_soccer::controldata cmdRob2;
 //functions
 bool pend(sem semaphore);
 void post(sem semaphore);

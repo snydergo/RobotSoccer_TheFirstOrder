@@ -1,5 +1,5 @@
 #include <cstdio>
-
+#include <ros/callback_queue.h>
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
 
@@ -14,32 +14,32 @@ int main(int argc, char *argv[])
     //PUBLISHER FOR MOTIONCONTROL
     ros::init(argc, argv, "mainhub");
     ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
-    ros::Rate loop_rate(TICKS_PER_SEC);
-
+    //ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
+    sendCmd_Rob1 = true;
     while (ros::ok())
     {
         count++;
-        if(visionUpdated){
+        if(visionUpdated && count%5==0){
             visionUpdated = false;
             std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<
                          visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;
-            //field.updateStatus(visionStatus_msg);
+            field.updateStatus(visionStatus_msg);
         }
 
-        if(count){
-            robot_soccer::controldata msg;
-            msg.cmdType = "mov";
-            msg.x_dir = count;
-            msg.y_dir = count;
-            msg.cur_theta = count;
-            msg.des_theta = count;
-            chatter_pub.publish(msg);
+        if(sendCmd_Rob1){
+            cmdRob1.cmdType = "mov";
+            Point direction = calc::directionToPoint(field.currentStatus.ally1.location, center);
+            cmdRob1.x_dir = direction.x;
+            cmdRob1.y_dir = direction.y;
+            cmdRob1.cur_theta = field.currentStatus.ally1.theta;
+            cmdRob1.des_theta = calc::angleDifference(cmdRob1.cur_theta, 90);
+            chatter_pub.publish(cmdRob1);
             std::cout << "Message sent" << std::endl;
         }
         //std::cout << "spinning" << std::endl;
-        ros::spinOnce();
-        loop_rate.sleep();
+        //ros::spinOnce();
+        ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.1));
     }
     return 0;
 }
