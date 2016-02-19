@@ -2,10 +2,18 @@
 #define SKILL_H_
 #include "../bookkeeping.h"
 #include "utilities.h"
+#include "../types.h"
 
 class Skills
 {
 public:
+    Skills(robotType type)
+        : type(type)
+        , utils(type)
+        , dest(0,0)
+    {
+
+    }
 
     Skills()
     : dest(0,0)
@@ -30,9 +38,10 @@ public:
     void skill_continueDribble();
     void skill_continueAim();
     void skill_stop();
-
+  private:
     Point dest;
     Utilities utils;
+    robotType type;
 };
 
 #endif /* SKILL_H_ */
