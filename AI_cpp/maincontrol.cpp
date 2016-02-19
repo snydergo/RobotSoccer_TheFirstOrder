@@ -29,14 +29,14 @@ int main(int argc, char *argv[])
 
         if(sendCmd_Rob1){
             cmdRob1.cmdType = "mov";
-/*            Point direction = calc::directionToPoint(field.currentStatus.ally1.location, center);
+            Point direction = calc::directionToPoint(field.currentStatus.ally1.location, center);
             cmdRob1.x = field.currentStatus.ally1.location.x;
             cmdRob1.y = field.currentStatus.ally1.location.y;
             cmdRob1.theta = field.currentStatus.ally1.theta;
             cmdRob1.x_cmd = direction.x;
             cmdRob1.y_cmd = direction.y;
-            cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.cur_theta, 90);
-            chatter_pub.publish(cmdRob1);*/
+            cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);
+            chatter_pub.publish(cmdRob1);
             std::cout << "Message sent" << std::endl;
         }
         //std::cout << "spinning" << std::endl;
