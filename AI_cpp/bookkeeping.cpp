@@ -12,7 +12,9 @@ void post(sem semaphore) {
     semaphore++;
 }
 
-Point center;
+Point center = Point(0,0);
+Point enemyGoal = Point();
+Point allyGoal = Point();
 FieldCoord field;
 bool visionUpdated;
 sem visionMsg_sem = 1;

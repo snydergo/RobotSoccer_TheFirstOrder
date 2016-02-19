@@ -83,6 +83,7 @@ AI_cpp/ctrldata/publisher_ctrlmsg.h
 AI_cpp/ctrldata/publisher_ctrlmsg.cpp
 AI_cpp/bookkeeping.h
 AI_cpp/bookkeeping.cpp
+AI_cpp/types.h
 AI_cpp/exceptionAI.h
 AI_cpp/exceptionAI.cpp
 AI_cpp/mathfunctions.h

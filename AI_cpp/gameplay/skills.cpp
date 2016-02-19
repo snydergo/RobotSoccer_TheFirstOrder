@@ -1,11 +1,6 @@
 #include "skills.h"
 
 
-Skills::Skills()
-{
-
-}
-
 enum class skill_state {idle_st, gotopoint_st, kick_st,
     fetchball_st, dribble_st, aim_st} skill_st;
 

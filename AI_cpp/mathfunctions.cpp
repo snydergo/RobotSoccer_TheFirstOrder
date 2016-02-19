@@ -59,6 +59,7 @@ double calc::getVectorAngle(Point vector){
     }
 }
 
+//####PLAY THRESHOLD FUNCTIONS####//
 bool calc::ballFetched(Robot ally, FieldObject ball){
     Point dist = calc::directionToPoint(ally.location, ball.location);
     //ball should be less than 4cm in front of robot x check
@@ -68,5 +69,13 @@ bool calc::ballFetched(Robot ally, FieldObject ball){
             abs(calc::getVectorAngle(dist) - ally.theta) > ANGLE_ERR) {
         return false;
     }
+
+}
+
+bool calc::ballAimed(Robot ally, FieldObject ball){
+
+}
+
+bool calc::ballKicked(Robot ally, FieldObject ball){
 
 }

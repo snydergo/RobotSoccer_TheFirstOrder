@@ -6,8 +6,6 @@
 #include "../mathfunctions.h"
 #include "../dataclasses/robot.h"
 
-class FieldObject;
-class Point;
 
 class Utilities
 {

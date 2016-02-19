@@ -6,11 +6,6 @@ enum class play_state {idle_st, rushgoal_st, playgoalie_st } play_st;
 enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
     coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st} coord_st;
 
-Plays::Plays()
-{
-
-}
-
 void Plays::rushGoal(){
     coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
     play_st = play_state::rushgoal_st;

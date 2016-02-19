@@ -1,7 +1,7 @@
 #include "strategy.h"
 
 enum class strategy {idle_st, start_st, strategy_GoaliePower_st, 
-					strategy_RushSplitDefense_st,} strategy_st;
+                    strategy_RushSplitDefense_st} strategy_st;
 
 
 bool strategy_shouldRushGoal()

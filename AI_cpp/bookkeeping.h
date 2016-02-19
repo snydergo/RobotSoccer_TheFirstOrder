@@ -9,12 +9,13 @@
 // Type definitions
 #define TICKS_PER_SEC 10
 
-enum class msgType {ally1, ally2, none};
 typedef short sem;
 
 // GLOBALS
 extern FieldCoord field;
 extern Point center;
+extern Point enemyGoal;
+extern Point allyGoal;
 extern bool visionUpdated;
 extern sem visionMsg_sem;
 extern sem ctrlMsg_sem;

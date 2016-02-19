@@ -16,6 +16,10 @@ namespace calc {
     Point getVelocity(FieldObject obj1, FieldObject obj2);
     double radToDeg(double radians);
     double getVectorAngle(Point vector);
+
+    /*#### THRESHOLD PLAY FUNCTIONS ####*/
     bool ballFetched(Robot ally, FieldObject ball);
+    bool ballAimed(Robot ally, FieldObject ball);
+    bool ballKicked(Robot ally, FieldObject ball);
 }
 #endif // MATHFUNCTIONS_H

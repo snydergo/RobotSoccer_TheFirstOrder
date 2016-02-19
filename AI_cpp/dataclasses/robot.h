@@ -4,10 +4,8 @@
 #include <string>
 
 #include "fieldobject.h"
+#include "../types.h"
 
-enum class robotType {ally1, ally2, enemy1, enemy2, none};
-
-class Point;
 
 class Robot: public FieldObject
 {
@@ -17,7 +15,6 @@ public:
     Robot(std::string tag, Point loc, Point vel, double theta, robotType type)
     : FieldObject(tag, loc, vel)
     , theta(theta)
- //   , plays(type)
     {
     }
 

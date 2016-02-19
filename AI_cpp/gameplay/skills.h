@@ -6,9 +6,12 @@
 class Skills
 {
 public:
-    Point dest = Point(0,0);
-    Utilities utils = Utilities();
-    Skills();
+
+    Skills()
+    : dest(0,0)
+    {
+    }
+
     void skill_tick();
     void skill_idle();
     void skill_goToPoint(Point* point);
@@ -27,6 +30,9 @@ public:
     void skill_continueDribble();
     void skill_continueAim();
     void skill_stop();
+
+    Point dest;
+    Utilities utils;
 };
 
 #endif /* SKILL_H_ */
