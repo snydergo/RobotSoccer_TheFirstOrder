@@ -8,8 +8,8 @@
 class Strategies{
 
 public:
-    Plays robot1Plays(robotType::ally1);
-    Plays robot2Plays(robotType::ally1);
+    Plays robot1Plays;
+    //Plays robot2Plays(robotType::ally2);
     void strategy_stop();
     void strategy_tick();
 

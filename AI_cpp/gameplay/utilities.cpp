@@ -12,12 +12,12 @@ void Utilities::rotate(double angle){
 
 void Utilities::move(Robot robot, Point dir, double des_theta){
     cmdRob1.cmdType = "mov";
-    cmdRob1.x_pos = robot.location.x;
-    cmdRob1.y_pos = robot.location.y;
-    cmdRob1.cur_theta = robot.theta;
-    cmdRob1.x_dir = dir.x;
-    cmdRob1.y_dir = dir.y;
-    cmdRob1.des_theta = des_theta;
+    cmdRob1.x = robot.location.x;
+    cmdRob1.y = robot.location.y;
+    cmdRob1.theta = robot.theta;
+    cmdRob1.x_cmd = dir.x;
+    cmdRob1.y_cmd = dir.y;
+    cmdRob1.theta_cmd = des_theta;
     sendCmd_Rob1 = true;
 }
 
