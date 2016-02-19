@@ -14,7 +14,7 @@ void Strategies::strategy_tick()
 	switch (strategy_st)
 	{
     case strategy::idle_st:
-        plays.playGoalie();
+        robot1Plays.playGoalie();
         strategy_st = strategy::start_st;
 		break;
     //state used to perform all necessary inits and start first strategy
@@ -24,9 +24,9 @@ void Strategies::strategy_tick()
     case strategy::strategy_GoaliePower_st:
         if(field.currentStatus.ball.velocity.x < 0 &&
             field.currentStatus.ball.location.x < 0){
-            plays.playGoalie();
+            robot1Plays.playGoalie();
         }else
-            plays.rushGoal();
+            robot1Plays.rushGoal();
 		break;
     case strategy::strategy_RushSplitDefense_st:
 		break;
