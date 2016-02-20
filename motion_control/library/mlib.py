@@ -3,6 +3,7 @@ import time
 import roboclaw
 import sys
 from enum import Enum
+import numpy as np
 # BECAUSE I HAD TO MAKE A NEW MAT
 import mat2 as mat
 
@@ -35,15 +36,23 @@ class mlibExcept(Exception):
 
 
 
-# motor gear ticks for 1 revolution
+# motor gear ticks for 1 revolution / 2pi radians
 mtps = 19820
 
-# scale ticks per second so that a value of 1 corresponds to 1 rotations per second.
-def omega2qpps(omega):
-	return int(omega*mtps)
-# scale from ticks per second to omega
-def qpps2omega(qpps):
-	return qpps/mtps
+# scale ticks per second so that a value of 1 corresponds to 2pi rotations per second.
+def radian2Qpps(radian):
+  result = int(radian * mtps / (2.0*math.pi))
+  if result > 308420:
+    return 308420
+  elif result < -308420:
+    return -308420
+  else:
+    return result
+    
+# scale from ticks per second to radians
+def qpps2Radian(qpps):
+  result = int(qpps / mtps * (2.0*math.pi))
+  return result
 
 # Move Motor Forward.
 # @param motor: 1 => Front-Right, 2 => Front-Left, 3 => Back
@@ -83,7 +92,7 @@ def ForwardBackM(motor,val):
 # @param val should be given in rotations/second
 def SpeedM(motor,omega):
 	# Convert to rotations/second
-	qpps = omega2qpps(omega)
+	qpps = radian2Qpps(omega)
 	if motor == 1:
 		return roboclaw.SpeedM1(addr1,qpps)
 	elif motor == 2:
@@ -95,7 +104,7 @@ def SpeedM(motor,omega):
 
 def speedAccelM(motor,time,speed):
 	# Convert to rotations/second
-	qpps = omega2qpps(speed)
+	qpps = radian2Qpps(speed)
 	accel = qpps/time
 	if motor == 1:
 		return roboclaw.SpeedAccelM1(addr1,accel,qpps)
@@ -151,11 +160,6 @@ def rotateRate(speed):
 	for n in x:
 		ForwardBackM(n,speed)
 
-def rotateDeg(degrees):
-	return
-
-
-
 def goXYOmega(x,y,omega):
 	# Get what the wheel omegas needs to be
 	v1,v2,v3 = mat.getWheelVel(x,y,omega)
@@ -183,12 +187,8 @@ def goXYOmegaWorldAccel(vx_w,vy_w,omega=0,theta=0,time=1):
 	k = 1
 	# Set speed for each wheel
 	for w in wheelVels:
-		speedAccelM(k,time,w)
+		speedAccelM(k,time,abs(w))
 		k = k+1
-	return
-
-def goDisXYOmegaWorld(x_w,y_w,time,omega=0,theta=0):
-	#goXYOmegaWorld()
 	return
 
 # Hard stop all motors
