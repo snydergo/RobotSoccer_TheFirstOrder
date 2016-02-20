@@ -27,7 +27,7 @@ def callback1(data):
     #    P.x_cmd = data.x_cmd
     #    P.y_cmd = data.y_cmd
     #    P.theta_cmd = data.theta_cmd
-	P = data
+	   P = data
 
     #scale factor
     sf = .01
