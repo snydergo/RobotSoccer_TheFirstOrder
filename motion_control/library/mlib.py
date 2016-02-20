@@ -41,7 +41,7 @@ mtps = 19820
 
 # scale ticks per second so that a value of 1 corresponds to 2pi rotations per second.
 def radian2Qpps(radian):
-  result = int(radian * mtps / (2.0*math.pi))
+  result = int(radian * mtps / (2.0*np.pi))
   if result > 308420:
     return 308420
   elif result < -308420:
@@ -51,7 +51,7 @@ def radian2Qpps(radian):
     
 # scale from ticks per second to radians
 def qpps2Radian(qpps):
-  result = int(qpps / mtps * (2.0*math.pi))
+  result = int(qpps / mtps * (2.0*np.pi))
   return result
 
 # Move Motor Forward.
