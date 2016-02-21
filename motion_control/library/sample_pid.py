@@ -7,17 +7,17 @@ class ControlVar:
 
 class Param:
     def __init__(self):
-        self.kp_x   = 1
-        self.ki_x   = 0.5
-        self.kd_x   = 0.25
+        self.kp_x   = .5
+        self.ki_x   = 0
+        self.kd_x   = 0
 
-        self.kp_y   = 1.25
-        self.ki_y   = 0.5
-        self.kd_y   = 0.25
+        self.kp_y   = .55
+        self.ki_y   = 0
+        self.kd_y   = 0
 
-        self.kp_th  = 1.25
-        self.ki_th  = 0.5
-        self.kd_th  = 0.25
+        self.kp_th  = .55
+        self.ki_th  = 0
+        self.kd_th  = 0
 
         self.Ts     = 0.033
         self.tau    = 0.005
@@ -29,28 +29,32 @@ y_g     = ControlVar()
 theta_g = ControlVar()
 P       = Param()
 
-def robot_ctrl(message):
-    x       = message.x
-    y       = message.y 
-    theta   = message.theta
 
-    x_cmd       = message.x_cmd
-    y_cmd       = message.y_cmd
-    theta_cmd   = message.theta_cmd
+sf = .001
+
+def robot_ctrl(message):
+    x       = sf*message.x
+    y       = sf*message.y 
+    theta   = sf*message.theta
+
+    x_cmd       = sf*message.x_cmd
+    y_cmd       = sf*message.y_cmd
+    theta_cmd   = sf*message.theta_cmd
     
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,2,P.Ts,P.tau)
-    vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,2,P.Ts,P.tau)
-    vth = PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,2,P.Ts,P.tau)
+    vy  = 0 #PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,2,P.Ts,P.tau)
+    vth = 0 #PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,2,P.Ts,P.tau)
 
     return vx, vy, vth
 
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
-    type(cmd_pos)
-    type(pos)
+    print("cmd_pos: " + str(cmd_pos))
+    print("pos" + str(pos))
+    cmd_pos = 0
     # compute the error
-    error = cmd_pos-pos;
+    error = cmd_pos-pos; print("Error: " + str(error));
     # update integral of error
     ctrl_vars.integrator = ctrl_vars.integrator + (Ts/2)*(error+ctrl_vars.prev_error);
     # update derivative of z

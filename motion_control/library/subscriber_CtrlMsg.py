@@ -39,8 +39,10 @@ def callback1(data):
     if P.x_cmd < threshold and P.y_cmd < threshold:
        mlib.stop()
     else:
+       data.x = 0; data.y = 0; data.theta = 0;
        vx, vy, omega = pid.robot_ctrl(data)
-       mlib.goXYOmegaWorld(vx,vy,omega,P.theta)
+       print(vx)
+       mlib.goXYOmegaWorld(vx,vy,omega)
 	
 	
     # print data
