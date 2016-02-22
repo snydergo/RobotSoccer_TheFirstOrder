@@ -51,7 +51,7 @@ def robot_ctrl(message):
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     print("cmd_pos: " + str(cmd_pos))
-    print("pos" + str(pos))
+    print("pos: " + str(pos))
     cmd_pos = 0
     # compute the error
     error = cmd_pos-pos; print("Error: " + str(error));
