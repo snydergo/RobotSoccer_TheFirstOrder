@@ -27,7 +27,7 @@
         },
         "teamRobots": {
             "count": 1,
-            "primaryColor": {
+            "color": {
                 "lowH": 60,
                 "highH": 90,
                 "lowS": 30,
@@ -40,7 +40,7 @@
         },
         "opponentRobots": {
             "count": 1,
-            "primaryColor": {
+            "color": {
                 "lowH": 0,
                 "highH": 0,
                 "lowS": 0,
