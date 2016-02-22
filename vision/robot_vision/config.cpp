@@ -12,14 +12,18 @@ int cropLeft;
 int cropRight;
 
 HsvColorSubSpace ballColor;
+int ballArea;
 
 int teamRobotCount;
 HsvColorSubSpace teamRobotPrimaryColor;
-HsvColorSubSpace teamRobotSecondaryColor;
+int teamRobotLargeArea;
+int teamRobotSmallArea;
 
 int opponentRobotCount;
 HsvColorSubSpace opponentRobotPrimaryColor;
-HsvColorSubSpace opponentRobotSecondaryColor;
+int opponentRobotLargeArea;
+int opponentRobotSmallArea;
+
 
 std::string cameraUrl;
 
