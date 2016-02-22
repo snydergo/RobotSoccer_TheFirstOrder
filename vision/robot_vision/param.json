@@ -28,28 +28,28 @@
         "teamRobots": {
             "count": 1,
             "color": {
+                "lowH": 80,
+                "highH": 100,
+                "lowS": 70,
+                "highS": 220,
+                "lowV": 170,
+                "highV": 255
+            },
+            "large_area": 440,
+            "small_area": 270
+        },
+        "opponentRobots": {
+            "count": 1,
+            "color": {
                 "lowH": 60,
                 "highH": 90,
                 "lowS": 30,
                 "highS": 145,
                 "lowV": 180,
                 "highV": 255
-            },
-            "large_area": 420,
-            "small_area": 240
-        },
-        "opponentRobots": {
-            "count": 1,
-            "color": {
-                "lowH": 0,
-                "highH": 0,
-                "lowS": 0,
-                "highS": 0,
-                "lowV": 0,
-                "highV": 0
             },        
-            "large_area": 420,
-            "small_area": 240
+            "large_area": 440,
+            "small_area": 270
         }
     }
 }
