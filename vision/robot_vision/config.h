@@ -18,15 +18,19 @@ extern int cropLeft;
 extern int cropRight;
 
 extern HsvColorSubSpace ballColor;
+extern int ballArea;
 
 extern int teamRobotCount;
 extern HsvColorSubSpace teamRobotPrimaryColor;
-extern HsvColorSubSpace teamRobotSecondaryColor;
+extern int teamRobotLargeArea;
+extern int teamRobotSmallArea;
 
 
 extern int opponentRobotCount;
 extern HsvColorSubSpace opponentRobotPrimaryColor;
 extern HsvColorSubSpace opponentRobotSecondaryColor;
+extern int opponentRobotLargeArea;
+extern int opponentRobotSmallArea;
 
 extern std::string cameraUrl;
 
