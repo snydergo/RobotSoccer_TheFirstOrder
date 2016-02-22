@@ -39,7 +39,7 @@ bool Robot::update(std::vector<UndefinedCVObject>& cvObjs)
         int idx = frontIdxs[i];
         float angle = std::abs(angleDifference(theta, angleFrom(potentialRear.center, cvObjs[idx].center)));
         if (angle < deltaAngle) {
-            frontIdx = i;
+            frontIdx = idx;
             deltaAngle = angle;
         }
     }
