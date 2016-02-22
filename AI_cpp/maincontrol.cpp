@@ -17,6 +17,8 @@ int main(int argc, char *argv[])
     //ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
     sendCmd_Rob1 = true;
+
+    std::cout << "Main Control Started Successfully" << std::endl;
     while (ros::ok())
     {
         count++;
@@ -37,7 +39,6 @@ int main(int argc, char *argv[])
             cmdRob1.y_cmd = direction.y;
             cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);
             chatter_pub.publish(cmdRob1);
-            std::cout << "Message sent" << std::endl;
         }
         //std::cout << "spinning" << std::endl;
         //ros::spinOnce();

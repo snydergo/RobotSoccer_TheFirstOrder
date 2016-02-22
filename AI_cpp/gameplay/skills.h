@@ -1,6 +1,6 @@
 #ifndef SKILL_H_
 #define SKILL_H_
-#include "../bookkeeping.h"
+
 #include "utilities.h"
 #include "../types.h"
 
