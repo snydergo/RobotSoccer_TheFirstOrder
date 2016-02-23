@@ -2,6 +2,8 @@
 #define TYPES_H
 
 #define GOAL_XLOCATION 180
+#define GOAL_WIDTH 60
+#define RADIUS GOAL_WIDTH/2
 #define FIELD_XBORDER 180
 #define FIELD_YBORDER 88
 #define PI 3.141592653
