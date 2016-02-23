@@ -34,6 +34,7 @@ int main(int argc, char** argv)
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
     bool robotUpdated = false;
     Robot robot;
+    Ball ball;
 
     VideoCapture camera(config::cameraUrl);
 
@@ -59,7 +60,8 @@ int main(int argc, char** argv)
         // find their robots
         //vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
         //find the ball
-        //vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
+        vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
+        
         for (auto m: teamMoments) {
             circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
         }
@@ -70,8 +72,17 @@ int main(int argc, char** argv)
             UndefinedCVObject obj(teamMoments[i], config::teamRobotPrimaryColor);
             uObjects.push_back(obj);
         }
+        
+        vector<UndefinedCVObject> ballObjects;
+        int j = 0;
+        for (int i = 0; i < balls.size(); i+=2) {
+            UndefinedCVObject obj(balls[i], config::teamRobotPrimaryColor);
+            ballObjects.push_back(obj);
+        }
 
         robotUpdated = robot.find(uObjects);
+        
+        ball.find(ballObjects);
 
         Moments rear;
         Moments front;
