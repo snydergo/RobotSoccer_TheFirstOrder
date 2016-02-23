@@ -14,18 +14,15 @@
 using namespace std;
 using namespace rapidjson;
 
-HsvColorSubSpace getColorSpace(std::string colorName)
+HsvColorSubSpace getColorSpace(string colorName)
 {
-    switch(colorName) {
-        case "green": return config::green;
-        case "blue": return config::blue;
-        case "purple": return config::purple;
-        case "red": return config::red;
-        case "orange": return config::orange;
-        case "pink": return config::pink;
-        case "yellow": return config::yellow;
-        default: return config::green;
-    }
+    if (colorName == "green") return config::green;
+    if (colorName == "blue") return config::blue;
+    if (colorName == "purple") return config::purple;
+    if (colorName == "red") return config::red;
+    if (colorName == "orange") return config::orange;
+    if (colorName == "pink") return config::pink;
+    if (colorName == "yellow") return config::yellow;
     return config::green;
 }
 

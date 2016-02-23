@@ -61,10 +61,11 @@ vision/robot_vision/undefinedcvobject.cpp
 vision/robot_vision/definedcvobject.h
 vision/robot_vision/robot.h
 vision/robot_vision/robot.cpp
+vision/robot_vision/parameters.h
+vision/robot_vision/parameters.cpp
 vision/robot_vision/ball.h
 vision/robot_vision/ball.cpp
 vision/robot_vision/utils.h
-vision/robot_vision/utils.cpp
 vision/robot_vision/objectdetection.h
 vision/robot_vision/objectdetection.cpp
 vision/robot_vision/config.h

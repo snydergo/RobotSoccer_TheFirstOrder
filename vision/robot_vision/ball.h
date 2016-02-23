@@ -7,6 +7,9 @@ class Ball: public DefinedCVObject
 { 
 public:
 
+    Ball(): thresholdDistance(45.0){}
+
+
     Ball(int _refSize)
     : refSize(_refSize)
     , thresholdDistance(45.0)
@@ -16,11 +19,10 @@ public:
     bool update(std::vector<UndefinedCVObject>& cvObjs) override;
     bool find(std::vector<UndefinedCVObject>& cvObjs) override;
     
-    cv::Point2f getCenter() {return center;}
+    cv::Point2f getCenter() {return lastLocation.center;}
 
 private:
     UndefinedCVObject lastLocation;
-    cv::Point2f center;
     int refSize;
     float thresholdDistance;
 };

@@ -7,7 +7,12 @@ class Robot: public DefinedCVObject
 {
 public:
 
-  Robot(): simpleDetection(true){}
+  Robot()
+  : simpleDetection(true)
+  , front()
+  , rear()
+  {
+  }
 
   Robot(int frontSize, int rearSize, int distance)
   : frontRefSize(frontSize)

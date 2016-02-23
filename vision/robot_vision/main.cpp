@@ -9,6 +9,7 @@
 #include "config.h"
 #include "undefinedcvobject.h"
 #include "robot.h"
+#include "ball.h"
 
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
@@ -16,7 +17,6 @@
 #include <stdio.h>
 #include <math.h>
 
-using namespace rapidjson;
 using namespace std;
 using namespace cv;
 
@@ -34,7 +34,7 @@ int main(int argc, char** argv)
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
     bool robotUpdated = false;
     Robot robot;
-    Ball ball;
+    Ball ball(50);
 
     VideoCapture camera(config::cameraUrl);
 
@@ -57,31 +57,25 @@ int main(int argc, char** argv)
 
         /// find our robots
         vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::teamRobotPrimaryColor);
-        // find their robots
-        //vector<cv::Moments> opponetMoments = locateCvObjects(frame, config::opponentRobotPrimaryColor);
-        //find the ball
-        vector<cv::Moments> balls = locateCvObjects(frame, config::ballColor);
-        
         for (auto m: teamMoments) {
             circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
         }
 
         vector<UndefinedCVObject> uObjects;
-        int j = 0;
         for (int i = 0; i < teamMoments.size(); i+=2) {
-            UndefinedCVObject obj(teamMoments[i], config::teamRobotPrimaryColor);
+            UndefinedCVObject obj(teamMoments[i]);
             uObjects.push_back(obj);
         }
-        
+        //find the ball
+        vector<cv::Moments> balls = locateCvObjects(frameHSV, config::ballColor);
+
+
         vector<UndefinedCVObject> ballObjects;
-        int j = 0;
         for (int i = 0; i < balls.size(); i+=2) {
-            UndefinedCVObject obj(balls[i], config::teamRobotPrimaryColor);
+            UndefinedCVObject obj(balls[i]);
             ballObjects.push_back(obj);
         }
 
-        robotUpdated = robot.find(uObjects);
-        
         ball.find(ballObjects);
 
         Moments rear;
@@ -108,19 +102,27 @@ int main(int argc, char** argv)
 
         msg.tm0_w = angleFrom(rearCenter, frontCenter);
 
+        msg.ball_x = ball.getCenter().x;
+        msg.ball_y = ball.getCenter().y;
+
         std::string str(  "x: " + std::to_string(((int)std::round(msg.tm0_x)))
                         + " y: " + std::to_string(((int)std::round(msg.tm0_y)))
                         + " w: " + std::to_string(((int)std::round(msg.tm0_w)))
                         );
-        putText(frame, str.c_str(), Point2f(30, 30)//GetMomentCenter(front)
-            ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 0.7, CV_AA);
+        putText(frame, str.c_str(), GetMomentCenter(front)
+            ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
+
+        std::string str2(  "x: " + std::to_string(((int)std::round(msg.ball_x)))
+                        + " y: " + std::to_string(((int)std::round(msg.ball_y)))
+                        );
+        putText(frame, str2.c_str(), Point(30,30)
+            ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
 
 
         visionDataPub.publish(msg);
-        //ros::spinOnce();
-        //loop_rate.sleep();
+
         imshow("robot view", frame);
-        waitKey(5);
+        waitKey(1);
     }
     
     return 0;

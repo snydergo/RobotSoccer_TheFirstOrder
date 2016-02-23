@@ -33,13 +33,15 @@ bool Ball::find(std::vector<UndefinedCVObject>& cvObjs) // find the object close
     int closest = -1;
     int size = 10000;
     for(int i = 0; i < cvObjs.size(); i++) {
-        if (std::abs(refSize - cvObjs[i].area) < size &&
-            std::abs(cvObjs[closest].area - refSize) < refSize/2)
+        int deltaSize = std::abs(refSize - cvObjs[i].area);
+        if (deltaSize < size && // this object is closer in size then the old one
+            deltaSize < refSize/2) // it is within our threshold distance
         {
             closest = i;
-            size = cvObjs[i].area;
+            size = deltaSize;
         }
     }
+
     if (closest > -1) {
         lastLocation = cvObjs[closest];
         cvObjs.erase(cvObjs.begin() + closest);

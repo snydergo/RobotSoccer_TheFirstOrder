@@ -16,7 +16,7 @@
         },
         "ball": {
             "color": "pink",
-            "area": 45
+            "area": 50
         },
         "teamRobots": {
             "count": 1,
