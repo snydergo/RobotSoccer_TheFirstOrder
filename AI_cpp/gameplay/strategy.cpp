@@ -22,6 +22,8 @@ void Strategies::tick()
 	{
     case strategy::idle_st:
         std::cout << "Strategies::tick() idle_st"<< std::endl;
+        //issue with the data not being initialized the first time
+        //it is assumed robot is not in the right position
         //if(count++ == 50){
             strategy_st = strategy::start_st;
             roleSwitch = true;
