@@ -60,18 +60,21 @@ void Plays::tick(){
                     case coordSkills_st::coordFetchball_st:
                        skill.fetchBall();
                        if(bkcalc::ballFetched(allyNum)){
+                            std::cout << "Plays::tick() BALL FETCHED" << std::endl;
                             coord_st = coordSkills_st::coordAim_st;
                         }
                         break;
                     case coordSkills_st::coordAim_st:
                         skill.aim();
                         if(true /*ballAimed()*/){
+                            std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             coord_st = coordSkills_st::coordKick_st;
                         }
                         break;
                     case coordSkills_st::coordKick_st:
                         skill.kick();
                         if(bkcalc::ballKicked(allyNum)){
+                            std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
                         }
                         break;
@@ -99,6 +102,7 @@ void Plays::tick(){
                         skill.goToPoint(point);
                         //if ball is close to robot
                         if(bkcalc::atLocation(allyNum, field.currentStatus.ball.location)){
+                            std::cout << "Plays::tick() BALL FOLLOWED" << std::endl;
                             coord_st = coordSkills_st::coordKick_st;
                         }
                     }
@@ -107,6 +111,7 @@ void Plays::tick(){
                         std::cout << "Skills::coordSkills_st == kick_st"<<std::endl;
                         skill.kick();
                         if(bkcalc::ballKicked(allyNum)){
+                            std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
                     break;
