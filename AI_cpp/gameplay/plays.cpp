@@ -18,17 +18,17 @@ void Plays::start(){
 }
 
 void Plays::rushGoal(bool playSwitch){
-    if(!playSwitch){
+    //if(!playSwitch){
         coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
         play_st = play_state::rushgoal_st;
-    }
+    //}
 }
 
 void Plays::playGoalie(bool playSwitch){
-    if(!playSwitch){
+    //if(!playSwitch){
         coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches firstime
         play_st = play_state::playgoalie_st;
-    }
+    //}
 }
 
 void Plays::idle(){
