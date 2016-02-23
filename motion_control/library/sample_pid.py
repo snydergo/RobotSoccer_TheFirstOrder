@@ -9,11 +9,11 @@ class Param:
     def __init__(self):
         self.kp_x   = .01
         self.ki_x   = 0
-        self.kd_x   = .005
+        self.kd_x   = 0 #.002
 
         self.kp_y   = .01
         self.ki_y   = 0
-        self.kd_y   = .005
+        self.kd_y   = 0 #.002
 
         self.kp_th  = .005
         self.ki_th  = 0
@@ -50,7 +50,7 @@ def robot_ctrl(message):
 
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
-    cmd_pos = -70.000
+    cmd_pos = 0.000
     # compute the error
     error = cmd_pos-pos
     print("Error: " + str(error))
