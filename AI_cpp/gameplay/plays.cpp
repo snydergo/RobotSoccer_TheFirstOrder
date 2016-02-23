@@ -17,14 +17,18 @@ void Plays::start(){
     play_st = play_state::start_st;
 }
 
-void Plays::rushGoal(){
-    coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
-    play_st = play_state::rushgoal_st;
+void Plays::rushGoal(bool playSwitch){
+    if(!playSwitch){
+        coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
+        play_st = play_state::rushgoal_st;
+    }
 }
 
-void Plays::playGoalie(){
-    coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches
-    play_st = play_state::playgoalie_st;
+void Plays::playGoalie(bool playSwitch){
+    if(!playSwitch){
+        coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches firstime
+        play_st = play_state::playgoalie_st;
+    }
 }
 
 void Plays::idle(){
@@ -43,16 +47,19 @@ void Plays::tick(){
     */
     switch(play_st){
             case play_state::idle_st:
+                std::cout << "Plays::tick() idle_st"<< std::endl;
                 skill.idle();
                 break;
             case play_state::start_st:
+                std::cout << "Plays::tick() start_st"<< std::endl;
                 skill.goToPoint(start1Location);
                 break;
             case play_state::rushgoal_st:
+                std::cout << "Plays::tick() rushgoal_st"<< std::endl;
                 switch(coord_st){
                     case coordSkills_st::coordFetchball_st:
                        skill.fetchBall();
-                       if(true/*ballFetched()*/){
+                       if(bkcalc::ballFetched(allyNum)){
                             coord_st = coordSkills_st::coordAim_st;
                         }
                         break;
@@ -75,15 +82,19 @@ void Plays::tick(){
                 break;
             case play_state::playgoalie_st:
                 //always should first go to goal
+                std::cout << "Plays::tick() playgoalie_st"<< std::endl;
                 switch(coord_st){
                     case coordSkills_st::coordGotogoal_st:
+                        std::cout << "Skills::coordSkills_st == gotogoal"<<std::endl;
                         skill.goToPoint(allyGoal);
                         if(bkcalc::atLocation(allyNum, allyGoal)){
+                            std::cout << "AT GOAL" << std::endl;
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
                         break;
                     case coordSkills_st::coordFollowball_st:
                     {
+                        std::cout << "Skills::coordSkills_st == Followball_st"<<std::endl;
                         Point point(allyGoal.x,field.currentStatus.ball.location.y);
                         skill.goToPoint(point);
                         //if ball is close to robot
@@ -93,6 +104,7 @@ void Plays::tick(){
                     }
                         break;
                     case coordSkills_st::coordKick_st:
+                        std::cout << "Skills::coordSkills_st == kick_st"<<std::endl;
                         skill.kick();
                         if(bkcalc::ballKicked(allyNum)){
                             coord_st = coordSkills_st::coordFollowball_st;
@@ -107,7 +119,8 @@ void Plays::tick(){
                 //Throw Exception
                 break;
 
-        //need skill to perform action depending on change
-        skill.tick();
+
     };
+    //need skill to perform action depending on change
+    skill.tick();
 }

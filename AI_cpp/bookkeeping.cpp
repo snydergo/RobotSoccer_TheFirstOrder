@@ -3,7 +3,7 @@
 Point center = Point(0,0);
 Point enemyGoal = Point(GOAL_XLOCATION,0);
 Point allyGoal = Point(-GOAL_XLOCATION,0);
-Point start1Location = Point(-GOAL_XLOCATION,0);
+Point start1Location = Point(0,0);
 FieldCoord field;
 bool visionUpdated;
 GameStatus visionStatus_msg;
@@ -44,4 +44,20 @@ bool bkcalc::ballKicked(robotType type){
             break;
     }
     return ballkicked;
+}
+
+bool bkcalc::ballFetched(robotType type){
+    bool ballfetched = false;
+    switch(type){
+        case robotType::ally1:
+            ballfetched = calc::ballFetched(field.currentStatus.ally1, field.currentStatus.ball);
+            break;
+        case robotType::ally2:
+            ballfetched = calc::ballFetched(field.currentStatus.ally2, field.currentStatus.ball);
+            break;
+        default:
+            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return ballfetched;
 }

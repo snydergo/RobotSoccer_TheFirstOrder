@@ -17,12 +17,13 @@ void Skills::idle(){
 }
 
 void Skills::goToPoint(Point point){
+    std::cout << "Skills::goToPoint" << std::endl;
     dest = point;
     skill_st = skill_state::gotopoint_st;
 }
 
 void Skills::fetchBall(){
-    printf("start fetch ball\n");
+    printf("SKILLS:: start fetch ball\n");
     skill_st = skill_state::fetchball_st;
 }
 
@@ -82,6 +83,7 @@ void Skills::tick(){
             continueIdle();
             break;
         case skill_state::gotopoint_st:
+            std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
             continueGoToPoint();
             break;
         case skill_state::kick_st:

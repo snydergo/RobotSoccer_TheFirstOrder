@@ -67,6 +67,7 @@ bool calc::atLocation(Point robot, Point point){
     double yValues = robot.y-point.y;
     yValues *= yValues;
     double distance_sqrd = xValues+yValues;
+    std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
     if(distance_sqrd > DISTANCE_ERR)
         return false;
     else
