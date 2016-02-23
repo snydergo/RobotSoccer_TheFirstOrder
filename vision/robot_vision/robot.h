@@ -6,6 +6,16 @@
 class Robot: public DefinedCVObject
 {
 public:
+
+  Robot(): simpleDetection(true){}
+
+  Robot(int frontSize, int rearSize, int distance)
+  : frontRefSize(frontSize)
+  , rearRefSize(rearSize)
+  , refDistance(distance)
+  , simpleDetection(false)
+  {
+  }
   
   bool update(std::vector<UndefinedCVObject>& cvObjs) override;
   bool find(std::vector<UndefinedCVObject>& cvObjs) override;
@@ -27,6 +37,7 @@ private:
   int frontRefSize;
   int rearRefSize;
   int refDistance;
+  bool simpleDetection;
 
   float theta;
 };
