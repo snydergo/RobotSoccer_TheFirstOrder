@@ -154,6 +154,21 @@ vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace
     return GetMoments(contours);
 }
 
+HsvColorSubSpace getColorSpace(std::string colorName)
+{
+    switch(colorName) {
+        case "green": return config::green;
+        case "blue": return config::blue;
+        case "purple": return config::purple;
+        case "red": return config::red;
+        case "orange": return config::orange;
+        case "pink": return config::pink;
+        case "yellow": return config::yellow;
+        default: return config::green;
+    }
+    return config::green;
+}
+
 void loadConfigData(int argc, char** argv)
 {
     cout << "loading param file..." << endl;
@@ -189,41 +204,25 @@ void loadConfigData(int argc, char** argv)
     config::cropTop = crop["top"].GetInt();
     config::cropBottom = crop["bottom"].GetInt();
     
-    config::ballArea = root["ball"]["area"].GetInt();
-    Value& ballColorHsv = root["ball"]["color"];
-    
-    config::ballColor.hue.low         = ballColorHsv["lowH"].GetInt();
-    config::ballColor.hue.high        = ballColorHsv["highH"].GetInt();
-    config::ballColor.saturation.low  = ballColorHsv["lowS"].GetInt();
-    config::ballColor.saturation.high = ballColorHsv["highS"].GetInt();
-    config::ballColor.value.low       = ballColorHsv["lowV"].GetInt();
-    config::ballColor.value.high      = ballColorHsv["highV"].GetInt();
+    Value& ball = root["ball"];
+    config::ballArea = ball["area"].GetInt();
+    config::ballColor = getColorSpace(ball["color"].GetString());
 
-    config::teamRobotCount = root["teamRobots"]["count"].GetInt();
-    config::teamRobotLargeArea = root["teamRobots"]["large_area"].GetInt();
-    config::teamRobotSmallArea = root["teamRobots"]["small_area"].GetInt();
+    Value& teamRobot = root["teamRobots"];
+    config::teamRobotCount = teamRobot["count"].GetInt();
+    config::teamRobotLargeArea = teamRobot["large_area"].GetInt();
+    config::teamRobotSmallArea = teamRobot["small_area"].GetInt();
+    config::teamRobotPrimaryColor = getColorSpace(teamRobot["color"].GetString());
     
-    Value& teamRobotPrimary = root["teamRobots"]["color"];
-    config::teamRobotPrimaryColor.hue.low         = teamRobotPrimary["lowH"].GetInt();
-    config::teamRobotPrimaryColor.hue.high        = teamRobotPrimary["highH"].GetInt();
-    config::teamRobotPrimaryColor.saturation.low  = teamRobotPrimary["lowS"].GetInt();
-    config::teamRobotPrimaryColor.saturation.high = teamRobotPrimary["highS"].GetInt();
-    config::teamRobotPrimaryColor.value.low       = teamRobotPrimary["lowV"].GetInt();
-    config::teamRobotPrimaryColor.value.high      = teamRobotPrimary["highV"].GetInt();
-
-    config::opponentRobotCount = root["opponentRobots"]["count"].GetInt();
-    config::opponentRobotLargeArea = root["opponentRobots"]["large_area"].GetInt();
-    config::opponentRobotSmallArea = root["opponentRobots"]["small_area"].GetInt();
-    
-    Value& opponentRobotPrimary = root["opponentRobots"]["color"];
-    config::opponentRobotPrimaryColor.hue.low         = opponentRobotPrimary["lowH"].GetInt();
-    config::opponentRobotPrimaryColor.hue.high        = opponentRobotPrimary["highH"].GetInt();
-    config::opponentRobotPrimaryColor.saturation.low  = opponentRobotPrimary["lowS"].GetInt();
-    config::opponentRobotPrimaryColor.saturation.high = opponentRobotPrimary["highS"].GetInt();
-    config::opponentRobotPrimaryColor.value.low       = opponentRobotPrimary["lowV"].GetInt();
-    config::opponentRobotPrimaryColor.value.high      = opponentRobotPrimary["highV"].GetInt();
+    Value& opponentRobot = root["opponentRobots"];
+    config::opponentRobotCount = opponentRobot["count"].GetInt();
+    config::opponentRobotLargeArea = opponentRobot["large_area"].GetInt();
+    config::opponentRobotSmallArea = opponentRobot["small_area"].GetInt();
+    config::opponentRobotPrimaryColor = getColorSpace(opponentRobot["color"].GetString());
     
     fclose(file);
     cout << "param file successfully loaded" << endl;
 
 }
+
+
