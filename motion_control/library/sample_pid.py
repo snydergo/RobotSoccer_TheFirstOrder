@@ -50,9 +50,9 @@ def robot_ctrl(message):
 
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
-    cmd_pos = 0.000
+    # cmd_pos = 0.000
     # compute the error
-    error = cmd_pos-pos
+    error = cmd_pos
     print("Error: " + str(error))
     # update integral of error
     ctrl_vars.integrator = ctrl_vars.integrator + (Ts/2)*(error+ctrl_vars.prev_error);
