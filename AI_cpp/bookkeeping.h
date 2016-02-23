@@ -17,8 +17,6 @@ extern Point enemyGoal;
 extern Point allyGoal;
 extern Point start1Location;
 extern bool visionUpdated;
-extern sem visionMsg_sem;
-extern sem ctrlMsg_sem;
 extern GameStatus visionStatus_msg;
 
 //cmd globals
