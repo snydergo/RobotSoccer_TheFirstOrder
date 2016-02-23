@@ -19,6 +19,7 @@ class Utilities
 
 
     void rotate(double angle);
+    void init();
     void idle();
     void move(Robot robot, Point dir, double des_theta);
     void moveToPoint(Robot robot, Point point, double theta);

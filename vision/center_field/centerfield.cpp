@@ -11,16 +11,16 @@ int main(int argc, char** argv)
 {
 
   /// Read the image
-  VideoCapture cap("http://192.168.1.10:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
+  VideoCapture cap("http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
 
     if (!cap.isOpened()) { // if not success, exit program 
         cout << "Cannot open the web cam" << endl;
         return -1;
     }
     float xMax = 0.0;
-    float xMin = 2000.0;
+    float xMin = 10000.0;
     float yMax = 0.0;
-    float yMin = 2000.0;
+    float yMin = 10000.0;
     Point2f averagedCenter;
 
     while (true) {
@@ -50,22 +50,22 @@ int main(int argc, char** argv)
         {
             center = Point2f(cvRound(circles[0][0]), cvRound(circles[0][1]));
 
-            if (center.x < src_gray.cols*2/3 && center.x > src_gray.cols/3) {
+          //  if (center.x < src_gray.cols*2/3 && center.x > src_gray.cols/3) {
                 if (center.x > xMax) {
                     xMax = center.x;
                 }
                 if (center.x < xMin) {
                     xMin = center.x;
                 }
-            }
-            if (center.y < src_gray.cols*2/3 && center.y > src_gray.cols/3) {
+          //  }
+          //  if (center.y < src_gray.cols*2/3 && center.y > src_gray.cols/3) {
                 if (center.y > yMax) {
                     yMax = center.y;
                 }
                 if (center.y < yMin) {
                     yMin = center.y;
                 }
-            }
+          //  }
             averagedCenter.x = (xMax + xMin)/2;
             averagedCenter.y = (yMax + yMin)/2;
         }

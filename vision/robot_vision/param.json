@@ -1,8 +1,8 @@
 {
     "param": {
-        "cameraUrl": "http://192.168.1.48:8080/stream?topic=/image&dummy=param.mjpg",
+        "cameraUrl": "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg",
         "calibration": {
-            "fieldCenterX_pixel": 312,
+            "fieldCenterX_pixel": 422,
             "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 121.92,
             "referenceDistance_pixel": 255,
@@ -15,41 +15,20 @@
             "bottom": 0
         },
         "ball": {
-            "color": {
-                "lowH": 0,
-                "highH": 0,
-                "lowS": 0,
-                "highS": 0,
-                "lowV": 0,
-                "highV": 0
-            },
-            "area": 45
+            "color": "pink",
+            "area": 50
         },
         "teamRobots": {
             "count": 1,
-            "primaryColor": {
-                "lowH": 60,
-                "highH": 90,
-                "lowS": 30,
-                "highS": 145,
-                "lowV": 130,
-                "highV": 255
-            },
-            "large_area": 420,
-            "small_area": 240
+            "color": "green",
+            "large_area": 440,
+            "small_area": 270
         },
         "opponentRobots": {
             "count": 1,
-            "primaryColor": {
-                "lowH": 0,
-                "highH": 0,
-                "lowS": 0,
-                "highS": 0,
-                "lowV": 0,
-                "highV": 0
-            },        
-            "large_area": 420,
-            "small_area": 240
+            "color": "blue",        
+            "large_area": 440,
+            "small_area": 270
         }
     }
 }

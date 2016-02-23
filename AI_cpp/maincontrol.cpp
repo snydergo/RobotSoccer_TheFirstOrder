@@ -2,6 +2,7 @@
 #include <ros/callback_queue.h>
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
+#include "gameplay/strategy.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,17 +18,25 @@ int main(int argc, char *argv[])
     //ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
     sendCmd_Rob1 = true;
+
+    //STRATEGY STATEMACHINE
+    Strategies strategy;
+    strategy.init();
+    std::cout << "Main Control Started Successfully" << std::endl;
     while (ros::ok())
     {
         count++;
+        strategy.tick();
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<
-                         visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;
+                        visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;
             field.updateStatus(visionStatus_msg);
         }
 
         if(sendCmd_Rob1){
+            /*
+            sendCmd_Rob1 = false;*/
             cmdRob1.cmdType = "mov";
             Point direction = calc::directionToPoint(field.currentStatus.ally1.location, center);
             cmdRob1.x = field.currentStatus.ally1.location.x;
@@ -37,7 +46,7 @@ int main(int argc, char *argv[])
             cmdRob1.y_cmd = direction.y;
             cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);
             chatter_pub.publish(cmdRob1);
-            std::cout << "Message sent" << std::endl;
+            //std::cout<<"sending data\n"<<std::endl;
         }
         //std::cout << "spinning" << std::endl;
         //ros::spinOnce();

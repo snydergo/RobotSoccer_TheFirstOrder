@@ -19,11 +19,11 @@ class Param:
         self.ki_th  = 0
         self.kd_th  = 0
 
-        self.Ts     = 0.033
+        self.Ts     = 1.00/loop_rate
         self.tau    = 0.005
 
 
-
+loop_rate = 100 # Hz
 x_g     = ControlVar()
 y_g     = ControlVar()
 theta_g = ControlVar()

@@ -35,31 +35,53 @@ Point calc::getVelocity(FieldObject newobj, FieldObject oldobj){
 }
 
 double calc::radToDeg(double radians){
-    return(radians*180)/M_PI;
+    return(radians*180)/PI;
 }
 
 double calc::getVectorAngle(Point vector){
     //need to first determine quadrant
     double vecAngle = 0;
     //top
-    if(vector.y > 0){
+    if(vector.y >= 0){
          //top right
          if(vector.x > 0){
             vecAngle = calc::radToDeg(atan2(vector.y, vector.x));
          }else{//top left
-            vecAngle = 180+calc::radToDeg(atan2(vector.y, vector.x));
+            vecAngle = calc::radToDeg(atan2(vector.y, vector.x));
          }
     }else {//bottom quadrant
          //bottom right
          if(vector.x > 0){
             vecAngle = 360+calc::radToDeg(atan2(vector.y, vector.x));
          }else{//bottom left
-            vecAngle = 180+calc::radToDeg(atan2(vector.y, vector.x));
+            vecAngle = 360+calc::radToDeg(atan2(vector.y, vector.x));
          }
     }
+    return vecAngle;
 }
 
 //####PLAY THRESHOLD FUNCTIONS####//
+bool calc::atLocation(Point robot, Point point){
+    double xValues = robot.x-point.x;
+    xValues *= xValues;
+    double yValues = robot.y-point.y;
+    yValues *= yValues;
+    double distance_sqrd = xValues+yValues;
+    if(distance_sqrd > DISTANCE_ERR)
+        return false;
+    else
+        return true;
+}
+
+bool calc::atLocation(double robot_coord, double p_coord){
+    double distance_sqrd = robot_coord - p_coord;
+    distance_sqrd *= distance_sqrd;
+    if(distance_sqrd > DISTANCE_ERR)
+        return false;
+    else
+        return true;
+}
+
 bool calc::ballFetched(Robot ally, FieldObject ball){
     Point dist = calc::directionToPoint(ally.location, ball.location);
     //ball should be less than 4cm in front of robot x check
@@ -73,7 +95,17 @@ bool calc::ballFetched(Robot ally, FieldObject ball){
 }
 
 bool calc::ballAimed(Robot ally, FieldObject ball){
-
+    //for ball to be aimed. the robots angle needs to match
+    //the angle created by the ball and the Goal. need to match
+    Point oppGoal = Point(40, 0);
+    Point allyBallVector = calc::directionToPoint(ally.location, ball.location);
+    Point allyGoalVector = calc::directionToPoint(ally.location, oppGoal);
+    if(abs(ally.theta - calc::getVectorAngle(allyBallVector)) < ANGLE_ERR ||
+            abs(ally.theta - calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR ||
+            abs(calc::getVectorAngle(allyBallVector)-calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR){
+        return true;
+    }else
+        return false;
 }
 
 bool calc::ballKicked(Robot ally, FieldObject ball){
