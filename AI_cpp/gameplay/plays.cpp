@@ -1,7 +1,7 @@
 #include "plays.h"
 
 
-enum class play_state {idle_st, rushgoal_st, playgoalie_st } play_st;
+enum class play_state {idle_st, start_st, rushgoal_st, playgoalie_st } play_st;
 
 enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
     coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st} coord_st;
@@ -11,6 +11,10 @@ void Plays::init(){
     play_st = play_state::idle_st;
     skill.init();
     skill.idle();
+}
+
+void Plays::start(){
+    play_st = play_state::start_st;
 }
 
 void Plays::rushGoal(){
@@ -40,6 +44,9 @@ void Plays::tick(){
     switch(play_st){
             case play_state::idle_st:
                 skill.idle();
+                break;
+            case play_state::start_st:
+                skill.goToPoint(start1Location);
                 break;
             case play_state::rushgoal_st:
                 switch(coord_st){

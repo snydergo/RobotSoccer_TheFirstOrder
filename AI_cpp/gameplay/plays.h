@@ -21,7 +21,7 @@ public:
     void idle();
     void tick();
     void init();
-private:
+    void start();
     robotType type;
 };
 

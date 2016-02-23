@@ -25,7 +25,13 @@ void Strategies::tick()
 		break;
     //state used to perform all necessary inits and start first strategy
     case strategy::start_st:
-        strategy_st = strategy::GoaliePower_st;
+        robot1Plays.start();
+        if(bkcalc::atLocation(robot1Plays.type, start1Location)){
+            strategy_st = strategy::GoaliePower_st;
+        }
+        /*if(truegameStarted){
+            strategy_st = strategy::GoaliePower_st;
+        }*/
 		break;
     case strategy::GoaliePower_st:
         if(field.currentStatus.ball.velocity.x < 0 &&

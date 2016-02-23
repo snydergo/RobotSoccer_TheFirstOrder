@@ -15,6 +15,7 @@ void post(sem semaphore) {
 Point center = Point(0,0);
 Point enemyGoal = Point(GOAL_XLOCATION,0);
 Point allyGoal = Point(-GOAL_XLOCATION,0);
+Point start1Location = Point(-GOAL_XLOCATION,0);
 FieldCoord field;
 bool visionUpdated;
 sem visionMsg_sem = 1;
@@ -25,3 +26,20 @@ bool sendCmd_Rob1 = true;
 bool sendCmd_Rob2 = false;
 robot_soccer::controldata cmdRob1;
 robot_soccer::controldata cmdRob2;
+
+//Helper Functions
+bool bkcalc::atLocation(robotType type, Point point){
+    bool atlocation = false;
+    switch(type){
+        case robotType::ally1:
+            atlocation = calc::atLocation(field.currentStatus.ally1.location, point);
+            break;
+        case robotType::ally2:
+            atlocation = calc::atLocation(field.currentStatus.ally2.location, point);
+            break;
+        default:
+            printf("bookkeeping:: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return atlocation;
+}

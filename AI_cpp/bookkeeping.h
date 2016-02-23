@@ -16,6 +16,7 @@ extern FieldCoord field;
 extern Point center;
 extern Point enemyGoal;
 extern Point allyGoal;
+extern Point start1Location;
 extern bool visionUpdated;
 extern sem visionMsg_sem;
 extern sem ctrlMsg_sem;
@@ -29,4 +30,9 @@ extern robot_soccer::controldata cmdRob2;
 //functions
 bool pend(sem semaphore);
 void post(sem semaphore);
+
+namespace bkcalc{
+    extern bool atLocation(robotType type, Point point);
+}
+
 
