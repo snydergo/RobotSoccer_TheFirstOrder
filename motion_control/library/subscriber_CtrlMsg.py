@@ -42,10 +42,9 @@ def callback1(data):
        # data.x = 0; data.y = 0; data.theta = 0;
         if data.x == data.x:
            vx, vy, omega = pid.robot_ctrl(data)
-           print("vx: " + str(vx))
            mlib.goXYOmegaWorld(vx,vy,omega)
 	else:
-            print("nan received")
+            print("NaN received")
 	
     # print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
