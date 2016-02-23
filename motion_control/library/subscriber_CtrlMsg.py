@@ -40,10 +40,10 @@ def callback1(data):
        mlib.stop()
     else:
        # data.x = 0; data.y = 0; data.theta = 0;
-        if data.x == data.x:
+        if data.x == data.x: # check for NaN
            vx, vy, omega = pid.robot_ctrl(data)
            mlib.goXYOmegaWorld(vx,vy,omega)
-	else:
+        else:
             print("NaN received")
 	
     # print data
