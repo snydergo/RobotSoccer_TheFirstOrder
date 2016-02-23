@@ -69,7 +69,7 @@ def ControlListener1():
     	# hello_str = "hello world %s" % rospy.get_time()
 	# rospy.loginfo(hello_str)
 	# pub.publish(hello_str)
-	rate.sleep()
+	   rate.sleep()
     #while not rospy.is_shutdown():
         # ignoring theta for now
         # if the commanded values are small enough, we are close enough. Just stop movement.
@@ -81,7 +81,7 @@ def ControlListener1():
 
 
         # rospy.spin()
-        return
+    return
 
     # spin() simply keeps python from exiting until this node is stopped
     #rospy.spin()
