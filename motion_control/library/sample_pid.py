@@ -9,11 +9,11 @@ class Param:
     def __init__(self):
         self.kp_x   = .01
         self.ki_x   = 0
-        self.kd_x   = 0
+        self.kd_x   = .005
 
         self.kp_y   = .01
         self.ki_y   = 0
-        self.kd_y   = 0
+        self.kd_y   = .005
 
         self.kp_th  = .005
         self.ki_th  = 0
