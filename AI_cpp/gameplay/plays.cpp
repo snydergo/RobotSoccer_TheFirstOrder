@@ -72,7 +72,7 @@ void Plays::play_tick(){
                     {
                         double ball_ycoord = 0; //ball location
                         double goalie_box = 0;
-                        Point point = new Point(ball_ycoord, goalie_box);
+                        Point point(ball_ycoord, goalie_box);
                         skill.skill_goToPoint(point);
                         if(true /*BallClose()*/){
                             coord_st = coordSkills_st::coordKick_st;
