@@ -12,7 +12,7 @@ public:
     Plays(){}
 
     Plays(robotType type)
-    : type(type)
+    : allyNum(type)
     {
     }
 
@@ -22,7 +22,7 @@ public:
     void tick();
     void init();
     void start();
-    robotType type;
+    robotType allyNum;
 };
 
 #endif // PLAYS_H

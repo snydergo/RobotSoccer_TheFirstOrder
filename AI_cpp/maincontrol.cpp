@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
     {
         count++;
         strategy.tick();
-
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<

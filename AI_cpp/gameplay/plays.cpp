@@ -64,7 +64,7 @@ void Plays::tick(){
                         break;
                     case coordSkills_st::coordKick_st:
                         skill.kick();
-                        if(true /*ballKicked()*/){
+                        if(bkcalc::ballKicked(allyNum)){
                             coord_st = coordSkills_st::coordFetchball_st;
                         }
                         break;
@@ -78,24 +78,23 @@ void Plays::tick(){
                 switch(coord_st){
                     case coordSkills_st::coordGotogoal_st:
                         skill.goToPoint(allyGoal);
-                        if(true /*atGoal()*/){
+                        if(bkcalc::atLocation(allyNum, allyGoal)){
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
                         break;
                     case coordSkills_st::coordFollowball_st:
                     {
-                        double ball_ycoord = 0; //ball location
-                        double goalie_box = 0;
-                        Point point(ball_ycoord, goalie_box);
+                        Point point(allyGoal.x,field.currentStatus.ball.location.y);
                         skill.goToPoint(point);
-                        if(true /*BallClose()*/){
+                        //if ball is close to robot
+                        if(bkcalc::atLocation(allyNum, field.currentStatus.ball.location)){
                             coord_st = coordSkills_st::coordKick_st;
                         }
                     }
                         break;
                     case coordSkills_st::coordKick_st:
                         skill.kick();
-                        if(true /*BallKicked()*/){
+                        if(bkcalc::ballKicked(allyNum)){
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
                     break;
@@ -107,5 +106,8 @@ void Plays::tick(){
             default:
                 //Throw Exception
                 break;
+
+        //need skill to perform action depending on change
+        skill.tick();
     };
 }

@@ -20,13 +20,12 @@ void Strategies::tick()
 	switch (strategy_st)
 	{
     case strategy::idle_st:
-        robot1Plays.playGoalie();
         strategy_st = strategy::start_st;
 		break;
     //state used to perform all necessary inits and start first strategy
     case strategy::start_st:
         robot1Plays.start();
-        if(bkcalc::atLocation(robot1Plays.type, start1Location)){
+        if(bkcalc::atLocation(robot1Plays.allyNum, start1Location)){
             strategy_st = strategy::GoaliePower_st;
         }
         /*if(truegameStarted){
@@ -43,6 +42,10 @@ void Strategies::tick()
     case strategy::RushSplitDefense_st:
 		break;
 	}
+
+    //need to tick the play statemachine depending on change that occured
+    robot1Plays.tick();
+    //robot2Plays.tick();
 }
 
 void Strategies::stop()

@@ -82,7 +82,7 @@ void Skills::tick(){
             continueIdle();
             break;
         case skill_state::gotopoint_st:
-            //continueGoToPoint();
+            continueGoToPoint();
             break;
         case skill_state::kick_st:
             continueKick();

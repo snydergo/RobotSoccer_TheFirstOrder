@@ -24,8 +24,24 @@ bool bkcalc::atLocation(robotType type, Point point){
             atlocation = calc::atLocation(field.currentStatus.ally2.location, point);
             break;
         default:
-            printf("bookkeeping:: ERR you didn't provide a valid robot\n");
+            printf("bookkeeping:atLocation:: ERR you didn't provide a valid robot\n");
             break;
     }
     return atlocation;
+}
+
+bool bkcalc::ballKicked(robotType type){
+    bool ballkicked = false;
+    switch(type){
+        case robotType::ally1:
+            ballkicked = calc::ballKicked(field.currentStatus.ally1, field.currentStatus.ball);
+            break;
+        case robotType::ally2:
+            ballkicked = calc::ballKicked(field.currentStatus.ally2, field.currentStatus.ball);
+            break;
+        default:
+            printf("bookkeeping:ballKicked: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return ballkicked;
 }
