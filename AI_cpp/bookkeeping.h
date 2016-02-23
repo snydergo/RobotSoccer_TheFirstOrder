@@ -9,7 +9,6 @@
 // Type definitions
 #define TICKS_PER_SEC 10
 
-typedef short sem;
 
 // GLOBALS
 extern FieldCoord field;
@@ -28,9 +27,6 @@ extern bool sendCmd_Rob2;
 extern robot_soccer::controldata cmdRob1;
 extern robot_soccer::controldata cmdRob2;
 //functions
-bool pend(sem semaphore);
-void post(sem semaphore);
-
 namespace bkcalc{
     extern bool atLocation(robotType type, Point point);
 }
