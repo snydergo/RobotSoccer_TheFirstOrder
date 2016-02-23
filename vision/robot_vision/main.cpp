@@ -2,11 +2,7 @@
 #include "std_msgs/String.h"
 #include "robot_soccer/visiondata.h"
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/filereadstream.h"
-
+#include "parameters.h"
 #include "hsvcolorsubspace.h"
 #include "utils.h"
 #include "objectdetection.h"
@@ -17,9 +13,7 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 
-#include <iostream>
 #include <stdio.h>
-#include <sstream>
 #include <math.h>
 
 using namespace rapidjson;
@@ -152,77 +146,6 @@ vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace
     cv::Mat segment = ColorSegmentImage(frame, colorSegment);
     contour_vector_t contours = EdgeDetectImage(segment);
     return GetMoments(contours);
-}
-
-HsvColorSubSpace getColorSpace(std::string colorName)
-{
-    switch(colorName) {
-        case "green": return config::green;
-        case "blue": return config::blue;
-        case "purple": return config::purple;
-        case "red": return config::red;
-        case "orange": return config::orange;
-        case "pink": return config::pink;
-        case "yellow": return config::yellow;
-        default: return config::green;
-    }
-    return config::green;
-}
-
-void loadConfigData(int argc, char** argv)
-{
-    cout << "loading param file..." << endl;
-    FILE* file;
-    if (argc == 1) {
-        file = fopen("src/robot_soccer/vision/robot_vision/param.json", "r");
-    } else {
-        file = fopen(argv[1], "r");
-    }
-    
-    char buffer[65536];
-    FileReadStream is(file, buffer, sizeof(buffer));
-    Document document;
-    document.ParseStream<0, UTF8<>, FileReadStream>(is);
-    Value& root = document["param"];
-
-    config::cameraUrl = root["cameraUrl"].GetString();
-
-    Value& calibrate = root["calibration"];
-
-    config::fieldCenter_px.x = calibrate["fieldCenterX_pixel"].GetDouble();
-    config::fieldCenter_px.y = calibrate["fieldCenterY_pixel"].GetDouble();
-
-    config::cmPerPixelConversionFactor = calibrate["referenceDistance_cm"].GetDouble() /
-                                         calibrate["referenceDistance_pixel"].GetDouble();
-    
-    config::invertX = calibrate["invertDirectionX"].GetBool();
-    
-    Value& crop = root["crop"];
-
-    config::cropLeft = crop["left"].GetInt();
-    config::cropRight = crop["right"].GetInt();
-    config::cropTop = crop["top"].GetInt();
-    config::cropBottom = crop["bottom"].GetInt();
-    
-    Value& ball = root["ball"];
-    config::ballArea = ball["area"].GetInt();
-    config::ballColor = getColorSpace(ball["color"].GetString());
-
-    Value& teamRobot = root["teamRobots"];
-    config::teamRobotCount = teamRobot["count"].GetInt();
-    config::teamRobotLargeArea = teamRobot["large_area"].GetInt();
-    config::teamRobotSmallArea = teamRobot["small_area"].GetInt();
-    config::teamRobotPrimaryColor = getColorSpace(teamRobot["color"].GetString());
-    
-    Value& opponentRobot = root["opponentRobots"];
-    config::opponentRobotCount = opponentRobot["count"].GetInt();
-    config::opponentRobotLargeArea = opponentRobot["large_area"].GetInt();
-    config::opponentRobotSmallArea = opponentRobot["small_area"].GetInt();
-    config::opponentRobotPrimaryColor = getColorSpace(opponentRobot["color"].GetString());
-    
-    fclose(file);
-    cout << "param file successfully loaded" << endl;
-
 }
 
 
