@@ -23,7 +23,7 @@ void Strategies::strategy_tick()
 		break;
     //state used to perform all necessary inits and start first strategy
     case strategy::start_st:
-        strategy::GoaliePower_st;
+        strategy_st = strategy::GoaliePower_st;
 		break;
     case strategy::GoaliePower_st:
         if(field.currentStatus.ball.velocity.x < 0 &&
