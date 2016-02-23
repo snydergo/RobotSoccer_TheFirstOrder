@@ -63,7 +63,14 @@ def ControlListener1():
     # threshhold for what is considered "close enough"
     #threshold = .05
     ## Decisions ##
+    
+    rate = rospy.Rate(100) # 100 Hz
     while not rospy.is_shutdown():
+    	# hello_str = "hello world %s" % rospy.get_time()
+	# rospy.loginfo(hello_str)
+	# pub.publish(hello_str)
+	   rate.sleep()
+    #while not rospy.is_shutdown():
         # ignoring theta for now
         # if the commanded values are small enough, we are close enough. Just stop movement.
      #   if P.x_cmd < threshold and P.y_cmd < threshold:
@@ -73,8 +80,8 @@ def ControlListener1():
      #       mlib.goXYOmegaWorld(vx,vy,omega,P.theta)
 
 
-        rospy.spin()
-        return
+        # rospy.spin()
+    return
 
     # spin() simply keeps python from exiting until this node is stopped
     #rospy.spin()
