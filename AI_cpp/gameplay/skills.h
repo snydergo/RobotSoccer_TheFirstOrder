@@ -22,7 +22,7 @@ public:
 
     void skill_tick();
     void skill_idle();
-    void skill_goToPoint(Point* point);
+    void skill_goToPoint(Point point);
     void skill_fetchBall();
     void skill_kick();
     void skill_dribble();
