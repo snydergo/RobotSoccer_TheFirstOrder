@@ -11,8 +11,8 @@ void Skills::skill_idle(){
     skill_st = skill_state::idle_st;
 }
 
-void Skills::skill_goToPoint(Point* point){
-    dest = *point;
+void Skills::skill_goToPoint(Point point){
+    dest = point;
     skill_st = skill_state::gotopoint_st;
 }
 
