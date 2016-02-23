@@ -35,9 +35,7 @@ void Utilities::dribble(){
 }
 
 void Utilities::moveToPoint(Robot robot, Point point, double theta){
-    std::cout << "Utilities::moveToPoint() idle_st"<< std::endl;
-    Point dir = calc::directionToPoint(robot.location, point);
-    move(robot, dir, theta);
+    move(robot, point, theta);
 }
 
 void Utilities::kick(double power, double theta){
@@ -46,13 +44,11 @@ void Utilities::kick(double power, double theta){
 }
 
 void Utilities::moveToCenter(Robot robot, double theta){
-    Point movVector = calc::directionToPoint(robot.location, center);
-    move(robot, movVector, theta);
+    move(robot, center, theta);
 }
 
 void Utilities::followBall(FieldObject ball, Robot robot, double theta){
     printf("following ball\n");
-    Point movVector = calc::directionToPoint(robot.location, ball.location);
-    move(robot, movVector, theta);
+    move(robot, ball.location, theta);
 }
 

@@ -19,9 +19,12 @@ int main(int argc, char *argv[])
     int count = 0;
     //sendCmd_Rob1 = true;
 
-    //STRATEGY STATEMACHINE
-    Strategies strategy;
-    strategy.init();
+//    //STRATEGY STATEMACHINE
+//    Strategies strategy;
+//    strategy.init();
+    Plays play;
+    play.init();
+    play.start();
     std::cout << "Main Control Started Successfully" << std::endl;
     bool dataInitialized = false;
     while (ros::ok())
@@ -29,7 +32,7 @@ int main(int argc, char *argv[])
         count++;
         //if(dataInitialized){}
 
-        strategy.tick();
+        play.tick();
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             dataInitialized = true;
@@ -39,8 +42,6 @@ int main(int argc, char *argv[])
         }
 
         if(sendCmd_Rob1){
-            /*
-            */
             sendCmd_Rob1 = false;
             /*cmdRob1.cmdType = "mov";
             Point direction = calc::directionToPoint(field.currentStatus.ally1.location, allyGoal);
@@ -51,10 +52,10 @@ int main(int argc, char *argv[])
             cmdRob1.y_cmd = direction.y;
             cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);*/
             chatter_pub.publish(cmdRob1);
-            //std::cout<<"sending data:\n"<<std::endl;
-            std::cout << "x_cmd = " << cmdRob1.x_cmd <<
-                         "\ny_cmd = " << cmdRob1.y_cmd <<
-                         "\ntheta_cmd = " << cmdRob1.theta_cmd << std::endl;
+            //std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
+            std::cout << "x to center = " << (int)-cmdRob1.x << std::endl <<
+                         "y to center = " << (int)-cmdRob1.y << std::endl <<
+                         "theta = " << (int)cmdRob1.theta << std::endl;
         }
         //std::cout << "spinning" << std::endl;
         //ros::spinOnce();

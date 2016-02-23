@@ -27,14 +27,11 @@ Point2f trasformCameraFrameToWorldFrame(Point2f point);
 // takes an optional param file
 int main(int argc, char** argv)
 {
-    if (argc > 2) { cout << "Usage: program [param.json]\n"; return 1; }
     loadConfigData(argc, argv);
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
-    bool robotUpdated = false;
-    Robot robot;
-    Ball ball(50);
+    Ball ball(config::ballArea);
 
     VideoCapture camera(config::cameraUrl);
 
