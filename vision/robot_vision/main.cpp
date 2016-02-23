@@ -189,6 +189,7 @@ void loadConfigData(char** argv)
     config::cropTop = crop["top"].GetInt();
     config::cropBottom = crop["bottom"].GetInt();
     
+    config::ballArea = root["ball"]["area"].GetInt();
     Value& ballColorHsv = root["ball"]["color"];
     
     config::ballColor.hue.low         = ballColorHsv["lowH"].GetInt();
@@ -199,6 +200,8 @@ void loadConfigData(char** argv)
     config::ballColor.value.high      = ballColorHsv["highV"].GetInt();
 
     config::teamRobotCount = root["teamRobots"]["count"].GetInt();
+    config::teamRobotLargeArea = root["teamRobots"]["large_area"].GetInt();
+    config::teamRobotSmallArea = root["teamRobots"]["small_area"].GetInt();
     
     Value& teamRobotPrimary = root["teamRobots"]["color"];
     config::teamRobotPrimaryColor.hue.low         = teamRobotPrimary["lowH"].GetInt();
@@ -209,6 +212,8 @@ void loadConfigData(char** argv)
     config::teamRobotPrimaryColor.value.high      = teamRobotPrimary["highV"].GetInt();
 
     config::opponentRobotCount = root["opponentRobots"]["count"].GetInt();
+    config::opponentRobotLargeArea = root["opponentRobots"]["large_area"].GetInt();
+    config::opponentRobotSmallArea = root["opponentRobots"]["small_area"].GetInt();
     
     Value& opponentRobotPrimary = root["opponentRobots"]["color"];
     config::opponentRobotPrimaryColor.hue.low         = opponentRobotPrimary["lowH"].GetInt();
