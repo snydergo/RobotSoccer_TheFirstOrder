@@ -22,11 +22,11 @@ void Strategies::tick()
 	{
     case strategy::idle_st:
         std::cout << "Strategies::tick() idle_st"<< std::endl;
-        if(count++ == 50){
+        //if(count++ == 50){
             strategy_st = strategy::start_st;
             roleSwitch = true;
-        }
-		break;
+        //}
+	break;
     //state used to perform all necessary inits and start first strategy
     case strategy::start_st:
         std::cout << "Strategies::tick() start_st"<< std::endl;
