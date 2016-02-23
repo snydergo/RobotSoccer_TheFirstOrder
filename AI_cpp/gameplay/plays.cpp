@@ -63,7 +63,7 @@ void Plays::play_tick(){
                 //always should first go to goal
                 switch(coord_st){
                     case coordSkills_st::coordGotogoal_st:
-                        skill.skill_goToPoint(&center);
+                        skill.skill_goToPoint(center);
                         if(true /*atGoal()*/){
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
