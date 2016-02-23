@@ -107,7 +107,7 @@ int main(int argc, char** argv)
                         + " y: " + std::to_string(((int)std::round(msg.tm0_y)))
                         + " w: " + std::to_string(((int)std::round(msg.tm0_w)))
                         );
-        putText(frame, str.c_str(), GetMomentCenter(front)
+        putText(frame, str.c_str(), Point2f(30, 30)//GetMomentCenter(front)
             ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,200,250), 0.7, CV_AA);
 
 

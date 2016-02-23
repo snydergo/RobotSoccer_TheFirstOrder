@@ -16,7 +16,7 @@ public:
 
     void stop();
     void init();
-    void strategy_tick();
+    void tick();
 
 private:
     bool strategy_shouldRushGoal();

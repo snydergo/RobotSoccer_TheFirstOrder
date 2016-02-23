@@ -34,11 +34,26 @@ using namespace std;
 
     cvCreateTrackbar("LowV", "Control", &iLowV, 255); //Value (0 - 255)
     cvCreateTrackbar("HighV", "Control", &iHighV, 255);
+//    Mat img;
+//    cap.read(img); // read a new frame from video
+//    vector<int> compression_params;
+//    compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
+//    compression_params.push_back(9);
+
+//    try {
+//        imwrite("image.png", img, compression_params);
+//    }
+//    catch (runtime_error& ex) {
+//        fprintf(stderr, "Exception converting image to PNG format: %s\n", ex.what());
+//        return 1;
+//    }
 
     while (true) {
         Mat imgOriginal;
 
         bool bSuccess = cap.read(imgOriginal); // read a new frame from video
+
+
 
         if (!bSuccess) { //if not success, break loop
             cout << "Cannot read a frame from video stream" << endl;

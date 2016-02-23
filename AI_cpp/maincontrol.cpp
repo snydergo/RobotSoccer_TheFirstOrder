@@ -2,6 +2,7 @@
 #include <ros/callback_queue.h>
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
+#include "gameplay/strategy.h"
 
 int main(int argc, char *argv[])
 {
@@ -18,10 +19,15 @@ int main(int argc, char *argv[])
     int count = 0;
     sendCmd_Rob1 = true;
 
+    //STRATEGY STATEMACHINE
+    Strategies strategy;
+    strategy.init();
     std::cout << "Main Control Started Successfully" << std::endl;
     while (ros::ok())
     {
         count++;
+        strategy.tick();
+
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<
@@ -30,6 +36,8 @@ int main(int argc, char *argv[])
         }
 
         if(sendCmd_Rob1){
+            /*
+            sendCmd_Rob1 = false;*/
             cmdRob1.cmdType = "mov";
             Point direction = calc::directionToPoint(field.currentStatus.ally1.location, center);
             cmdRob1.x = field.currentStatus.ally1.location.x;

@@ -6,6 +6,8 @@ enum class strategy {idle_st, start_st, GoaliePower_st,
 
 void Strategies::init(){
     strategy_st = strategy::GoaliePower_st;
+    robot1Plays.init();
+    robot2Plays.init();
 }
 
 bool strategy_shouldRushGoal()
@@ -13,7 +15,7 @@ bool strategy_shouldRushGoal()
 	return false;
 }
 
-void Strategies::strategy_tick()
+void Strategies::tick()
 {
 	switch (strategy_st)
 	{

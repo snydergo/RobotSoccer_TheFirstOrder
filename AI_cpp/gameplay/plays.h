@@ -19,8 +19,8 @@ public:
     void rushGoal();
     void playGoalie();
     void idle();
-    void play_tick();
-
+    void tick();
+    void init();
 private:
     robotType type;
 };

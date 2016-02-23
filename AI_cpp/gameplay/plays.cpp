@@ -6,6 +6,13 @@ enum class play_state {idle_st, rushgoal_st, playgoalie_st } play_st;
 enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
     coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st} coord_st;
 
+
+void Plays::init(){
+    play_st = play_state::idle_st;
+    skill.init();
+    skill.idle();
+}
+
 void Plays::rushGoal(){
     coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
     play_st = play_state::rushgoal_st;
@@ -20,7 +27,7 @@ void Plays::idle(){
     play_st = play_state::idle_st;
 }
 
-void Plays::play_tick(){
+void Plays::tick(){
     //needed changes
     /*
         Needed Changes
@@ -32,24 +39,24 @@ void Plays::play_tick(){
     */
     switch(play_st){
             case play_state::idle_st:
-                skill.skill_idle();
+                skill.idle();
                 break;
             case play_state::rushgoal_st:
                 switch(coord_st){
                     case coordSkills_st::coordFetchball_st:
-                       skill.skill_fetchBall();
+                       skill.fetchBall();
                        if(true/*ballFetched()*/){
                             coord_st = coordSkills_st::coordAim_st;
                         }
                         break;
                     case coordSkills_st::coordAim_st:
-                        skill.skill_aim();
+                        skill.aim();
                         if(true /*ballAimed()*/){
                             coord_st = coordSkills_st::coordKick_st;
                         }
                         break;
                     case coordSkills_st::coordKick_st:
-                        skill.skill_kick();
+                        skill.kick();
                         if(true /*ballKicked()*/){
                             coord_st = coordSkills_st::coordFetchball_st;
                         }
@@ -63,7 +70,7 @@ void Plays::play_tick(){
                 //always should first go to goal
                 switch(coord_st){
                     case coordSkills_st::coordGotogoal_st:
-                        skill.skill_goToPoint(allyGoal);
+                        skill.goToPoint(allyGoal);
                         if(true /*atGoal()*/){
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
@@ -73,14 +80,14 @@ void Plays::play_tick(){
                         double ball_ycoord = 0; //ball location
                         double goalie_box = 0;
                         Point point(ball_ycoord, goalie_box);
-                        skill.skill_goToPoint(point);
+                        skill.goToPoint(point);
                         if(true /*BallClose()*/){
                             coord_st = coordSkills_st::coordKick_st;
                         }
                     }
                         break;
                     case coordSkills_st::coordKick_st:
-                        skill.skill_kick();
+                        skill.kick();
                         if(true /*BallKicked()*/){
                             coord_st = coordSkills_st::coordFollowball_st;
                         }
