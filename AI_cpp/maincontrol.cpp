@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<
-                         visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;
+                        visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;
             field.updateStatus(visionStatus_msg);
         }
 
@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
             cmdRob1.y_cmd = direction.y;
             cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);
             chatter_pub.publish(cmdRob1);
+            std::cout<<"sending data\n"<<std::endl;
         }
         //std::cout << "spinning" << std::endl;
         //ros::spinOnce();

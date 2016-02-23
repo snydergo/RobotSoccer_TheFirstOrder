@@ -14,7 +14,8 @@ public:
     }
 
 
-    void strategy_stop();
+    void stop();
+    void init();
     void strategy_tick();
 
 private:

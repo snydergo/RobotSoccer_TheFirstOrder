@@ -80,13 +80,10 @@ int main(int argc, char** argv)
         }
 
 
-//        if (robotUpdated) {
-//            robotUpdated = robot.update(uObjects);
-//        }
 
-//        if (!robotUpdated) {
-//            robotUpdated = robot.find(uObjects);
-//        }
+        robotUpdated = robot.find(uObjects);
+
+
 
 
         Moments rear;
@@ -203,7 +200,7 @@ void loadConfigData(char** argv)
 
     config::teamRobotCount = root["teamRobots"]["count"].GetInt();
     
-    Value& teamRobotPrimary = root["teamRobots"]["primaryColor"];
+    Value& teamRobotPrimary = root["teamRobots"]["color"];
     config::teamRobotPrimaryColor.hue.low         = teamRobotPrimary["lowH"].GetInt();
     config::teamRobotPrimaryColor.hue.high        = teamRobotPrimary["highH"].GetInt();
     config::teamRobotPrimaryColor.saturation.low  = teamRobotPrimary["lowS"].GetInt();
@@ -213,7 +210,7 @@ void loadConfigData(char** argv)
 
     config::opponentRobotCount = root["opponentRobots"]["count"].GetInt();
     
-    Value& opponentRobotPrimary = root["opponentRobots"]["primaryColor"];
+    Value& opponentRobotPrimary = root["opponentRobots"]["color"];
     config::opponentRobotPrimaryColor.hue.low         = opponentRobotPrimary["lowH"].GetInt();
     config::opponentRobotPrimaryColor.hue.high        = opponentRobotPrimary["highH"].GetInt();
     config::opponentRobotPrimaryColor.saturation.low  = opponentRobotPrimary["lowS"].GetInt();

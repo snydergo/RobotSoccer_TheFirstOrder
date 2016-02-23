@@ -1,12 +1,12 @@
 #ifndef MATHFUNCTIONS_H
 #define MATHFUNCTIONS_H
 
-
+#include "types.h"
 #include "dataclasses/point.h"
 #include "dataclasses/robot.h"
 #include <math.h>
-#define ANGLE_ERR 10
-#define BALLFETCHED_ERR 8
+#include <cmath>
+
 
 namespace calc {
     Point directionToPredict(FieldObject startobj, FieldObject destobj, double time);
@@ -21,5 +21,7 @@ namespace calc {
     bool ballFetched(Robot ally, FieldObject ball);
     bool ballAimed(Robot ally, FieldObject ball);
     bool ballKicked(Robot ally, FieldObject ball);
+    bool atLocation(Point robot, Point point);
+    bool atLocation(double robot_coord, double p_coord);
 }
 #endif // MATHFUNCTIONS_H

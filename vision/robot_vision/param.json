@@ -2,7 +2,7 @@
     "param": {
         "cameraUrl": "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg",
         "calibration": {
-            "fieldCenterX_pixel": 312,
+            "fieldCenterX_pixel": 422,
             "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 121.92,
             "referenceDistance_pixel": 255,
@@ -28,11 +28,11 @@
         "teamRobots": {
             "count": 1,
             "color": {
-                "lowH": 80,
-                "highH": 100,
-                "lowS": 70,
-                "highS": 220,
-                "lowV": 170,
+                "lowH": 0,
+                "highH": 69,
+                "lowS": 0,
+                "highS": 255,
+                "lowV": 231,
                 "highV": 255
             },
             "large_area": 440,
@@ -41,11 +41,11 @@
         "opponentRobots": {
             "count": 1,
             "color": {
-                "lowH": 60,
-                "highH": 90,
-                "lowS": 30,
-                "highS": 145,
-                "lowV": 180,
+                "lowH": 80,
+                "highH": 100,
+                "lowS": 70,
+                "highS": 220,
+                "lowV": 170,
                 "highV": 255
             },        
             "large_area": 440,

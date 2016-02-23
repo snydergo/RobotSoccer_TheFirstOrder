@@ -1,8 +1,12 @@
 #include "strategy.h"
 
-enum class strategy {idle_st, start_st, strategy_GoaliePower_st, 
-                    strategy_RushSplitDefense_st} strategy_st;
+enum class strategy {idle_st, start_st, GoaliePower_st,
+                    RushSplitDefense_st} strategy_st;
 
+
+void Strategies::init(){
+    strategy_st = strategy::GoaliePower_st;
+}
 
 bool strategy_shouldRushGoal()
 {
@@ -19,21 +23,21 @@ void Strategies::strategy_tick()
 		break;
     //state used to perform all necessary inits and start first strategy
     case strategy::start_st:
-        strategy::strategy_GoaliePower_st;
+        strategy::GoaliePower_st;
 		break;
-    case strategy::strategy_GoaliePower_st:
+    case strategy::GoaliePower_st:
         if(field.currentStatus.ball.velocity.x < 0 &&
             field.currentStatus.ball.location.x < 0){
             robot1Plays.playGoalie();
         }else
             robot1Plays.rushGoal();
 		break;
-    case strategy::strategy_RushSplitDefense_st:
+    case strategy::RushSplitDefense_st:
 		break;
 	}
 }
 
-void Strategies::strategy_stop()
+void Strategies::stop()
 {
 	printf("stop strategy\n");
     strategy_st = strategy::idle_st;
