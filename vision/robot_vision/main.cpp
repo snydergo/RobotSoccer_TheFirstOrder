@@ -26,20 +26,18 @@ using namespace rapidjson;
 using namespace std;
 using namespace cv;
 
-void loadConfigData(char** argv);
+void loadConfigData(int argc, char** argv);
 vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace& colorSegment);
 Point2f trasformCameraFrameToWorldFrame(Point2f point);
 
+// takes an optional param file
 int main(int argc, char** argv)
 {
-    if (argc != 2) { cout << "no param file. Usage: program [param.json]\n"; return 1; }
-    cout << "loading param file..." << endl;
-    loadConfigData(argv);
-    cout << "param file successfully loaded" << endl;
+    if (argc > 2) { cout << "Usage: program [param.json]\n"; return 1; }
+    loadConfigData(argc, argv);
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
-    // ros::Rate loop_rate(30);
     bool robotUpdated = false;
     Robot robot;
 
@@ -79,12 +77,7 @@ int main(int argc, char** argv)
             uObjects.push_back(obj);
         }
 
-
-
         robotUpdated = robot.find(uObjects);
-
-
-
 
         Moments rear;
         Moments front;
@@ -161,9 +154,16 @@ vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace
     return GetMoments(contours);
 }
 
-void loadConfigData(char** argv)
+void loadConfigData(int argc, char** argv)
 {
-    FILE* file = fopen(argv[1], "r");
+    cout << "loading param file..." << endl;
+    FILE* file;
+    if (argc == 1) {
+        file = fopen("param.json", "r");
+    } else {
+        file = fopen(argv[1], "r");
+    }
+    
     char buffer[65536];
     FileReadStream is(file, buffer, sizeof(buffer));
     Document document;
@@ -224,5 +224,6 @@ void loadConfigData(char** argv)
     config::opponentRobotPrimaryColor.value.high      = opponentRobotPrimary["highV"].GetInt();
     
     fclose(file);
+    cout << "param file successfully loaded" << endl;
 
 }
