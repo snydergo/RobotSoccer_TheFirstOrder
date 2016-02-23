@@ -39,7 +39,7 @@ def callback1(data):
        # data.x = 0; data.y = 0; data.theta = 0;
     if data.x == data.x: # check for NaN
         vx, vy, omega = pid.robot_ctrl(data)
-        mlib.goXYOmegaWorld(vx,vy,omega)
+        mlib.goXYOmegaWorld(vx,vy,omega,data.theta)
         print("\n")
     else:
         print("NaN received")
