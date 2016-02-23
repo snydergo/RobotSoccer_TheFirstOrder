@@ -159,7 +159,7 @@ void loadConfigData(int argc, char** argv)
     cout << "loading param file..." << endl;
     FILE* file;
     if (argc == 1) {
-        file = fopen("param.json", "r");
+        file = fopen("src/robot_soccer/vision/robot_vision/param.json", "r");
     } else {
         file = fopen(argv[1], "r");
     }

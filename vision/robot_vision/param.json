@@ -28,11 +28,11 @@
         "teamRobots": {
             "count": 1,
             "color": {
-                "lowH": 0,
-                "highH": 69,
-                "lowS": 0,
-                "highS": 255,
-                "lowV": 231,
+                "lowH": 60,
+                "highH": 90,
+                "lowS": 30,
+                "highS": 145,
+                "lowV": 180,
                 "highV": 255
             },
             "large_area": 440,

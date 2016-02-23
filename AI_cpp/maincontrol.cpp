@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
             cmdRob1.y_cmd = direction.y;
             cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);
             chatter_pub.publish(cmdRob1);
-            std::cout<<"sending data\n"<<std::endl;
+            //std::cout<<"sending data\n"<<std::endl;
         }
         //std::cout << "spinning" << std::endl;
         //ros::spinOnce();
