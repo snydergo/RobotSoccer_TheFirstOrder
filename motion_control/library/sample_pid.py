@@ -7,15 +7,15 @@ class ControlVar:
 
 class Param:
     def __init__(self):
-        self.kp_x   = .5
+        self.kp_x   = .01
         self.ki_x   = 0
         self.kd_x   = 0
 
-        self.kp_y   = .55
+        self.kp_y   = .01
         self.ki_y   = 0
         self.kd_y   = 0
 
-        self.kp_th  = .55
+        self.kp_th  = .005
         self.ki_th  = 0
         self.kd_th  = 0
 
@@ -30,7 +30,7 @@ theta_g = ControlVar()
 P       = Param()
 
 
-sf = .001
+sf = 1
 
 def robot_ctrl(message):
     x       = sf*message.x
@@ -43,7 +43,7 @@ def robot_ctrl(message):
     
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,2,P.Ts,P.tau)
-    vy  = 0 #PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,2,P.Ts,P.tau)
+    vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,2,P.Ts,P.tau)
     vth = 0 #PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,2,P.Ts,P.tau)
 
     return vx, vy, vth
@@ -52,9 +52,10 @@ def robot_ctrl(message):
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     print("cmd_pos: " + str(cmd_pos))
     print("pos: " + str(pos))
-    cmd_pos = 0
+    cmd_pos = 0.000
     # compute the error
-    error = cmd_pos-pos; print("Error: " + str(error));
+    error = cmd_pos-pos
+    print("Error: " + str(error))
     # update integral of error
     ctrl_vars.integrator = ctrl_vars.integrator + (Ts/2)*(error+ctrl_vars.prev_error);
     # update derivative of z
