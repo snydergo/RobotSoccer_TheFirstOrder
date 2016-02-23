@@ -30,16 +30,14 @@ theta_g = ControlVar()
 P       = Param()
 
 
-sf = 1
-
 def robot_ctrl(message):
-    x       = sf*message.x
-    y       = sf*message.y 
-    theta   = sf*message.theta
+    x       = message.x
+    y       = message.y 
+    theta   = message.theta
 
-    x_cmd       = sf*message.x_cmd
-    y_cmd       = sf*message.y_cmd
-    theta_cmd   = sf*message.theta_cmd
+    x_cmd       = message.x_cmd
+    y_cmd       = message.y_cmd
+    theta_cmd   = message.theta_cmd
     
     xylimit = 0.75
     # compute the desired angled angle using the outer loop control
