@@ -36,15 +36,12 @@ def callback1(data):
     ## Decisions ##
     # ignoring theta for now
     # if the commanded values are small enough, we are close enough. Just stop movement.
-    if P.x_cmd < threshold and P.y_cmd < threshold:
-       mlib.stop()
-    else:
        # data.x = 0; data.y = 0; data.theta = 0;
-        if data.x == data.x: # check for NaN
-           vx, vy, omega = pid.robot_ctrl(data)
-           mlib.goXYOmegaWorld(vx,vy,omega)
-        else:
-            print("NaN received")
+    if data.x == data.x: # check for NaN
+        vx, vy, omega = pid.robot_ctrl(data)
+        mlib.goXYOmegaWorld(vx,vy,omega)
+    else:
+        print("NaN received")
 	
     # print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
