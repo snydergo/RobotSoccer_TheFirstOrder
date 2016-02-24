@@ -22,7 +22,8 @@ using namespace cv;
 
 void loadConfigData(int argc, char** argv);
 vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace& colorSegment);
-Point2f trasformCameraFrameToWorldFrame(Point2f point);
+Point2f trasformCameraFrameToWorldFrame(const Point2f point);
+Point2f transformWorldFrametoCameraFrame(const Point2f point);
 
 // takes an optional param file
 int main(int argc, char** argv)
@@ -33,9 +34,7 @@ int main(int argc, char** argv)
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
     Ball ball(config::ballArea);
     
-    int iLastX;
-    int iLastY;
-    bool detectedLastFrame;
+    Point2f lastPos;
 
     VideoCapture camera(config::cameraUrl);
 
@@ -43,6 +42,13 @@ int main(int argc, char** argv)
         cout << "Cannot open the web cam" << endl;
         return -1;
     }
+
+    //Capture a temporary image from the camera
+    Mat imgTmp;
+    camera.read(imgTmp);
+
+    //Create a black image with the size as the camera output
+    Mat imgLines = Mat::zeros( imgTmp.size(), CV_8UC3 );
 
     cout << "starting video feed" << endl;
     while (ros::ok()) {
@@ -118,30 +124,23 @@ int main(int argc, char** argv)
                         );
         putText(frame, str2.c_str(), Point(30,30)
             ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
+        if (config::trackRobot) {
+            if (msg.tm0_x == msg.tm0_x && msg.tm0_x != 0.0) {
 
-        if (msg.tm0_x == msg.tm0_x && msg.tm0_x != 0.0) {
-            //calculate the position of the robot
-            int posX = transformWorldFrametoCameraFrame(msg.tm0_x);
-            int posY = transformWorldFrametoCameraFrame(msg.tm0_y);        
-                
-            //Draw a red line from the previous point to the current point
-            Scalar color;
-            if (detectedLastFrame) {
-                color = (0,0,255);
+                //calculate the position of the robot
+                Point2f pos = transformWorldFrametoCameraFrame(Point2f(msg.tm0_x, msg.tm0_y));
+                if (lastPos.x == 0.0)
+                    lastPos = pos;
+                //Draw a red line from the previous point to the current point
+                line(imgLines, pos, lastPos, Scalar(0,0,255), 2);
+                lastPos = pos;
             } else {
-                color = (255,0,0);
+                lastPos.x = 0.0;
             }
-            line(frame, Point(posX, posY), Point(iLastX, iLastY), color, 2);
-            
-            detectedLastFrame = true;
-            iLastX = posX;
-            iLastY = posY;
-        } else {
-            detectedLastFrame = false;
         }
         
         visionDataPub.publish(msg);
-
+        frame = frame + imgLines;
         imshow("robot view", frame);
         waitKey(1);
     }
@@ -149,7 +148,7 @@ int main(int argc, char** argv)
     return 0;
 }
 
-Point2f trasformCameraFrameToWorldFrame(Point2f point)
+Point2f trasformCameraFrameToWorldFrame(const Point2f point)
 {
     Point2f retVal;
     retVal.x = (point.x - config::fieldCenter_px.x) * config::cmPerPixelConversionFactor;
@@ -162,16 +161,17 @@ Point2f trasformCameraFrameToWorldFrame(Point2f point)
     return retVal;
 }
 
-Point2f transformWorldFrametoCameraFrame(Point2f point)
+Point2f transformWorldFrametoCameraFrame(const Point2f point)
 {
-    Point2f retVal;
-    retVal.x = (point.x / config::cmPerPixelConversionFactor) + config::fieldCenter_px.x;
-    retVal.y = (point.y / config::cmPerPixelConversionFactor) + config::fieldCenter_px.y;
+    Point2f retVal = point;
     if (config::invertX) {
         retVal.x = -retVal.x;
     } else {
         retVal.y = -retVal.y;
     }
+    retVal.x = (retVal.x / config::cmPerPixelConversionFactor) + config::fieldCenter_px.x;
+    retVal.y = (retVal.y / config::cmPerPixelConversionFactor) + config::fieldCenter_px.y;
+
     return retVal;
 }
 

@@ -12,6 +12,8 @@ extern Point2f fieldCenter_px;
 extern double cmPerPixelConversionFactor;
 extern bool invertX;
 
+extern bool trackRobot;
+
 extern int cropTop;
 extern int cropBottom;
 extern int cropLeft;
@@ -33,6 +35,7 @@ extern int opponentRobotLargeArea;
 extern int opponentRobotSmallArea;
 
 extern std::string cameraUrl;
+
 
 extern const HsvColorSubSpace green;
 extern const HsvColorSubSpace blue;

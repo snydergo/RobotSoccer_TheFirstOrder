@@ -19,11 +19,11 @@ RNG rng(12345);
 
     namedWindow("Control", CV_WINDOW_AUTOSIZE); //create a window called "Control"
 
-    int iLowH = 0;
-    int iHighH = 179;
+    int iLowH = 110;
+    int iHighH = 140;
 
-    int iLowS = 0;
-    int iHighS = 255;
+    int iLowS = 30;
+    int iHighS = 90;
 
     int iLowV = 200;
     int iHighV = 255;
@@ -37,9 +37,6 @@ RNG rng(12345);
 
     cvCreateTrackbar("LowV", "Control", &iLowV, 255); //Value (0 - 255)
     cvCreateTrackbar("HighV", "Control", &iHighV, 255);
-
-    vector<float> values(10);
-
 
     while (true) {
         Mat imgOriginal;
@@ -74,11 +71,10 @@ RNG rng(12345);
         dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
         erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
 
-        imshow("Thresholded Image", imgThresholded); //show the thresholded image
+        //imshow("Thresholded Image", imgThresholded); //show the thresholded image
         imshow("Original", imgOriginal); //show the original image
 
         int thresh = 100;
-        int max_thresh = 255;
 
         Mat canny_output;
         vector<vector<Point> > contours;
