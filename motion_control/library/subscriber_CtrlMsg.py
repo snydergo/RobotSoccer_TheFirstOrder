@@ -2,7 +2,8 @@
 import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import controldata
-import mlib; import sample_pid as pid;
+import mlib
+import sample_pid as pid
 
 class Param:
     def __init__(self):
@@ -39,7 +40,7 @@ def callback1(data):
        # data.x = 0; data.y = 0; data.theta = 0;
     if data.x == data.x: # check for NaN
         vx, vy, omega = pid.robot_ctrl(data)
-        mlib.goXYOmegaWorld(vx,vy,omega,data.theta)
+        mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         print("\n")
     else:
         print("NaN received")

@@ -201,3 +201,6 @@ def stop():
 def smoothStop():
 	return
 #def SetMVelocityPID(address,p,i,d,qpps):
+
+def deg2rad(deg):
+    return deg*math.pi/180
