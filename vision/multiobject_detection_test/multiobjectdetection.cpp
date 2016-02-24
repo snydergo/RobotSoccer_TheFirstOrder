@@ -38,6 +38,9 @@ RNG rng(12345);
     cvCreateTrackbar("LowV", "Control", &iLowV, 255); //Value (0 - 255)
     cvCreateTrackbar("HighV", "Control", &iHighV, 255);
 
+    vector<float> values(10);
+
+
     while (true) {
         Mat imgOriginal;
 
@@ -104,7 +107,7 @@ RNG rng(12345);
             Scalar color = Scalar( 100, 200, 150);
             drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
             circle( drawing, mc[i], 4, color, -1, 8, 0 );
-            std::string str(  " A: " + std::to_string(((int)mu[i].m00)));
+            std::string str(  " A: " + std::to_string(mu[i].m00));
             putText(drawing, str.c_str(), mc[i]
                 ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(0,0,250), 0.7, CV_AA);
         }
