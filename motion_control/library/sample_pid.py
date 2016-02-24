@@ -15,8 +15,8 @@ class Param:
         self.ki_y   = .001
         self.kd_y   = .000
 
-        self.kp_th  = .01
-        self.ki_th  = .0001
+        self.kp_th  = .02
+        self.ki_th  = .0000
         self.kd_th  = 0
 
         self.Ts     = 1.00/loop_rate
@@ -39,8 +39,8 @@ def robot_ctrl(message):
     y_cmd       = message.y_cmd
     theta_cmd   = message.theta_cmd
     
-    xy_limit = 0.50
-    th_limit = 0.15
+    xy_limit = 0.75
+    th_limit = 0.25
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
     vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
