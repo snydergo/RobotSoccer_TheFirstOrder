@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     //PUBLISHER FOR MOTIONCONTROL
     ros::init(argc, argv, "mainhub");
     ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
-    //ros::Rate loop_rate(TICKS_PER_SEC);
+    ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
     //sendCmd_Rob1 = true;
 
@@ -56,8 +56,10 @@ int main(int argc, char *argv[])
                          "desired_theta = " << cmdRob1.theta_cmd << "\n\n";
         }
         ////std::cout << "spinning" << std::endl;
-        //ros::spinOnce();
-        ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.1));
+
+        ros::spinOnce();
+        loop_rate.sleep();
+        //ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.1));
     }
     return 0;
 }
