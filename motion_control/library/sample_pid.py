@@ -39,11 +39,12 @@ def robot_ctrl(message):
     y_cmd       = message.y_cmd
     theta_cmd   = message.theta_cmd
     
-    xylimit = 0.75
+    xy_limit = 0.25
+    th_limit = 0.125
     # compute the desired angled angle using the outer loop control
-    vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xylimit,P.Ts,P.tau)
-    vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xylimit,P.Ts,P.tau)
-    vth = PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,0.5,P.Ts,P.tau)
+    vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
+    vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
+    vth = PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,th_limit,P.Ts,P.tau)
 
     return vx, vy, vth
 
