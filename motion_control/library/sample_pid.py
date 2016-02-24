@@ -31,14 +31,14 @@ class Param:
         self.kd_y   = .000
 
         self.kp_th  = .02
-        self.ki_th  = .0000
+        self.ki_th  = .00005
         self.kd_th  = 0
 
         self.Ts     = 1.00/loop_rate
         self.tau    = 1 / 5
 
         self.camera_sample_rate = 33
-        self.lpf_alpha = 0.7
+        self.lpf_alpha          = 0.7
 
 
 loop_rate = 50 # Hz (get value from publisher)
