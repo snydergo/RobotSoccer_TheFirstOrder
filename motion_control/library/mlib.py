@@ -6,6 +6,7 @@ from enum import Enum
 import numpy as np
 # BECAUSE I HAD TO MAKE A NEW MAT
 import mat2 as mat
+import math
 
 #Linux comport name
 roboclaw.Open("/dev/ttySAC0",38400)
