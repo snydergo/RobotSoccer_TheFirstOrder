@@ -7,15 +7,15 @@ class ControlVar:
 
 class Param:
     def __init__(self):
-        self.kp_x   = .04
+        self.kp_x   = .02
         self.ki_x   = .0001
         self.kd_x   = 0 #.002
 
-        self.kp_y   = .04
+        self.kp_y   = .02
         self.ki_y   = .0001
         self.kd_y   = 0 #.002
 
-        self.kp_th  = .002
+        self.kp_th  = .001
         self.ki_th  = .0000
         self.kd_th  = 0
 
@@ -23,7 +23,7 @@ class Param:
         self.tau    = 0.005
 
 
-loop_rate = 100 # Hz
+loop_rate = 50 # Hz (get value from publisher)
 x_g     = ControlVar()
 y_g     = ControlVar()
 theta_g = ControlVar()
@@ -65,8 +65,8 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     u = sat(u_unsat,limit);
     
     # integrator anti-windup
-    # if (ki!=0):
-    #     ctrl_vars.integrator = ctrl_vars.integrator + Ts/ki*(u-u_unsat)
+    if (ki!=0):
+        ctrl_vars.integrator = ctrl_vars.integrator + Ts/ki*(u-u_unsat)
 
     return u
 
