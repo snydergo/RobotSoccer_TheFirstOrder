@@ -7,11 +7,11 @@ class ControlVar:
 
 class Param:
     def __init__(self):
-        self.kp_x   = .03
+        self.kp_x   = .05
         self.ki_x   = .0000
         self.kd_x   = .002
 
-        self.kp_y   = .03
+        self.kp_y   = .05
         self.ki_y   = .0000
         self.kd_y   = .002
 
@@ -39,8 +39,8 @@ def robot_ctrl(message):
     y_cmd       = message.y_cmd
     theta_cmd   = message.theta_cmd
     
-    xy_limit = 0.5
-    th_limit = 0.125
+    xy_limit = 1
+    th_limit = 0.25
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
     vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
