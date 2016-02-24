@@ -32,6 +32,10 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
     Ball ball(config::ballArea);
+    
+    int iLastX;
+    int iLastY;
+    bool detectedLastFrame;
 
     VideoCapture camera(config::cameraUrl);
 
@@ -115,7 +119,27 @@ int main(int argc, char** argv)
         putText(frame, str2.c_str(), Point(30,30)
             ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
 
-
+        if (msg.tm0_x == msg.tm0_x && msg.tm0_x != 0.0) {
+            //calculate the position of the robot
+            int posX = transformWorldFrametoCameraFrame(msg.tm0_x);
+            int posY = transformWorldFrametoCameraFrame(msg.tm0_y);        
+                
+            //Draw a red line from the previous point to the current point
+            Scalar color;
+            if (detectedLastFrame) {
+                color = (0,0,255);
+            } else {
+                color = (255,0,0);
+            }
+            line(frame, Point(posX, posY), Point(iLastX, iLastY), color, 2);
+            
+            detectedLastFrame = true;
+            iLastX = posX;
+            iLastY = posY;
+        } else {
+            detectedLastFrame = false;
+        }
+        
         visionDataPub.publish(msg);
 
         imshow("robot view", frame);
