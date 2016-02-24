@@ -35,7 +35,7 @@ class Param:
         self.kd_th  = 0
 
         self.Ts     = 1.00/loop_rate
-        self.tau    = 1 / 5
+        self.tau    = 0.005
 
         self.camera_sample_rate = 33
         self.lpf_alpha          = 0.7
@@ -57,7 +57,7 @@ def robot_ctrl(message):
     y_cmd       = message.y_cmd
     theta_cmd   = message.theta_cmd
     
-    xy_limit = 0.75
+    xy_limit = 0.50
     th_limit = 0.25
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
