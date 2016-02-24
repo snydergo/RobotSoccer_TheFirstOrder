@@ -1,17 +1,32 @@
+import numpy as np
+from numpy import matlib
+from numpy import matrix
+
 class ControlVar:
     def __init__(self):
         self.integrator = 0
-        self.velocity = 0
+        self.velocity   = 0
         self.prev_error = 0
-        self.prev_pos = 0
+        self.prev_pos   = 0
+
+# class State:
+#     def __init__(self):
+#         self.pos        = matlib.zeros(3,1)
+#         self.vel        = matlib.zeros(3,1)
+#         self.accel      = matlib.zeros(3,1)
+#         self.jerk       = matlib.zeros(3,1)
+#         self.pos_prev   = matlib.zeros(3,1)
+#         self.vel_prev   = matlib.zeros(3,1)
+#         self.accel_prev = matlib.zeros(3,1)
+#         self.jerk_prev  = matlib.zeros(3,1)
 
 class Param:
     def __init__(self):
-        self.kp_x   = .02
+        self.kp_x   = .03
         self.ki_x   = .001
         self.kd_x   = .000
 
-        self.kp_y   = .02
+        self.kp_y   = .03
         self.ki_y   = .001
         self.kd_y   = .000
 
@@ -21,6 +36,9 @@ class Param:
 
         self.Ts     = 1.00/loop_rate
         self.tau    = 1 / 5
+
+        self.camera_sample_rate = 33
+        self.lpf_alpha = 0.7
 
 
 loop_rate = 50 # Hz (get value from publisher)
