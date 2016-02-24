@@ -16,8 +16,9 @@ void Skills::idle(){
     skill_st = skill_state::idle_st;
 }
 
-void Skills::goToPoint(Point point){
+void Skills::goToPoint(Point point, double dest_theta){
     std::cout << "Skills::goToPoint" << std::endl;
+    theta_cmd = dest_theta;
     dest = point;
     skill_st = skill_state::gotopoint_st;
 }

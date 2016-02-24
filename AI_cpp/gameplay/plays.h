@@ -16,8 +16,8 @@ public:
     {
     }
 
-    void rushGoal(bool roleSwitch);
-    void playGoalie(bool roleSwitch);
+    void rushGoal();
+    void playGoalie();
     void idle();
     void tick();
     void init();

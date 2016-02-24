@@ -1,6 +1,7 @@
 #include "strategy.h"
 
-enum class strategy {idle_st, start_st, GoaliePower_st,
+enum class strategy {idle_st, start_st,
+                     GoaliePower_st, GPGoalie_st, GPRush_st,
                     RushSplitDefense_st} strategy_st;
 
 int count = 0;
@@ -8,7 +9,6 @@ void Strategies::init(){
     strategy_st = strategy::idle_st;
     robot1Plays.init();
     robot2Plays.init();
-    roleSwitch = true;
 }
 
 bool strategy_shouldRushGoal()
@@ -26,7 +26,6 @@ void Strategies::tick()
         //it is assumed robot is not in the right position
         //if(count++ == 50){
             strategy_st = strategy::start_st;
-            roleSwitch = true;
         //}
 	break;
     //state used to perform all necessary inits and start first strategy
@@ -36,23 +35,43 @@ void Strategies::tick()
         if(bkcalc::atLocation(robot1Plays.allyNum, start1Location)){
             std::cout << "at Start Location" << std::endl;
             strategy_st = strategy::GoaliePower_st;
-            roleSwitch = true;
         }
         /*if(truegameStarted){
             strategy_st = strategy::GoaliePower_st;
         }*/
 		break;
+    //GOALIE POWER STATES
     case strategy::GoaliePower_st:
         std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
-        if(field.currentStatus.ball.velocity.x < 0 &&
-            field.currentStatus.ball.location.x < 0){
-            std::cout << "Strategies::tick() playingGoalie"<< std::endl;
-            robot1Plays.playGoalie(roleSwitch);
-        }else
+        if(bkcalc::ballThreat()){
+            std::cout << "Strategies::tick() playGoalie"<< std::endl;
+            strategy_st = strategy::GPGoalie_st;
+            robot1Plays.playGoalie();
+        }else{
             //std::cout << "Strategies::tick() rushingGoal"<< std::endl;
-            //robot1Plays.rushGoal(roleSwitch);
-            robot1Plays.playGoalie(roleSwitch);
+            //strategy_st = strategy::GPRush_st;
+            //robot1Plays.rushGoal();
+            strategy_st = strategy::GPGoalie_st;
+            robot1Plays.playGoalie();
+        }
+
+
 		break;
+    case strategy::GPGoalie_st:
+        std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
+        if(false/*!bkcalc::ballThreat()*/){
+            strategy_st = strategy::GPRush_st;
+            robot1Plays.rushGoal();
+        }
+        break;
+    case strategy::GPRush_st:
+        std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
+        if(bkcalc::ballThreat()){
+            strategy_st = strategy::GPGoalie_st;
+            robot1Plays.playGoalie();
+        }
+        break;
+    //RUSH SPLIT DEFENSE STATES
     case strategy::RushSplitDefense_st:
 		break;
 	}

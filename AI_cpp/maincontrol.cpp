@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     //sendCmd_Rob1 = true;
 
 //    //STRATEGY STATEMACHINE
-//    Strategies strategy;
-//    strategy.init();
+    Strategies strategy;
+    strategy.init();
     Plays play;
     play.init();
     play.start();
@@ -32,7 +32,8 @@ int main(int argc, char *argv[])
         count++;
         //if(dataInitialized){}
 
-        play.tick();
+        strategy.tick();
+        //play.tick();
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             dataInitialized = true;

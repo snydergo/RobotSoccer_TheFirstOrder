@@ -13,14 +13,14 @@ void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);
 }
 
-void Utilities::move(Robot robot, Point dir, double des_theta){
+void Utilities::move(Robot robot, Point dest, double des_theta){
     std::cout << "UTILITIES:: sending mov command\n" << std::endl;
     cmdRob1.cmdType = "mov";
     cmdRob1.x = robot.location.x;
     cmdRob1.y = robot.location.y;
     cmdRob1.theta = robot.theta;
-    cmdRob1.x_cmd = dir.x;
-    cmdRob1.y_cmd = dir.y;
+    cmdRob1.x_cmd = dest.x;
+    cmdRob1.y_cmd = dest.y;
     cmdRob1.theta_cmd = des_theta;
     sendCmd_Rob1 = true;
 }

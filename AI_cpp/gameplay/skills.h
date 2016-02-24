@@ -22,7 +22,7 @@ public:
     void init();
     void tick();
     void idle();
-    void goToPoint(Point point);
+    void goToPoint(Point point, double dest_theta);
     void fetchBall();
     void kick();
     void dribble();
@@ -40,6 +40,7 @@ public:
     void stop();
   private:
     Point dest;
+    double theta_cmd;
     Utilities utils;
     robotType type;
 };

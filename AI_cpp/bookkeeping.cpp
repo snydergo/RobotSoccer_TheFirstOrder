@@ -61,3 +61,24 @@ bool bkcalc::ballFetched(robotType type){
     }
     return ballfetched;
 }
+
+double bkcalc::getAngleTo(robotType type, Point point){
+    Point dir;
+    switch(type){
+        case robotType::ally1:
+            dir = calc::directionToPoint(field.currentStatus.ally1.location, point);
+            break;
+        case robotType::ally2:
+            dir = calc::directionToPoint(field.currentStatus.ally2.location, point);
+            break;
+        default:
+            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return calc::getVectorAngle(dir);
+}
+
+bool bkcalc::ballThreat(){
+   return(field.currentStatus.ball.velocity.x < 0 &&
+        field.currentStatus.ball.location.x < 0);
+}
