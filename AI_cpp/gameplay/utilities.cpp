@@ -14,7 +14,7 @@ void Utilities::rotate(double angle){
 }
 
 void Utilities::move(Robot robot, Point dest, double des_theta){
-    //std::cout << "UTILITIES:: sending mov command" << std::endl;
+    std::cout << "UTILITIES:: sending mov command" << std::endl;
     cmdRob1.cmdType = "mov";
     cmdRob1.x = robot.location.x;
     cmdRob1.y = robot.location.y;

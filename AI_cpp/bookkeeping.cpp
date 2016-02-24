@@ -51,15 +51,33 @@ bool bkcalc::ballFetched(robotType type){
     switch(type){
         case robotType::ally1:
             ballfetched = calc::ballFetched(field.currentStatus.ally1, field.currentStatus.ball);
+            std::cout << "ROBOT1" << std::endl;
             break;
         case robotType::ally2:
             ballfetched = calc::ballFetched(field.currentStatus.ally2, field.currentStatus.ball);
             break;
         default:
-            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
+            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot %d\n", type);
             break;
     }
     return ballfetched;
+}
+
+bool bkcalc::ballKickZone(robotType type){
+    bool ballkickZone = false;
+    Point ball = field.currentStatus.ball.location;
+    switch(type){
+        case robotType::ally1:
+            ballkickZone = calc::withinPerimeter(field.currentStatus.ally1.location, ball);
+            break;
+        case robotType::ally2:
+            ballkickZone = calc::withinPerimeter(field.currentStatus.ally2.location, ball);
+            break;
+        default:
+            printf("bookkeeping:atLocation:: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return ballkickZone;
 }
 
 double bkcalc::getAngleTo(robotType type, Point point){
@@ -72,7 +90,7 @@ double bkcalc::getAngleTo(robotType type, Point point){
             dir = calc::directionToPoint(field.currentStatus.ally2.location, point);
             break;
         default:
-            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
+            printf("bookkeeping:getAngleTo: ERR you didn't provide a valid robot %d\n", type);
             break;
     }
     return calc::getVectorAngle(dir);
@@ -97,8 +115,21 @@ Point bkcalc::kickPoint(robotType type){
     result = Point(kickerLoc.x+KICK_FACTOR*dir.x,kickerLoc.y+KICK_FACTOR*dir.y);
     return result;
 }
-bool bkcalc::ballAimed(robotType type){
 
+bool bkcalc::ballAimed(robotType type){
+    Robot* kicker;
+    switch(type){
+        case robotType::ally1:
+            kicker = &field.currentStatus.ally1;
+            break;
+        case robotType::ally2:
+            kicker = &field.currentStatus.ally2;
+            break;
+        default:
+            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return calc::ballAimed(*kicker, field.currentStatus.ball, enemyGoal);
 }
 
 bool bkcalc::ballThreat(){

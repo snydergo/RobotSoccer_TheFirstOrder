@@ -29,6 +29,7 @@ namespace bkcalc{
     extern double getAngleTo(robotType type, Point point);
     extern bool atLocation(robotType type, Point point);
     extern bool ballKicked(robotType type, Point kp);
+    extern bool ballKickZone(robotType type);
     extern bool ballFetched(robotType type);
     extern bool ballThreat();
     extern bool ballAimed(robotType type);

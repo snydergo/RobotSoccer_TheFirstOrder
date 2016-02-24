@@ -68,11 +68,22 @@ bool calc::atLocation(Point robot, Point point){
     double yValues = robot.y-point.y;
     yValues *= yValues;
     double distance_sqrd = xValues+yValues;
-    //std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
+    std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
     if(distance_sqrd > DISTANCE_ERR)
         return false;
     else
         return true;
+}
+
+bool calc::withinPerimeter(Point robot, Point ball){
+    if(robot.x != robot.x || robot.y != robot.y){return false;}
+    double xValues = robot.x-ball.x;
+    xValues *= xValues;
+    double yValues = robot.y-ball.y;
+    yValues *= yValues;
+    double perimeter = xValues+yValues;
+    std::cout << "perimeter == " << perimeter << std::endl;
+    return (perimeter < PERIMETER_ERR);
 }
 
 bool calc::atLocation(double robot_coord, double p_coord){
@@ -99,12 +110,11 @@ bool calc::ballFetched(Robot ally, FieldObject ball){
 
 }
 
-bool calc::ballAimed(Robot ally, FieldObject ball){
+bool calc::ballAimed(Robot ally, FieldObject ball, Point enemyGoal){
     //for ball to be aimed. the robots angle needs to match
     //the angle created by the ball and the Goal. need to match
-    Point oppGoal = Point(40, 0);
     Point allyBallVector = calc::directionToPoint(ally.location, ball.location);
-    Point allyGoalVector = calc::directionToPoint(ally.location, oppGoal);
+    Point allyGoalVector = calc::directionToPoint(ally.location, enemyGoal);
     if(abs(ally.theta - calc::getVectorAngle(allyBallVector)) < ANGLE_ERR ||
             abs(ally.theta - calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR ||
             abs(calc::getVectorAngle(allyBallVector)-calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR){

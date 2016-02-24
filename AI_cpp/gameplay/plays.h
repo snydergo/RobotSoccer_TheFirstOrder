@@ -12,7 +12,8 @@ public:
     Plays(){}
 
     Plays(robotType type)
-    : allyNum(type)
+    : allyNum(type),
+      skill(type)
     {
     }
 

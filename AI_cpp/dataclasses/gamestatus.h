@@ -15,7 +15,7 @@ public:
     Robot enemy1;
     Robot enemy2;
     FieldObject ball;
-
+    ros::Time time;
     GameStatus()
     : ally1("ally1", Point(), Point(), 0, robotType::ally1)
     , ally2("ally2", Point(), Point(), 0, robotType::ally2)

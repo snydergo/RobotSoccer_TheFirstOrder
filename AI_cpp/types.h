@@ -1,7 +1,7 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-#define GOAL_XLOCATION 180
+#define GOAL_XLOCATION 160
 #define GOAL_WIDTH 60
 #define GOAL_RADIUS GOAL_WIDTH/2
 #define FIELD_XBORDER 180
@@ -9,9 +9,10 @@
 #define PI 3.141592653
 #define ANGLE_ERR 10
 #define DISTANCE_ERR 16 // this is an error of 4cm
+#define PERIMETER_ERR 124
 #define KICK_FACTOR 3
 #define BALLFETCHED_ERR 20
-#define FETCHBALL_OFFSET 8
+#define FETCHBALL_OFFSET 20
 #define TICKS_PER_SEC 50
 
 enum class robotType {ally1, ally2, enemy1, enemy2, none};
