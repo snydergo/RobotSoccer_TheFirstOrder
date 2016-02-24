@@ -8,15 +8,15 @@ class ControlVar:
 class Param:
     def __init__(self):
         self.kp_x   = .02
-        self.ki_x   = .01
+        self.ki_x   = .001
         self.kd_x   = .002
 
         self.kp_y   = .02
-        self.ki_y   = .01
+        self.ki_y   = .001
         self.kd_y   = .002
 
-        self.kp_th  = .002
-        self.ki_th  = .0000
+        self.kp_th  = .02
+        self.ki_th  = .0001
         self.kd_th  = 0
 
         self.Ts     = 1.00/loop_rate
