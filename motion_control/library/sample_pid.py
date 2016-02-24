@@ -9,11 +9,11 @@ class Param:
     def __init__(self):
         self.kp_x   = .02
         self.ki_x   = .0000
-        self.kd_x   = 0 #.002
+        self.kd_x   = .002
 
         self.kp_y   = .02
         self.ki_y   = .0000
-        self.kd_y   = 0 #.002
+        self.kd_y   = .002
 
         self.kp_th  = .002
         self.ki_th  = .0000
@@ -53,19 +53,22 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     # compute the error
     error = cmd_pos - pos
     print("Error: " + str(error))
-    # update integral of error
-    ctrl_vars.integrator = ctrl_vars.integrator + (Ts/2)*(error+ctrl_vars.prev_error);
+    
     # update derivative of z
-    ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos);
+    ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos)
     # update delayed variables for next time through the loop
     ctrl_vars.prev_error  = error;
     ctrl_vars.prev_pos    = pos;
 
     # compute the pid control signal
     u_unsat = kp*error + ki*ctrl_vars.integrator - kd*ctrl_vars.velocity;
-    u = sat(u_unsat,limit);
+    u = sat(u_unsat,limit)
     
     # integrator anti-windup
+    if abs(error) > 15
+        # update integral of error
+        ctrl_vars.integrator = ctrl_vars.integrator + (Ts/2)*(error+ctrl_vars.prev_error)
+
     if (ki!=0):
         ctrl_vars.integrator = ctrl_vars.integrator + Ts/ki*(u-u_unsat)
 
