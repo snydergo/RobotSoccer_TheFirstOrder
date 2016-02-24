@@ -30,14 +30,14 @@ bool bkcalc::atLocation(robotType type, Point point){
     return atlocation;
 }
 
-bool bkcalc::ballKicked(robotType type){
+bool bkcalc::ballKicked(robotType type, Point kp){
     bool ballkicked = false;
     switch(type){
         case robotType::ally1:
-            ballkicked = calc::ballKicked(field.currentStatus.ally1, field.currentStatus.ball);
+            ballkicked = calc::ballKicked(field.currentStatus.ally1, kp);
             break;
         case robotType::ally2:
-            ballkicked = calc::ballKicked(field.currentStatus.ally2, field.currentStatus.ball);
+            ballkicked = calc::ballKicked(field.currentStatus.ally2, kp);
             break;
         default:
             printf("bookkeeping:ballKicked: ERR you didn't provide a valid robot\n");
@@ -76,6 +76,26 @@ double bkcalc::getAngleTo(robotType type, Point point){
             break;
     }
     return calc::getVectorAngle(dir);
+}
+
+Point bkcalc::kickPoint(robotType type){
+    Point dir;
+    Point result;
+    Point kickerLoc;
+    switch(type){
+        case robotType::ally1:
+            kickerLoc = field.currentStatus.ally1.location;
+            break;
+        case robotType::ally2:
+            kickerLoc = field.currentStatus.ally2.location;
+            break;
+        default:
+            printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    dir = calc::directionToPoint(kickerLoc,field.currentStatus.ball.location);
+    result = Point(kickerLoc.x+KICK_FACTOR*dir.x,kickerLoc.y+KICK_FACTOR*dir.y);
+    return result;
 }
 
 bool bkcalc::ballThreat(){

@@ -54,9 +54,9 @@ int main(int argc, char *argv[])
             cmdRob1.theta_cmd = calc::angleDifference(cmdRob1.theta, 90);*/
             chatter_pub.publish(cmdRob1);
             //std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
-            std::cout << "x to center = " << (int)-cmdRob1.x << std::endl <<
-                         "y to center = " << (int)-cmdRob1.y << std::endl <<
-                         "theta = " << (int)cmdRob1.theta << std::endl;
+            std::cout << "x_dir = " << cmdRob1.x_cmd-cmdRob1.x << std::endl <<
+                         "y_dir = " << cmdRob1.y_cmd-cmdRob1.y << std::endl <<
+                         "theta = " << cmdRob1.theta_cmd-cmdRob1.theta << std::endl;
         }
         //std::cout << "spinning" << std::endl;
         //ros::spinOnce();

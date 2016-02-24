@@ -6,6 +6,7 @@ enum class play_state {idle_st, start_st, rushgoal_st, playgoalie_st } play_st;
 enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
     coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st} coord_st;
 
+Point kp = center;
 
 void Plays::init(){
     play_st = play_state::idle_st;
@@ -68,12 +69,14 @@ void Plays::tick(){
                         skill.aim();
                         if(true /*ballAimed()*/){
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
+                            kp = bkcalc::kickPoint(allyNum);
                             coord_st = coordSkills_st::coordKick_st;
                         }
                         break;
                     case coordSkills_st::coordKick_st:
-                        skill.kick();
-                        if(bkcalc::ballKicked(allyNum)){
+                        //skill.kick();
+                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,field.currentStatus.ball.location));
+                        if(bkcalc::ballKicked(allyNum,kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
                         }
@@ -101,13 +104,16 @@ void Plays::tick(){
                         //if ball is close to robot
                         if(bkcalc::atLocation(allyNum, field.currentStatus.ball.location)){                
                             std::cout << "Plays::tick() BALL FOLLOWED" << std::endl;
+                            kp = bkcalc::kickPoint(allyNum);
                             coord_st = coordSkills_st::coordKick_st;
                         }else{ //if ball isn't close to robot
                             Point point;
                             //if ball is within goalie box
-                            if(abs(field.currentStatus.ball.location.y) > GOAL_RADIUS){
+                            if(abs(field.currentStatus.ball.location.y) < GOAL_RADIUS){
+                                std::cout << "ball is within Goal width" << std::endl;
                                 point = Point(allyGoal.x,field.currentStatus.ball.location.y);
                             }else{ //ball is outside of goalie box
+                                std::cout << "ball is outside Goal width" << std::endl;
                                 double y_coord = allyGoal.y;
                                 if(field.currentStatus.ball.location.y > 0)
                                     y_coord += GOAL_RADIUS;
@@ -123,8 +129,9 @@ void Plays::tick(){
                         break;
                     case coordSkills_st::coordKick_st:
                         std::cout << "Skills::coordSkills_st == kick_st"<<std::endl;
-                        skill.kick();
-                        if(bkcalc::ballKicked(allyNum)){
+                        //skill.kick();
+                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,field.currentStatus.ball.location));
+                        if(bkcalc::ballKicked(allyNum, kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFollowball_st;
                         }

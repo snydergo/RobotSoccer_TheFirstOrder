@@ -109,6 +109,6 @@ bool calc::ballAimed(Robot ally, FieldObject ball){
         return false;
 }
 
-bool calc::ballKicked(Robot ally, FieldObject ball){
-
+bool calc::ballKicked(Robot ally, Point kp){
+    return calc::atLocation(ally.location, kp);
 }

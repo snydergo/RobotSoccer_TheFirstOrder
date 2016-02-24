@@ -28,9 +28,10 @@ extern robot_soccer::controldata cmdRob2;
 namespace bkcalc{
     extern double getAngleTo(robotType type, Point point);
     extern bool atLocation(robotType type, Point point);
-    extern bool ballKicked(robotType type);
+    extern bool ballKicked(robotType type, Point kp);
     extern bool ballFetched(robotType type);
     extern bool ballThreat();
+    extern Point kickPoint(robotType type);
 }
 
 

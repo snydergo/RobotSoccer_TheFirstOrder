@@ -10,6 +10,7 @@
 #define ANGLE_ERR 10
 #define BALLFETCHED_ERR 20
 #define DISTANCE_ERR 16 // this is an error of 4cm
+#define KICK_FACTOR 3
 
 enum class robotType {ally1, ally2, enemy1, enemy2, none};
 

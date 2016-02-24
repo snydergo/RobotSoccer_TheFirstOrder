@@ -20,7 +20,7 @@ namespace calc {
     /*#### THRESHOLD PLAY FUNCTIONS ####*/
     bool ballFetched(Robot ally, FieldObject ball);
     bool ballAimed(Robot ally, FieldObject ball);
-    bool ballKicked(Robot ally, FieldObject ball);
+    bool ballKicked(Robot ally, Point kp);
     bool atLocation(Point robot, Point point);
     bool atLocation(double robot_coord, double p_coord);
 }
