@@ -40,7 +40,7 @@ def robot_ctrl(message):
     theta_cmd   = message.theta_cmd
     
     xy_limit = 0.50
-    th_limit = 0.25
+    th_limit = 0.15
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
     vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
