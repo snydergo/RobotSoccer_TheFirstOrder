@@ -65,8 +65,8 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     u = sat(u_unsat,limit);
     
     # integrator anti-windup
-    if (ki!=0):
-        ctrl_vars.integrator = ctrl_vars.integrator + Ts/ki*(u-u_unsat)
+    # if (ki!=0):
+    #     ctrl_vars.integrator = ctrl_vars.integrator + Ts/ki*(u-u_unsat)
 
     return u
 
