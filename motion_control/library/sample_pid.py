@@ -23,11 +23,11 @@ class ControlVar:
 class Param:
     def __init__(self):
         self.kp_x   = .03
-        self.ki_x   = .001
+        self.ki_x   = .0001
         self.kd_x   = .000
 
         self.kp_y   = .03
-        self.ki_y   = .001
+        self.ki_y   = .0001
         self.kd_y   = .000
 
         self.kp_th  = .02
