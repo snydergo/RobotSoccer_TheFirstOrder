@@ -7,7 +7,7 @@
 #include "mathfunctions.h"
 
 // Type definitions
-#define TICKS_PER_SEC 10
+
 
 
 // GLOBALS
@@ -31,6 +31,7 @@ namespace bkcalc{
     extern bool ballKicked(robotType type, Point kp);
     extern bool ballFetched(robotType type);
     extern bool ballThreat();
+    extern bool ballAimed(robotType type);
     extern Point kickPoint(robotType type);
 }
 

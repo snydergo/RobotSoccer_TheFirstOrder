@@ -12,12 +12,11 @@ void Skills::init(){
 
 //FUNCTIONS CALLED BY PLAYS OR OUTSIDE TO DO SKILLS
 void Skills::idle(){
-    printf("start circle ball\n");
     skill_st = skill_state::idle_st;
 }
 
 void Skills::goToPoint(Point point, double dest_theta){
-    std::cout << "Skills::goToPoint" << std::endl;
+    //std::cout << "Skills::goToPoint" << std::endl;
     theta_cmd = dest_theta;
     dest = point;
     skill_st = skill_state::gotopoint_st;
@@ -58,7 +57,10 @@ void Skills::continueKick(){
 }
 
 void Skills::continueFetchBall(){
-    utils.moveToPoint(field.currentStatus.ally1,field.currentStatus.ball.location,0);
+    Point ballP = field.currentStatus.ball.location;
+    Point fetchballpoint(ballP.x-FETCHBALL_OFFSET,ballP.y);
+    double theta = bkcalc::getAngleTo(allyNum, ballP);
+    utils.moveToPoint(field.currentStatus.ally1,fetchballpoint,0);
 }
 
 void Skills::continueDribble(){
@@ -84,7 +86,7 @@ void Skills::tick(){
             continueIdle();
             break;
         case skill_state::gotopoint_st:
-            std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
+            //std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
             continueGoToPoint();
             break;
         case skill_state::kick_st:

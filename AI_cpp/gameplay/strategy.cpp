@@ -4,7 +4,6 @@ enum class strategy {idle_st, start_st,
                      GoaliePower_st, GPGoalie_st, GPRush_st,
                     RushSplitDefense_st} strategy_st;
 
-int count = 0;
 void Strategies::init(){
     strategy_st = strategy::idle_st;
     robot1Plays.init();
@@ -21,19 +20,21 @@ void Strategies::tick()
 	switch (strategy_st)
 	{
     case strategy::idle_st:
-        std::cout << "Strategies::tick() idle_st"<< std::endl;
+        //std::cout << "Strategies::tick() idle_st"<< std::endl;
         //issue with the data not being initialized the first time
         //it is assumed robot is not in the right position
-        //if(count++ == 50){
+        if(field.currentStatus.ally1.location.x != 0 &&
+                field.currentStatus.ally1.location.x != 0 &&
+                field.currentStatus.ally1.theta != 0){
             strategy_st = strategy::start_st;
-        //}
-	break;
+        }
+        break;
     //state used to perform all necessary inits and start first strategy
     case strategy::start_st:
-        std::cout << "Strategies::tick() start_st"<< std::endl;
+        //std::cout << "Strategies::tick() start_st"<< std::endl;
         robot1Plays.start();
         if(bkcalc::atLocation(robot1Plays.allyNum, start1Location)){
-            std::cout << "at Start Location" << std::endl;
+            //std::cout << "at Start Location" << std::endl;
             strategy_st = strategy::GoaliePower_st;
         }
         /*if(truegameStarted){
@@ -42,13 +43,13 @@ void Strategies::tick()
 		break;
     //GOALIE POWER STATES
     case strategy::GoaliePower_st:
-        std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
+        //std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
         if(bkcalc::ballThreat()){
-            std::cout << "Strategies::tick() playGoalie"<< std::endl;
+            //std::cout << "Strategies::tick() playGoalie"<< std::endl;
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
         }else{
-            //std::cout << "Strategies::tick() rushingGoal"<< std::endl;
+            ////std::cout << "Strategies::tick() rushingGoal"<< std::endl;
             //strategy_st = strategy::GPRush_st;
             //robot1Plays.rushGoal();
             strategy_st = strategy::GPGoalie_st;
@@ -58,14 +59,14 @@ void Strategies::tick()
 
 		break;
     case strategy::GPGoalie_st:
-        std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
+        //std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
         if(false/*!bkcalc::ballThreat()*/){
             strategy_st = strategy::GPRush_st;
             robot1Plays.rushGoal();
         }
         break;
     case strategy::GPRush_st:
-        std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
+        //std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
         if(bkcalc::ballThreat()){
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();

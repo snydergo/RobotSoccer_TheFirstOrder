@@ -97,6 +97,9 @@ Point bkcalc::kickPoint(robotType type){
     result = Point(kickerLoc.x+KICK_FACTOR*dir.x,kickerLoc.y+KICK_FACTOR*dir.y);
     return result;
 }
+bool bkcalc::ballAimed(robotType type){
+
+}
 
 bool bkcalc::ballThreat(){
    return(field.currentStatus.ball.velocity.x < 0 &&

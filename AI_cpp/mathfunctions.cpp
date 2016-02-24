@@ -62,12 +62,13 @@ double calc::getVectorAngle(Point vector){
 
 //####PLAY THRESHOLD FUNCTIONS####//
 bool calc::atLocation(Point robot, Point point){
+    if(robot.x != robot.x && robot.y != robot.y){return false;}
     double xValues = robot.x-point.x;
     xValues *= xValues;
     double yValues = robot.y-point.y;
     yValues *= yValues;
     double distance_sqrd = xValues+yValues;
-    std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
+    //std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
     if(distance_sqrd > DISTANCE_ERR)
         return false;
     else
@@ -84,14 +85,17 @@ bool calc::atLocation(double robot_coord, double p_coord){
 }
 
 bool calc::ballFetched(Robot ally, FieldObject ball){
-    Point dist = calc::directionToPoint(ally.location, ball.location);
+    //Point dist = calc::directionToPoint(ally.location, ball.location);
     //ball should be less than 4cm in front of robot x check
     //ball should be in the center of the robot with error of 4
     //angle should be towards the ball
-    if(dist.x > BALLFETCHED_ERR || dist.y > BALLFETCHED_ERR ||
-            abs(calc::getVectorAngle(dist) - ally.theta) > ANGLE_ERR) {
-        return false;
-    }
+    Point fetchballpoint(ball.location.x-FETCHBALL_OFFSET,ball.location.y);
+    return calc::atLocation(ally.location, fetchballpoint);
+
+//    if(dist.x > BALLFETCHED_ERR || dist.y > BALLFETCHED_ERR ||
+//            abs(calc::getVectorAngle(dist) - ally.theta) > ANGLE_ERR) {
+//        return false;
+//    }
 
 }
 

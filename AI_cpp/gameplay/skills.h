@@ -8,7 +8,7 @@ class Skills
 {
 public:
     Skills(robotType type)
-        : type(type)
+        : allyNum(type)
         , utils(type)
         , dest(0,0)
     {
@@ -42,7 +42,7 @@ public:
     Point dest;
     double theta_cmd;
     Utilities utils;
-    robotType type;
+    robotType allyNum;
 };
 
 #endif /* SKILL_H_ */
