@@ -170,6 +170,16 @@ bool bkcalc::ballAimed(robotType type){
 }
 
 bool bkcalc::ballThreat(){
-   return(field.currentStatus.ball.velocity.x < 0 &&
-        field.currentStatus.ball.location.x < 0);
+//   std::cout << "####bkcalc::ballThreat####" << std::endl;
+//   std::cout << "ball.velocity.x == " + std::to_string(field.currentStatus.ball.velocity.x) << std::endl;
+//   std::cout << "ball.location.x == " + std::to_string(field.currentStatus.ball.location.x) << std::endl;
+//   if(field.currentStatus.ball.velocity.x < 0 &&
+//          field.currentStatus.ball.location.x < 0){
+//       std::cout << "BALL THREATENING" << std::endl;
+//       return true;
+//   }else{
+//       std::cout << "NO THREAT" << std::endl;
+//       return false;
+//   }
+    return (field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0);
 }

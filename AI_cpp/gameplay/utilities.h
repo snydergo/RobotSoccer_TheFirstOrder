@@ -6,7 +6,7 @@
 #include "../mathfunctions.h"
 #include "../dataclasses/robot.h"
 #include "../types.h"
-
+#include "../exceptionAI.h"
 
 class Utilities
 {

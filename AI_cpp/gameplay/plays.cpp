@@ -56,9 +56,10 @@ void Plays::tick(){
                 skill.goToPoint(start1Location, 0);
                 break;
             case play_state::rushgoal_st:
-                std::cout << "Plays::tick() rushgoal_st"<< std::endl;
+                std::cout << "Plays::tick() rushgoal_st ";
                 switch(coord_st){
                     case coordSkills_st::coordFetchball_st:
+                       std::cout << " fetching ball" << std::endl;
                        skill.fetchBall();
                        if(bkcalc::ballFetched(allyNum)){
                             std::cout << "Plays::tick() BALL FETCHED" << std::endl;
@@ -66,16 +67,18 @@ void Plays::tick(){
                         }
                         break;
                     case coordSkills_st::coordAim_st:
+                        std::cout << " aiming ball" << std::endl;
                         skill.aim();
-                        if(true /*ballAimed()*/){
+                        if(bkcalc::ballAimed(allyNum)){
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             kp = bkcalc::kickPoint(allyNum);
                             coord_st = coordSkills_st::coordKick_st;
                         }
                         break;
                     case coordSkills_st::coordKick_st:
+                        std::cout << " kicking ball" << std::endl;
                         //skill.kick();
-                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,field.currentStatus.ball.location));
+                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum,kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
@@ -109,20 +112,20 @@ void Plays::tick(){
                         }else{ //if ball isn't close to robot
                             Point point;
                             //if ball is within goalie box
-                            if(abs(field.currentStatus.ball.location.y) < GOAL_RADIUS){
+                            if(abs(fieldget::getBallLoc().y) < GOAL_RADIUS){
                                 std::cout << "ball is within Goal width" << std::endl;
-                                point = Point(allyGoal.x,field.currentStatus.ball.location.y);
+                                point = Point(allyGoal.x,fieldget::getBallLoc().y);
                             }else{ //ball is outside of goalie box
                                 std::cout << "ball is outside Goal width" << std::endl;
                                 double y_coord = allyGoal.y;
-                                if(field.currentStatus.ball.location.y > 0)
+                                if(fieldget::getBallLoc().y > 0)
                                     y_coord += GOAL_RADIUS;
                                 else
                                     y_coord -= GOAL_RADIUS;
 
                                 point = Point(allyGoal.x,y_coord);
                             }
-                            double cmdTheta = bkcalc::getAngleTo(allyNum,field.currentStatus.ball.location);
+                            double cmdTheta = bkcalc::getAngleTo(allyNum,fieldget::getBallLoc());
                             skill.goToPoint(point,cmdTheta);
                         }
                     }
@@ -130,7 +133,7 @@ void Plays::tick(){
                     case coordSkills_st::coordKick_st:
                         std::cout << "Skills::coordSkills_st == kick_st"<<std::endl;
                         //skill.kick();
-                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,field.currentStatus.ball.location));
+                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum, kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordGotogoal_st;

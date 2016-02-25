@@ -31,6 +31,12 @@ double calc::angleDifference(double currentTheta, double desiredTheta){
 Point calc::getVelocity(FieldObject newobj, FieldObject oldobj){
     double x_vel = newobj.location.x - oldobj.location.x;
     double y_vel = newobj.location.y - oldobj.location.y;
+    if(abs(x_vel) < VELOCITY_THRESHOLD)
+        x_vel = 0;
+
+    if(abs(y_vel) < VELOCITY_THRESHOLD)
+        y_vel = 0;
+
     return Point(x_vel, y_vel);
 }
 
@@ -115,8 +121,8 @@ bool calc::ballAimed(Robot ally, FieldObject ball, Point enemyGoal){
     //the angle created by the ball and the Goal. need to match
     Point allyBallVector = calc::directionToPoint(ally.location, ball.location);
     Point allyGoalVector = calc::directionToPoint(ally.location, enemyGoal);
-    if(abs(ally.theta - calc::getVectorAngle(allyBallVector)) < ANGLE_ERR ||
-            abs(ally.theta - calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR ||
+    if(abs(ally.theta - calc::getVectorAngle(allyBallVector)) < ANGLE_ERR &&
+            abs(ally.theta - calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR &&
             abs(calc::getVectorAngle(allyBallVector)-calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR){
         return true;
     }else

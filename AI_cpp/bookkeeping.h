@@ -5,9 +5,13 @@
 #include "robot_soccer/visiondata.h"
 #include "dataclasses/gamestatus.h"
 #include "mathfunctions.h"
+#include <fstream>
+//Outputs
 
-// Type definitions
-
+/*namespace stream{
+    std::ofstream stateStatus;
+    std::ofstream info;
+}*/
 
 
 // GLOBALS
@@ -24,6 +28,7 @@ extern bool sendCmd_Rob1;
 extern bool sendCmd_Rob2;
 extern robot_soccer::controldata cmdRob1;
 extern robot_soccer::controldata cmdRob2;
+
 //functions
 namespace fieldget {
     FieldObject* getBall();

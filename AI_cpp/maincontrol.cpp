@@ -5,6 +5,8 @@
 #include "gameplay/strategy.h"
 #include "types.h"
 
+void checkCmd(robot_soccer::controldata *cmdRob1);
+
 int main(int argc, char *argv[])
 {
     //need to perform all necessary inits
@@ -46,6 +48,7 @@ int main(int argc, char *argv[])
 
         if(sendCmd_Rob1){
             sendCmd_Rob1 = false;
+            checkCmd(&cmdRob1);
             chatter_pub.publish(cmdRob1);
             ////std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
             std::cout << "x_dir = " << cmdRob1.x_cmd-cmdRob1.x << std::endl <<
@@ -64,6 +67,13 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+void checkCmd(robot_soccer::controldata *cmdRob1){
+    if(cmdRob1->x != cmdRob1->x || cmdRob1->x_cmd != cmdRob1->x_cmd){
+        std::cout << "maincontrol::checkCmd() ##nan's detected## reverting to IDLE" << std::endl;
+        cmdRob1->cmdType = "idle";
+
+    }
+}
 
 
 

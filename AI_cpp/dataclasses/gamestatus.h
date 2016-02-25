@@ -5,7 +5,6 @@
 
 #include "robot.h"
 #include "fieldobject.h"
-
 #include "robot_soccer/visiondata.h"
 
 class GameStatus{
@@ -17,11 +16,11 @@ public:
     FieldObject ball;
     ros::Time time;
     GameStatus()
-    : ally1("ally1", Point(), Point(), 0, robotType::ally1)
-    , ally2("ally2", Point(), Point(), 0, robotType::ally2)
-    , enemy1("enemy1", Point(), Point(), 0, robotType::enemy1)
-    , enemy2("enemy2", Point(), Point(), 0, robotType::enemy2)
-    , ball("ball", Point(), Point())
+    : ally1(robotType::ally1, Point(), Point(), 0)
+    , ally2(robotType::ally2, Point(), Point(), 0)
+    , enemy1(robotType::enemy1, Point(), Point(), 0)
+    , enemy2(robotType::enemy2, Point(), Point(), 0)
+    , ball(robotType::ball, Point(), Point())
     {
     }
 

@@ -13,9 +13,20 @@
 #define KICK_FACTOR 3
 #define BALLFETCHED_ERR 20
 #define FETCHBALL_OFFSET 20
+
 #define TICKS_PER_SEC 50
 
-enum class robotType {ally1, ally2, enemy1, enemy2, none};
+#define VELOCITY_THRESHOLD .000001
+#define VELOCITY_DIVIDER (1/TICKS_PER_SEC)
+//# FILTER DEFINES #//
+#define DOSAMPLE    0
+#define BETASMOOTH0 .5 //main filter
+#define BETASMOOTH1 .35
+#define BETASMOOTH2 .5
+#define BETASMOOTH3 .75
+#define SAMPLENUM 300
+
+enum class robotType {ally1, ally2, enemy1, enemy2, ball, object, none};
 
 
 #endif // TYPES_H

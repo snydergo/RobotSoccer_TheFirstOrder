@@ -15,14 +15,27 @@ void Utilities::rotate(double angle){
 
 void Utilities::move(Robot robot, Point dest, double des_theta){
     std::cout << "UTILITIES:: sending mov command" << std::endl;
-    cmdRob1.cmdType = "mov";
-    cmdRob1.x = robot.location.x;
-    cmdRob1.y = robot.location.y;
-    cmdRob1.theta = robot.theta;
-    cmdRob1.x_cmd = dest.x;
-    cmdRob1.y_cmd = dest.y;
-    cmdRob1.theta_cmd = des_theta;
+    robot_soccer::controldata cmd;
+    cmd.cmdType = "mov";
+    cmd.x = robot.location.x;
+    cmd.y = robot.location.y;
+    cmd.theta = robot.theta;
+    cmd.x_cmd = dest.x;
+    cmd.y_cmd = dest.y;
+    cmd.theta_cmd = des_theta;
     sendCmd_Rob1 = true;
+
+    switch(robot.tag){
+        case robotType::ally1:
+             cmdRob1 = cmd;
+            break;
+        case robotType::ally2:
+             cmdRob2 = cmd;
+            break;
+        default:
+            throw ExceptionAI(errtype::robotType);
+            break;
+    }
 }
 
 void Utilities::idle(){
