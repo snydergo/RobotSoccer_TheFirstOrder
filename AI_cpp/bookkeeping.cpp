@@ -17,7 +17,7 @@ FieldObject* fieldget::getBall(){
     return &field.currentStatus.ball;
 }
 
-Robot* fieldget::getRobot(){
+Robot* fieldget::getRobot(robotType type){
     Robot *rob;
     switch(type){
         case robotType::ally1:
