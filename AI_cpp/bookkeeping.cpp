@@ -16,6 +16,28 @@ robot_soccer::controldata cmdRob2;
 FieldObject fieldget::getBall(){
     return field.currentStatus.ball;
 }
+
+Robot* fieldget::getRobot(){
+    Robot *rob;
+    switch(type){
+        case robotType::ally1:
+            rob = &field.currentStatus.ally1;
+            break;
+        case robotType::ally2:
+            rob = &field.currentStatus.ally2;
+            break;
+        case robotType::enemy1:
+            rob = &field.currentStatus.enemy1;
+            break;
+        case robotType::enemy2:
+            rob = &field.currentStatus.enemy2;
+            break;
+        default:
+            printf("bookkeeping:atLocation:: ERR you didn't provide a valid robot\n");
+            break;
+    }
+    return rob;
+}
 //BOOK KEEPING CALC FUNCTIONS
 bool bkcalc::atLocation(robotType type, Point point){
     bool atlocation = false;
