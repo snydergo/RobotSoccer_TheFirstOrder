@@ -49,7 +49,7 @@ void Skills::continueIdle(){
 }
 
 void Skills::continueGoToPoint(){
-    utils.moveToPoint(*fieldget::getRobot(allyNum)dest,0);
+    utils.moveToPoint(*fieldget::getRobot(allyNum),dest,0);
 }
 
 void Skills::continueKick(){

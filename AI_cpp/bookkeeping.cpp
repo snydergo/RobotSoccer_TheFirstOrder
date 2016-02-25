@@ -46,7 +46,7 @@ Robot* fieldget::getRobot(robotType type){
 }
 
 Point fieldget::getRobotLoc(robotType type){
-    return field::getRobot(robotType type)->location;
+    return fieldget::getRobot(type)->location;
 }
 
 
