@@ -49,7 +49,7 @@ void Skills::continueIdle(){
 }
 
 void Skills::continueGoToPoint(){
-    utils.moveToPoint(field.currentStatus.ally1,dest,0);
+    utils.moveToPoint(*fieldget::getRobot(allyNum)dest,0);
 }
 
 void Skills::continueKick(){
@@ -60,7 +60,7 @@ void Skills::continueFetchBall(){
     Point ballP = field.currentStatus.ball.location;
     Point fetchballpoint(ballP.x-FETCHBALL_OFFSET,ballP.y);
     double theta = bkcalc::getAngleTo(allyNum, ballP);
-    utils.moveToPoint(field.currentStatus.ally1,fetchballpoint,theta);
+    utils.moveToPoint(*fieldget::getRobot(allyNum),fetchballpoint,theta);
 }
 
 void Skills::continueDribble(){
@@ -73,7 +73,7 @@ void Skills::continueAim(){
     double x_point = field.currentStatus.ball.location.x -1 ;
     double y_point = field.currentStatus.ball.location.y;
     Point aimSpot = Point(x_point,y_point);
-    utils.moveToPoint(field.currentStatus.ally1, aimSpot ,0);
+    utils.moveToPoint(*fieldget::getRobot(allyNum), aimSpot ,0);
 }
 
 void Skills::stop(){
