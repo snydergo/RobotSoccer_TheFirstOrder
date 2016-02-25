@@ -25,6 +25,10 @@ extern bool sendCmd_Rob2;
 extern robot_soccer::controldata cmdRob1;
 extern robot_soccer::controldata cmdRob2;
 //functions
+namespace fieldGet {
+    FieldObject getObject(robotType type);
+}
+
 namespace bkcalc{
     extern double getAngleTo(robotType type, Point point);
     extern bool atLocation(robotType type, Point point);
