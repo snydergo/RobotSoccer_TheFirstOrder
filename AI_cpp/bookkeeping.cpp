@@ -12,7 +12,9 @@ bool sendCmd_Rob1 = true;
 bool sendCmd_Rob2 = false;
 robot_soccer::controldata cmdRob1;
 robot_soccer::controldata cmdRob2;
-//FIELDGET FUNCTIONS
+
+
+//#### FIELDGET FUNCTIONS ####//
 FieldObject* fieldget::getBall(){
     return &field.currentStatus.ball;
 }
@@ -46,7 +48,9 @@ Robot* fieldget::getRobot(robotType type){
 Point fieldget::getRobotLoc(robotType type){
     return field::getRobot(robotType type)->location;
 }
-//BOOK KEEPING CALC FUNCTIONS
+
+
+//#### BOOK KEEPING CALC FUNCTIONS ####//
 bool bkcalc::atLocation(robotType type, Point point){
     bool atlocation = false;
     switch(type){
