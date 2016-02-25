@@ -25,7 +25,7 @@ extern bool sendCmd_Rob2;
 extern robot_soccer::controldata cmdRob1;
 extern robot_soccer::controldata cmdRob2;
 //functions
-namespace fieldGet {
+namespace fieldget {
     FieldObject getObject(robotType type);
 }
 
