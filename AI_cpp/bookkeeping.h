@@ -27,7 +27,7 @@ extern robot_soccer::controldata cmdRob2;
 //functions
 namespace fieldget {
     FieldObject* getBall();
-    Robot* getRobot();
+    Robot* getRobot(robotType type);
 }
 
 namespace bkcalc{
