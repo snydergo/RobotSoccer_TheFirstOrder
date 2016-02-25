@@ -28,8 +28,8 @@ extern robot_soccer::controldata cmdRob2;
 namespace fieldget {
     FieldObject* getBall();
     Robot* getRobot(robotType type);
-    Point* getBallLoc();
-    Point* getRobotLoc(robotType type);
+    Point getBallLoc();
+    Point getRobotLoc(robotType type);
 }
 
 namespace bkcalc{
