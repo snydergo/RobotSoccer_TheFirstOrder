@@ -17,6 +17,10 @@ FieldObject* fieldget::getBall(){
     return &field.currentStatus.ball;
 }
 
+Point fieldget::getBallLoc(){
+    return field.currentStatus.ball.location;
+}
+
 Robot* fieldget::getRobot(robotType type){
     Robot *rob;
     switch(type){
@@ -37,6 +41,10 @@ Robot* fieldget::getRobot(robotType type){
             break;
     }
     return rob;
+}
+
+Point fieldget::getRobotLoc(robotType type){
+    return field::getRobot(robotType type)->location;
 }
 //BOOK KEEPING CALC FUNCTIONS
 bool bkcalc::atLocation(robotType type, Point point){
