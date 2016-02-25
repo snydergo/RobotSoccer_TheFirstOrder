@@ -13,8 +13,8 @@ bool sendCmd_Rob2 = false;
 robot_soccer::controldata cmdRob1;
 robot_soccer::controldata cmdRob2;
 //FIELDGET FUNCTIONS
-FieldObject fieldget::getBall(){
-    return field.currentStatus.ball;
+FieldObject* fieldget::getBall(){
+    return &field.currentStatus.ball;
 }
 
 Robot* fieldget::getRobot(){
