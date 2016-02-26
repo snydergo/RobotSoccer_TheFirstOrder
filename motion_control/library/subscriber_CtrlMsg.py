@@ -4,6 +4,7 @@ from std_msgs.msg import String
 from robot_soccer.msg import controldata
 import mlib
 import sample_pid as pid
+import tunePID
 
 class Param:
     def __init__(self):
@@ -22,12 +23,6 @@ def callback1(data):
     global P
     P.cmdType = data.cmdType
     if P.cmdType == 'mov':
-    #    P.x = data.x
-    #    P.y = data.y
-    #    P.theta = data.theta
-    #    P.x_cmd = data.x_cmd
-    #    P.y_cmd = data.y_cmd
-    #    P.theta_cmd = data.theta_cmd
 	   P = data
 
     #scale factor
@@ -35,11 +30,11 @@ def callback1(data):
     # threshhold for what is considered "close enough"
     threshold = .05
     ## Decisions ##
-    # ignoring theta for now
     # if the commanded values are small enough, we are close enough. Just stop movement.
        # data.x = 0; data.y = 0; data.theta = 0;
     if data.x == data.x: # check for NaN
-        vx, vy, omega = pid.robot_ctrl(data)
+        # vx, vy, omega = pid.robot_ctrl(data)
+        vx, vy, omega = tunePID.do_action(data)
         mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         print("\n")
     else:
@@ -60,10 +55,7 @@ def ControlListener1():
 
     rospy.Subscriber("robot1Com", controldata, callback1)
 
-    #scale factor
-    #sf = .01
-    # threshhold for what is considered "close enough"
-    #threshold = .05
+
     ## Decisions ##
     
     # rate = rospy.Rate(100) # 100 Hz
@@ -73,15 +65,6 @@ def ControlListener1():
 	# pub.publish(hello_str)
 	   # rate.sleep()
     while not rospy.is_shutdown():
-        # ignoring theta for now
-        # if the commanded values are small enough, we are close enough. Just stop movement.
-     #   if P.x_cmd < threshold and P.y_cmd < threshold:
-     #        mlib.stop()
-     #   else:
-     #       vx, vy, omega = pid.robot_ctrl(controldata)
-     #       mlib.goXYOmegaWorld(vx,vy,omega,P.theta)
-
-
         rospy.spin()
     return
 
