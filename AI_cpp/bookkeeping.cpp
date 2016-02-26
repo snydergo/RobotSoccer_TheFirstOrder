@@ -1,13 +1,17 @@
 #include "bookkeeping.h"
 
+//## FIELD INFO & OBJECTS ##//
 Point center(0,0);
 Point enemyGoal(GOAL_XLOCATION,0);
 Point allyGoal(-GOAL_XLOCATION,0);
 Point start1Location(0,0);
 FieldCoord field;
+
+//## VISION DATA ##//
 bool visionUpdated;
 GameStatus visionStatus_msg;
 
+//## CONTROL DATA ##//
 bool sendCmd_Rob1 = true;
 bool sendCmd_Rob2 = false;
 robot_soccer::controldata cmdRob1;
