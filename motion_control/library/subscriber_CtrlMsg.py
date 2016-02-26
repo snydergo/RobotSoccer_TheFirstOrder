@@ -36,7 +36,7 @@ def callback1(data):
         else:
             print("NaN - stopping")
             mlib.stop()
-    elif data.cmdType == 'pid'
+    elif data.cmdType == 'pid':
         for i in vars(data):
             if i in vars(P):
                 setattr(P, i, eval('data.{}'.format(i)))
