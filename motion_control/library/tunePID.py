@@ -109,7 +109,7 @@ def do_action(message):
             P.kd_theta = P.kd_theta - tuningSensitivity
             print("kd_theta: " + str(P.kd_theta))
     elif action == 'KD_UP':
-         if tuningVariable == 'x':
+        if tuningVariable == 'x':
             P.kd_x = P.kd_x + tuningSensitivity
             print("kd_x: " + str(P.kd_x))
         elif tuningVariable == 'y':
@@ -119,7 +119,7 @@ def do_action(message):
             P.kd_theta = P.kd_theta + tuningSensitivity
             print("kd_theta: " + str(P.kd_theta))       
     elif action == 'KI_DOWN':
-         if tuningVariable == 'x':
+        if tuningVariable == 'x':
             P.ki_x = P.ki_x - tuningSensitivity
             print("ki_x: " + str(P.ki_x))
         elif tuningVariable == 'y':
@@ -129,7 +129,7 @@ def do_action(message):
             P.ki_theta = P.ki_theta - tuningSensitivity
             print("ki_theta: " + str(P.ki_theta))       
     elif action == 'KI_UP':
-         if tuningVariable == 'x':
+        if tuningVariable == 'x':
             P.ki_x = P.ki_x + tuningSensitivity
             print("ki_x: " + str(P.ki_x))
         elif tuningVariable == 'y':
