@@ -14,6 +14,7 @@ add_message_files(
   FILES
   visiondata.msg
   controldata.msg
+  piddata.msg
 )
 
 generate_messages(

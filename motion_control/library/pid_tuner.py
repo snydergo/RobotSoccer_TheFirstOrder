@@ -6,25 +6,25 @@ from robot_soccer.msg import piddata
 # Default commands
 class Tuning:
     def __init__(self):
-        self.x_cmd = 0
-        self.y_cmd = 0
-        self.theta_cmd = 0
+      self.x_cmd = 0
+      self.y_cmd = 0
+      self.theta_cmd = 0
 
-        self.kp_x   = .02
-        self.ki_x   = .00001
-        self.kd_x   = .000
+      self.kp_x   = .02
+      self.ki_x   = .00001
+      self.kd_x   = .000
 
-        self.kp_y   = .02
-        self.ki_y   = .00001
-        self.kd_y   = .000
+      self.kp_y   = .02
+      self.ki_y   = .00001
+      self.kd_y   = .000
 
-        self.kp_theta  = .02
-        self.ki_theta  = .00005
-        self.kd_theta  = 0
+      self.kp_theta  = .02
+      self.ki_theta  = .00005
+      self.kd_theta  = 0
 
-        self.loop_rate = 10 # Hz (get value from publisher)
-        self.tuningVariable = 'x'
-        self.tuningSensitivity = .001
+      self.loop_rate = 10 # Hz (get value from publisher)
+      self.tuningVariable = 'x'
+      self.tuningSensitivity = .001
 
 T = Tuning()
 
