@@ -30,9 +30,9 @@ class Param:
         self.ki_y   = .00001
         self.kd_y   = .000
 
-        self.kp_th  = .02
-        self.ki_th  = .00005
-        self.kd_th  = 0
+        self.kp_theta  = .02
+        self.ki_theta  = .00005
+        self.kd_theta  = 0
 
         self.Ts     = 1.00/loop_rate
         self.tau    = 0.005
@@ -40,8 +40,8 @@ class Param:
         self.camera_sample_rate = 33
         self.lpf_alpha          = 0.7
 
-        a1      = (2*P.tau-P.camera_sample_rate)/(2*P.tau+P.camera_sample_rate)
-        a2      = 2/(2*P.tau+P.camera_sample_rate)
+        a1      = (2*P.tau-self..camera_sample_rate)/(2*tau-self.tau+self.camera_sample_rate)
+        a2      = 2/(2*self.tau+self.camera_sample_rate)
 
 
 loop_rate = 50 # Hz (get value from publisher)
@@ -65,7 +65,7 @@ def robot_ctrl(message):
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
     vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
-    vth = PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,th_limit,P.Ts,P.tau)
+    vth = PID(theta_cmd,theta,theta_g,P.kp_theta,P.ki_theta,P.kd_theta,th_limit,P.Ts,P.tau)
 
     return vx, vy, vth
 
