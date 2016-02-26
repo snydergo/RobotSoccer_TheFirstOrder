@@ -19,10 +19,7 @@ class Ball(object):
 
 def utility_lpf_ball(ball,P):
 
-    if (t==0):  # initialize filter
-        position = ball.position
-        position_delayed = position
-        velocity = matlib.zeros(shape=(2,1))
+
         old_position_measurement = position
         # dirty derivative coefficients
         a1 = (2*P.tau-P.camera_sample_rate)/(2*P.tau+P.camera_sample_rate)
