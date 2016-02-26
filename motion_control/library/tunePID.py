@@ -4,16 +4,16 @@ import sample_pid as pid
 from getch import _Getch
 
 # Default commands
-x_cmd = '0'
-y_cmd = '0'
-theta_cmd = '0'
+global x_cmd = '0'
+global y_cmd = '0'
+global theta_cmd = '0'
 x_g     = pid.ControlVar()
 y_g     = pid.ControlVar()
 theta_g = pid.ControlVar()
 P = Param()
-loop_rate = 10 # Hz (get value from publisher)
-tuningVariable = 'x'
-tuningSensitivity = .001
+global loop_rate = 10 # Hz (get value from publisher)
+global tuningVariable = 'x'
+global tuningSensitivity = .001
 
 def get_action():
     getch = _Getch()
