@@ -25,7 +25,7 @@ def get_action():
     # Show commands (help)
     if pressed == 'h':
         return 'HELP'
-    elif pressed == 'q'
+    elif pressed == 'q':
         return 'QUIT'
     # Switch tuning variable
     elif pressed == '1':
