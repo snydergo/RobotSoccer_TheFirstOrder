@@ -1,0 +1,10 @@
+string  cmdType
+float64 x_kp
+float64 x_kd
+float64 x_ki
+float64 y_kp
+float64 y_kd
+float64 y_ki
+float64 th_kp
+float64 th_kd
+float64 th_ki
