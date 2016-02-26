@@ -6,9 +6,9 @@ from getch import _Getch
 # Default commands
 class Tuning:
     def __init__(self):
-        self.x_cmd = '0'
-        self.y_cmd = '0'
-        self.theta_cmd = '0'
+        self.x_cmd = 0
+        self.y_cmd = 0
+        self.theta_cmd = 0
         self.loop_rate = 10 # Hz (get value from publisher)
         self.tuningVariable = 'x'
         self.tuningSensitivity = .001
