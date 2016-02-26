@@ -1,12 +1,12 @@
 {
     "param": {
-        "cameraUrl": "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg",
+        "cameraUrl": "http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg",
         "calibration": {
             "fieldCenterX_pixel": 422,
             "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 121.92,
             "referenceDistance_pixel": 255,
-            "invertDirectionX": true
+            "invertDirectionX": false
         },
         "crop": {
             "left": 0,
