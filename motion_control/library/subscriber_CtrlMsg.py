@@ -38,7 +38,8 @@ def callback1(data):
         mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         print("\n")
     else:
-        print("NaN received")
+        print("NaN - stopping")
+        mlib.stop()
 	
     # print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)

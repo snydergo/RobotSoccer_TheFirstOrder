@@ -2,6 +2,8 @@
 
 import sample_pid as pid
 from getch import _Getch
+import sys, tty
+tty.setcbreak(sys.stdin)
 
 # Default commands
 class Tuning:
@@ -20,8 +22,10 @@ P = pid.Param()
 T = Tuning()
 
 def get_action():
+    print("getting action")
     getch = _Getch()
     pressed = getch()
+    print("called getch")
     # Show commands (help)
     if pressed == 'h':
         return 'HELP'
@@ -58,6 +62,9 @@ def get_action():
     # change cmd position
     elif pressed == ' ':
         return 'CHANGE_CMD_POS'
+    
+    else:
+        return 'NOTHING'
 
 def do_action(message):
     action = get_action()
@@ -180,6 +187,7 @@ def do_action(message):
     xy_limit = 0.50
     th_limit = 0.25
     # compute the desired angled angle using the outer loop control
+    print("gonna compute pid loops")
     vx  = pid.PID(T.x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
     vy  = pid.PID(T.y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
     vth = pid.PID(T.theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,th_limit,P.Ts,P.tau)
