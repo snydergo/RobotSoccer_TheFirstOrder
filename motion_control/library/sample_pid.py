@@ -40,7 +40,7 @@ class Param:
         self.camera_sample_rate = 33
         self.lpf_alpha          = 0.7
 
-        a1      = (2*P.tau-self.camera_sample_rate)/(2*tau-self.tau+self.camera_sample_rate)
+        a1      = (2*self.tau-self.camera_sample_rate)/(2*tau-self.tau+self.camera_sample_rate)
         a2      = 2/(2*self.tau+self.camera_sample_rate)
 
 
