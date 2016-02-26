@@ -16,7 +16,7 @@ class Tuning:
 x_g     = pid.ControlVar()
 y_g     = pid.ControlVar()
 theta_g = pid.ControlVar()
-P = Param()
+P = pid.Param()
 T = Tuning()
 
 def get_action():
