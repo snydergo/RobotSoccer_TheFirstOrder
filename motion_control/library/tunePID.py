@@ -25,6 +25,8 @@ def get_action():
     # Show commands (help)
     if pressed == 'h':
         return 'HELP'
+    elif pressed == 'q'
+        return 'QUIT'
     # Switch tuning variable
     elif pressed == '1':
         return 'X'
@@ -69,6 +71,10 @@ def do_action(message):
         print("Press s to change tuning sensitivity")
         print("Press Space to change commanded position")
         print("Press h to bring up the commands (this menu)")
+        print("Press q to quit")
+
+    elif action == 'QUIT':
+        quit()
 
     # Switch tuning variable
     elif action == 'X':
