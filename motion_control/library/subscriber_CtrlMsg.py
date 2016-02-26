@@ -29,8 +29,8 @@ def callback1(data):
         # if the commanded values are small enough, we are close enough. Just stop movement.
            # data.x = 0; data.y = 0; data.theta = 0;
         if data.x == data.x: # check for NaN
-            # vx, vy, omega = pid.robot_ctrl(data)
-            vx, vy, omega = tunePID.do_action(data)
+            vx, vy, omega = pid.robot_ctrl(data)
+            # vx, vy, omega = tunePID.do_action(data)
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
             print("\n")
         else:
