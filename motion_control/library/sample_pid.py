@@ -70,7 +70,7 @@ def robot_ctrl(message):
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     # compute the error
     error = cmd_pos - pos
-    print("Error: " + str(error))
+#    print("Error: " + str(error))
     
     # update derivative of z
     ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos)
