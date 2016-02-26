@@ -19,17 +19,13 @@ void Plays::start(){
 }
 
 void Plays::rushGoal(){
-    //if(!playSwitch){
-        coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
-        play_st = play_state::rushgoal_st;
-    //}
+    coord_st = coordSkills_st::coordFetchball_st; //needs to be set when role switches
+    play_st = play_state::rushgoal_st;
 }
 
 void Plays::playGoalie(){
-    //if(!playSwitch){
-        coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches firstime
-        play_st = play_state::playgoalie_st;
-    //}
+    coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches firstime
+    play_st = play_state::playgoalie_st;
 }
 
 void Plays::idle(){
@@ -41,10 +37,8 @@ void Plays::tick(){
     /*
         Needed Changes
             1. when roles/plays are assigned each state needs to be initialized appropriately
-            2. need to provide ways for skills to be able to access the GameStatus without difficulty
-                a. inheritance, globals or passed in as parameters
-            3. Need each time coord_st switch statement occurs that a function from skills is called
-            4. Need to add an exception code for when default case is reached in statemachines.
+            2. Need each time coord_st switch statement occurs that a function from skills is called
+            3. Need to add an exception code for when default case is reached in statemachines.
     */
     switch(play_st){
             case play_state::idle_st:
