@@ -4,16 +4,20 @@ import sample_pid as pid
 from getch import _Getch
 
 # Default commands
-global x_cmd = '0'
-global y_cmd = '0'
-global theta_cmd = '0'
+class Tuning:
+    def __init__(self):
+        self.x_cmd = '0'
+        self.y_cmd = '0'
+        self.theta_cmd = '0'
+        self.loop_rate = 10 # Hz (get value from publisher)
+        self.tuningVariable = 'x'
+        self.tuningSensitivity = .001
+
 x_g     = pid.ControlVar()
 y_g     = pid.ControlVar()
 theta_g = pid.ControlVar()
 P = Param()
-global loop_rate = 10 # Hz (get value from publisher)
-global tuningVariable = 'x'
-global tuningSensitivity = .001
+T = Tuning()
 
 def get_action():
     getch = _Getch()
@@ -68,75 +72,75 @@ def do_action(message):
 
     # Switch tuning variable
     elif action == 'X':
-        tuningVariable = 'x'
+        T.tuningVariable = 'x'
         print("changed tuning variable to x")
     elif action == 'Y':
-        tuningVariable = 'y'
+        T.tuningVariable = 'y'
         print("changed tuning variable to y")
     elif action == 'THETA':
-        tuningVariable = 'theta'
+        T.tuningVariable = 'theta'
         print("changed tuning variable to theta")
 
     # change tuning paramaters for current tuning variable
     elif action == 'KP_DOWN':
-        if tuningVariable == 'x':
-            P.kp_x = P.kp_x - tuningSensitivity
+        if T.tuningVariable == 'x':
+            P.kp_x = P.kp_x - T.tuningSensitivity
             print("kp_x: " + str(P.kp_x))
-        elif tuningVariable == 'y':
-            P.kp_y = P.kp_y - tuningSensitivity
+        elif T.tuningVariable == 'y':
+            P.kp_y = P.kp_y - T.tuningSensitivity
             print("kp_y: " + str(P.kp_y))
-        elif tuningVariable == 'theta':
-            P.kp_theta = P.kp_theta - tuningSensitivity
+        elif T.tuningVariable == 'theta':
+            P.kp_theta = P.kp_theta - T.tuningSensitivity
             print("kp_theta: " + str(P.kp_theta))
     elif action == 'KP_UP':
-        if tuningVariable == 'x':
-            P.kp_x = P.kp_x + tuningSensitivity
+        if T.tuningVariable == 'x':
+            P.kp_x = P.kp_x + T.tuningSensitivity
             print("kp_x: " + str(P.kp_x))
-        elif tuningVariable == 'y':
-            P.kp_y = P.kp_y + tuningSensitivity
+        elif T.tuningVariable == 'y':
+            P.kp_y = P.kp_y + T.tuningSensitivity
             print("kp_y: " + str(P.kp_y))
-        elif tuningVariable == 'theta':
-            P.kp_theta = P.kp_theta + tuningSensitivity
+        elif T.tuningVariable == 'theta':
+            P.kp_theta = P.kp_theta + T.tuningSensitivity
             print("kp_theta: " + str(P.kp_theta))  
     elif action == 'KD_DOWN':
-        if tuningVariable == 'x':
-            P.kd_x = P.kd_x - tuningSensitivity
+        if T.tuningVariable == 'x':
+            P.kd_x = P.kd_x - T.tuningSensitivity
             print("kd_x: " + str(P.kd_x))
-        elif tuningVariable == 'y':
-            P.kd_y = P.kd_y - tuningSensitivity
+        elif T.tuningVariable == 'y':
+            P.kd_y = P.kd_y - T.tuningSensitivity
             print("kd_y: " + str(P.kd_y))
-        elif tuningVariable == 'theta':
-            P.kd_theta = P.kd_theta - tuningSensitivity
+        elif T.tuningVariable == 'theta':
+            P.kd_theta = P.kd_theta - T.tuningSensitivity
             print("kd_theta: " + str(P.kd_theta))
     elif action == 'KD_UP':
-        if tuningVariable == 'x':
-            P.kd_x = P.kd_x + tuningSensitivity
+        if T.tuningVariable == 'x':
+            P.kd_x = P.kd_x + T.tuningSensitivity
             print("kd_x: " + str(P.kd_x))
-        elif tuningVariable == 'y':
-            P.kd_y = P.kd_y + tuningSensitivity
+        elif T.tuningVariable == 'y':
+            P.kd_y = P.kd_y + T.tuningSensitivity
             print("kd_y: " + str(P.kd_y))
-        elif tuningVariable == 'theta':
-            P.kd_theta = P.kd_theta + tuningSensitivity
+        elif T.tuningVariable == 'theta':
+            P.kd_theta = P.kd_theta + T.tuningSensitivity
             print("kd_theta: " + str(P.kd_theta))       
     elif action == 'KI_DOWN':
-        if tuningVariable == 'x':
-            P.ki_x = P.ki_x - tuningSensitivity
+        if T.tuningVariable == 'x':
+            P.ki_x = P.ki_x - T.tuningSensitivity
             print("ki_x: " + str(P.ki_x))
-        elif tuningVariable == 'y':
-            P.ki_y = P.ki_y - tuningSensitivity
+        elif T.tuningVariable == 'y':
+            P.ki_y = P.ki_y - T.tuningSensitivity
             print("ki_y: " + str(P.ki_y))
-        elif tuningVariable == 'theta':
-            P.ki_theta = P.ki_theta - tuningSensitivity
+        elif T.tuningVariable == 'theta':
+            P.ki_theta = P.ki_theta - T.tuningSensitivity
             print("ki_theta: " + str(P.ki_theta))       
     elif action == 'KI_UP':
-        if tuningVariable == 'x':
-            P.ki_x = P.ki_x + tuningSensitivity
+        if T.tuningVariable == 'x':
+            P.ki_x = P.ki_x + T.tuningSensitivity
             print("ki_x: " + str(P.ki_x))
-        elif tuningVariable == 'y':
-            P.ki_y = P.ki_y + tuningSensitivity
+        elif T.tuningVariable == 'y':
+            P.ki_y = P.ki_y + T.tuningSensitivity
             print("ki_y: " + str(P.ki_y))
-        elif tuningVariable == 'theta':
-            P.ki_theta = P.ki_theta + tuningSensitivity
+        elif T.tuningVariable == 'theta':
+            P.ki_theta = P.ki_theta + T.tuningSensitivity
             print("ki_theta: " + str(P.ki_theta)) 
 
 
@@ -153,13 +157,13 @@ def do_action(message):
         print("kd_theta: " + str(P.kd_theta))
         print("ki_theta: " + str(P.ki_theta))
     elif action == 'SENSITIVITY':
-        tuningSensitivity = input("Tuning Sensitivity: ")
+        T.tuningSensitivity = input("Tuning Sensitivity: ")
         
     # change cmd position
     elif action == 'CHANGE_CMD_POS':
-        x_cmd = input("x: ")
-        y_cmd = input("y: ")
-        theta_cmd = input("theta: ")
+        T.x_cmd = input("x: ")
+        T.y_cmd = input("y: ")
+        T.theta_cmd = input("theta: ")
 
     # Current positions
     x       = message.x
@@ -170,8 +174,8 @@ def do_action(message):
     xy_limit = 0.50
     th_limit = 0.25
     # compute the desired angled angle using the outer loop control
-    vx  = pid.PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
-    vy  = pid.PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
-    vth = pid.PID(theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,th_limit,P.Ts,P.tau)
+    vx  = pid.PID(T.x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
+    vy  = pid.PID(T.y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
+    vth = pid.PID(T.theta_cmd,theta,theta_g,P.kp_th,P.ki_th,P.kd_th,th_limit,P.Ts,P.tau)
 
     return vx, vy, vth
