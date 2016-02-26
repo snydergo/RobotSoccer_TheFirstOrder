@@ -23,7 +23,7 @@ class Param:
         self.tau    = 0.005
 
 
-loop_rate = 100 # Hz
+loop_rate = 10 # Hz
 x_g     = ControlVar()
 y_g     = ControlVar()
 theta_g = ControlVar()
