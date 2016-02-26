@@ -5,6 +5,7 @@ from robot_soccer.msg import controldata
 import mlib
 import sample_pid as pid
 import tunePID
+from sample_pid import P
 
 class Param:
     def __init__(self):
@@ -16,30 +17,30 @@ class Param:
         self.y_cmd = ''
         self.theta_cmd = ''
         
-P = controldata()
-
 def callback1(data):
     #print data
-    global P
-    P.cmdType = data.cmdType
-    if P.cmdType == 'mov':
-	   P = data
+    if data.cmdType == 'mov':
 
-    #scale factor
-    sf = .01
-    # threshhold for what is considered "close enough"
-    threshold = .05
-    ## Decisions ##
-    # if the commanded values are small enough, we are close enough. Just stop movement.
-       # data.x = 0; data.y = 0; data.theta = 0;
-    if data.x == data.x: # check for NaN
-        # vx, vy, omega = pid.robot_ctrl(data)
-        vx, vy, omega = tunePID.do_action(data)
-        mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
-        print("\n")
-    else:
-        print("NaN - stopping")
-        mlib.stop()
+        #scale factor
+        sf = .01
+        # threshhold for what is considered "close enough"
+        threshold = .05
+        ## Decisions ##
+        # if the commanded values are small enough, we are close enough. Just stop movement.
+           # data.x = 0; data.y = 0; data.theta = 0;
+        if data.x == data.x: # check for NaN
+            # vx, vy, omega = pid.robot_ctrl(data)
+            vx, vy, omega = tunePID.do_action(data)
+            mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
+            print("\n")
+        else:
+            print("NaN - stopping")
+            mlib.stop()
+    elif data.cmdType == 'pid'
+        for i in vars(data):
+            if i in vars(P):
+                setattr(P, i, eval('data.{}'.format(i)))
+
 	
     # print data
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
