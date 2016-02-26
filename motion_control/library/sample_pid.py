@@ -40,6 +40,9 @@ class Param:
         self.camera_sample_rate = 33
         self.lpf_alpha          = 0.7
 
+        a1      = (2*P.tau-P.camera_sample_rate)/(2*P.tau+P.camera_sample_rate)
+        a2      = 2/(2*P.tau+P.camera_sample_rate)
+
 
 loop_rate = 50 # Hz (get value from publisher)
 x_g     = ControlVar()
