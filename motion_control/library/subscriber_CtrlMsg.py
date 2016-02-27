@@ -4,7 +4,7 @@ from std_msgs.msg import String
 from robot_soccer.msg import controldata
 import mlib
 import sample_pid as pid
-import tunePID
+#import tunePID
 from sample_pid import P
 
 class Param:
@@ -18,7 +18,7 @@ class Param:
         self.theta_cmd = ''
         
 def callback1(data):
-    #print data
+#    print data
     if data.cmdType == 'mov':
 
         #scale factor
@@ -27,9 +27,12 @@ def callback1(data):
         threshold = .05
         ## Decisions ##
         # if the commanded values are small enough, we are close enough. Just stop movement.
-           # data.x = 0; data.y = 0; data.theta = 0;
+#        data.x = 0; data.y = 0; data.theta = 90;
+	data.theta_cmd = 90;
+	#print data
         if data.x == data.x: # check for NaN
             vx, vy, omega = pid.robot_ctrl(data)
+	    print("omega: " + str(omega))
             # vx, vy, omega = tunePID.do_action(data)
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
             print("\n")
