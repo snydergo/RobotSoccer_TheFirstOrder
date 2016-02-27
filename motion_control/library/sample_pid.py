@@ -22,17 +22,17 @@ class ControlVar:
 
 class Param:
     def __init__(self):
-        self.kp_x   = .02
-        self.ki_x   = .00001
+        self.kp_x   = 0#.02
+        self.ki_x   = 0
         self.kd_x   = .000
 
-        self.kp_y   = .02
-        self.ki_y   = .00001
+        self.kp_y   = 0#.02
+        self.ki_y   = 0
         self.kd_y   = .000
 
-        self.kp_theta  = .02
-        self.ki_theta  = .00005
-        self.kd_theta  = 0
+        self.kp_theta  = .04
+        self.ki_theta  = 0.000
+        self.kd_theta  = .001
 
         self.Ts     = 1.00/loop_rate
         self.tau    = 0.005
@@ -61,7 +61,7 @@ def robot_ctrl(message):
     theta_cmd   = message.theta_cmd
     
     xy_limit = 0.50
-    th_limit = 0.25
+    th_limit = 5
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
     vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
@@ -69,11 +69,14 @@ def robot_ctrl(message):
 
     return vx, vy, vth
 
+threshold = 4
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
     # compute the error
     error = cmd_pos - pos
-#    print("Error: " + str(error))
+    if abs(error) < threshold:
+        error = 0
+    print("Error: " + str(error))
     
     # update derivative of z
     ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos)
