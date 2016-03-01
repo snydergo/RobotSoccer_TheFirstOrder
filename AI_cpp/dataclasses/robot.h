@@ -1,3 +1,5 @@
+/* Class that inherits from Field Object except it contains a theta and the 
+tags are used for knowing which robot to send commands to if they are an ally*/
 #ifndef ROBOT_H
 #define ROBOT_H
 
