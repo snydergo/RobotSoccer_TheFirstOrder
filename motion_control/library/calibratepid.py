@@ -31,9 +31,9 @@ def read(addr,motor):
   for i in range(0, samples):
     sample = 0
     if motor == 1:
-      sample = ReadSpeedM1(addr)
+      sample = ReadSpeedM1(addr)[0]
     elif motor == 2:
-      sample = ReadSpeedM2(addr)
+      sample = ReadSpeedM2(addr)[0]
     #print sample
     result = result + sample
   result = result/samples
