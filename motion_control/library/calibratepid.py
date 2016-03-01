@@ -51,8 +51,8 @@ speed = 48
 mlib.stop();
 
 #Forwards
-BackwardM1(128,speed); #M1 backward sample 1
-ForwardM2(128,speed); #M2 forward sample 1
+mlib.BackwardM(1,speed); #M1 backward sample 1
+Forwamlib.rdM(3,speed); #M2 forward sample 1
 time.sleep(2)
 
 speedM1Backward=speedM1Backward+read(128,1)
@@ -62,8 +62,8 @@ mlib.stop();
 time.sleep(1);
 
 #Backwards
-ForwardM1(128,speed); #M1 forward sample 1
-BackwardM2(128,speed); #M2 backward sample 1
+mlib.ForwardM(1,speed); #M1 forward sample 1
+mlib.BackwardM(3,speed); #M2 backward sample 1
 time.sleep(2)
 
 speedM1Forward=speedM1Forward+read(128,1)
@@ -73,8 +73,8 @@ mlib.stop();
 time.sleep(1);
 
 #Left back
-BackwardM2(128,speed); #M2 backward sample 2 
-ForwardM1(129,speed); #M3 forward sample 1
+mlib.BackwardM(2,speed); #M2 backward sample 2 
+mlib.ForwardM(1,speed); #M3 forward sample 1
 time.sleep(2)
 
 speedM2Backward=speedM2Backward+read(128,2)
@@ -85,8 +85,8 @@ mlib.stop();
 time.sleep(1);
 
 #Left forward
-ForwardM2(128,speed); #M2 forward sample 2
-BackwardM1(129,speed); #M3 backward sample 1
+mlib.ForwardM(2,speed); #M2 forward sample 2
+mlib.BackwardM(1,speed); #M3 backward sample 1
 time.sleep(2)
 
 speedM2Forward=speedM2Forward+read(128,2)
@@ -97,8 +97,8 @@ mlib.stop();
 time.sleep(1);
 
 # RightBack
-ForwardM1(128,speed); #M1 forward sample 2
-BackwardM1(129,speed); #M3 backward sample 2
+mlib.ForwardM(2,speed); #M1 forward sample 2
+mlib.BackwardM2(3,speed); #M3 backward sample 2
 time.sleep(2)
 
 speedM1Forward=speedM1Forward+read(128,1)
@@ -110,8 +110,8 @@ mlib.stop();
 time.sleep(1);
 
 # Right Forward
-BackwardM1(128,speed); #M1 backward sample 2
-ForwardM1(129,speed); #M3 forward sample 2
+mlib.BackwardM(2,speed); #M1 backward sample 2
+mlib.ForwardM(3,speed); #M3 forward sample 2
 time.sleep(2)
 
 speedM1Backward=speedM1Backward+read(128,1)
