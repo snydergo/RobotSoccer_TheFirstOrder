@@ -18,9 +18,9 @@ addr1 = 0x80
 addr2 = 0x81
 
 #Set (default) velocity pids
-roboclaw.SetM1VelocityPID(addr1,1,.5,.25,180000)
-roboclaw.SetM2VelocityPID(addr1,1,.5,.25,180000)
-roboclaw.SetM1VelocityPID(addr2,1,.5,.25,180000)
+roboclaw.SetM1VelocityPID(addr1,2,1,.1,180000)
+roboclaw.SetM2VelocityPID(addr1,2,1,.1,180000)
+roboclaw.SetM1VelocityPID(addr2,2,1,.1,180000)
 
 class e_type(Enum):
 	motorNumOff = 1
