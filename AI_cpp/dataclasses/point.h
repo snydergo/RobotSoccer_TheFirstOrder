@@ -1,3 +1,4 @@
+/* Simple Data structure that contains just and x and y coordinate*/
 #ifndef POINT_H
 #define POINT_H
 
