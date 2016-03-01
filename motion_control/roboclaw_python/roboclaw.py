@@ -855,7 +855,6 @@ def DutyAccelM1M2(address,accel1,duty1,accel2,duty2):
 	
 def ReadM1VelocityPID(address):
 	data = _read_n(address,Cmd.READM1PID,4)
-	print data
 	if data[0]:
 		data[1]/=65536.0
 		data[2]/=65536.0
