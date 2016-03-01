@@ -20,7 +20,6 @@ public:
 
 private:
     bool strategy_shouldRushGoal();
-
     Plays robot1Plays;
     Plays robot2Plays;
 

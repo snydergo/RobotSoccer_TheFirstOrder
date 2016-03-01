@@ -8,7 +8,7 @@ class Skills
 {
 public:
     Skills(robotType type)
-        : type(type)
+        : allyNum(type)
         , utils(type)
         , dest(0,0)
     {
@@ -22,7 +22,7 @@ public:
     void init();
     void tick();
     void idle();
-    void goToPoint(Point point);
+    void goToPoint(Point point, double dest_theta);
     void fetchBall();
     void kick();
     void dribble();
@@ -40,8 +40,9 @@ public:
     void stop();
   private:
     Point dest;
+    double theta_cmd;
     Utilities utils;
-    robotType type;
+    robotType allyNum;
 };
 
 #endif /* SKILL_H_ */

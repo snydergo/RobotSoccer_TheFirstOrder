@@ -4,7 +4,7 @@
 #include <string>
 #include <cstddef>
 
-enum class errtype {parsedata, senddata, none};
+enum class errtype {parsedata, senddata, robotType, none};
 
 class ExceptionAI
 {

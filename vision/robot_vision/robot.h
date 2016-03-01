@@ -44,5 +44,8 @@ private:
   int refDistance;
   bool simpleDetection;
 
+  const int rearRefSizeDelta = 60;
+  const int frontRefSizeDelta = 80;
+
   float theta;
 };

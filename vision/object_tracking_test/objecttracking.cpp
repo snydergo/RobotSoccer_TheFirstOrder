@@ -43,7 +43,7 @@ int main(int argc, char** argv)
     cap.read(imgTmp); 
 
     //Create a black image with the size as the camera output
-    Mat imgLines = Mat::zeros( imgTmp.size(), CV_8UC3 );;
+    Mat imgLines = Mat::zeros( imgTmp.size(), CV_8UC3 );
  
 
     while (true) {

@@ -53,6 +53,7 @@ void loadConfigData(int argc, char** argv)
                                          calibrate["referenceDistance_pixel"].GetDouble();
     
     config::invertX = calibrate["invertDirectionX"].GetBool();
+    config::trackRobot = calibrate["trackRobot"].GetBool();
     
     Value& crop = root["crop"];
 

@@ -13,7 +13,7 @@ bool Robot::update(std::vector<UndefinedCVObject>& cvObjs)
     float deltaDistance = 500.0;
     for(int i = 0; i < cvObjs.size(); i++) {
         float newDistance = distance(rear.center, cvObjs[i].center);
-        if (std::abs(cvObjs[i].area - rearRefSize) < rearRefSize/3 && // we found a point within our size threshold
+        if (std::abs(cvObjs[i].area - rearRefSize) < rearRefSizeDelta && // we found a point within our size threshold
             newDistance < 20.0  && // it is within our threshold distance
             newDistance < deltaDistance) // it is closer then the previous point
         {
@@ -31,7 +31,7 @@ bool Robot::update(std::vector<UndefinedCVObject>& cvObjs)
     for(int i = 0; i < cvObjs.size(); i++) {
         float newDistance = distance(potentialRear.center, cvObjs[i].center);
         if (std::abs(refDistance - newDistance) < refDistance/2 && // we found a point within our distance threshold
-            std::abs(cvObjs[i].area - frontRefSize) < frontRefSize/3) // it is within our threshold size
+            std::abs(cvObjs[i].area - frontRefSize) < frontRefSizeDelta) // it is within our threshold size
         {
             frontIdxs.push_back(i);
             deltaDistance = newDistance;
@@ -78,7 +78,7 @@ bool Robot::find(std::vector<UndefinedCVObject>& cvObjs)
     int rearIdx = -1;
     int size = 10000;
     for(int i = 0; i < cvObjs.size(); i++) {
-        if (std::abs(cvObjs[i].area - rearRefSize) < rearRefSize/3 && // found a point within our size threshold
+        if (std::abs(cvObjs[i].area - rearRefSize) < rearRefSizeDelta && // found a point within our size threshold
             std::abs(rearRefSize - cvObjs[i].area) < size) // it is closer in size then the previous point
         {
             rearIdx = i;
@@ -95,7 +95,7 @@ bool Robot::find(std::vector<UndefinedCVObject>& cvObjs)
         float newDistance = distance(potentialRear.center, cvObjs[i].center);
         if (std::abs(refDistance - newDistance) < refDistance/2 && // we found a point within our distance threshold
             std::abs(refDistance - newDistance) < deltaDistance && // it is closer then the previous point
-            std::abs(cvObjs[i].area - frontRefSize) < frontRefSize/3) // it is within our threshold size
+            std::abs(cvObjs[i].area - frontRefSize) < frontRefSizeDelta) // it is within our threshold size
         {
             frontIdx = i;
             deltaDistance = newDistance;

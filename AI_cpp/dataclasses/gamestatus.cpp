@@ -15,6 +15,7 @@ GameStatus& GameStatus::operator= (const robot_soccer::visiondata& arg) {
     enemy2.theta = arg.op1_w;
     ball.location.x = arg.ball_x;
     ball.location.y = arg.ball_y;
+    time = arg.sys_time;
 }
 
 /*GameStatus::GameStatus(){

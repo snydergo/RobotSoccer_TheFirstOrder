@@ -1,12 +1,13 @@
 {
     "param": {
-        "cameraUrl": "http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg",
+        "cameraUrl": "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg",
         "calibration": {
             "fieldCenterX_pixel": 422,
             "fieldCenterY_pixel": 266,
             "referenceDistance_cm": 121.92,
             "referenceDistance_pixel": 255,
-            "invertDirectionX": false
+            "invertDirectionX": true,
+            "trackRobot" : true
         },
         "crop": {
             "left": 0,
@@ -21,14 +22,14 @@
         "teamRobots": {
             "count": 1,
             "color": "green",
-            "large_area": 440,
-            "small_area": 270
+            "large_area": 450,
+            "small_area": 280
         },
         "opponentRobots": {
             "count": 1,
             "color": "blue",        
-            "large_area": 440,
-            "small_area": 270
+            "large_area": 450,
+            "small_area": 280
         }
     }
 }

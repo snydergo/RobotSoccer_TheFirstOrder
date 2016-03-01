@@ -19,11 +19,11 @@ RNG rng(12345);
 
     namedWindow("Control", CV_WINDOW_AUTOSIZE); //create a window called "Control"
 
-    int iLowH = 0;
-    int iHighH = 179;
+    int iLowH = 110;
+    int iHighH = 140;
 
-    int iLowS = 0;
-    int iHighS = 255;
+    int iLowS = 30;
+    int iHighS = 90;
 
     int iLowV = 200;
     int iHighV = 255;
@@ -71,11 +71,10 @@ RNG rng(12345);
         dilate( imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
         erode(imgThresholded, imgThresholded, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
 
-        imshow("Thresholded Image", imgThresholded); //show the thresholded image
+        //imshow("Thresholded Image", imgThresholded); //show the thresholded image
         imshow("Original", imgOriginal); //show the original image
 
         int thresh = 100;
-        int max_thresh = 255;
 
         Mat canny_output;
         vector<vector<Point> > contours;
@@ -104,7 +103,7 @@ RNG rng(12345);
             Scalar color = Scalar( 100, 200, 150);
             drawContours( drawing, contours, i, color, 2, 8, hierarchy, 0, Point() );
             circle( drawing, mc[i], 4, color, -1, 8, 0 );
-            std::string str(  " A: " + std::to_string(((int)mu[i].m00)));
+            std::string str(  " A: " + std::to_string(mu[i].m00));
             putText(drawing, str.c_str(), mc[i]
                 ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(0,0,250), 0.7, CV_AA);
         }

@@ -6,7 +6,7 @@
 #include "dataclasses/robot.h"
 #include <math.h>
 #include <cmath>
-
+#include <iostream>
 
 namespace calc {
     Point directionToPredict(FieldObject startobj, FieldObject destobj, double time);
@@ -19,9 +19,10 @@ namespace calc {
 
     /*#### THRESHOLD PLAY FUNCTIONS ####*/
     bool ballFetched(Robot ally, FieldObject ball);
-    bool ballAimed(Robot ally, FieldObject ball);
-    bool ballKicked(Robot ally, FieldObject ball);
+    bool ballAimed(Robot ally, FieldObject ball, Point enemyGoal);
+    bool ballKicked(Robot ally, Point kp);
     bool atLocation(Point robot, Point point);
     bool atLocation(double robot_coord, double p_coord);
+    bool withinPerimeter(Point robot, Point ball);
 }
 #endif // MATHFUNCTIONS_H

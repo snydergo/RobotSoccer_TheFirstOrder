@@ -12,17 +12,18 @@ void Skills::init(){
 
 //FUNCTIONS CALLED BY PLAYS OR OUTSIDE TO DO SKILLS
 void Skills::idle(){
-    printf("start circle ball\n");
     skill_st = skill_state::idle_st;
 }
 
-void Skills::goToPoint(Point point){
+void Skills::goToPoint(Point point, double dest_theta){
+    std::cout << "Skills::goToPoint" << std::endl;
+    theta_cmd = dest_theta;
     dest = point;
     skill_st = skill_state::gotopoint_st;
 }
 
 void Skills::fetchBall(){
-    //printf("start fetch ball\n");
+    printf("SKILLS:: start fetch ball\n");
     skill_st = skill_state::fetchball_st;
 }
 
@@ -48,15 +49,19 @@ void Skills::continueIdle(){
 }
 
 void Skills::continueGoToPoint(){
-    utils.moveToPoint(field.currentStatus.ally1,dest,0);
+    utils.moveToPoint(*fieldget::getRobot(allyNum),dest,0);
 }
 
 void Skills::continueKick(){
     utils.kick(1,0);
 }
 
+//needs to be changed so it goes around ball to get to desired position
 void Skills::continueFetchBall(){
-    utils.moveToPoint(field.currentStatus.ally1,field.currentStatus.ball.location,0);
+    Point ballP = fieldget::getBallLoc();
+    Point fetchballpoint(ballP.x-FETCHBALL_OFFSET,ballP.y);
+    double theta = bkcalc::getAngleTo(allyNum, ballP);
+    utils.moveToPoint(*fieldget::getRobot(allyNum),fetchballpoint,theta);
 }
 
 void Skills::continueDribble(){
@@ -65,11 +70,27 @@ void Skills::continueDribble(){
 
 void Skills::continueAim(){
     //need to calculate position
-    double angleAtGoal = 0;
-    double x_point = field.currentStatus.ball.location.x -1 ;
-    double y_point = field.currentStatus.ball.location.y;
-    Point aimSpot = Point(x_point,y_point);
-    utils.moveToPoint(field.currentStatus.ally1, aimSpot ,0);
+    Point ballLoc = fieldget::getBallLoc();
+    Point robGoalDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), enemyGoal);
+    Point robBallDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), ballLoc);
+    double robGoalAngle = calc::getVectorAngle(robGoalDir);
+    double robBallAngle = calc::getVectorAngle(robBallDir);
+
+    double x_point = fieldget::getRobotLoc(allyNum).x + 1;
+    double y_point = fieldget::getRobotLoc(allyNum).y;
+    if(robBallAngle > robGoalAngle ){
+        //rotate CCW or move y+ and a little x+
+        y_point += 2;
+        std::cout << "ROTATE CCW" << std::endl;
+    }else{
+        //rotate CW or move y- and a little x+
+        y_point -= 2;
+        std::cout << "ROTATE CW" << std::endl;
+    }
+    Point aimSpot(x_point, y_point);
+    Point airBallDir = calc::directionToPoint(aimSpot, ballLoc);
+    double newTheta = calc::getVectorAngle(airBallDir);
+    utils.moveToPoint(*fieldget::getRobot(allyNum), aimSpot ,newTheta);
 }
 
 void Skills::stop(){
@@ -82,6 +103,7 @@ void Skills::tick(){
             continueIdle();
             break;
         case skill_state::gotopoint_st:
+            std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
             continueGoToPoint();
             break;
         case skill_state::kick_st:

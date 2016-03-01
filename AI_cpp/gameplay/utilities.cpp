@@ -13,15 +13,29 @@ void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);
 }
 
-void Utilities::move(Robot robot, Point dir, double des_theta){
-    cmdRob1.cmdType = "mov";
-    cmdRob1.x = robot.location.x;
-    cmdRob1.y = robot.location.y;
-    cmdRob1.theta = robot.theta;
-    cmdRob1.x_cmd = dir.x;
-    cmdRob1.y_cmd = dir.y;
-    cmdRob1.theta_cmd = des_theta;
+void Utilities::move(Robot robot, Point dest, double des_theta){
+    std::cout << "UTILITIES:: sending mov command" << std::endl;
+    robot_soccer::controldata cmd;
+    cmd.cmdType = "mov";
+    cmd.x = robot.location.x;
+    cmd.y = robot.location.y;
+    cmd.theta = robot.theta;
+    cmd.x_cmd = dest.x;
+    cmd.y_cmd = dest.y;
+    cmd.theta_cmd = des_theta;
     sendCmd_Rob1 = true;
+
+    switch(robot.tag){
+        case robotType::ally1:
+             cmdRob1 = cmd;
+            break;
+        case robotType::ally2:
+             cmdRob2 = cmd;
+            break;
+        default:
+            throw ExceptionAI(errtype::robotType);
+            break;
+    }
 }
 
 void Utilities::idle(){
@@ -34,8 +48,7 @@ void Utilities::dribble(){
 }
 
 void Utilities::moveToPoint(Robot robot, Point point, double theta){
-    Point dir = calc::directionToPoint(robot.location, point);
-    move(robot, dir, theta);
+    move(robot, point, theta);
 }
 
 void Utilities::kick(double power, double theta){
@@ -44,13 +57,11 @@ void Utilities::kick(double power, double theta){
 }
 
 void Utilities::moveToCenter(Robot robot, double theta){
-    Point movVector = calc::directionToPoint(robot.location, center);
-    move(robot, movVector, theta);
+    move(robot, center, theta);
 }
 
 void Utilities::followBall(FieldObject ball, Robot robot, double theta){
     printf("following ball\n");
-    Point movVector = calc::directionToPoint(robot.location, ball.location);
-    move(robot, movVector, theta);
+    move(robot, ball.location, theta);
 }
 
