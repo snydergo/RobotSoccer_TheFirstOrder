@@ -8,18 +8,18 @@ i = int(65536 * 2) #131072
 d = int(65536 * 6)  #65536
 q = 308419
 
-print readmainbattery()
-p1,i1,d1,q1 = readM1pidq(128)
+print ReadMainBatteryVoltage(128)
+p1,i1,d1,q1 = ReadM1VelocityPID(128)
 print "128 M1 P=%.2f" % (p1/65536.0)
 print "128 M1 I=%.2f" % (i1/65536.0)
 print "128 M1 D=%.2f" % (d1/65536.0)
 print "128 M1 QPPS=",q1
-p2,i2,d2,q2 = readM2pidq(128)
+p2,i2,d2,q2 = ReadM2VelocityPID(128)
 print "128 M2 P=%.2f" % (p2/65536.0)
 print "128 M2 I=%.2f" % (i2/65536.0)
 print "128 M2 D=%.2f" % (d2/65536.0)
 print "128 M2 QPPS=",q2
-p3,i3,d3,q3 = readM1pidq(129)
+p3,i3,d3,q3 = ReadM1VelocityPID(129)
 print "121 M1 P=%.2f" % (p3/65536.0)
 print "129 M1 I=%.2f" % (i3/65536.0)
 print "129 M1 D=%.2f" % (d3/65536.0)
@@ -139,21 +139,21 @@ speedM1 = (speedM1Forward - speedM1Backward)/2
 speedM2 = (speedM2Forward - speedM2Backward)/2
 speedM3 = (speedM3Forward - speedM3Backward)/2
 
-SetM1pidq(128,p,i,d,speedM1)
-SetM2pidq(128,p,i,d,speedM2)
-SetM1pidq(129,p,i,d,speedM3)
+SetM1VelocityPID(128,p,i,d,speedM1)
+SetM2VelocityPID(128,p,i,d,speedM2)
+SetM1VelocityPID(129,p,i,d,speedM3)
 
-p1,i1,d1,q1 = readM1pidq(128)
+p1,i1,d1,q1 = ReadM1VelocityPID(128)
 print "128 M1 P=%.2f" % (p1/65536.0)
 print "128 M1 I=%.2f" % (i1/65536.0)
 print "128 M1 D=%.2f" % (d1/65536.0)
 print "128 M1 QPPS=",q1
-p2,i2,d2,q2 = readM2pidq(128)
+p2,i2,d2,q2 = ReadM2VelocityPID(128)
 print "128 M2 P=%.2f" % (p2/65536.0)
 print "128 M2 I=%.2f" % (i2/65536.0)
 print "128 M2 D=%.2f" % (d2/65536.0)
 print "128 M2 QPPS=",q2
-p3,i3,d3,q3 = readM1pidq(129)
+p3,i3,d3,q3 = ReadM1VelocityPID(129)
 print "121 M1 P=%.2f" % (p3/65536.0)
 print "129 M1 I=%.2f" % (i3/65536.0)
 print "129 M1 D=%.2f" % (d3/65536.0)
