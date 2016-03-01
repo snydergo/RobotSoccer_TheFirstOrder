@@ -52,7 +52,7 @@ mlib.stop();
 
 #Forwards
 mlib.BackwardM(1,speed); #M1 backward sample 1
-Forwamlib.rdM(3,speed); #M2 forward sample 1
+mlib.ForwadM(3,speed); #M2 forward sample 1
 time.sleep(2)
 
 speedM1Backward=speedM1Backward+read(128,1)
