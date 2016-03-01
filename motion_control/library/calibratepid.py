@@ -63,7 +63,7 @@ time.sleep(1);
 
 #Backwards
 ForwardM1(128,speed); #M1 forward sample 1
-M2Backward(128,speed); #M2 backward sample 1
+BackwardM2(128,speed); #M2 backward sample 1
 time.sleep(2)
 
 speedM1Forward=speedM1Forward+read(128,1)
@@ -73,7 +73,7 @@ mlib.stop();
 time.sleep(1);
 
 #Left back
-M2Backward(128,speed); #M2 backward sample 2 
+BackwardM2(128,speed); #M2 backward sample 2 
 ForwardM1(129,speed); #M3 forward sample 1
 time.sleep(2)
 
