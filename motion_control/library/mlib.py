@@ -6,6 +6,7 @@ from enum import Enum
 import numpy as np
 # BECAUSE I HAD TO MAKE A NEW MAT
 import mat2 as mat
+import math
 
 #Linux comport name
 roboclaw.Open("/dev/ttySAC0",38400)
@@ -17,9 +18,9 @@ addr1 = 0x80
 addr2 = 0x81
 
 #Set (default) velocity pids
-roboclaw.SetM1VelocityPID(addr1,1,.5,.25,180000)
-roboclaw.SetM2VelocityPID(addr1,1,.5,.25,180000)
-roboclaw.SetM1VelocityPID(addr2,1,.5,.25,180000)
+roboclaw.SetM1VelocityPID(addr1,2,1,.1,180000)
+roboclaw.SetM2VelocityPID(addr1,2,1,.1,180000)
+roboclaw.SetM1VelocityPID(addr2,2,1,.1,180000)
 
 class e_type(Enum):
 	motorNumOff = 1
@@ -201,3 +202,6 @@ def stop():
 def smoothStop():
 	return
 #def SetMVelocityPID(address,p,i,d,qpps):
+
+def deg2rad(deg):
+    return deg*math.pi/180

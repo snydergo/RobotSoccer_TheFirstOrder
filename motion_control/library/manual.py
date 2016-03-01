@@ -44,9 +44,9 @@ def main():
         elif action == 'RIGHT':
             mlib.goXYOmegaWorld(0,-speed)
         elif action == 'SPIN_CCW':
-            mlib.goXYOmegaWorld(0,0,1)
+            mlib.goXYOmegaWorld(0,0,1+speed)
         elif action == 'SPIN_CW':
-            mlib.goXYOmegaWorld(0,0,-1)
+            mlib.goXYOmegaWorld(0,0,-1-speed)
         elif action == 'STOP':
             mlib.stop()
         elif action == 'SPEED_DEC':

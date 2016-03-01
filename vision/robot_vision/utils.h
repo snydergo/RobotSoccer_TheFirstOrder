@@ -17,18 +17,6 @@ const Range blueHue{75,130};
 const Range violetHue{130,160};
 const Range redHue{160,179};
 
-enum class Color {
-    orange,
-    yellow,
-    green,
-    blue,
-    violet,
-    red,
-    undefined
-};
-
-Color ConvertHueRangeToColor(Range hueRange);
-
 template<template<typename> class P, typename T>
 T distance(const P<T>& p1, const P<T>& p2)
 {

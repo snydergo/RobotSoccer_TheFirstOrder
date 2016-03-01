@@ -18,17 +18,31 @@ extern int cropLeft;
 extern int cropRight;
 
 extern HsvColorSubSpace ballColor;
+extern int ballArea;
 
 extern int teamRobotCount;
 extern HsvColorSubSpace teamRobotPrimaryColor;
-extern HsvColorSubSpace teamRobotSecondaryColor;
+extern int teamRobotLargeArea;
+extern int teamRobotSmallArea;
 
 
 extern int opponentRobotCount;
 extern HsvColorSubSpace opponentRobotPrimaryColor;
 extern HsvColorSubSpace opponentRobotSecondaryColor;
+extern int opponentRobotLargeArea;
+extern int opponentRobotSmallArea;
 
 extern std::string cameraUrl;
+
+extern const HsvColorSubSpace green;
+extern const HsvColorSubSpace blue;
+extern const HsvColorSubSpace purple;
+extern const HsvColorSubSpace red;
+extern const HsvColorSubSpace orange;
+extern const HsvColorSubSpace pink;
+extern const HsvColorSubSpace yellow;
+
+
 
 
 } // namespace config

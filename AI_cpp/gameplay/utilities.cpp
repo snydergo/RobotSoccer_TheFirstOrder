@@ -5,6 +5,9 @@
 //extern bool sendCmd_Rob2;
 //robot_soccer::controldata cmdRob1;
 //robot_soccer::controldata cmdRob2;
+void Utilities::init(){
+    idle();
+}
 
 void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);
@@ -23,6 +26,7 @@ void Utilities::move(Robot robot, Point dir, double des_theta){
 
 void Utilities::idle(){
     cmdRob1.cmdType = "idle";
+    sendCmd_Rob1 = true;
 }
 
 void Utilities::dribble(){

@@ -12,17 +12,17 @@ public:
     Plays(){}
 
     Plays(robotType type)
-    : type(type)
+    : allyNum(type)
     {
     }
 
     void rushGoal();
     void playGoalie();
     void idle();
-    void play_tick();
-
-private:
-    robotType type;
+    void tick();
+    void init();
+    void start();
+    robotType allyNum;
 };
 
 #endif // PLAYS_H

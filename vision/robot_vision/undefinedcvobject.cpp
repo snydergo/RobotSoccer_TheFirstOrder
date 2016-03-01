@@ -5,7 +5,7 @@
 
 using namespace cv;
 
-UndefinedCVObject::UndefinedCVObject(Moments moment, HsvColorSubSpace _color)
+UndefinedCVObject::UndefinedCVObject(Moments moment)
 {
     Point2f point(GetMomentCenter(moment));
     center.x = (point.x - config::fieldCenter_px.x) * config::cmPerPixelConversionFactor;
@@ -16,5 +16,4 @@ UndefinedCVObject::UndefinedCVObject(Moments moment, HsvColorSubSpace _color)
         center.y = -center.y;
     }
     area = GetMomentArea(moment);
-    color = ConvertHueRangeToColor(_color.hue);
 }
