@@ -22,7 +22,7 @@ void Skills::goToPoint(Point point){
 }
 
 void Skills::fetchBall(){
-    printf("start fetch ball\n");
+    //printf("start fetch ball\n");
     skill_st = skill_state::fetchball_st;
 }
 

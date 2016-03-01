@@ -11,7 +11,7 @@ void chat_ctrl(int argc, char **argv)
 
   ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("chatter", 1000);
 
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(50);
 
   int count = 0;
   while (ros::ok())
