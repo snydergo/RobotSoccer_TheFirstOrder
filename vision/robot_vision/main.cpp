@@ -182,4 +182,39 @@ vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace
     return GetMoments(contours);
 }
 
+/*
+#include <cv_bridge/cv_bridge.h>
+void imageCallback(const sensor_msgs::ImageConstPtr& msg)
+{
+    try
+    {
+        Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
+        processImage(frame);
+        imshow("Soccer Overhead Camera", frame);        
+        waitKey(30);
+    }
+    catch (cv_bridge::Exception& e)
+    {
+        ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+    }
+}
 
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "vision");
+    ros::NodeHandle nh;
+
+    // Subscribe to camera
+    image_transport::ImageTransport it(nh);
+    image_transport::Subscriber image_sub = it.subscribe("/camera1/image_raw", 1, imageCallback);
+
+    ros::init(argc, argv, "vision_data_pub");
+    ros::NodeHandle n;
+    ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
+
+    // Publish robot locations
+    //soccer_pub = nh.advertise<walle::SoccerPoses>("/vision", 5);
+    ros::spin();
+    return 0;
+}
+*/

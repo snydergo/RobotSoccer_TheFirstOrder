@@ -88,8 +88,9 @@ void Skills::continueAim(){
         std::cout << "ROTATE CW" << std::endl;
     }
     Point aimSpot(x_point, y_point);
-    Point airBallDir = calc::directionToPoint(aimSpot, ballLoc);
-    double newTheta = calc::getVectorAngle(airBallDir);
+    Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
+    double newTheta = calc::getVectorAngle(aimBallDir);
+    std::cout << "SKILL::continueAim theta = " << std::to_string(newTheta)<< std::endl;
     utils.moveToPoint(*fieldget::getRobot(allyNum), aimSpot ,newTheta);
 }
 
