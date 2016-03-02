@@ -39,10 +39,11 @@ void Skills::dribble(){
 //function will get the robot to go to the ball
 //and aim position to aim at the goal
 void Skills::aim(){
-
+    printf("start aim ball\n");
+    skill_st = skill_state::aim_st;
 }
 
-//FUNCTIONS THAT USE UTILITIES
+//### FUNCTIONS THAT USE UTILITIES ###//
 
 void Skills::continueIdle(){
     utils.idle();
@@ -57,6 +58,7 @@ void Skills::continueKick(){
 }
 
 //needs to be changed so it goes around ball to get to desired position
+//function that is used to go to a point that is behind the ball
 void Skills::continueFetchBall(){
     Point ballP = fieldget::getBallLoc();
     Point fetchballpoint(ballP.x-FETCHBALL_OFFSET,ballP.y);
@@ -68,6 +70,8 @@ void Skills::continueDribble(){
     utils.dribble();
 }
 
+//function used for aiming. makes sure that the angle between the robot and the goal and
+//the angle between the robot and the ball are approximately the same.
 void Skills::continueAim(){
     //need to calculate position
     Point ballLoc = fieldget::getBallLoc();
