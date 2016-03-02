@@ -1,3 +1,5 @@
+/* Class that represents any object that is on the field.
+It consists of a Point, Velocity and Tag for identification */
 #ifndef FIELDOBJECT_H
 #define FIELDOBJECT_H
 

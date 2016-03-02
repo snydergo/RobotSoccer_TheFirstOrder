@@ -1,25 +1,29 @@
+/*Contains statemachine for all of the different strategies that can be implimented. The Strategy
+will change depending on the scores, opponent techniques and etc*/
 #include "strategy.h"
 
 enum class strategy {idle_st, start_st,
                      GoaliePower_st, GPGoalie_st, GPRush_st,
                     RushSplitDefense_st} strategy_st;
-
+                    
+//init function for strategy. It calls all inits below also
 void Strategies::init(){
     strategy_st = strategy::idle_st;
     robot1Plays.init();
     robot2Plays.init();
 }
 
-bool strategy_shouldRushGoal()
-{
-	return false;
-}
+// bool strategy_shouldRushGoal()
+// {
+// 	return false;
+// }
 
 void Strategies::tick()
 {
 	switch (strategy_st)
 	{
     case strategy::idle_st:
+    	//STATE USED TO WAIT UNTIL THE CAMERA DATA IS UPDATED
         std::cout << "Strategies::tick() idle_st"<< std::endl;
         //issue with the data not being initialized the first time
         //it is assumed robot is not in the right position
@@ -30,6 +34,7 @@ void Strategies::tick()
         }
         break;
     //state used to perform all necessary inits and start first strategy
+    //has the robot go to a specified location on map when the game is going to start
     case strategy::start_st:
         std::cout << "Strategies::tick() start_st"<< std::endl;
         robot1Plays.start();
@@ -37,9 +42,6 @@ void Strategies::tick()
             std::cout << "at Start Location" << std::endl;
             strategy_st = strategy::GoaliePower_st;
         }
-        /*if(truegameStarted){
-            strategy_st = strategy::GoaliePower_st;
-        }*/
 		break;
     //GOALIE POWER STATES
     case strategy::GoaliePower_st:

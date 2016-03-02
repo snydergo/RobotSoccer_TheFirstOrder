@@ -1,3 +1,6 @@
+/*Data structure that contains all of the Robots and Field Objects
+on a given field. All of which have a velocity, Location and Tag
+It will eventually need to also count the score*/
 #ifndef GAMESTATUS_H
 #define GAMESTATUS_H
 

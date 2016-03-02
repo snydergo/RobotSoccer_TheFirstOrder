@@ -1,10 +1,7 @@
+/*in charge of all of the functions that creates the commands that
+are sent to the robot to be executed*/
 #include "utilities.h"
 
-
-//extern bool sendCmd_Rob1;
-//extern bool sendCmd_Rob2;
-//robot_soccer::controldata cmdRob1;
-//robot_soccer::controldata cmdRob2;
 void Utilities::init(){
     idle();
 }
