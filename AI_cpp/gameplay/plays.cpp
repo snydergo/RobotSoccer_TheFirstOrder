@@ -1,3 +1,4 @@
+/*Contains all of the plays or roles like goalie, rushgoal, split rush, split goal and etc*/
 #include "plays.h"
 
 
@@ -6,14 +7,18 @@ enum class play_state {idle_st, start_st, rushgoal_st, playgoalie_st } play_st;
 enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
     coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st} coord_st;
 
+//variable that is used for Kicking
+//Kick Point
 Point kp = center;
 
+//performs all of the necessary inits and calls skills init
 void Plays::init(){
     play_st = play_state::idle_st;
     skill.init();
     skill.idle();
 }
 
+//###FUNCTIONS THAT ARE USED OUTSIDE TO SET WHICH PLAY TO PERFORM.###//
 void Plays::start(){
     play_st = play_state::start_st;
 }
@@ -32,6 +37,7 @@ void Plays::idle(){
     play_st = play_state::idle_st;
 }
 
+//### END OF FUNCTIONS CALLED OUTSIDE ###//
 void Plays::tick(){
     //needed changes
     /*
@@ -49,6 +55,7 @@ void Plays::tick(){
                 std::cout << "Plays::tick() start_st"<< std::endl;
                 skill.goToPoint(start1Location, 0);
                 break;
+            //## RUSH GOAL PLAY ##//
             case play_state::rushgoal_st:
                 std::cout << "Plays::tick() rushgoal_st ";
                 switch(coord_st){
@@ -83,6 +90,7 @@ void Plays::tick(){
                         break;
                 }
                 break;
+            //## GOALIE PLAY ##//
             case play_state::playgoalie_st:
                 //always should first go to goal
                 std::cout << "Plays::tick() playgoalie_st"<< std::endl;
