@@ -70,7 +70,10 @@ void Plays::tick(){
                     case coordSkills_st::coordAim_st:
                         std::cout << " aiming ball" << std::endl;
                         skill.aim();
-                        if(bkcalc::ballAimed(allyNum)){
+                        if(!bkcalc::ballFetched(allyNum)){
+                             std::cout << "Plays::tick() BALL FETCHED" << std::endl;
+                             coord_st = coordSkills_st::coordFetchball_st;
+                         }else if(bkcalc::ballAimed(allyNum)){
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             kp = bkcalc::kickPoint(allyNum);
                             coord_st = coordSkills_st::coordKick_st;

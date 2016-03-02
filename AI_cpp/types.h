@@ -5,6 +5,7 @@
 #define GOAL_XLOCATION 160
 #define GOAL_WIDTH 60
 #define GOAL_RADIUS GOAL_WIDTH/2
+#define GOAL_ANGLE_ERR 10
 #define FIELD_XBORDER 180
 #define FIELD_YBORDER 88
 #define PI 3.141592653
@@ -14,7 +15,7 @@
 #define DISTANCE_ERR 16 // this is an error of 4cm
 #define PERIMETER_ERR 124
 #define KICK_FACTOR 3
-#define BALLFETCHED_ERR 20
+#define BALLFETCHED_ERR 35
 #define FETCHBALL_OFFSET 20
 
 //## TIMING DEFINES ##//

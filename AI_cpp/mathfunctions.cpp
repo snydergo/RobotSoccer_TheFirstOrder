@@ -25,6 +25,9 @@ double calc::angleDifference(double currentTheta, double desiredTheta){
     } else {
         angle = -angle;
     }
+    if(angle > 180)
+        angle -= 360;
+
     return angle;
 }
 
@@ -63,6 +66,9 @@ double calc::getVectorAngle(Point vector){
             vecAngle = 360+calc::radToDeg(atan2(vector.y, vector.x));
          }
     }
+    if(vecAngle > 180)
+        vecAngle -= 360;
+
     return vecAngle;
 }
 
@@ -121,9 +127,9 @@ bool calc::ballAimed(Robot ally, FieldObject ball, Point enemyGoal){
     //the angle created by the ball and the Goal. need to match
     Point allyBallVector = calc::directionToPoint(ally.location, ball.location);
     Point allyGoalVector = calc::directionToPoint(ally.location, enemyGoal);
-    if(abs(ally.theta - calc::getVectorAngle(allyBallVector)) < ANGLE_ERR &&
-            abs(ally.theta - calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR &&
-            abs(calc::getVectorAngle(allyBallVector)-calc::getVectorAngle(allyGoalVector)) < ANGLE_ERR){
+    if(abs(ally.theta - calc::getVectorAngle(allyBallVector)) < GOAL_ANGLE_ERR &&
+            abs(ally.theta - calc::getVectorAngle(allyGoalVector)) < GOAL_ANGLE_ERR &&
+            abs(calc::getVectorAngle(allyBallVector)-calc::getVectorAngle(allyGoalVector)) < GOAL_ANGLE_ERR){
         return true;
     }else
         return false;

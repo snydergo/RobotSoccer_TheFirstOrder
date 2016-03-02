@@ -80,7 +80,7 @@ void Skills::continueAim(){
     double robGoalAngle = calc::getVectorAngle(robGoalDir);
     double robBallAngle = calc::getVectorAngle(robBallDir);
 
-    double x_point = fieldget::getRobotLoc(allyNum).x + 1;
+    double x_point = fieldget::getRobotLoc(allyNum).x + 1.5;
     double y_point = fieldget::getRobotLoc(allyNum).y;
     if(robBallAngle > robGoalAngle ){
         //rotate CCW or move y+ and a little x+
