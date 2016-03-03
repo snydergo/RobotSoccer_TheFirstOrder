@@ -4,11 +4,13 @@ will change depending on the scores, opponent techniques and etc*/
 
 enum class strategy {idle_st, start_st,
                      GoaliePower_st, GPGoalie_st, GPRush_st,
-                    RushSplitDefense_st} strategy_st;
-                    
+                    RushSplitDefense_st,
+                     SeparateRushGoal_st, SRGPlay_st} strategy_st, startStrategy;
+
 //init function for strategy. It calls all inits below also
 void Strategies::init(){
     strategy_st = strategy::idle_st;
+    startStrategy = strategy::GoaliePower_st;
     robot1Plays.init();
     robot2Plays.init();
 }
@@ -40,9 +42,20 @@ void Strategies::tick()
         robot1Plays.start();
         if(bkcalc::atLocation(robot1Plays.allyNum, start1Location)){
             std::cout << "at Start Location" << std::endl;
-            strategy_st = strategy::GoaliePower_st;
+            strategy_st = startStrategy;
         }
 		break;
+    case strategy::SeparateRushGoal_st:
+        std::cout << "Strategies:: tick() SeparateRushGoal_st" << std::endl;
+        if(true/*robot1Plays != NULL && robot2Plays != NULL*/){
+            strategy_st = strategy::SRGPlay_st;
+            robot1Plays.playGoalie();
+            robot2Plays.rushGoal();
+        }
+        break;
+    case strategy::SRGPlay_st:
+        std::cout << "Strategies::tick() SRGPlay_st" << std::endl;
+        break;
     //GOALIE POWER STATES
     case strategy::GoaliePower_st:
         std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
@@ -54,8 +67,6 @@ void Strategies::tick()
             std::cout << "Strategies::tick() rushingGoal"<< std::endl;
             strategy_st = strategy::GPRush_st;
             robot1Plays.rushGoal();
-            //strategy_st = strategy::GPGoalie_st;
-            //robot1Plays.playGoalie();
         }
 
 

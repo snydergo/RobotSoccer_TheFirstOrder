@@ -68,12 +68,13 @@ void Plays::tick(){
                         }
                         break;
                     case coordSkills_st::coordAim_st:
+                        static uint8_t aim_cnt = 1;
                         std::cout << " aiming ball" << std::endl;
                         skill.aim();
-                        if(!bkcalc::ballFetched(allyNum)){
+                        /*if(!bkcalc::ballFetched(allyNum)){
                              std::cout << "Plays::tick() BALL FETCHED" << std::endl;
                              coord_st = coordSkills_st::coordFetchball_st;
-                         }else if(bkcalc::ballAimed(allyNum)){
+                        }else*/ if(bkcalc::ballAimed(allyNum) || !aim_cnt++){
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             kp = bkcalc::kickPoint(allyNum);
                             coord_st = coordSkills_st::coordKick_st;

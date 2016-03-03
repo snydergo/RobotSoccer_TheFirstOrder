@@ -12,9 +12,9 @@
 
 //## THRESHOLD DEFINITIONS ##//
 #define ANGLE_ERR 10
-#define DISTANCE_ERR 16 // this is an error of 4cm
+#define DISTANCE_ERR 25 // this is an error of 5cm
 #define PERIMETER_ERR 124
-#define KICK_FACTOR 3
+#define KICK_FACTOR 2
 #define BALLFETCHED_ERR 35
 #define FETCHBALL_OFFSET 20
 

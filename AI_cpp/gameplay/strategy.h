@@ -5,8 +5,8 @@
 #define STRATEGY_H_
 
 class Strategies{
-
 public:
+
     Strategies()
     : robot1Plays(robotType::ally1)
     , robot2Plays(robotType::ally2)

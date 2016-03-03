@@ -17,14 +17,15 @@ int main(int argc, char *argv[])
 
     //PUBLISHER FOR MOTIONCONTROL
     ros::init(argc, argv, "mainhub");
-    ros::Publisher chatter_pub = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
+    ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
+    //ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
     ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
     //sendCmd_Rob1 = true;
 
-//    //STRATEGY STATEMACHINE
-    Strategies strategy;
-    strategy.init();
+//    //strategies STATEMACHINE
+    Strategies strategies;
+    strategies.init();
     Plays play;
     play.init();
     play.start();
@@ -33,9 +34,8 @@ int main(int argc, char *argv[])
     while (ros::ok())
     {
         count++;
-        //if(dataInitialized){}
 
-        strategy.tick();
+        strategies.tick();
         //play.tick();
         if(visionUpdated && count%5==0){
             visionUpdated = false;
@@ -49,15 +49,27 @@ int main(int argc, char *argv[])
         if(sendCmd_Rob1){
             sendCmd_Rob1 = false;
             checkCmd(&cmdRob1);
-            chatter_pub.publish(cmdRob1);
+            robo1Com.publish(cmdRob1);
             ////std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
-            std::cout << "x_dir = " << cmdRob1.x_cmd-cmdRob1.x << std::endl <<
+            /*std::cout << "x_dir = " << cmdRob1.x_cmd-cmdRob1.x << std::endl <<
                          "y_dir = " << cmdRob1.y_cmd-cmdRob1.y << std::endl <<
                          "theta = " << cmdRob1.theta_cmd-cmdRob1.theta << std::endl;
             std::cout << "desired_x = " << cmdRob1.x_cmd << std::endl <<
                          "desired_y = " << cmdRob1.y_cmd << std::endl <<
-                         "desired_theta = " << cmdRob1.theta_cmd << "\n\n";
+                         "desired_theta = " << cmdRob1.theta_cmd << "\n\n";*/
         }
+        /*if(sendCmd_Rob2){
+            sendCmd_Rob2 = false;
+            checkCmd(&cmdRob2);
+            robo2Com.publish(cmdRob2);
+            ////std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
+            std::cout << "x_dir = " << cmdRob2.x_cmd-cmdRob2.x << std::endl <<
+                         "y_dir = " << cmdRob2.y_cmd-cmdRob2.y << std::endl <<
+                         "theta = " << cmdRob2.theta_cmd-cmdRob2.theta << std::endl;
+            std::cout << "desired_x = " << cmdRob2.x_cmd << std::endl <<
+                         "desired_y = " << cmdRob2.y_cmd << std::endl <<
+                         "desired_theta = " << cmdRob2.theta_cmd << "\n\n";
+        }*/
         ////std::cout << "spinning" << std::endl;
 
         ros::spinOnce();
@@ -67,10 +79,10 @@ int main(int argc, char *argv[])
     return 0;
 }
 
-void checkCmd(robot_soccer::controldata *cmdRob1){
-    if(cmdRob1->x != cmdRob1->x || cmdRob1->x_cmd != cmdRob1->x_cmd){
+void checkCmd(robot_soccer::controldata *cmdRob){
+    if(cmdRob->x != cmdRob->x || cmdRob->x_cmd != cmdRob->x_cmd){
         std::cout << "maincontrol::checkCmd() ##nan's detected## reverting to IDLE" << std::endl;
-        cmdRob1->cmdType = "idle";
+        cmdRob->cmdType = "idle";
 
     }
 }
