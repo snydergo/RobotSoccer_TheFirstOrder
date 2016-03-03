@@ -39,6 +39,9 @@ private:
   UndefinedCVObject front;
   UndefinedCVObject rear;
 
+  UndefinedCVObject frontDelay;
+  UndefinedCVObject rearDelay;
+
   int frontRefSize;
   int rearRefSize;
   int refDistance;
@@ -49,3 +52,5 @@ private:
 
   float theta;
 };
+
+std::vector<Robot> findRobots(std::vector<UndefinedCVObject>& cvObjs);

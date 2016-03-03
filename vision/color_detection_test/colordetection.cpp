@@ -1,6 +1,7 @@
 #include <iostream>
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
+#include <cmath>
 
 using namespace cv;
 using namespace std;
@@ -15,6 +16,8 @@ using namespace std;
     }
 
     namedWindow("Control", CV_WINDOW_AUTOSIZE); //create a window called "Control"
+
+    cout << atan2(0,-10) << endl;
 
     int iLowH = 0;
     int iHighH = 179;

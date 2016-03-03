@@ -19,10 +19,12 @@ public:
     bool update(std::vector<UndefinedCVObject>& cvObjs) override;
     bool find(std::vector<UndefinedCVObject>& cvObjs) override;
     
-    cv::Point2f getCenter() {return lastLocation.center;}
+    cv::Point2f getCenter() {return currentLocation.center;}
 
 private:
+    UndefinedCVObject currentLocation;
     UndefinedCVObject lastLocation;
+
     int refSize;
     float thresholdDistance;
 };

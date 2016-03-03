@@ -8,7 +8,7 @@ bool Ball::update(std::vector<UndefinedCVObject> &cvObjs) // find the closest oj
     int closest = -1;
     float deltaDistance = 500.0;
     for(int i = 0; i < cvObjs.size(); i++) {
-        float newDistance = distance(lastLocation.center, cvObjs[i].center);
+        float newDistance = distance(currentLocation.center, cvObjs[i].center);
         if (newDistance < deltaDistance && // we found a new point
             newDistance < thresholdDistance && // it is within our threshold distance
             std::abs(cvObjs[closest].area - refSize) < refSize/2) // it is within our threshold size
@@ -19,7 +19,8 @@ bool Ball::update(std::vector<UndefinedCVObject> &cvObjs) // find the closest oj
     }
 
     if (closest > -1) {
-        lastLocation = cvObjs[closest];
+        lastLocation = currentLocation;
+        currentLocation = cvObjs[closest];
         cvObjs.erase(cvObjs.begin() + closest);
         return true;
     }
@@ -43,7 +44,8 @@ bool Ball::find(std::vector<UndefinedCVObject>& cvObjs) // find the object close
     }
 
     if (closest > -1) {
-        lastLocation = cvObjs[closest];
+        lastLocation = currentLocation;
+        currentLocation = cvObjs[closest];
         cvObjs.erase(cvObjs.begin() + closest);
         return true;
     }

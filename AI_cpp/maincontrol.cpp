@@ -5,7 +5,7 @@
 #include "gameplay/strategy.h"
 #include "types.h"
 
-void checkCmd(robot_soccer::controldata *cmdRob1);
+void checkCmd(robot_soccer::controldata &cmdRob1);
 
 int main(int argc, char *argv[])
 {
@@ -19,24 +19,26 @@ int main(int argc, char *argv[])
     ros::init(argc, argv, "mainhub");
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
     //ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
-    ros::Rate loop_rate(TICKS_PER_SEC);
+    ros::Rate loop_rate(10);
     int count = 0;
     //sendCmd_Rob1 = true;
 
 //    //strategies STATEMACHINE
-    Strategies strategies;
-    strategies.init();
-    Plays play;
-    play.init();
-    play.start();
+//    Strategies strategies;
+//    strategies.init();
+//    Plays play;
+//    play.init();
+//    play.start();
+    Skills skill;
+    skill.init();
     //std::cout << "Main Control Started Successfully" << std::endl;
     bool dataInitialized = false;
     while (ros::ok())
     {
         count++;
 
-        strategies.tick();
-        //play.tick();
+
+
         if(visionUpdated && count%5==0){
             visionUpdated = false;
             dataInitialized = true;
@@ -46,43 +48,36 @@ int main(int argc, char *argv[])
             field.updateStatus(visionStatus_msg);
         }
 
-        if(sendCmd_Rob1){
-            sendCmd_Rob1 = false;
-            checkCmd(&cmdRob1);
-            robo1Com.publish(cmdRob1);
-            ////std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
-            /*std::cout << "x_dir = " << cmdRob1.x_cmd-cmdRob1.x << std::endl <<
-                         "y_dir = " << cmdRob1.y_cmd-cmdRob1.y << std::endl <<
-                         "theta = " << cmdRob1.theta_cmd-cmdRob1.theta << std::endl;
-            std::cout << "desired_x = " << cmdRob1.x_cmd << std::endl <<
-                         "desired_y = " << cmdRob1.y_cmd << std::endl <<
-                         "desired_theta = " << cmdRob1.theta_cmd << "\n\n";*/
-        }
-        /*if(sendCmd_Rob2){
-            sendCmd_Rob2 = false;
-            checkCmd(&cmdRob2);
-            robo2Com.publish(cmdRob2);
-            ////std::cout<<"sending data:\n"<<std::endl; destobj.x - startobj.x
-            std::cout << "x_dir = " << cmdRob2.x_cmd-cmdRob2.x << std::endl <<
-                         "y_dir = " << cmdRob2.y_cmd-cmdRob2.y << std::endl <<
-                         "theta = " << cmdRob2.theta_cmd-cmdRob2.theta << std::endl;
-            std::cout << "desired_x = " << cmdRob2.x_cmd << std::endl <<
-                         "desired_y = " << cmdRob2.y_cmd << std::endl <<
-                         "desired_theta = " << cmdRob2.theta_cmd << "\n\n";
-        }*/
-        ////std::cout << "spinning" << std::endl;
+        //        strategies.tick();
+                // play.tick();
 
+        skill.goToPoint(Point(0,0), -90.0);
+        skill.tick();
+        std::cout << "mark" << std::endl;
+        if(sendCmd_Rob1){
+
+            sendCmd_Rob1 = false;
+            checkCmd(cmdRob1);
+            cmdRob1.x_cmd = cmdRob1.x;
+            cmdRob1.y_cmd = cmdRob1.y;
+            cmdRob1.theta_cmd = -90;
+            robo1Com.publish(cmdRob1);
+        }
+        std::cout << "spin once" << std::endl;
         ros::spinOnce();
+        std::cout << "sleep" << std::endl;
         loop_rate.sleep();
+        std::cout << "end of loop" << std::endl;
         //ros::getGlobalCallbackQueue()->callAvailable(ros::WallDuration(0.1));
     }
+    std::cout << "returning" << std::endl;
     return 0;
 }
 
-void checkCmd(robot_soccer::controldata *cmdRob){
-    if(cmdRob->x != cmdRob->x || cmdRob->x_cmd != cmdRob->x_cmd){
+void checkCmd(robot_soccer::controldata &cmdRob){
+    if(cmdRob.x != cmdRob.x || cmdRob.x_cmd != cmdRob.x_cmd){
         std::cout << "maincontrol::checkCmd() ##nan's detected## reverting to IDLE" << std::endl;
-        cmdRob->cmdType = "idle";
+        cmdRob.cmdType = "idle";
 
     }
 }

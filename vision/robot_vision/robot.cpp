@@ -119,3 +119,41 @@ bool Robot::find(std::vector<UndefinedCVObject>& cvObjs)
     return true;
 
 }
+
+std::vector<Robot> findRobots(const std::vector<UndefinedCVObject>& cvObjs)
+{
+    if (cvObjs.size() < 2) return std::vector<Robot>();
+
+    float minArea = 10000;
+    float maxArea = 0;
+    for (auto &i: cvObjs) {
+        if (i.area < minArea) {
+            minArea = i.area;
+        }
+        if (i.area > maxArea) {
+            maxArea = i.area;
+        }
+    }
+    float centerArea = (maxArea + minArea)/2;
+    std::vector<UndefinedCVObject> smallObj;
+    std::vector<UndefinedCVObject> largeObj;
+
+    for (auto &i: cvObjs) {
+        if (i.area < centerArea) {
+            smallObj.push_back(i);
+        }
+        else {
+            largeObj.push_back(i);
+        }
+    }
+    int totalSize = 100000;
+    std::vector<int> mapping;
+    for (int l = 0; l < largeObj.size(); l++) {
+        int size = 0;
+        for (int s = 0; s < smallObj.size(); s++) {
+            size += distance(largeObj[l].center, smallObj[s].center);
+        }
+    }
+
+    return std::vector<Robot>();
+}

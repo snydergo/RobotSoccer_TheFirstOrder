@@ -12,8 +12,8 @@ bool visionUpdated;
 GameStatus visionStatus_msg;
 
 //## CONTROL DATA ##//
-bool sendCmd_Rob1 = true;
-bool sendCmd_Rob2 = false;
+bool sendCmd_Rob1(true);
+bool sendCmd_Rob2(false);
 robot_soccer::controldata cmdRob1;
 robot_soccer::controldata cmdRob2;
 
