@@ -3,27 +3,29 @@ from roboclaw import *
 import mlib
 import time
 
-p = int(65536 * 4) #262144
-i = int(65536 * 2) #131072
-d = int(65536 * 6)  #65536
-q = 308419
+# Inital Values
+p = 1 
+i = .25 
+d = .5  
+q = 180000
 
+print "==Initial Values==\n"
 print 'Battery Voltage: ' + str(ReadMainBatteryVoltage(128))
 p1,i1,d1,q1,crc = mlib.readMVelocityPID(1)
-print "128 M1 P=%.2f" % (p1/65536.0)
-print "128 M1 I=%.2f" % (i1/65536.0)
-print "128 M1 D=%.2f" % (d1/65536.0)
-print "128 M1 QPPS=",q1
+print "M1 P=%.2f" % (p1)
+print "M1 I=%.2f" % (i1)
+print "M1 D=%.2f" % (d1)
+print "M1 QPPS=",q1
 p2,i2,d2,q2,crc = mlib.readMVelocityPID(2)
-print "128 M2 P=%.2f" % (p2/65536.0)
-print "128 M2 I=%.2f" % (i2/65536.0)
-print "128 M2 D=%.2f" % (d2/65536.0)
-print "128 M2 QPPS=",q2
+print "M2 P=%.2f" % (p2)
+print "M2 I=%.2f" % (i2)
+print "M2 D=%.2f" % (d2)
+print "M2 QPPS=",q2
 p3,i3,d3,q3,crc = mlib.readMVelocityPID(3)
-print "121 M1 P=%.2f" % (p3/65536.0)
-print "129 M1 I=%.2f" % (i3/65536.0)
-print "129 M1 D=%.2f" % (d3/65536.0)
-print "129 M1 QPPS=",q3
+print "M1 P=%.2f" % (p3)
+print "M1 I=%.2f" % (i3)
+print "M1 D=%.2f" % (d3)
+print "M1 QPPS=",q3
 
 # This function takes multiple samples of the motor speed and then returns the average
 def read(motor):
@@ -84,12 +86,12 @@ time.sleep(1);
 
 #Left forward
 mlib.ForwardM(2,speed); #M2 forward sample 2
-mlib.BackwardM(3,speed); #M3 backward sample 1
+mlib.BackwardM(1,speed); #M1 backward sample 1
 time.sleep(2)
 
 speedM2Forward=speedM2Forward+read(2)
 speedM2Forward=speedM2Forward/2
-speedM3Backward=speedM3Backward+read(3)
+speedM3Backward=speedM3Backward+read(1)
 
 mlib.stop();
 time.sleep(5);
@@ -141,18 +143,19 @@ mlib.setMVelocityPID(1,p,i,d,speedM1)
 mlib.setMVelocityPID(2,p,i,d,speedM2)
 mlib.setMVelocityPID(3,p,i,d,speedM3)
 
+print "==Final Values==\n"
 p1,i1,d1,q1,crc = mlib.readMVelocityPID(1)
-print "128 M1 P=%.2f" % (p1/65536.0)
-print "128 M1 I=%.2f" % (i1/65536.0)
-print "128 M1 D=%.2f" % (d1/65536.0)
-print "128 M1 QPPS=",q1
+print "M1 P=%.2f" % (p1)
+print "M1 I=%.2f" % (i1)
+print "M1 D=%.2f" % (d1)
+print "M1 QPPS=",q1
 p2,i2,d2,q2,crc = mlib.readMVelocityPID(2)
-print "128 M2 P=%.2f" % (p2/65536.0)
-print "128 M2 I=%.2f" % (i2/65536.0)
-print "128 M2 D=%.2f" % (d2/65536.0)
-print "128 M2 QPPS=",q2
+print "M2 P=%.2f" % (p2)
+print "M2 I=%.2f" % (i2)
+print "M2 D=%.2f" % (d2)
+print "M2 QPPS=",q2
 p3,i3,d3,q3,crc = mlib.readMVelocityPID(3)
-print "121 M1 P=%.2f" % (p3/65536.0)
-print "129 M1 I=%.2f" % (i3/65536.0)
-print "129 M1 D=%.2f" % (d3/65536.0)
-print "129 M1 QPPS=",q3
+print "M1 P=%.2f" % (p3)
+print "M1 I=%.2f" % (i3)
+print "M1 D=%.2f" % (d3)
+print "M1 QPPS=",q3
