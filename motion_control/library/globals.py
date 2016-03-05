@@ -1,8 +1,8 @@
-kp_x   = .02
-ki_x   = 0
+kp_x   = .03
+ki_x   = 0.01
 kd_x   = .000
-kp_y   = .02
-ki_y   = 0
+kp_y   = .03
+ki_y   = 0.01
 kd_y   = .000
 kp_theta  = .01
 ki_theta  = 0.000
