@@ -4,8 +4,7 @@ from std_msgs.msg import String
 from robot_soccer.msg import controldata
 import mlib
 import sample_pid as pid
-#import tunePID
-from sample_pid import P
+import globals
 
 class Param:
     def __init__(self):
@@ -28,7 +27,7 @@ def callback1(data):
         ## Decisions ##
         # if the commanded values are small enough, we are close enough. Just stop movement.
 #        data.x = 0; data.y = 0; data.theta = 90;
-	data.theta_cmd = 90;
+	data.theta_cmd = 90; data.x_cmd = 0, data.y_cmd = 0;
 	#print data
         if data.x == data.x: # check for NaN
             vx, vy, omega = pid.robot_ctrl(data)
@@ -41,8 +40,8 @@ def callback1(data):
             mlib.stop()
     elif data.cmdType == 'pid':
         for i in vars(data):
-            if i in vars(P):
-                setattr(P, i, eval('data.{}'.format(i)))
+            if i in vars(globals):
+                globals.i = eval('data.{}'.format(i))
 
 	
     # print data
