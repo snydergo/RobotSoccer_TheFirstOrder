@@ -9,25 +9,27 @@ i = .25
 d = .5  
 q = 44000
 
+print "pidq"
+print p,i,d,q
 for k in range(1,4):
   mlib.setMVelocityPID(k,p,i,d,q)
 
 print "==Initial Values==\n"
 print 'Battery Voltage: ' + str(ReadMainBatteryVoltage(128))
 p1,i1,d1,q1,crc = mlib.readMVelocityPID(1)
-print "M1 P=%.2f" % (p1)
-print "M1 I=%.2f" % (i1)
-print "M1 D=%.2f" % (d1)
+print "M1 P=%.3f" % (p1)
+print "M1 I=%.3f" % (i1)
+print "M1 D=%.3f" % (d1)
 print "M1 QPPS=",q1
 p2,i2,d2,q2,crc = mlib.readMVelocityPID(2)
-print "M2 P=%.2f" % (p2)
-print "M2 I=%.2f" % (i2)
-print "M2 D=%.2f" % (d2)
+print "M2 P=%.3f" % (p2)
+print "M2 I=%.3f" % (i2)
+print "M2 D=%.3f" % (d2)
 print "M2 QPPS=",q2
 p3,i3,d3,q3,crc = mlib.readMVelocityPID(3)
-print "M3 P=%.2f" % (p3)
-print "M3 I=%.2f" % (i3)
-print "M3 D=%.2f" % (d3)
+print "M3 P=%.3f" % (p3)
+print "M3 I=%.3f" % (i3)
+print "M3 D=%.3f" % (d3)
 print "M3 QPPS=",q3
 
 # This function takes multiple samples of the motor speed and then returns the average
@@ -155,17 +157,17 @@ mlib.setMVelocityPID(3,p,i,d,speedM3)
 
 print "==Final Values==\n"
 p1,i1,d1,q1,crc = mlib.readMVelocityPID(1)
-print "M1 P=%.2f" % (p1)
-print "M1 I=%.2f" % (i1)
-print "M1 D=%.2f" % (d1)
+print "M1 P=%.3f" % (p1)
+print "M1 I=%.3f" % (i1)
+print "M1 D=%.3f" % (d1)
 print "M1 QPPS=",q1
 p2,i2,d2,q2,crc = mlib.readMVelocityPID(2)
-print "M2 P=%.2f" % (p2)
-print "M2 I=%.2f" % (i2)
-print "M2 D=%.2f" % (d2)
+print "M2 P=%.3f" % (p2)
+print "M2 I=%.3f" % (i2)
+print "M2 D=%.3f" % (d2)
 print "M2 QPPS=",q2
 p3,i3,d3,q3,crc = mlib.readMVelocityPID(3)
-print "M3 P=%.2f" % (p3)
-print "M3 I=%.2f" % (i3)
-print "M3 D=%.2f" % (d3)
+print "M3 P=%.3f" % (p3)
+print "M3 I=%.3f" % (i3)
+print "M3 D=%.3f" % (d3)
 print "M3 QPPS=",q3
