@@ -128,17 +128,20 @@ speedM2Backward=(speedM2Backward*127)/speed
 speedM3Forward=(speedM3Forward*127)/speed
 speedM3Backward=(speedM3Backward*127)/speed
 
-print speedM1Forward;
-print speedM1Backward;
-print speedM2Forward;
-print speedM2Backward;
-print speedM3Forward;
-print speedM3Backward;
+#print speedM1Forward;
+#print speedM1Backward;
+#print speedM2Forward;
+#print speedM2Backward;
+#print speedM3Forward;
+#print speedM3Backward;
 
 speedM1 = (speedM1Forward - speedM1Backward)/2
 speedM2 = (speedM2Forward - speedM2Backward)/2
 speedM3 = (speedM3Forward - speedM3Backward)/2
-
+print "qpps values:"
+print speedM1
+print speedM2
+print speedM3
 mlib.setMVelocityPID(1,p,i,d,speedM1)
 mlib.setMVelocityPID(2,p,i,d,speedM2)
 mlib.setMVelocityPID(3,p,i,d,speedM3)
