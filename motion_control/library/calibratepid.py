@@ -31,7 +31,7 @@ def read(motor):
   result = 0
   for i in range(0, samples):
     sample = 0
-    sample = mlib.readSpeedM(motor)
+    sample = mlib.readSpeedM(motor)[1]
     #print sample
     result = result + sample
   result = result/samples
