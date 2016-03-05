@@ -7,10 +7,10 @@ import time
 p = 1 
 i = .25 
 d = .5  
-q = 180000
+q = 44000
 
-for i in range(1,3):
-  mlib.setMVelocityPID(i,p,i,d,q)
+for k in range(1,4):
+  mlib.setMVelocityPID(k,p,i,d,q)
 
 print "==Initial Values==\n"
 print 'Battery Voltage: ' + str(ReadMainBatteryVoltage(128))
@@ -32,9 +32,9 @@ print "M3 QPPS=",q3
 
 # This function takes multiple samples of the motor speed and then returns the average
 def read(motor):
-  samples = 4
+  samples = 2
   result = 0
-  for i in range(0, samples):
+  for k in range(0, samples):
     sample = 0
     sample = mlib.readSpeedM(motor)[1]
     #print sample
