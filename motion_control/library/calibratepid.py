@@ -22,10 +22,10 @@ print "M2 I=%.2f" % (i2)
 print "M2 D=%.2f" % (d2)
 print "M2 QPPS=",q2
 p3,i3,d3,q3,crc = mlib.readMVelocityPID(3)
-print "M1 P=%.2f" % (p3)
-print "M1 I=%.2f" % (i3)
-print "M1 D=%.2f" % (d3)
-print "M1 QPPS=",q3
+print "M3 P=%.2f" % (p3)
+print "M3 I=%.2f" % (i3)
+print "M3 D=%.2f" % (d3)
+print "M3 QPPS=",q3
 
 # This function takes multiple samples of the motor speed and then returns the average
 def read(motor):
@@ -128,12 +128,12 @@ speedM2Backward=(speedM2Backward*127)/speed
 speedM3Forward=(speedM3Forward*127)/speed
 speedM3Backward=(speedM3Backward*127)/speed
 
-#print speedM1Forward;
-#print speedM1Backward;
-#print speedM2Forward;
-#print speedM2Backward;
-#print speedM3Forward;
-#print speedM3Backward;
+print speedM1Forward;
+print speedM1Backward;
+print speedM2Forward;
+print speedM2Backward;
+print speedM3Forward;
+print speedM3Backward;
 
 speedM1 = (speedM1Forward - speedM1Backward)/2
 speedM2 = (speedM2Forward - speedM2Backward)/2
@@ -155,7 +155,7 @@ print "M2 I=%.2f" % (i2)
 print "M2 D=%.2f" % (d2)
 print "M2 QPPS=",q2
 p3,i3,d3,q3,crc = mlib.readMVelocityPID(3)
-print "M1 P=%.2f" % (p3)
-print "M1 I=%.2f" % (i3)
-print "M1 D=%.2f" % (d3)
-print "M1 QPPS=",q3
+print "M3 P=%.2f" % (p3)
+print "M3 I=%.2f" % (i3)
+print "M3 D=%.2f" % (d3)
+print "M3 QPPS=",q3
