@@ -50,6 +50,7 @@ speed = 48
 
 mlib.stop();
 
+## Forward Back
 #Forwards
 mlib.BackwardM(1,speed); #M1 backward sample 1
 mlib.ForwardM(3,speed); #M3 forward sample 1
@@ -72,30 +73,32 @@ speedM3Backward=speedM3Backward+read(3)
 mlib.stop();
 time.sleep(5);
 
+## Diagonal 1
 #Left back
-mlib.BackwardM(2,speed); #M2 backward sample 2 
-mlib.ForwardM(1,speed); #M1 forward sample 1
+mlib.BackwardM(2,speed); #M2 backward sample 1 
+mlib.ForwardM(1,speed); #M1 forward sample 2
 time.sleep(2)
 
 speedM2Backward=speedM2Backward+read(2)
-speedM2Backward=speedM2Backward/2
 speedM1Forward=speedM1Forward+read(1)
+speedM1Forward=speedM1Forward/2
 
 mlib.stop();
 time.sleep(1);
 
 #Left forward
-mlib.ForwardM(2,speed); #M2 forward sample 2
-mlib.BackwardM(1,speed); #M1 backward sample 1
+mlib.ForwardM(2,speed); #M2 forward sample 1
+mlib.BackwardM(1,speed); #M1 backward sample 2
 time.sleep(2)
 
 speedM2Forward=speedM2Forward+read(2)
-speedM2Forward=speedM2Forward/2
-speedM3Backward=speedM3Backward+read(1)
+speedM1Backward=speedM1Backward+read(1)
+speedM1Backward=speedM1Backward/2
 
 mlib.stop();
 time.sleep(5);
 
+## Diagonal 2
 # RightBack
 mlib.ForwardM(2,speed); #M2 forward sample 2
 mlib.BackwardM(3,speed); #M3 backward sample 2
@@ -121,6 +124,7 @@ speedM3Forward=speedM3Forward/2
 
 mlib.stop();
 
+# Make Calculations
 speedM1Forward=(speedM1Forward*127)/speed
 speedM1Backward=(speedM1Backward*127)/speed
 speedM2Forward=(speedM2Forward*127)/speed
