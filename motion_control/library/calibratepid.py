@@ -9,6 +9,9 @@ i = .25
 d = .5  
 q = 180000
 
+for i in range(1,3):
+  mlib.setMVelocityPID(i,p,i,d,q)
+
 print "==Initial Values==\n"
 print 'Battery Voltage: ' + str(ReadMainBatteryVoltage(128))
 p1,i1,d1,q1,crc = mlib.readMVelocityPID(1)
