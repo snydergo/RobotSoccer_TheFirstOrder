@@ -3,13 +3,13 @@ from roboclaw import *
 import mlib
 import time
 
-def default():
-  # Inital Values
-  p = 1 
-  i = .25 
-  d = .5  
-  q = 44000
+# Inital Values
+p = 1 
+i = .25 
+d = .5  
+q = 44000
 
+def default():
   for k in range(1,4):
     mlib.setMVelocityPID(k,p,i,d,q)
 
