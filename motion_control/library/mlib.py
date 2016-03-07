@@ -211,7 +211,7 @@ def goXYOmegaWorldAccel(vx_w,vy_w,omega=0,theta=0,time=1):
 	k = 1
 	# Set speed for each wheel
 	for w in wheelVels:
-		speedAccelM(k,time,abs(w))
+		speedAccelM(k,time,w)
 		k = k+1
 	return
 
