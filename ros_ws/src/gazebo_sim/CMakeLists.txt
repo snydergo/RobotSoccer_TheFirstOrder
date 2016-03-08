@@ -21,12 +21,18 @@ catkin_package(CATKIN_DEPENDS message_runtime roscpp gazebo_ros)
 # Specify additional locations of header files
 include_directories(include ${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
+catkin_install_python(PROGRAMS
+src/library/subscriber_CtrlMsg.py
+DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 # Declare C++ executables
 add_executable(vision src/vision.cpp)
+add_dependencies(vision walle_generate_messages_cpp)
 find_package( OpenCV REQUIRED )
 target_link_libraries(vision ${OpenCV_LIBS} ${catkin_LIBRARIES})
 
 add_executable(controller src/controller.cpp)
+add_dependencies(controller walle_generate_messages_cpp)
 target_link_libraries(controller ${catkin_LIBRARIES})
 
 # Add plugins
