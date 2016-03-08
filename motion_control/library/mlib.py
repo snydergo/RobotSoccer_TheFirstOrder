@@ -18,9 +18,9 @@ addr1 = 0x80
 addr2 = 0x81
 
 #Set (default) velocity pids
-roboclaw.SetM1VelocityPID(addr1,2,1,.1,180000)
-roboclaw.SetM2VelocityPID(addr1,2,1,.1,180000)
-roboclaw.SetM1VelocityPID(addr2,2,1,.1,180000)
+# roboclaw.SetM1VelocityPID(addr1,2,1,.1,180000)
+# roboclaw.SetM2VelocityPID(addr1,2,1,.1,180000)
+# roboclaw.SetM1VelocityPID(addr2,2,1,.1,180000)
 
 class e_type(Enum):
 	motorNumOff = 1
@@ -137,6 +137,27 @@ def SetEncM(motor,cnt):
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
+def setMVelocityPID(motor,p,i,d,qpps):
+	if motor == 1:
+		return roboclaw.SetM1VelocityPID(addr1,p,i,d,qpps)
+	elif motor == 2:
+		return roboclaw.SetM2VelocityPID(addr1,p,i,d,qpps)
+	elif motor == 3:
+		return roboclaw.SetM1VelocityPID(addr2,p,i,d,qpps)
+	else:
+		raise mlibExcept(e_type.motorNumOff)
+
+def readMVelocityPID(motor):
+	if motor == 1:
+		return roboclaw.ReadM1VelocityPID(addr1)
+	elif motor == 2:
+		return roboclaw.ReadM2VelocityPID(addr1)
+	elif motor == 3:
+		return roboclaw.ReadM1VelocityPID(addr1)
+	else:
+		raise mlibExcept(e_type.motorNumOff)
+
+
 # Returns the speed of the motor in revolutions/second
 def readSpeedM(motor):
 	if motor == 1:
@@ -149,25 +170,27 @@ def readSpeedM(motor):
 		raise mlibExcept(e_type.motorNumOff)
 
 
+
+
 # # Based on wheel speed instead of distance
 # def moveBodyX(speed):
 # 	ForwardBackM(1,speed) # Maybe use speed instead, since it specifies omega instead of arbitrary motor power
 # 	ForwardBackM(2,-speed)
 # 	return
 
-# Based on wheel speed instead of distance
-def rotateRate(speed):
-	x = [1,2,3]
-	for n in x:
-		ForwardBackM(n,speed)
+# # Based on wheel speed instead of distance
+# def rotateRate(speed):
+# 	x = [1,2,3]
+# 	for n in x:
+# 		ForwardBackM(n,speed)
 
-def goXYOmega(x,y,omega):
-	# Get what the wheel omegas needs to be
-	v1,v2,v3 = mat.getWheelVel(x,y,omega)
-	# Drive each wheel at the appropriate omega
-	SpeedM(1,v1)
-	SpeedM(2,v2)
-	SpeedM(3,v3)
+# def goXYOmega(x,y,omega):
+# 	# Get what the wheel omegas needs to be
+# 	v1,v2,v3 = mat.getWheelVel(x,y,omega)
+# 	# Drive each wheel at the appropriate omega
+# 	SpeedM(1,v1)
+# 	SpeedM(2,v2)
+# 	SpeedM(3,v3)
 
 # Go in an XY direction with an omega.
 # Theta is defaulted to zero (body and world frames aligned)
@@ -188,7 +211,7 @@ def goXYOmegaWorldAccel(vx_w,vy_w,omega=0,theta=0,time=1):
 	k = 1
 	# Set speed for each wheel
 	for w in wheelVels:
-		speedAccelM(k,time,abs(w))
+		speedAccelM(k,time,w)
 		k = k+1
 	return
 
@@ -199,8 +222,6 @@ def stop():
 		ForwardBackM(m,0)
 	return
 
-def smoothStop():
-	return
 #def SetMVelocityPID(address,p,i,d,qpps):
 
 def deg2rad(deg):

@@ -1,0 +1,16 @@
+kp_x   = .02
+ki_x   = 0.00
+kd_x   = .000
+kp_y   = .02
+ki_y   = 0.00
+kd_y   = .000
+kp_theta  = .00
+ki_theta  = 0.000
+kd_theta  = .000
+loop_rate = 10 # Hz (get value from publisher)
+Ts     = 1.00/loop_rate
+tau    = 0.005
+camera_sample_rate = 33
+lpf_alpha          = 0.7 
+a1      = (2*tau-camera_sample_rate)/(2*tau-tau+camera_sample_rate)
+a2      = 2/(2*tau+camera_sample_rate)

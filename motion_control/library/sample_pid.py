@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import matlib
 from numpy import matrix
+import globals
 
 class ControlVar:
     def __init__(self):
@@ -20,35 +21,35 @@ class ControlVar:
 #         self.accel_prev = matlib.zeros(3,1)
 #         self.jerk_prev  = matlib.zeros(3,1)
 
-class Param:
-    def __init__(self):
-        self.kp_x   = 0#.02
-        self.ki_x   = 0
-        self.kd_x   = .000
+# class Param:
+#     def __init__(self):
+#         self.kp_x   = .02
+#         self.ki_x   = 0
+#         self.kd_x   = .000
 
-        self.kp_y   = 0#.02
-        self.ki_y   = 0
-        self.kd_y   = .000
+#         self.kp_y   = .02
+#         self.ki_y   = 0
+#         self.kd_y   = .000
 
-        self.kp_theta  = .04
-        self.ki_theta  = 0.000
-        self.kd_theta  = .001
+#         self.kp_theta  = .04
+#         self.ki_theta  = 0.000
+#         self.kd_theta  = .001
 
-        self.Ts     = 1.00/loop_rate
-        self.tau    = 0.005
+#         self.Ts     = 1.00/loop_rate
+#         self.tau    = 0.005
 
-        self.camera_sample_rate = 33
-        self.lpf_alpha          = 0.7
+#         self.camera_sample_rate = 33
+#         self.lpf_alpha          = 0.7
 
-        a1      = (2*self.tau-self.camera_sample_rate)/(2*self.tau-self.tau+self.camera_sample_rate)
-        a2      = 2/(2*self.tau+self.camera_sample_rate)
+#         a1      = (2*self.tau-self.camera_sample_rate)/(2*self.tau-self.tau+self.camera_sample_rate)
+#         a2      = 2/(2*self.tau+self.camera_sample_rate)
 
 
 loop_rate = 50 # Hz (get value from publisher)
 x_g     = ControlVar()
 y_g     = ControlVar()
 theta_g = ControlVar()
-P       = Param()
+# P       = Param()
 
 
 def robot_ctrl(message):
@@ -63,9 +64,9 @@ def robot_ctrl(message):
     xy_limit = 0.50
     th_limit = 5
     # compute the desired angled angle using the outer loop control
-    vx  = PID(x_cmd,x,x_g,P.kp_x,P.ki_x,P.kd_x,xy_limit,P.Ts,P.tau)
-    vy  = PID(y_cmd,y,y_g,P.kp_y,P.ki_y,P.kd_y,xy_limit,P.Ts,P.tau)
-    vth = PID(theta_cmd,theta,theta_g,P.kp_theta,P.ki_theta,P.kd_theta,th_limit,P.Ts,P.tau)
+    vx  = PID(x_cmd,x,x_g,globals.kp_x,globals.ki_x,globals.kd_x,xy_limit,globals.Ts,globals.tau)
+    vy  = PID(y_cmd,y,y_g,globals.kp_y,globals.ki_y,globals.kd_y,xy_limit,globals.Ts,globals.tau)
+    vth = PID(theta_cmd,theta,theta_g,globals.kp_theta,globals.ki_theta,globals.kd_theta,th_limit,globals.Ts,globals.tau)
 
     return vx, vy, vth
 
