@@ -74,7 +74,7 @@ vision/robot_vision/config.cpp
 )
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 target_link_libraries( RobotVision ${catkin_LIBRARIES})
-include_directories(~/imports/rapidjson/include)
+include_directories(~/ecen490/imports/rapidjson/include)
 
 
 add_executable( MainControl 

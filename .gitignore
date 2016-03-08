@@ -42,4 +42,10 @@ Thumbs.db
 ############
 #.user
 
+ros_ws/build
+ros_ws/devel
+ros_ws/install
+
+# Catkin custom files
+CATKIN_IGNORE
 
