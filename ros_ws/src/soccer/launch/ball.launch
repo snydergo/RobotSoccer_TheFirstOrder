@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="ball_name" default="ball"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+
+  <!-- Send the robot XML to param server -->
+  <param name="$(arg ball_name)_description" command="
+    $(find xacro)/xacro.py 
+    $(find walle)/urdf/ball.xacro"/>
+
+  <!-- Push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_$(arg ball_name)" pkg="gazebo_ros" type="spawn_model"
+   args="-param $(arg ball_name)_description
+         -urdf
+         -x $(arg x)
+         -y $(arg y)
+         -z $(arg z)
+         -model $(arg ball_name)"
+   respawn="false" output="screen">
+  </node>
+</launch>

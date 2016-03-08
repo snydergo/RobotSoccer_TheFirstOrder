@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- Soccer Ball -->
+<robot name="ball" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="mass" value="0.046"/>
+  <xacro:property name="radius" value="0.021"/>
+
+  <!-- Chassis -->
+  <link name="ball">
+    <collision name="collision">
+      <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${radius}"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="${radius}"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 ${radius}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${2*mass*radius*radius/3}" ixy="0.0" ixz="0.0"
+        iyy="${2*mass*radius*radius/3}" iyz="0.0"
+        izz="${2*mass*radius*radius/3}"/>
+    </inertial>      
+  </link>
+  <gazebo reference="ball">
+    <material>Gazebo/Yellow</material>
+  </gazebo>
+
+  <!-- Control -->
+  <gazebo>
+    <plugin name="soccer_ball" filename="libsoccer_ball.so">
+      <namespace>ball</namespace>
+      <friction>0.02</friction>
+    </plugin>
+  </gazebo>  
+</robot>

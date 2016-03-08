@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!-- Soccer Robot -->
+<robot name="soccer_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="namespace" value="$(arg robot_name)"/>
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="SIN60" value="0.8660254038"/>
+  <xacro:property name="COS60" value="0.5"/>
+  <xacro:property name="height" value=".15"/>
+  <xacro:property name="mass" value=".8"/>
+  <xacro:property name="wheel_mass" value=".008"/>
+  <xacro:property name="wheel_radius" value=".03"/>
+  <xacro:property name="wheel_dist" value=".095"/>
+  <xacro:property name="radius" value=".095"/>
+  <xacro:property name="jersey_color" value="$(arg jersey_color)"/>
+
+  <!-- Dummy base link -->
+  <link name="base_link">
+  </link>
+
+  <!-- Chassis -->
+  <link name="chassis">
+    <collision name="collision">
+      <origin xyz="0 0 ${height/2+wheel_radius/4}" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://walle/meshes/soccer_robot.dae"/>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <origin xyz="0 0 ${height/2+wheel_radius/4}" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://walle/meshes/soccer_robot.dae"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <origin xyz="0 0 ${height/2+wheel_radius/4}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass/12 * (3*radius*radius + height*height)}" ixy="0.0" ixz="0.0"
+        iyy="${mass/12 * (3*radius*radius + height*height)}" iyz="0.0"
+        izz="${mass*radius*radius/2}"/>
+    </inertial>
+  </link>
+  <gazebo reference="chassis">
+    <material>Gazebo/DarkGrey</material>
+  </gazebo>
+  <joint type="fixed" name="base_joint">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="chassis"/>
+  </joint>
+
+  <!-- Jersey -->
+  <link name="jersey">
+    <visual name="visual1">
+      <origin xyz="-.03 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size=".04 .14 .01"/>
+      </geometry>
+    </visual>
+    <visual name="visual2">
+      <origin xyz=".03 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size=".02 .14 .01"/>
+      </geometry>
+    </visual>
+  </link>
+  <gazebo reference="jersey">
+    <material>Gazebo/${jersey_color}</material>
+  </gazebo>
+  <joint type="fixed" name="jersey_joint">
+    <origin xyz="0 0 ${height+wheel_radius/2}" rpy="0 0 0"/>
+    <parent link="chassis"/>
+    <child link="jersey"/>
+  </joint>
+
+  <!-- Wheels -->
+  <xacro:include filename="$(find walle)/urdf/wheel.xacro"/>
+  <xacro:wheel namespace="${namespace}" parent="chassis" id="1" mass="${wheel_mass}" radius="${wheel_radius}" thickness=".01" xyz="${-wheel_dist}      0                    ${wheel_radius}" yaw="${PI}"/>
+  <xacro:wheel namespace="${namespace}" parent="chassis" id="2" mass="${wheel_mass}" radius="${wheel_radius}" thickness=".01" xyz="${wheel_dist*COS60} ${-wheel_dist*SIN60} ${wheel_radius}" yaw="${-PI/3}"/>
+  <xacro:wheel namespace="${namespace}" parent="chassis" id="3" mass="${wheel_mass}" radius="${wheel_radius}" thickness=".01" xyz="${wheel_dist*COS60} ${wheel_dist*SIN60}  ${wheel_radius}" yaw="${PI/3}"/>
+
+  <!-- Control -->
+  <gazebo>
+    <plugin name="soccer_drive" filename="libsoccer_drive.so">
+      <namespace>${namespace}</namespace>
+      <kP_xy>20</kP_xy>
+      <kP_w>2</kP_w>
+      <maxF_xy>10</maxF_xy>
+      <maxF_w>1</maxF_w>
+    </plugin>
+  </gazebo>
+</robot>

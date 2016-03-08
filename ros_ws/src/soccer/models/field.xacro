@@ -1,0 +1,33 @@
+<?xml version='1.0'?>
+<sdf version='1.4' xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <model name="soccer_field">
+    <static>true</static>
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <mesh><uri>$(find walle)/meshes/field9_collision.dae</uri></mesh>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>50</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh><uri>$(find walle)/meshes/field9_visual.dae</uri></mesh>
+        </geometry>
+        <material>
+          <ambient>.3 .3 .3 1</ambient>
+          <diffuse>.6 .6 .6 1</diffuse>
+          <specular>0.01 0.01 0.01 1</specular>
+          <emissive>0 0 0 0</emissive>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,11 @@
+<?xml version='1.0'?>
+<sdf version='1.4' xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <world name='default'>
+    <xacro:include filename="$(find walle)/models/camera.xacro"/>
+    <xacro:include filename="$(find walle)/models/field.xacro"/>
+    <include>
+      <uri>model://sun</uri>
+      
+    </include>
+  </world>
+</sdf>

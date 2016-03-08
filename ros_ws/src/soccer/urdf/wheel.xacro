@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!-- Soccer Robot -->
+<robot name="soccer_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="PI" value="3.1415926535897931"/>
+  <xacro:property name="SIN30" value="0.5000000000"/>
+  <xacro:property name="SIN45" value="0.7071067812"/>
+  <xacro:property name="SIN60" value="0.8660254038"/>
+
+  <!-- Omni joints -->
+  <xacro:macro name="omni" params="namespace parent id mass radius thickness xyz yaw color">
+    <link name="omni_link${id}">
+      <visual name="visual">
+        <geometry>
+          <cylinder
+            radius="${radius}"
+            length="${thickness}"/>
+        </geometry>
+      </visual>
+    </link>
+    <gazebo reference="omni_link${id}">
+      <material>Gazebo/${color}</material>
+    </gazebo>    
+    <joint type="fixed" name="omni_joint${id}">
+      <origin xyz="${xyz}" rpy="0 ${PI/2} ${yaw}"/>
+      <parent link="${parent}"/>
+      <child link="omni_link${id}"/>
+      <axis xyz="0 0 1"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Base -->
+  <xacro:macro name="wheel" params="namespace parent id mass radius thickness xyz yaw">
+    <link name="wheel${id}">
+      <visual name="visual">
+        <geometry>
+          <cylinder
+            radius="${radius*.9}"
+            length="${thickness}"/>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <cylinder
+            radius="${radius}"
+            length="${thickness}"/>
+        </geometry>
+      </collision>      
+      <inertial>
+        <mass value="${mass}"/>
+        <inertia
+          ixx="${mass/12 * (3*radius*radius + thickness*thickness)}" ixy="0.0" ixz="0.0"
+          iyy="${mass/12 * (3*radius*radius + thickness*thickness)}" iyz="0.0"
+          izz="${mass*radius*radius/2}"/>
+      </inertial>
+    </link>
+    <gazebo reference="wheel${id}">
+      <mu1>0.0</mu1>
+      <mu2>0.0</mu2>
+    </gazebo>
+    <joint type="fixed" name="joint${id}">
+      <origin xyz="${xyz}" rpy="0 ${PI/2} ${yaw}"/>
+      <parent link="${parent}"/>
+      <child link="wheel${id}"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="0.2" velocity="20.0" />
+    </joint>
+
+    <!-- Omni joints -->
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}a" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="White"    xyz="${radius*.8}        0                   0" yaw="${PI/2}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}b" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${SIN60*radius*.8}  ${SIN30*radius*.8}  0" yaw="${2*PI/3}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}c" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${SIN30*radius*.8}  ${SIN60*radius*.8}  0" yaw="${5*PI/6}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}d" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="0                   ${radius*.8}        0" yaw="0"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}e" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${-SIN30*radius*.8} ${SIN60*radius*.8}  0" yaw="${PI/6}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}f" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${-SIN60*radius*.8} ${SIN30*radius*.8}  0" yaw="${PI/3}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}g" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${-radius*.8}       0                   0" yaw="${PI/2}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}h" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${-SIN60*radius*.8} ${-SIN30*radius*.8} 0" yaw="${2*PI/3}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}i" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${-SIN30*radius*.8} ${-SIN60*radius*.8} 0" yaw="${5*PI/6}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}j" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="0                   ${-radius*.8}       0" yaw="0"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}k" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${SIN30*radius*.8}  ${-SIN60*radius*.8} 0" yaw="${PI/6}"/>
+    <xacro:omni namespace="${namespace}" parent="wheel${id}" id="${id}l" mass="${mass/10}" radius="${radius/4}" thickness="${radius/6}" color="DarkGrey" xyz="${SIN60*radius*.8}  ${-SIN30*radius*.8} 0" yaw="${PI/3}"/>
+  </xacro:macro>
+</robot>

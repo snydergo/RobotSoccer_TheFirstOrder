@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" default="robot"/>
+  <arg name="jersey_color" default="Red"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+
+  <!-- Send the robot XML to param server -->
+  <param name="$(arg robot_name)_description" command="
+    $(find xacro)/xacro.py 
+    $(find walle)/urdf/robot.xacro 
+    robot_name:=$(arg robot_name)
+    jersey_color:=$(arg jersey_color)"/>
+
+  <!-- Push robot_description to factory and spawn robot in gazebo -->
+  <node name="spawn_$(arg robot_name)" pkg="gazebo_ros" type="spawn_model"
+   args="-param $(arg robot_name)_description
+         -urdf
+         -x $(arg x)
+         -y $(arg y)
+         -z $(arg z)
+         -model $(arg robot_name)"
+   respawn="false" output="screen">
+  </node>
+</launch>
