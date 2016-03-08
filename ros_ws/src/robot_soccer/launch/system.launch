@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <node name="RobotVision" pkg="robot_soccer" type="RobotVision" args="src/robot_soccer/vision/robot_vision/param.json"/>
-  <node name="MainControl" pkg="robot_soccer" type="MainControl"/>
-</launch>

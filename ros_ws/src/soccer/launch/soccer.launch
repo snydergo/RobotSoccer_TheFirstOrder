@@ -33,9 +33,7 @@
 
   <!-- Home and away team controllers -->
   <!-- <node name="home" pkg="robot_soccer" type="MainControl"/> -->
-  <node name="motion_control1" pkg="walle" type="subscriber1_CtrlMsg.py"/>
-  <!--node name="motion_control2" pkg="walle" type="subscriber2_CtrlMsg.py"/> -->
-
+  <node name="motion_control1" pkg="walle" type="subscriber_CtrlMsg.py"/>
 
   <!-- node name="away" pkg="walle" type="controller" args="_team:=away"-->
 

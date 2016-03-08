@@ -16,6 +16,7 @@
   <license>BSD</license>
 
   <buildtool_depend>catkin</buildtool_depend>
+   <build_depend>walle</build_depend>
   <depend>roscpp</depend>
   <depend>rospy</depend>
   <depend>std_msgs</depend>

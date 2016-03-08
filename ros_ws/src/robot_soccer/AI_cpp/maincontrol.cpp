@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     //PUBLISHER FOR MOTIONCONTROL
     ros::init(argc, argv, "mainhub");
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
-    //ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
+    ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
     ros::Rate loop_rate(10);
     int count = 0;
     //sendCmd_Rob1 = true;
@@ -29,8 +29,10 @@ int main(int argc, char *argv[])
 //    Plays play;
 //    play.init();
 //    play.start();
-    Skills skill;
-    skill.init();
+    Skills skill1(robotType::ally1);
+    Skills skill2(robotType::ally2);
+    skill1.init();
+    skill2.init();
     //std::cout << "Main Control Started Successfully" << std::endl;
     bool dataInitialized = false;
     while (ros::ok())
@@ -39,7 +41,7 @@ int main(int argc, char *argv[])
 
 
 
-        if(visionUpdated && count%5==0){
+        if (visionUpdated && count%5==0) {
             visionUpdated = false;
             dataInitialized = true;
 
@@ -51,17 +53,17 @@ int main(int argc, char *argv[])
         //        strategies.tick();
                 // play.tick();
 
-        skill.goToPoint(Point(0,0), -90.0);
-        skill.tick();
-        std::cout << "mark" << std::endl;
-        if(sendCmd_Rob1){
+        skill1.goToPoint(Point(0,0), 0);
+        skill1.tick();
+        skill2.goToPoint(Point(-20,20), 0);
+        skill2.tick();
+        if (sendCmd_Rob1) {
 
             sendCmd_Rob1 = false;
             checkCmd(cmdRob1);
-            cmdRob1.x_cmd = cmdRob1.x;
-            cmdRob1.y_cmd = cmdRob1.y;
-            cmdRob1.theta_cmd = -90;
             robo1Com.publish(cmdRob1);
+            checkCmd(cmdRob2);
+            robo2Com.publish(cmdRob2);
         }
         std::cout << "spin once" << std::endl;
         ros::spinOnce();
@@ -81,9 +83,3 @@ void checkCmd(robot_soccer::controldata &cmdRob){
 
     }
 }
-
-
-
-
-
-

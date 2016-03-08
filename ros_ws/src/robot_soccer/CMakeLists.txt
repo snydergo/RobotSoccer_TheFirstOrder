@@ -26,7 +26,7 @@ catkin_package(
   CATKIN_DEPENDS message_runtime rospy
 )
 
-include_directories(
+include_directories( include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -72,6 +72,7 @@ vision/robot_vision/objectdetection.cpp
 vision/robot_vision/config.h
 vision/robot_vision/config.cpp
 )
+add_dependencies(RobotVision robot_soccer_generate_messages_cpp  ${catkin_EXPORTED_TARGETS})
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 target_link_libraries( RobotVision ${catkin_LIBRARIES})
 include_directories(~/ecen490/imports/rapidjson/include)
@@ -109,4 +110,5 @@ AI_cpp/gameplay/strategy.cpp
 AI_cpp/gameplay/plays.h
 AI_cpp/gameplay/plays.cpp
 )
+add_dependencies(MainControl robot_soccer_generate_messages_cpp  ${catkin_EXPORTED_TARGETS})
 target_link_libraries( MainControl ${catkin_LIBRARIES})
