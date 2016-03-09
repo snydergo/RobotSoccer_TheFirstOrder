@@ -222,6 +222,11 @@ def stop():
 		ForwardBackM(m,0)
 	return
 
+# Since we are using the roboclaw to source enough voltage for the kicker, we are using a roboclaw command to kick it
+def kick():
+	roboclaw.ForwardM2(addr2,127) # max power
+	return
+
 #def SetMVelocityPID(address,p,i,d,qpps):
 
 def deg2rad(deg):
