@@ -1,7 +1,7 @@
-kp_x   = .01
+kp_x   = .03
 ki_x   = 0.00
 kd_x   = .000
-kp_y   = .01
+kp_y   = .03
 ki_y   = 0.00
 kd_y   = .000
 kp_theta  = .005
