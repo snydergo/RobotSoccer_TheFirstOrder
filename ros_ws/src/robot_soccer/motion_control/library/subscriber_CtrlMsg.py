@@ -27,8 +27,8 @@ def callback1(data):
         ## Decisions ##
         # if the commanded values are small enough, we are close enough. Just stop movement.
 #        data.x = 0; data.y = 0; data.theta = 90;
-	data.theta_cmd = 90; data.x_cmd = 0; data.y_cmd = 0;
-	print data
+    	data.theta_cmd = 90; data.x_cmd = 0; data.y_cmd = 0;
+    	print data
         if data.x == data.x: # check for NaN
             vx, vy, omega = pid.robot_ctrl(data)
 	    print("omega: " + str(omega))
@@ -38,6 +38,8 @@ def callback1(data):
         else:
             print("NaN - stopping")
             mlib.stop()
+    elif data.cmdType == 'kick':
+        mlib.kick()
     elif data.cmdType == 'pid':
         for i in vars(data):
             if i in vars(globals):
