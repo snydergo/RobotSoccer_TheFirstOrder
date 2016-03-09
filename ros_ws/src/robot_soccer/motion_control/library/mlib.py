@@ -20,9 +20,9 @@ addr2 = 0x81
 roboclaw.ForwardM2(addr2,127) # max power
 
 #Set (default) velocity pids
-roboclaw.SetM1VelocityPID(addr1,2,1,.1,131320)
-roboclaw.SetM2VelocityPID(addr1,2,1,.1,112657)
-roboclaw.SetM1VelocityPID(addr2,2,1,.1,131320)
+roboclaw.SetM1VelocityPID(addr1,1,.5,.1,180000)
+roboclaw.SetM2VelocityPID(addr1,1,.5,.1,180000)
+roboclaw.SetM1VelocityPID(addr2,1,.5,.1,180000)
 
 class e_type(Enum):
 	motorNumOff = 1
