@@ -228,8 +228,8 @@ def stop():
 def kick():
 	roboclaw.ForwardM2(addr2,0) # max power
 	time.sleep(.1)
-	roboclaw.ForwardM2(addr2,127)
-	return
+	return roboclaw.ForwardM2(addr2,127)
+	
 
 #def SetMVelocityPID(address,p,i,d,qpps):
 
