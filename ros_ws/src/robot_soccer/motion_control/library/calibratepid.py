@@ -51,7 +51,7 @@ def calibrate():
   speedM3Forward=0
   speedM3Backward=0
 
-  speed = 48
+  speed = 50
 
   mlib.stop();
 

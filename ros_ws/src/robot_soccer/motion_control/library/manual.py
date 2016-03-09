@@ -28,6 +28,8 @@ def get_action():
         return 'SPEED_INC'
     elif pressed == 'k':
         return 'KILL'
+    elif pressed == 'f':
+        return 'KICK'
 
 def main():
     #default speed
@@ -57,6 +59,8 @@ def main():
             print("Speed: ",speed)
         elif action == 'KILL':
             return
+        elif action == 'KICK':
+            mlib.kick()
 
     return
 

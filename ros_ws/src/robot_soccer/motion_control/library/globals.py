@@ -1,10 +1,10 @@
-kp_x   = .02
+kp_x   = .03
 ki_x   = 0.00
 kd_x   = .000
-kp_y   = .02
+kp_y   = .03
 ki_y   = 0.00
 kd_y   = .000
-kp_theta  = .00
+kp_theta  = .005
 ki_theta  = 0.000
 kd_theta  = .000
 loop_rate = 10 # Hz (get value from publisher)

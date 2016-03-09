@@ -16,11 +16,13 @@ roboclaw.Open("/dev/ttySAC0",38400)
 
 addr1 = 0x80
 addr2 = 0x81
+# Hold the kicker back
+roboclaw.ForwardM2(addr2,127) # max power
 
 #Set (default) velocity pids
-# roboclaw.SetM1VelocityPID(addr1,2,1,.1,180000)
-# roboclaw.SetM2VelocityPID(addr1,2,1,.1,180000)
-# roboclaw.SetM1VelocityPID(addr2,2,1,.1,180000)
+roboclaw.SetM1VelocityPID(addr1,1,.5,.1,180000)
+roboclaw.SetM2VelocityPID(addr1,1,.5,.1,180000)
+roboclaw.SetM1VelocityPID(addr2,1,.5,.1,180000)
 
 class e_type(Enum):
 	motorNumOff = 1
@@ -221,6 +223,13 @@ def stop():
 	for m in motors:
 		ForwardBackM(m,0)
 	return
+
+# Since we are using the roboclaw to source enough voltage for the kicker, we are using a roboclaw command to kick it
+def kick():
+	roboclaw.ForwardM2(addr2,0) # max power
+	time.sleep(.1)
+	return roboclaw.ForwardM2(addr2,127)
+	
 
 #def SetMVelocityPID(address,p,i,d,qpps):
 
