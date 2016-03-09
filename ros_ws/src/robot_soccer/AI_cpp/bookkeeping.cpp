@@ -4,7 +4,7 @@
 Point center(0,0);
 Point enemyGoal(GOAL_XLOCATION,0);
 Point allyGoal(-GOAL_XLOCATION,0);
-Point start1Location(0,0);
+Point start1Location = allyGoal;
 FieldCoord field;
 
 //## VISION DATA ##//
@@ -17,6 +17,9 @@ bool sendCmd_Rob2(false);
 robot_soccer::controldata cmdRob1;
 robot_soccer::controldata cmdRob2;
 
+//## DEBUG DATA ##//
+bool newDebugCmd = false;
+robot_soccer::controldata debugCmd;
 
 //#### FIELDGET FUNCTIONS ####//
 FieldObject* fieldget::getBall(){

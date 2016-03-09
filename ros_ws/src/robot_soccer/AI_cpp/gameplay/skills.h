@@ -1,6 +1,8 @@
 #ifndef SKILL_H_
 #define SKILL_H_
-
+#include <cstdio>
+#include <iostream>
+#include <stdlib.h>
 #include "utilities.h"
 #include "../types.h"
 

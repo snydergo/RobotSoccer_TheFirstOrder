@@ -29,6 +29,10 @@ extern bool sendCmd_Rob2;
 extern robot_soccer::controldata cmdRob1;
 extern robot_soccer::controldata cmdRob2;
 
+//debug globals
+extern bool newDebugCmd;
+extern robot_soccer::controldata debugCmd;
+
 //functions
 namespace fieldget {
     FieldObject* getBall();

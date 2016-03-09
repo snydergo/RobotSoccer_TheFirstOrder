@@ -16,7 +16,7 @@ void Skills::idle(){
 }
 
 void Skills::goToPoint(Point point, double dest_theta){
-    std::cout << "Skills::goToPoint" << std::endl;
+    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
     theta_cmd = dest_theta;
     dest = point;
     skill_st = skill_state::gotopoint_st;
@@ -50,7 +50,7 @@ void Skills::continueIdle(){
 }
 
 void Skills::continueGoToPoint(){
-    utils.moveToPoint(*fieldget::getRobot(allyNum),dest,0);
+    utils.moveToPoint(*fieldget::getRobot(allyNum),dest,theta_cmd);
 }
 
 void Skills::continueKick(){

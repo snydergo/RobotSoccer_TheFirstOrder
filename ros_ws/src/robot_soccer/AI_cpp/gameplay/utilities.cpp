@@ -50,7 +50,7 @@ void Utilities::moveToPoint(Robot robot, Point point, double theta){
 
 void Utilities::kick(double power, double theta){
     printf("ball kicked with power %f and angle %f\n", power, theta);
-    //msg.cmdType = kick
+    cmdRob1.cmdType = "kick";
 }
 
 void Utilities::moveToCenter(Robot robot, double theta){
