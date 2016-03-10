@@ -39,8 +39,10 @@ void Strategies::tick()
     //has the robot go to a specified location on map when the game is going to start
     case strategy::start_st:
         std::cout << "Strategies::tick() start_st"<< std::endl;
-        robot1Plays.start();
-        if(bkcalc::atLocation(robot1Plays.allyNum, start1Location)){
+        robot1Plays.start(start1Location);
+        robot2Plays.start(start2Location);
+        if(bkcalc::atLocation(robot1Plays.allyNum, start1Location) /*&&
+                bkcalc::atLocation(robot2Plays.allyNum, start2Location)*/){
             std::cout << "at Start Location" << std::endl;
             strategy_st = startStrategy;
         }
@@ -68,8 +70,7 @@ void Strategies::tick()
             strategy_st = strategy::GPRush_st;
             robot1Plays.rushGoal();
         }
-
-
+        robot2Plays.rushGoal();
 		break;
     case strategy::GPGoalie_st:
         std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
@@ -92,7 +93,7 @@ void Strategies::tick()
 
     //need to tick the play statemachine depending on change that occured
     robot1Plays.tick();
-    //robot2Plays.tick();
+    robot2Plays.tick();
 }
 
 void Strategies::stop()

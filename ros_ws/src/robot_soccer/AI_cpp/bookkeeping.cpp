@@ -5,6 +5,7 @@ Point center(0,0);
 Point enemyGoal(GOAL_XLOCATION,0);
 Point allyGoal(-GOAL_XLOCATION,0);
 Point start1Location = allyGoal;
+Point start2Location(-20,0);
 FieldCoord field;
 
 //## VISION DATA ##//
@@ -188,5 +189,6 @@ bool bkcalc::ballThreat(){
 //       std::cout << "NO THREAT" << std::endl;
 //       return false;
 //   }
-    return (field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0);
+    return ((field.currentStatus.ball.location.x < -90)||
+        (field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0));
 }

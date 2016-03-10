@@ -44,12 +44,18 @@ int main(int argc, char *argv[])
 
 
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
-    //ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
+    ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
     ros::Rate loop_rate(20);
     int count = 0;
 
     bool dataInitialized = false;
-    std::string option(argv[OPTION]);
+    std::string option;
+    try{
+        option = std::string(argv[OPTION]);
+    }catch(...){
+            option = "none";
+    }
+
     //std::string x(argv[XCMD]);
     //std::string y(argv[YCMD]);
     //std::cout << option + " x = " + x + " y = " + y << std::endl;
@@ -135,29 +141,17 @@ int main(int argc, char *argv[])
                         visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;*/
             field.updateStatus(visionStatus_msg);
         }
-
         strategies.tick();
 
-//        int keyVal = 0;//getch();
-//        std::cout << keyVal << std::endl;
-//        if (keyVal == 0x72) {// r
-//            std::cout << "r pressed" << std::endl;
-//            play.rushGoal();
-//        } else if (keyVal == 0x67) { // g
-//            std::cout << "g pressed" << std::endl;
-//            play.playGoalie();
-//        }
-//        play.tick();
-
-
-//        skill1.goToPoint(Point(0,0), 0);
-//        skill1.tick();
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
             checkCmd(cmdRob1);
             robo1Com.publish(cmdRob1);
-            //checkCmd(cmdRob2);
-            //robo2Com.publish(cmdRob2);
+        }
+        if (sendCmd_Rob2){
+            sendCmd_Rob2 = false;
+            checkCmd(cmdRob2);
+            robo2Com.publish(cmdRob2);
         }
 
         ros::spinOnce();

@@ -19,14 +19,14 @@ class Utilities
 
 
     void rotate(double angle);
-    void init();
-    void idle();
+    void init(Robot robot);
+    void idle(Robot robot);
     void move(Robot robot, Point dir, double des_theta);
     void moveToPoint(Robot robot, Point point, double theta);
-    void kick(double power, double theta);
+    void kick(Robot robot);
     void moveToCenter(Robot robot, double theta);
     void followBall(FieldObject ball, Robot robot, double theta);
-    void dribble();
+    void dribble(Robot robot);
  private:
     robotType type;
 };

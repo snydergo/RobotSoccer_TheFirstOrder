@@ -20,6 +20,7 @@ extern Point center;
 extern Point enemyGoal;
 extern Point allyGoal;
 extern Point start1Location;
+extern Point start2Location;
 extern bool visionUpdated;
 extern GameStatus visionStatus_msg;
 
