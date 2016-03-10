@@ -32,8 +32,8 @@ include_directories( include
 
 catkin_install_python(PROGRAMS
 motion_control/library/subscriber_CtrlMsg.py
+motion_control/library/manual.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
-
 
 add_definitions(-std=c++11)
 find_package( OpenCV REQUIRED )

@@ -51,7 +51,6 @@ y_g     = ControlVar()
 theta_g = ControlVar()
 # P       = Param()
 
-
 def robot_ctrl(message):
     x       = message.x
     y       = message.y 
@@ -59,25 +58,32 @@ def robot_ctrl(message):
 
     x_cmd       = message.x_cmd
     y_cmd       = message.y_cmd
-    theta_cmd   = message.theta_cmd
+
+    angle = theta - message.theta_cmd
+    if angle < -180:
+	angle = -(360 - abs(angle))
+    elif angle > 180:
+	angle = 360 - angle
+    else:
+	angle = -angle
+
+    theta_cmd = angle + theta
     
-    xy_limit = 0.4
-    th_limit = 5
     # compute the desired angled angle using the outer loop control
-    vx  = PID(x_cmd,x,x_g,globals.kp_x,globals.ki_x,globals.kd_x,xy_limit,globals.Ts,globals.tau)
-    vy  = PID(y_cmd,y,y_g,globals.kp_y,globals.ki_y,globals.kd_y,xy_limit,globals.Ts,globals.tau)
-    vth = PID(theta_cmd,theta,theta_g,globals.kp_theta,globals.ki_theta,globals.kd_theta,th_limit,globals.Ts,globals.tau)
+    vx  = PID(x_cmd,x,x_g,globals.kp_x,globals.ki_x,globals.kd_x,globals.xy_limit,globals.Ts,globals.tau,globals.xy_thresh)
+    vy  = PID(y_cmd,y,y_g,globals.kp_y,globals.ki_y,globals.kd_y,globals.xy_limit,globals.Ts,globals.tau,globals.xy_thresh)
+    vth = PID(theta_cmd,theta,theta_g,globals.kp_theta,globals.ki_theta,globals.kd_theta,globals.th_limit,globals.Ts,globals.tau,globals.theta_thresh)
 
     return vx, vy, vth
 
-threshold = 4
+
 # PID control for position
-def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau):
+def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     # compute the error
     error = cmd_pos - pos
-    if abs(error) < threshold:
+    if abs(error) < thresh:
         error = 0
-    print("Error: " + str(error))
+   # print("Error: " + str(error))
     
     # update derivative of z
     ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos)
