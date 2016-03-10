@@ -75,8 +75,43 @@ vision/robot_vision/config.cpp
 add_dependencies(RobotVision robot_soccer_generate_messages_cpp  ${catkin_EXPORTED_TARGETS})
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 target_link_libraries( RobotVision ${catkin_LIBRARIES})
-include_directories(~/ecen490/imports/rapidjson/include)
+include_directories(../../../imports/rapidjson/include)
 
+add_executable( debug
+AI_cpp/debug/publisher_debugmsg.h
+AI_cpp/debug/publisher_debugmsg.cpp
+AI_cpp/visiondata/subscriber_visionmsg.h
+AI_cpp/visiondata/subscriber_visionmsg.cpp
+AI_cpp/ctrldata/publisher_ctrlmsg.h
+AI_cpp/ctrldata/publisher_ctrlmsg.cpp
+AI_cpp/bookkeeping.h
+AI_cpp/bookkeeping.cpp
+AI_cpp/types.h
+AI_cpp/exceptionAI.h
+AI_cpp/exceptionAI.cpp
+AI_cpp/mathfunctions.h
+AI_cpp/mathfunctions.cpp
+AI_cpp/dataclasses/gamestatus.h
+AI_cpp/dataclasses/gamestatus.cpp
+AI_cpp/dataclasses/point.h
+AI_cpp/dataclasses/point.cpp
+AI_cpp/dataclasses/robot.h
+AI_cpp/dataclasses/robot.cpp
+AI_cpp/dataclasses/fieldobject.h
+AI_cpp/dataclasses/fieldobject.cpp
+AI_cpp/gameplay/fieldcoord.h
+AI_cpp/gameplay/fieldcoord.cpp
+AI_cpp/gameplay/utilities.h
+AI_cpp/gameplay/utilities.cpp
+AI_cpp/gameplay/skills.h
+AI_cpp/gameplay/skills.cpp
+AI_cpp/gameplay/strategy.h
+AI_cpp/gameplay/strategy.cpp
+AI_cpp/gameplay/plays.h
+AI_cpp/gameplay/plays.cpp
+)
+add_dependencies(debug robot_soccer_generate_messages_cpp  ${catkin_EXPORTED_TARGETS})
+target_link_libraries( debug ${catkin_LIBRARIES})
 
 add_executable( MainControl 
 AI_cpp/maincontrol.cpp
@@ -84,6 +119,8 @@ AI_cpp/visiondata/subscriber_visionmsg.h
 AI_cpp/visiondata/subscriber_visionmsg.cpp
 AI_cpp/ctrldata/publisher_ctrlmsg.h
 AI_cpp/ctrldata/publisher_ctrlmsg.cpp
+AI_cpp/debug/subscriber_debugmsg.cpp
+AI_cpp/debug/subscriber_debugmsg.h
 AI_cpp/bookkeeping.h
 AI_cpp/bookkeeping.cpp
 AI_cpp/types.h

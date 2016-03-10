@@ -6,7 +6,7 @@
             "fieldCenterY_pixel": 224,
             "referenceDistance_cm": 152.4,
             "referenceDistance_pixel": 276,
-            "invertDirectionX": true,
+            "invertDirectionX": false,
             "trackRobot" : true
         },
         "crop": {
@@ -21,7 +21,7 @@
         },
         "teamRobots": {
             "count": 1,
-            "color": "green",
+            "color": "purple",
             "large_area": 450,
             "small_area": 280
         },
