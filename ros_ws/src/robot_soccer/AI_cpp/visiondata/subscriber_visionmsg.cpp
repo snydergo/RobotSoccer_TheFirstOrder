@@ -90,8 +90,5 @@ void closeFilterStreams(){
 
 void visionCallback(const robot_soccer::visiondata& msg){
     visionStatus_msg = msg;
-    //setupFilterStreams();
-    //filter(visionStatus_msg);
-    //closeFilterStreams();
     visionUpdated = true;
 }
