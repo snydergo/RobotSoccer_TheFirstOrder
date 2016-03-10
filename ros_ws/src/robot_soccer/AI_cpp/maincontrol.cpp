@@ -33,35 +33,30 @@ int getch()
 int main(int argc, char *argv[])
 {
     //need to perform all necessary inits
-    //SUBSCRIBER FROM VISION
-    ros::init(argc, argv, "visiondata_sub");
-    ros::init(argc, argv, "debug_sub");
-    ros::NodeHandle n;
-    ros::Subscriber vision_subscriber = n.subscribe("vision_data", 1000, visionCallback);
-    ros::Subscriber debug_subscriber = n.subscribe("debug", 1000, debugCallback);
-    //PUBLISHER FOR MOTIONCONTROL
     ros::init(argc, argv, "mainhub");
+    ros::NodeHandle n;
+
+    //SUBSCRIBER FROM VISION
+    ros::Subscriber vision_subscriber = n.subscribe("vision_data", 1000, visionCallback);
+    (void*)vision_subscriber;
+
+    //PUBLISHER FOR MOTIONCONTROL
+
+
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
     //ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
     ros::Rate loop_rate(50);
     int count = 0;
 
-//    //strategies STATEMACHINE
-    Strategies strategies;
-    strategies.init();
     bool dataInitialized = false;
-//    Plays play(robotType::ally1);
-//    play.init();
-//    play.start();
-//    Skills skill2(robotType::ally2);
-//    skill2.init();
     std::string option(argv[OPTION]);
     //std::string x(argv[XCMD]);
     //std::string y(argv[YCMD]);
     //std::cout << option + " x = " + x + " y = " + y << std::endl;
-    system("PAUSE");
     ///### DEBUG OPTION ###///
     if (option.compare("debug") == 0){
+        ros::Subscriber debug_subscriber = n.subscribe("debug", 1000, debugCallback);
+        (void*)debug_subscriber;
         Skills skill1(robotType::ally1);
         skill1.init();
         Point dest;
@@ -72,36 +67,38 @@ int main(int argc, char *argv[])
                 dataInitialized = true;
                 field.updateStatus(visionStatus_msg);
             }
-            if(newDebugCmd){
+            if (newDebugCmd) {
                     newDebugCmd = false;
                     cmdRob1.cmdType = debugCmd.cmdType;
                     cmdRob1.x_cmd = debugCmd.x_cmd;
                     cmdRob1.y_cmd = debugCmd.y_cmd;
                     cmdRob1.theta_cmd = debugCmd.theta_cmd;
 
-                if(cmdRob1.cmdType.compare("move") == 0){
+                if (cmdRob1.cmdType.compare("move") == 0) {
                     dest = Point(cmdRob1.y_cmd,cmdRob1.y_cmd);
-                    if(!bkcalc::atLocation(robotType::ally1, dest)){
+                    if (!bkcalc::atLocation(robotType::ally1, dest)) {
                         skill1.goToPoint(dest, cmdRob1.theta_cmd);
-                    }else
+                    } else
                         skill1.idle();
-                }else if(cmdRob1.cmdType.compare("kick") == 0){
+                } else if (cmdRob1.cmdType.compare("kick") == 0) {
                     kickball = true;
                     skill1.kick();
-                }else
+                } else {
                     skill1.idle();
+                }
             }
 
             /*if(cmdRob1.cmdType.compare("move") == 0 && bkcalc::atLocation(robotType::ally1, dest) ||
                     cmdRob1.cmdType.compare("kick") == 0 && !kickball){
                 skill1.idle();
             }*/
-            std::cout << "tick\n";
             skill1.tick();
             if (sendCmd_Rob1) {
                 sendCmd_Rob1 = false;
                 checkCmd(cmdRob1);
+                std::cout << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd << " w: " << cmdRob1.theta_cmd << std::endl;
                 robo1Com.publish(cmdRob1);
+
             }
             ros::spinOnce();
 
@@ -111,6 +108,16 @@ int main(int argc, char *argv[])
     }
 
     ///### NORMAL MAINCONTROL ###///
+
+    //    //strategies STATEMACHINE
+        Strategies strategies;
+        strategies.init();
+
+    //    Plays play(robotType::ally1);
+    //    play.init();
+    //    play.start();
+    //    Skills skill2(robotType::ally2);
+    //    skill2.init();
     while (ros::ok())
     {
 
