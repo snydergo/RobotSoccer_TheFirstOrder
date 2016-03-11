@@ -11,8 +11,8 @@ kp_theta = 0.01
 ki_theta = 0.00
 kd_theta = 0.00
 
-xy_limit	 = 1 #0.5
-th_limit	 = 0.75 #5
+xy_limit	 = 0.5 #0.5
+th_limit	 = 0.25 #5
 
 xy_thresh	 = 5
 theta_thresh = 5
