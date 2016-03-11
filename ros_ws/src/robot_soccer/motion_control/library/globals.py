@@ -7,12 +7,12 @@ kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
-kp_theta = 0.15
+kp_theta = 0.10
 ki_theta = 0.00
 kd_theta = 0.00
 
-xy_limit	 = 0.25 #0.5
-th_limit	 = 0.125 #5
+xy_limit	 = 0.3 #0.5
+th_limit	 = 0.15 #5
 
 xy_thresh	 = 5
 theta_thresh = 5
