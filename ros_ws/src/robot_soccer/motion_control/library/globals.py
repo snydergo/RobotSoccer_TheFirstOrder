@@ -3,11 +3,11 @@ from numpy import matlib
 
 kp_x	 = 0.25
 ki_x	 = 0.125
-kd_x	 = 0.0625
+kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
-kp_theta = 0.3
+kp_theta = 0.15
 ki_theta = 0.00
 kd_theta = 0.00
 
