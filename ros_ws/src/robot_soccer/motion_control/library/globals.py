@@ -12,7 +12,7 @@ ki_theta = 0.00
 kd_theta = 0.00
 
 xy_limit	 = 0.3 #0.5
-th_limit	 = 0.15 #5
+th_limit	 = 0.2 #5
 
 xy_thresh	 = 5
 theta_thresh = 5
