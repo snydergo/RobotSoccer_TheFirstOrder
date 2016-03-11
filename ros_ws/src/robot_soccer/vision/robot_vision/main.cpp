@@ -26,6 +26,7 @@ void loadConfigData(int argc, char** argv);
 vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace& colorSegment);
 Point2f trasformCameraFrameToWorldFrame(const Point2f point);
 Point2f transformWorldFrametoCameraFrame(const Point2f point);
+vector<UndefinedCVObject> getCVObjects(vector<cv::Moments> moments);
 
 Mat frame;
 mutex frameMtx;
@@ -40,6 +41,7 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
     Ball ball(config::ballArea);
+    Robot robotAlly1;
     
     Point2f lastPos;
 
@@ -73,15 +75,12 @@ int main(int argc, char** argv)
 
         /// find our robots
         vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::teamRobotPrimaryColor);
+
         for (auto m: teamMoments) {
             circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
         }
 
-        vector<UndefinedCVObject> uObjects;
-        for (int i = 0; i < teamMoments.size(); i+=2) {
-            UndefinedCVObject obj(teamMoments[i]);
-            uObjects.push_back(obj);
-        }
+        vector<UndefinedCVObject> uObjects = getCVObjects(teamMoments);
         //find the ball
         vector<cv::Moments> balls = locateCvObjects(frameHSV, config::ballColor);
 
@@ -93,6 +92,7 @@ int main(int argc, char** argv)
         }
 
         ball.find(ballObjects);
+        robotAlly1.find(uObjects);
 
         Moments rear;
         Moments front;
@@ -156,6 +156,17 @@ int main(int argc, char** argv)
     
     return 0;
 }
+
+vector<UndefinedCVObject> getCVObjects(vector<cv::Moments> moments)
+{
+    vector<UndefinedCVObject> retObjs;
+    for (int i = 0; i < moments.size(); i+=2) {
+        UndefinedCVObject obj(moments[i]);
+        retObjs.push_back(obj);
+    }
+    return retObjs;
+}
+
 
 void listenCameraFeed()
 {
