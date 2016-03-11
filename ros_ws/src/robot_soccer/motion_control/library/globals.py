@@ -9,6 +9,7 @@ ki_y	 = ki_x
 kd_y	 = kd_x
 kp_theta = 0.02
 ki_theta = 0.00
+kd_theta = 0.00
 
 xy_limit	 = 0.3 #0.5
 th_limit	 = 0.2 #5
