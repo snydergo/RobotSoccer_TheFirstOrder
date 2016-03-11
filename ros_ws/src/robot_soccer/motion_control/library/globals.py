@@ -3,7 +3,7 @@ from numpy import matlib
 
 kp_x	 = 0.02
 ki_x	 = 0.00
-kd_x	 = 0.02
+kd_x	 = 0.005
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
