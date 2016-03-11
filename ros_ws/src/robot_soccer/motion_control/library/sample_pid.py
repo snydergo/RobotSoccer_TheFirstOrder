@@ -83,7 +83,7 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     error = cmd_pos - pos
     if abs(error) < thresh:
         error = 0
-   # print("Error: " + str(error))
+    print("Error: " + str(error))
     
     # update derivative of z
     ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos)
