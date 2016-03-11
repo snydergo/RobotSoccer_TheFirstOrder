@@ -6,7 +6,7 @@ enum class skill_state {idle_st, gotopoint_st, kick_st,
 
 void Skills::init(){
     skill_st = skill_state::idle_st;
-    utils.init();
+    utils.init(*fieldget::getRobot(allyNum));
     dest = allyGoal;
 }
 
@@ -46,7 +46,7 @@ void Skills::aim(){
 //### FUNCTIONS THAT USE UTILITIES ###//
 
 void Skills::continueIdle(){
-    utils.idle();
+    utils.idle(*fieldget::getRobot(allyNum));
 }
 
 void Skills::continueGoToPoint(){
@@ -54,7 +54,7 @@ void Skills::continueGoToPoint(){
 }
 
 void Skills::continueKick(){
-    utils.kick(1,0);
+    utils.kick(*fieldget::getRobot(allyNum));
 }
 
 //needs to be changed so it goes around ball to get to desired position
@@ -67,7 +67,7 @@ void Skills::continueFetchBall(){
 }
 
 void Skills::continueDribble(){
-    utils.dribble();
+    utils.dribble(*fieldget::getRobot(allyNum));
 }
 
 //function used for aiming. makes sure that the angle between the robot and the goal and

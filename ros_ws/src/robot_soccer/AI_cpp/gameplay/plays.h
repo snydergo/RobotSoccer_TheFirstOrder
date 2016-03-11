@@ -22,7 +22,7 @@ public:
     void idle();
     void tick();
     void init();
-    void start();
+    void start(Point startLoc);
     robotType allyNum;
 };
 

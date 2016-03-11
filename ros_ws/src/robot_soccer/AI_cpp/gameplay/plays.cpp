@@ -10,7 +10,7 @@ enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
 //variable that is used for Kicking
 //Kick Point
 Point kp = center;
-
+Point startLocation = center;
 //performs all of the necessary inits and calls skills init
 void Plays::init(){
     play_st = play_state::idle_st;
@@ -19,7 +19,8 @@ void Plays::init(){
 }
 
 //###FUNCTIONS THAT ARE USED OUTSIDE TO SET WHICH PLAY TO PERFORM.###//
-void Plays::start(){
+void Plays::start(Point startLoc){
+    startLocation = startLoc;
     play_st = play_state::start_st;
 }
 
@@ -53,7 +54,7 @@ void Plays::tick(){
                 break;
             case play_state::start_st:
                 std::cout << "Plays::tick() start_st"<< std::endl;
-                skill.goToPoint(start1Location, 0);
+                skill.goToPoint(startLocation, 0);
                 break;
             //## RUSH GOAL PLAY ##//
             case play_state::rushgoal_st:

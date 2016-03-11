@@ -2,7 +2,7 @@
 #define TYPES_H
 
 //## FIELD PARAMETERS ##//
-#define GOAL_XLOCATION 160
+#define GOAL_XLOCATION 130 //160 real 130 gazebo
 #define GOAL_WIDTH 60
 #define GOAL_RADIUS GOAL_WIDTH/2
 #define GOAL_ANGLE_ERR 10
@@ -14,7 +14,7 @@
 #define ANGLE_ERR 10
 #define DISTANCE_ERR 25 // this is an error of 5cm
 #define PERIMETER_ERR 124
-#define KICK_FACTOR 2
+#define KICK_FACTOR 3
 #define BALLFETCHED_ERR 35
 #define FETCHBALL_OFFSET 20
 
