@@ -40,6 +40,8 @@ def callback1(data):
             mlib.stop()
     elif data.cmdType == 'kick':
         mlib.kick()
+    elif data.cmdType == 'idle':
+	mlib.stop()
     elif data.cmdType == 'pid':
         for i in vars(data):
             if i in vars(globals):
