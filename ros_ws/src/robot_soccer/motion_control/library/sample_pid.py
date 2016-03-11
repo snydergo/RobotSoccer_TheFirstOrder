@@ -45,7 +45,7 @@ class ControlVar:
 #         a2      = 2/(2*self.tau+self.camera_sample_rate)
 
 
-loop_rate = 50 # Hz (get value from publisher)
+#loop_rate = 50 # Hz (get value from publisher)
 x_g     = ControlVar()
 y_g     = ControlVar()
 theta_g = ControlVar()
