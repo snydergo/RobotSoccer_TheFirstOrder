@@ -2,7 +2,7 @@ import numpy as np
 from numpy import matlib
 
 kp_x	 = 0.25
-ki_x	 = 0.125
+ki_x	 = 0.0
 kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
