@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import matlib
 
-kp_x	 = 0.03
+kp_x	 = 0.05
 ki_x	 = 0.002
 kd_x	 = 0.005
 kp_y	 = kp_x
@@ -11,7 +11,7 @@ kp_theta = 0.02
 ki_theta = 0.00
 kd_theta = 0.00
 
-xy_limit	 = 0.3 #0.5
+xy_limit	 = 0.5 #0.5
 th_limit	 = 0.2 #5
 
 xy_thresh	 = 5
