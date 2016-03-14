@@ -25,8 +25,6 @@ double calc::angleDifference(double currentTheta, double desiredTheta){
     } else {
         angle = -angle;
     }
-    if(angle > 180)
-        angle -= 360;
 
     return angle;
 }

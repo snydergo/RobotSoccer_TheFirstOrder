@@ -10,6 +10,9 @@ std::string ExceptionAI::toString(){
             break;
         case errtype::senddata:
             break;
+        case errtype::outofbounds:
+            return "Point is out of Bounds\n";
+            break;
         default:
             break;
     }
