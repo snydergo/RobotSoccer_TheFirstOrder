@@ -21,7 +21,10 @@ extern Point enemyGoal;
 extern Point allyGoal;
 extern Point start1Location;
 extern Point start2Location;
+
+//vision globals
 extern bool visionUpdated;
+extern robot_soccer::visiondata vision_msg;
 extern GameStatus visionStatus_msg;
 
 //cmd globals
@@ -33,6 +36,11 @@ extern robot_soccer::controldata cmdRob2;
 //debug globals
 extern bool newDebugCmd;
 extern robot_soccer::controldata debugCmd;
+
+//filter globals
+extern GameStatus predicted;
+extern GameStatus predictedPositions_msg;
+extern bool predictedUpdated;
 
 //functions
 namespace fieldget {

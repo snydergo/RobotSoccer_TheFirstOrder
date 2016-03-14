@@ -8,8 +8,10 @@ Point start1Location = allyGoal;
 Point start2Location(-20,0);
 FieldCoord field;
 
+
 //## VISION DATA ##//
 bool visionUpdated;
+robot_soccer::visiondata vision_msg;
 GameStatus visionStatus_msg;
 
 //## CONTROL DATA ##//
@@ -21,6 +23,11 @@ robot_soccer::controldata cmdRob2;
 //## DEBUG DATA ##//
 bool newDebugCmd = false;
 robot_soccer::controldata debugCmd;
+
+
+//## FILTER DATA ##//
+GameStatus predicted;
+bool predictedUpdated(false);
 
 //#### FIELDGET FUNCTIONS ####//
 FieldObject* fieldget::getBall(){
