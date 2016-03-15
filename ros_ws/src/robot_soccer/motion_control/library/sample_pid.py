@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import matlib
 from numpy import matrix
-import globals_matt as globals
+import globals_troy as globals
 
 class ControlVar:
     def __init__(self):
