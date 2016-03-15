@@ -1,6 +1,11 @@
 #ifndef EXCEPTIONAI_H
 #define EXCEPTIONAI_H
-
+/* ---------------------------------------------------------------------------
+** exceptionai.h
+** Contains exceptions that can be thrown when robot is out of boundaries and etc
+**
+** Author: Glade Snyder
+** -------------------------------------------------------------------------*/
 #include <string>
 #include <cstddef>
 

@@ -1,6 +1,11 @@
 #ifndef TYPES_H
 #define TYPES_H
-
+/* ---------------------------------------------------------------------------
+** getFilteredData.h
+** Contains all of the #defines that are used for thresholding, clocks and etc
+**
+** Author: Glade Snyder
+** -------------------------------------------------------------------------*/
 //## FIELD PARAMETERS ##//
 #define GOAL_XLOCATION 150 //160 real 130 gazebo
 #define GOAL_WIDTH 60

@@ -9,6 +9,7 @@
 #include "gameplay/strategy.h"
 #include "types.h"
 #include "termios.h"
+
 #define OPTION 1
 #define XCMD 2
 #define YCMD 3
@@ -16,21 +17,6 @@
 
 void checkCmd(robot_soccer::controldata &cmdRob1);
 void debugOption();
-
-// non blocking character acqusition
-int getch()
-{
-  static struct termios oldt, newt;
-  tcgetattr( STDIN_FILENO, &oldt);           // save old settings
-  newt = oldt;
-  newt.c_lflag &= ~(ICANON);                 // disable buffering
-  tcsetattr( STDIN_FILENO, TCSANOW, &newt);  // apply new settings
-
-  int c = getchar();  // read character (non-blocking)
-
-  tcsetattr( STDIN_FILENO, TCSANOW, &oldt);  // restore old settings
-  return c;
-}
 
 int main(int argc, char *argv[])
 {
@@ -43,8 +29,6 @@ int main(int argc, char *argv[])
     (void*)vision_subscriber;
 
     //PUBLISHER FOR MOTIONCONTROL
-
-
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
     ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
     ros::Rate loop_rate(TICKS_PER_SEC);
@@ -57,7 +41,7 @@ int main(int argc, char *argv[])
     }catch(...){
             option = "none";
     }
-
+    
     //std::string x(argv[XCMD]);
     //std::string y(argv[YCMD]);
     //std::cout << option + " x = " + x + " y = " + y << std::endl;
@@ -113,6 +97,7 @@ int main(int argc, char *argv[])
             loop_rate.sleep();
         }
         return 0;
+    //### FILTER TEST OPTION ###//
     }else if(option == "filter"){
         ros::Subscriber filter_subscriber = n.subscribe("outputfilter", 1000, filterCallback);
         ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 1000);
@@ -136,7 +121,11 @@ int main(int argc, char *argv[])
 
     ///### NORMAL MAINCONTROL ###///
 
+<<<<<<< HEAD
 //strategies STATEMACHINE
+=======
+    //strategies STATEMACHINE
+>>>>>>> 7b2d72e9d000d4a617b5e28913a42e2ec6cb295a
     Strategies strategies;
     strategies.init();
     while (ros::ok())

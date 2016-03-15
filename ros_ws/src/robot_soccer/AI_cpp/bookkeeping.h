@@ -1,5 +1,11 @@
 #pragma once
-
+/* ---------------------------------------------------------------------------
+** bookkeeping.h
+** contains globals for the entire game. Also wrapper functions for the
+** mathfunctions file and uses the actual robots at play and being tested
+**
+** Author: Glade Snyder
+** -------------------------------------------------------------------------*/
 #include "gameplay/fieldcoord.h"
 #include "robot_soccer/controldata.h"
 #include "robot_soccer/visiondata.h"

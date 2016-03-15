@@ -1,6 +1,13 @@
 #ifndef MATHFUNCTIONS_H
 #define MATHFUNCTIONS_H
-
+/* ---------------------------------------------------------------------------
+** mathfunctions.h
+** contains needed calculatiosn for threshold functions where decisions are
+** made whether a ball is kicked robot is in location and etc. It alco contains
+** all of the necessary supporting vector and trig calcuations 
+**
+** Author: Glade Snyder
+** -------------------------------------------------------------------------*/
 #include "types.h"
 #include "dataclasses/point.h"
 #include "dataclasses/robot.h"
