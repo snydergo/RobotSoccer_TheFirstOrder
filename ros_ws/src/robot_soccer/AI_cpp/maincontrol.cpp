@@ -121,11 +121,7 @@ int main(int argc, char *argv[])
 
     ///### NORMAL MAINCONTROL ###///
 
-<<<<<<< HEAD
 //strategies STATEMACHINE
-=======
-    //strategies STATEMACHINE
->>>>>>> 7b2d72e9d000d4a617b5e28913a42e2ec6cb295a
     Strategies strategies;
     strategies.init();
     while (ros::ok())
