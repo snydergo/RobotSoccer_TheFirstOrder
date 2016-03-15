@@ -11,11 +11,11 @@ kp_theta = .008#0.013
 ki_theta = 0.00
 kd_theta = 0.00
 
-xy_limit	 = 100#.4
-th_limit	 = 100#0.2 #5
+xy_limit	 = 1.0#.4
+th_limit	 = 50#0.2 #5
 
 xy_thresh	 = 0#5
-theta_thresh = 0#5
+theta_thresh = 5#5
 
 loop_rate = 20 # Hz (get value from publisher)
 Ts     = 1.00/loop_rate
