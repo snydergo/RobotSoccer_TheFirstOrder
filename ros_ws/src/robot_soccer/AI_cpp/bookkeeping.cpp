@@ -4,8 +4,8 @@
 Point center(0,0);
 Point enemyGoal(GOAL_XLOCATION,0);
 Point allyGoal(-GOAL_XLOCATION,0);
-Point start1Location = allyGoal;
-Point start2Location(-20,0);
+Point start1Location(-40,0);
+Point start2Location(-40,0);// = center;
 FieldCoord field;
 
 
@@ -120,9 +120,11 @@ bool bkcalc::ballKickZone(robotType type){
     Point ball = field.currentStatus.ball.location;
     switch(type){
         case robotType::ally1:
+            std::cout << "ballkickZone::ally1" << std::endl;
             ballkickZone = calc::withinPerimeter(field.currentStatus.ally1.location, ball);
             break;
         case robotType::ally2:
+            std::cout << "ballkickZone::ally2" << std::endl;
             ballkickZone = calc::withinPerimeter(field.currentStatus.ally2.location, ball);
             break;
         default:

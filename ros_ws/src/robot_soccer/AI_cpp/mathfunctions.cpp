@@ -73,9 +73,13 @@ double calc::getVectorAngle(Point vector){
 //####PLAY THRESHOLD FUNCTIONS####//
 bool calc::atLocation(Point robot, Point point){
     if(robot.x != robot.x && robot.y != robot.y){return false;}
+    std::cout << "point.x == " << std::to_string(point.x) << std::endl;
+    std::cout << "robot.x == " << std::to_string(robot.x) << std::endl;
     double xValues = robot.x-point.x;
+    std::cout << "xValues == " << std::to_string(xValues) << std::endl;
     xValues *= xValues;
     double yValues = robot.y-point.y;
+    std::cout << "yValues == " << std::to_string(yValues) << std::endl;
     yValues *= yValues;
     double distance_sqrd = xValues+yValues;
     std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
@@ -87,9 +91,13 @@ bool calc::atLocation(Point robot, Point point){
 
 bool calc::withinPerimeter(Point robot, Point ball){
     if(robot.x != robot.x || robot.y != robot.y){return false;}
+    std::cout << "point.x == " << std::to_string(ball.x) << std::endl;
+    std::cout << "robot.x == " << std::to_string(robot.x) << std::endl;
     double xValues = robot.x-ball.x;
+    std::cout << "xValues == " << std::to_string(xValues) << std::endl;
     xValues *= xValues;
     double yValues = robot.y-ball.y;
+    std::cout << "yValues == " << std::to_string(yValues) << std::endl;
     yValues *= yValues;
     double perimeter = xValues+yValues;
     std::cout << "perimeter == " << perimeter << std::endl;

@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
     ///### NORMAL MAINCONTROL ###///
 
-    //    //strategies STATEMACHINE
+//strategies STATEMACHINE
     Strategies strategies;
     strategies.init();
     while (ros::ok())
