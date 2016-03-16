@@ -3,7 +3,7 @@ from numpy import matlib
 
 # Troy's values
 
-kp_x	 = 0.20
+kp_x	 = 0.30
 ki_x	 = 0.01
 kd_x	 = 0.0
 kp_y	 = kp_x
@@ -13,11 +13,11 @@ kp_theta = .15#0.013
 ki_theta = 0.00
 kd_theta = 0.00
 
-xy_limit	 = 1.0#.4
-th_limit	 = 50#0.2 #5
+xy_limit	 = 5#.4
+th_limit	 = 5#0.2 #5
 
-xy_thresh	 = 0#5
-theta_thresh = 5#5
+xy_thresh	 = 100#5
+theta_thresh = 100#5
 
 # James' vaules
 
