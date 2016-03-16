@@ -5,6 +5,9 @@
 import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import visiondata
+import globals
+import sample_lpf as lpf 
+from numpy.matlib import matrix
 
 
 global filteredData
@@ -12,7 +15,9 @@ global newData
 newData = False
 
 def filter(raw_data):
-    print raw_data
+    # print raw_data
+    temp = lpf.GamePiece()
+    temp.position = 
     global filteredData
     global newData
     filteredData = raw_data

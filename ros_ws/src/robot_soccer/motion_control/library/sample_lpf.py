@@ -8,13 +8,31 @@ import globals
 # velocity = matlib.zeros(shape=(3,1))
 # old_position_measurement = matlib.zeros(shape=(3,1))
 
-class Ball(object):
+class GamePieces(object):
     def __init__(self):
+        self.op0 = Piece('op0')
+        self.op1 = Piece('op1')
+        self.tm0 = Piece('tm0')
+        self.tm1 = Piece('tm1')
+        self.ball = Piece('ball')
+
+    def update_all(self, vision_msg):
+        idx = {'x':0, 'y':1, 'w':2}
+        for var in vars(vision_msg):
+            name, t = var.split('_')
+            if t in idx:
+                exec("self.{0}.position[idx['{1}']] = vision_msg.{2}".format(name, t, var))
+                
+
+class Piece(object):
+    def __init__(self, name):
+        self.name = ''
         self.position = matlib.zeros(shape=(3,1))
         self.old_position_measurement = matlib.zeros(shape=(3,1))
         self.position_delayed = matlib.zeros(shape=(3,1))
         self.camera_flag = 0
         self.vel = matlib.zeros((3,1))
+
 
 def utility_lpf_ball(ball):
 

@@ -96,3 +96,11 @@ def utility_kalman_filter_ball(ball):
     ball.acceleration = xhat[4:5];
     ball.jerk         = xhat[6:7];
     ball.S            = globals.S_ball;
+
+
+def div0( a, b ):
+    # ignore / 0, div0( [-1, 0, 1], 0 ) -> [0, 0, 0]
+    with np.errstate(divide='ignore', invalid='ignore'):
+        c = np.true_divide( a, b )
+        c[ ~ np.isfinite( c )] = 0  # -inf inf NaN
+    return c

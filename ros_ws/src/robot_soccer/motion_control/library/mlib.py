@@ -17,7 +17,7 @@ roboclaw.Open("/dev/ttySAC0",38400)
 addr1 = 0x80
 addr2 = 0x81
 # Hold the kicker back
-roboclaw.ForwardM2(addr2,127) # max power
+# roboclaw.ForwardM2(addr2,127) # max power
 
 #Set (default) velocity pids
 roboclaw.SetM1VelocityPID(addr1,1,.5,.1,180000)
