@@ -5,7 +5,7 @@ from numpy import matlib
 
 kp_x	 = 0.02
 ki_x	 = 0.001
-kd_x	 = 0.0
+kd_x	 = 0.0001
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
