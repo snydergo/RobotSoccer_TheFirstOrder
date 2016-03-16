@@ -3,16 +3,15 @@
 #include "hsvcolorsubspace.h"
 #include "config.h"
 
-#include "rapidjson/document.h"
-#include "rapidjson/writer.h"
-#include "rapidjson/stringbuffer.h"
-#include "rapidjson/filereadstream.h"
+//#include "rapidjson/document.h"
+//#include "rapidjson/writer.h"
+//#include "rapidjson/stringbuffer.h"
+//#include "rapidjson/filereadstream.h"
 
 #include <iostream>
 #include <stdio.h>
 
 using namespace std;
-using namespace rapidjson;
 
 HsvColorSubSpace getColorSpace(string colorName)
 {
@@ -28,6 +27,45 @@ HsvColorSubSpace getColorSpace(string colorName)
 
 void loadConfigData(int argc, char** argv)
 {
+    config::ballArea = 50;
+    config::ballColor = config::pink;
+    config::allyRobotCount = 1;
+    config::enemyRobotCount = 0;
+    config::cropTop = 0;
+    config::cropBottom = 0;
+    config::cropLeft = 0;
+    config::cropRight = 0;
+    config::trackRobot = false;
+    if (argc == 2) {
+        try {
+            int ip;
+            ip = stoi(argv[1]);
+            if (ip == 78) {
+                cout << "loading camera 192.168.1.78..." << endl;
+                config::cameraUrl = "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg";
+                config::fieldCenter_px = Point2f(449, 224);
+                config::cmPerPixelConversionFactor = 154.2 / 276.0;
+                config::invertX = true; // we are home
+                config::homeIsInverted = true;
+                return;
+            }
+        } catch(...) {}
+    }
+    // default
+    cout << "loading camera 192.168.1.79..." << endl;
+    config::cameraUrl = "http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg";
+    config::fieldCenter_px = Point2f(413, 222);
+    config::cmPerPixelConversionFactor = 100.0 / 179.0;
+    config::invertX = false; // we are home
+    config::homeIsInverted = false;
+    return;
+}
+
+/*
+ * std::string cameraUrl;
+cv::Point2f fieldCenter_px;
+double cmPerPixelConversionFactor;
+bool invertX;
     cout << "loading param file..." << endl;
     FILE* file;
     if (argc == 1) {
@@ -35,7 +73,7 @@ void loadConfigData(int argc, char** argv)
     } else {
         file = fopen(argv[1], "r");
     }
-    
+
     char buffer[65536];
     FileReadStream is(file, buffer, sizeof(buffer));
     Document document;
@@ -51,17 +89,17 @@ void loadConfigData(int argc, char** argv)
 
     config::cmPerPixelConversionFactor = calibrate["referenceDistance_cm"].GetDouble() /
                                          calibrate["referenceDistance_pixel"].GetDouble();
-    
+
     config::invertX = calibrate["invertDirectionX"].GetBool();
     config::trackRobot = calibrate["trackRobot"].GetBool();
-    
+
     Value& crop = root["crop"];
 
     config::cropLeft = crop["left"].GetInt();
     config::cropRight = crop["right"].GetInt();
     config::cropTop = crop["top"].GetInt();
     config::cropBottom = crop["bottom"].GetInt();
-    
+
     Value& ball = root["ball"];
     config::ballArea = ball["area"].GetInt();
     config::ballColor = getColorSpace(ball["color"].GetString());
@@ -71,14 +109,13 @@ void loadConfigData(int argc, char** argv)
     config::teamRobotLargeArea = teamRobot["large_area"].GetInt();
     config::teamRobotSmallArea = teamRobot["small_area"].GetInt();
     config::teamRobotPrimaryColor = getColorSpace(teamRobot["color"].GetString());
-    
+
     Value& opponentRobot = root["opponentRobots"];
     config::opponentRobotCount = opponentRobot["count"].GetInt();
     config::opponentRobotLargeArea = opponentRobot["large_area"].GetInt();
     config::opponentRobotSmallArea = opponentRobot["small_area"].GetInt();
     config::opponentRobotPrimaryColor = getColorSpace(opponentRobot["color"].GetString());
-    
+
     fclose(file);
     cout << "param file successfully loaded" << endl;
-
-}
+*/

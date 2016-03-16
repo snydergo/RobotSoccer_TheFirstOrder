@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "robot_soccer/visiondata.h"
+#include "robot_soccer/gameparam.h"
 
 #include "parameters.h"
 #include "hsvcolorsubspace.h"
@@ -27,9 +28,8 @@ vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace
 Point2f trasformCameraFrameToWorldFrame(const Point2f point);
 Point2f transformWorldFrametoCameraFrame(const Point2f point);
 vector<UndefinedCVObject> getCVObjects(vector<cv::Moments> moments);
+void gameStateCallback(const robot_soccer::gameparam &msg);
 
-Mat frame;
-mutex frameMtx;
 
 
 // takes an optional param file
@@ -40,10 +40,12 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
+    ros::Subscriber gameStateSub = n.subscribe("game_state", 1000, gameStateCallback);
+    (void*)gameStateSub;
     Ball ball(config::ballArea);
     Robot robotAlly1;
     
-    Point2f lastPos;
+//    Point2f lastPos;
 
     VideoCapture camera(config::cameraUrl);
 
@@ -74,7 +76,7 @@ int main(int argc, char** argv)
         cvtColor(frame, frameHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
 
         /// find our robots
-        vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::teamRobotPrimaryColor);
+        vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::allyRobot1Color);
 
         for (auto m: teamMoments) {
             circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
@@ -152,6 +154,7 @@ int main(int argc, char** argv)
         //frame = frame + imgLines;
         imshow("robot view", frame);
         waitKey(1);
+        ros::spinOnce();
     }
     
     return 0;
@@ -166,58 +169,6 @@ vector<UndefinedCVObject> getCVObjects(vector<cv::Moments> moments)
     }
     return retObjs;
 }
-
-
-void listenCameraFeed()
-{
-    VideoCapture camera(config::cameraUrl);
-
-    if (!camera.isOpened()) { // if not success, exit program
-        cout << "Cannot open the web cam" << endl;
-        return;
-    }
-    cout << "starting video feed" << endl;
-    while (ros::ok()) {
-        frameMtx.lock();
-        if (!camera.read(frame)) { //if not success, break loop
-            cout << "Cannot read frame from video stream" << endl;
-            break;
-        }
-        frameMtx.unlock();
-    }
-
-}
-
-void processFrame()
-{
-    while (ros::ok()) {
-        Mat frameHSV;
-        frameMtx.lock();
-        cvtColor(frame, frameHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
-        frameMtx.unlock();
-        /// find our robots
-        vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::teamRobotPrimaryColor);
-        for (auto m: teamMoments) {
-            circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
-        }
-    }
-
-}
-
-void processObjects()
-{
-}
-
-// LPF: Y(n) = Y(n-1) - (ß*(Y(n-1)-X(n)));
-void lowPassFilter(const Point2f &rawData, Point2f &filterData)
-{
-    static const float beta = 0.5;
-    filterData = filterData - (beta * (filterData - rawData));
-}
-
-
-
-
 
 Point2f trasformCameraFrameToWorldFrame(const Point2f point)
 {
@@ -253,39 +204,16 @@ vector<cv::Moments> locateCvObjects(const cv::Mat& frame, const HsvColorSubSpace
     return GetMoments(contours);
 }
 
-/*
-#include <cv_bridge/cv_bridge.h>
-void imageCallback(const sensor_msgs::ImageConstPtr& msg)
-{
-    try
-    {
-        Mat frame = cv_bridge::toCvShare(msg, "bgr8")->image;
-        processImage(frame);
-        imshow("Soccer Overhead Camera", frame);        
-        waitKey(30);
-    }
-    catch (cv_bridge::Exception& e)
-    {
-        ROS_ERROR("Could not convert from '%s' to 'bgr8'.", msg->encoding.c_str());
+void gameStateCallback(const robot_soccer::gameparam& msg) {
+    config::allyRobot1Color = getColorSpace(msg.ally1_color);
+    config::allyRobot2Color = getColorSpace(msg.ally2_color);
+    config::enemyRobot1Color = getColorSpace(msg.enemy1_color);
+    config::enemyRobot2Color = getColorSpace(msg.enemy2_color);
+    config::allyRobotCount = msg.ally_robot_count;
+    config::enemyRobotCount = msg.enemy_robot_count;
+    if (msg.field_pos == "home") {
+        config::invertX = config::homeIsInverted;
+    } else if (msg.field_pos == "away") {
+        config::invertX = !config::homeIsInverted;
     }
 }
-
-int main(int argc, char **argv)
-{
-    ros::init(argc, argv, "vision");
-    ros::NodeHandle nh;
-
-    // Subscribe to camera
-    image_transport::ImageTransport it(nh);
-    image_transport::Subscriber image_sub = it.subscribe("/camera1/image_raw", 1, imageCallback);
-
-    ros::init(argc, argv, "vision_data_pub");
-    ros::NodeHandle n;
-    ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
-
-    // Publish robot locations
-    //soccer_pub = nh.advertise<walle::SoccerPoses>("/vision", 5);
-    ros::spin();
-    return 0;
-}
-*/

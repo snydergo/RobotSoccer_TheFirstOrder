@@ -12,6 +12,8 @@ extern Point2f fieldCenter_px;
 extern double cmPerPixelConversionFactor;
 extern bool invertX;
 
+extern bool homeIsInverted;
+
 extern bool trackRobot;
 
 extern int cropTop;
@@ -22,17 +24,14 @@ extern int cropRight;
 extern HsvColorSubSpace ballColor;
 extern int ballArea;
 
-extern int teamRobotCount;
-extern HsvColorSubSpace teamRobotPrimaryColor;
-extern int teamRobotLargeArea;
-extern int teamRobotSmallArea;
+extern int allyRobotCount;
+extern HsvColorSubSpace allyRobot1Color;
+extern HsvColorSubSpace allyRobot2Color;
 
 
-extern int opponentRobotCount;
-extern HsvColorSubSpace opponentRobotPrimaryColor;
-extern HsvColorSubSpace opponentRobotSecondaryColor;
-extern int opponentRobotLargeArea;
-extern int opponentRobotSmallArea;
+extern int enemyRobotCount;
+extern HsvColorSubSpace enemyRobot1Color;
+extern HsvColorSubSpace enemyRobot2Color;
 
 extern std::string cameraUrl;
 

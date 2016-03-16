@@ -15,6 +15,7 @@ add_message_files(
   visiondata.msg
   controldata.msg
   piddata.msg
+  gameparam.msg
 )
 
 generate_messages(
@@ -56,6 +57,7 @@ add_executable( ObjectTracking vision/object_tracking_test/objecttracking.cpp )
 target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 
 add_executable( GameControl game_control/gamecontroller.cpp )
+target_link_libraries( GameControl ${catkin_LIBRARIES})
 
 add_executable( RobotVision 
 vision/robot_vision/main.cpp
@@ -78,7 +80,7 @@ vision/robot_vision/config.cpp
 add_dependencies(RobotVision robot_soccer_generate_messages_cpp  ${catkin_EXPORTED_TARGETS})
 target_link_libraries( RobotVision ${OpenCV_LIBS} )
 target_link_libraries( RobotVision ${catkin_LIBRARIES})
-include_directories(../../../imports/rapidjson/include)
+#include_directories(../../../imports/rapidjson/include)
 
 add_executable( debug
 AI_cpp/debug/publisher_debugmsg.h
