@@ -4,13 +4,13 @@ from numpy import matlib
 # Troy's values
 
 kp_x	 = 0.02
-ki_x	 = 0.001
+ki_x	 = 0.000
 kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
 kp_theta = 0.01
-ki_theta = 0.001
+ki_theta = 0.000
 kd_theta = 0.00
 
 xy_limit	 = 1.0#.4
