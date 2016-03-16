@@ -22,6 +22,7 @@ class GamePieces(object):
             name, t = var.split('_')
             if t in idx:
                 exec("self.{0}.position[idx['{1}']] = vision_msg.{2}".format(name, t, var))
+            exec("self.{}.camera_flag = 1".format(name))
                 
 
 class Piece(object):
