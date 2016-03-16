@@ -16,8 +16,8 @@ from numpy import matlib
 # James' values
 
 kp_x	 = 0.02
-ki_x	 = 0.0015
-kd_x	 = 0.0009
+ki_x	 = 0.002
+kd_x	 = 0.001
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
