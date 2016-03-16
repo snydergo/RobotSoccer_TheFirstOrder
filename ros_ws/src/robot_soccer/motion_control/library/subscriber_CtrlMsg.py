@@ -40,6 +40,10 @@ def callback1(data):
             mlib.stop()
     elif data.cmdType == 'kick':
         mlib.kick()
+    elif data.cmdType == 'kickinit':
+        mlib.init_kick()
+    elif data.cmdType == 'uninitkick':
+        mlib.uninit_kick()
     elif data.cmdType == 'idle':
 	mlib.stop()
     elif data.cmdType == 'pid':
