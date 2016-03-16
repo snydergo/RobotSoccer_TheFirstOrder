@@ -24,6 +24,7 @@ class Utilities
     void move(Robot robot, Point dir, double des_theta);
     void moveToPoint(Robot robot, Point point, double theta);
     void initKick(Robot robot);
+    void uninitKick(Robot robot);
     void kick(Robot robot);
     void moveToCenter(Robot robot, double theta);
     void followBall(FieldObject ball, Robot robot, double theta);

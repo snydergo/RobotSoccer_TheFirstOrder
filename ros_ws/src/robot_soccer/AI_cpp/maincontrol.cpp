@@ -118,6 +118,8 @@ int main(int argc, char *argv[])
     ///### NORMAL MAINCONTROL ###///
 
 //strategies STATEMACHINE
+//    ros::Subscriber filter_subscriber = n.subscribe("outputfilter", 1000, filterCallback);
+//    ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 1000);
     Strategies strategies;
     strategies.init();
     while (ros::ok())
@@ -125,7 +127,9 @@ int main(int argc, char *argv[])
         count++;
         if (visionUpdated) {
             visionUpdated = false;
+           // filterCom.publish(robot_soccer::visiondata(visionStatus_msg));
             dataInitialized = true;
+
             /*//std::cout << "dataRecieved: " << visionStatus_msg.ally1.location.x << " " <<
                         visionStatus_msg.ally1.location.y << " " << visionStatus_msg.ally1.theta << std::endl;*/
             field.updateStatus(visionStatus_msg);

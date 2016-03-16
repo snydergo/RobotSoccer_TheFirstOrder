@@ -27,6 +27,7 @@ public:
     void goToPoint(Point point, double dest_theta);
     void fetchBall();
     void init_kick();
+    void uninit_kick();
     void kick();
     void dribble();
     //function will get the robot to go to the ball
@@ -37,6 +38,7 @@ public:
     void continueIdle();
     void continueGoToPoint();
     void continueInitKick();
+    void continueUninitKick();
     void continueKick();
     void continueFetchBall();
     void continueDribble();

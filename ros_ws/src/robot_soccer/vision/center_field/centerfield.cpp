@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 {
 
   /// Read the image
-  VideoCapture cap("http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
+  VideoCapture cap("http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
 
     if (!cap.isOpened()) { // if not success, exit program 
         cout << "Cannot open the web cam" << endl;

@@ -55,6 +55,8 @@ target_link_libraries( MultiobjectDetection ${OpenCV_LIBS} )
 add_executable( ObjectTracking vision/object_tracking_test/objecttracking.cpp )
 target_link_libraries( ObjectTracking ${OpenCV_LIBS} )
 
+add_executable( GameControl game_control/gamecontroller.cpp )
+
 add_executable( RobotVision 
 vision/robot_vision/main.cpp
 vision/robot_vision/hsvcolorsubspace.h

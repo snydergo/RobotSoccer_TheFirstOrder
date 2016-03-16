@@ -18,28 +18,26 @@ GameStatus& GameStatus::operator= (const robot_soccer::visiondata& arg) {
     time = arg.sys_time;
 }
 
-/*GameStatus::GameStatus(){
-    this->ally1.location = NULL;
-    this->ally1.tag = "ally1";
-    this->ally1.theta = 0;
-    this->ally1.velocity = NULL;
-    this->ally2.location = NULL;
-    this->ally2.tag = "ally2";
-    this->ally2.theta = 0;
-    this->ally2.velocity = NULL;
-    this->enemy1.location = NULL;
-    this->enemy1.tag = "enemy1";
-    this->enemy1.theta = 0;
-    this->enemy1.velocity = NULL;
-    this->enemy2.location = NULL;
-    this->enemy2.tag = "enemy2";
-    this->enemy2.theta = 0;
-    this->enemy2.velocity = NULL;
-    this->ball.location = NULL;
-    this->ball.tag = NULL;
-    this->ball.velocity = NULL;
-
-}*/
+GameStatus::operator robot_soccer::visiondata() const
+{
+    robot_soccer::visiondata msg;
+    msg.tm0_x = ally1.location.x;
+    msg.tm0_y = ally1.location.y;
+    msg.tm0_w = ally1.theta;
+    msg.tm1_x = ally2.location.x ;
+    msg.tm1_y = ally2.location.y;
+    msg.tm1_w = ally2.theta;
+    msg.op0_x = enemy1.location.x;
+    msg.op0_y = enemy1.location.y;
+    msg.op0_w = enemy1.theta;
+    msg.op1_x = enemy2.location.x;
+    msg.op1_y = enemy2.location.y;
+    msg.op1_w = enemy2.theta;
+    msg.ball_x = ball.location.x;
+    msg.ball_y = ball.location.y;
+    msg.sys_time = time;
+    return msg;
+}
 
 std::string GameStatus::toString() {
     return "null";

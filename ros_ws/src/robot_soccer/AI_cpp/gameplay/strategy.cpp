@@ -61,7 +61,7 @@ void Strategies::tick()
     //##### GOALIE POWER STATES #####//
     case strategy::GoaliePower_st:
         std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
-        if(true/*bkcalc::ballThreat()*/){
+        if(bkcalc::ballThreat()){
             std::cout << "Strategies::tick() playGoalie"<< std::endl;
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
@@ -74,14 +74,14 @@ void Strategies::tick()
 		break;
     case strategy::GPGoalie_st:
         std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
-        if(false/*!bkcalc::ballThreat()*/){
+        if(!bkcalc::ballThreat()){
             strategy_st = strategy::GPRush_st;
             robot1Plays.rushGoal();
         }
         break;
     case strategy::GPRush_st:
         std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
-        if(true/*bkcalc::ballThreat()*/){
+        if(bkcalc::ballThreat()){
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
         }

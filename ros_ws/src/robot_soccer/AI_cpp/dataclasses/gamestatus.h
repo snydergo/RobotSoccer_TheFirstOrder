@@ -31,6 +31,8 @@ public:
 
     //GameStatus function calls
     std::string toString();
+
+    operator robot_soccer::visiondata() const;
 };
 
 

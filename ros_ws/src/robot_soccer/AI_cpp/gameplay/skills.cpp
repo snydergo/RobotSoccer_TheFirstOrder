@@ -1,7 +1,7 @@
 #include "skills.h"
 
 
-enum class skill_state {idle_st, gotopoint_st, kick_st, initkick_st,
+enum class skill_state {idle_st, gotopoint_st, kick_st, initkick_st, uninitkick_st,
     fetchball_st, dribble_st, aim_st} skill_st;
 
 void Skills::init(){
@@ -35,6 +35,10 @@ void Skills::init_kick(){
     skill_st = skill_state::initkick_st;
 }
 
+void Skills::uninit_kick(){
+    skill_st = skill_state::uninitkick_st;
+}
+
 void Skills::dribble(){
     printf("start dribble ball\n");
     skill_st = skill_state::dribble_st;
@@ -59,6 +63,10 @@ void Skills::continueGoToPoint(){
 
 void Skills::continueInitKick(){
     utils.initKick(*fieldget::getRobot(allyNum));
+}
+
+void Skills::continueUninitKick(){
+    utils.uninitKick(*fieldget::getRobot(allyNum));
 }
 
 void Skills::continueKick(){

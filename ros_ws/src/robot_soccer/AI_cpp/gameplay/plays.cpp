@@ -79,15 +79,16 @@ void Plays::tick(){
                             aim_cnt = 0;
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             kp = bkcalc::kickPoint(allyNum);
+                            skill.init_kick();
                             coord_st = coordSkills_st::coordKick_st;
                         }
                         break;
                     case coordSkills_st::coordKick_st:
                         std::cout << " kicking ball" << std::endl;
-                        //skill.kick();
+                        skill.kick();
                         skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum,kp)){
-                            skill.kick();
+                            skill.uninit_kick();
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
                         }
@@ -123,7 +124,9 @@ void Plays::tick(){
                             //if ball is within goalie box
                             if(abs(fieldget::getBallLoc().y) < GOAL_RADIUS){
                                 //std::cout << "ball is within Goal width" << std::endl;
-                                point = Point(allyGoal.x,fieldget::getBallLoc().y);
+                                //double y = 2*fieldget::getBallLoc().y - fieldget::getRobotLoc(robotType::ally1).y;
+
+                                point = Point(allyGoal.x, fieldget::getBallLoc().y);
                             }else{ //ball is outside of goalie box
                                 //std::cout << "ball is outside Goal width" << std::endl;
                                 double y_coord = allyGoal.y;
