@@ -3,7 +3,6 @@ import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import controldata
 import mlib
-import kick
 import sample_pid as pid
 import globals
 
@@ -40,11 +39,11 @@ def callback1(data):
             print("NaN - stopping")
             mlib.stop()
     elif data.cmdType == 'kick':
-        kick.kick()
+        mlib.kick()
     elif data.cmdType == 'kickinit':
-        kick.init_kick()
+        mlib.init_kick()
     elif data.cmdType == 'uninitkick':
-        kick.uninit_kick()
+        mlib.uninit_kick()
     elif data.cmdType == 'idle':
 	mlib.stop()
     elif data.cmdType == 'pid':

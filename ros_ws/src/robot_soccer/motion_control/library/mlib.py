@@ -229,7 +229,15 @@ def kick():
 	roboclaw.ForwardM2(addr2,0) # max power
 	time.sleep(.1)
 	return roboclaw.ForwardM2(addr2,127)
-	
+
+
+def init_kick():
+	# Hold the kicker back
+	return roboclaw.ForwardM2(addr2,127)
+
+
+def uninit_kick():
+	return roboclaw.ForwardM2(addr2,0)
 
 #def SetMVelocityPID(address,p,i,d,qpps):
 
