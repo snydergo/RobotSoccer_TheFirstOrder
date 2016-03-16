@@ -78,7 +78,8 @@ int main(int argc, char** argv)
                     << "stop (stop robot)" << endl
                     << "start (begin AI state machine)" << endl
                     << "mark (move to starting mark)" << endl
-                    << "update (force update of latest paramter values)" << endl;
+                    << "update (force update of latest paramter values)" << endl << endl
+                    << "type 'quit' to quit" << endl << endl;
             } else if (parameterName == "ally1_color") {
                 string color = parseColor();
                 if (color != "") {
