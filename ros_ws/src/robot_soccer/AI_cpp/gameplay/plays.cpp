@@ -70,12 +70,13 @@ void Plays::tick(){
                         break;
                     case coordSkills_st::coordAim_st:
                         static uint8_t aim_cnt = 1;
-                        std::cout << " aiming ball" << std::endl;
+                        std::cout << " aiming ball::count == " << std::to_string(aim_cnt) << std::endl;
                         skill.aim();
                         /*if(!bkcalc::ballFetched(allyNum)){
                              std::cout << "Plays::tick() BALL FETCHED" << std::endl;
                              coord_st = coordSkills_st::coordFetchball_st;
-                        }else*/ if(bkcalc::ballAimed(allyNum) || !aim_cnt++){
+                        }else*/ if(bkcalc::ballAimed(allyNum) || aim_cnt++ == AIM_MAX_CNT){
+                            aim_cnt = 0;
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             kp = bkcalc::kickPoint(allyNum);
                             coord_st = coordSkills_st::coordKick_st;
@@ -121,10 +122,10 @@ void Plays::tick(){
                             Point point;
                             //if ball is within goalie box
                             if(abs(fieldget::getBallLoc().y) < GOAL_RADIUS){
-                                std::cout << "ball is within Goal width" << std::endl;
+                                //std::cout << "ball is within Goal width" << std::endl;
                                 point = Point(allyGoal.x,fieldget::getBallLoc().y);
                             }else{ //ball is outside of goalie box
-                                std::cout << "ball is outside Goal width" << std::endl;
+                                //std::cout << "ball is outside Goal width" << std::endl;
                                 double y_coord = allyGoal.y;
                                 if(fieldget::getBallLoc().y > 0)
                                     y_coord += GOAL_RADIUS;
@@ -140,7 +141,7 @@ void Plays::tick(){
                         break;
                     case coordSkills_st::coordKick_st:
                         std::cout << "Skills::coordSkills_st == kick_st"<<std::endl;
-                        //skill.kick();
+                        skill.kick();
                         skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum, kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;

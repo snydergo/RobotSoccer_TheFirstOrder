@@ -26,6 +26,7 @@ public:
     void idle();
     void goToPoint(Point point, double dest_theta);
     void fetchBall();
+    void init_kick();
     void kick();
     void dribble();
     //function will get the robot to go to the ball
@@ -35,6 +36,7 @@ public:
     //FUNCTIONS THAT USE UTILITIES
     void continueIdle();
     void continueGoToPoint();
+    void continueInitKick();
     void continueKick();
     void continueFetchBall();
     void continueDribble();

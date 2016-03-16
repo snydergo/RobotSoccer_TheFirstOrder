@@ -120,9 +120,12 @@ bool bkcalc::ballKickZone(robotType type){
     Point ball = field.currentStatus.ball.location;
     switch(type){
         case robotType::ally1:
+        {
             std::cout << "ballkickZone::ally1" << std::endl;
-            ballkickZone = calc::withinPerimeter(field.currentStatus.ally1.location, ball);
+            Point perCenter(field.currentStatus.ally1.location.x+PERIMETER_XOFFSET,field.currentStatus.ally1.location.y);
+            ballkickZone = calc::withinPerimeter(perCenter, ball);
             break;
+        }
         case robotType::ally2:
             std::cout << "ballkickZone::ally2" << std::endl;
             ballkickZone = calc::withinPerimeter(field.currentStatus.ally2.location, ball);
@@ -197,7 +200,6 @@ bool bkcalc::ballThreat(){
 //   }else{
 //       std::cout << "NO THREAT" << std::endl;
 //       return false;
-//   }
-    return ((field.currentStatus.ball.location.x < -90)||
-        (field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0));
+//   }(field.currentStatus.ball.location.x < -90)||
+    return ((field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0));
 }

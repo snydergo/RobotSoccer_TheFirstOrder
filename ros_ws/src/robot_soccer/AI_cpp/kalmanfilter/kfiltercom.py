@@ -17,7 +17,7 @@ newData = False
 def filter(raw_data):
     # print raw_data
     temp = lpf.GamePiece()
-    temp.position = 
+    temp.position = 5
     global filteredData
     global newData
     filteredData = raw_data

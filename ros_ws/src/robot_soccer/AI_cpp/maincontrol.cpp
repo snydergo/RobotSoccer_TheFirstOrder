@@ -71,11 +71,7 @@ int main(int argc, char *argv[])
 
                 if (cmdRob1.cmdType == "move") {
                     dest = Point(cmdRob1.x_cmd,cmdRob1.y_cmd);
-//                    if (!bkcalc::atLocation(robotType::ally1, dest)) {
                     skill1.goToPoint(dest, cmdRob1.theta_cmd);
-//                    } else {
-//                        skill1.idle();
-//                    }
                 } else if (cmdRob1.cmdType == "kick") {
                     kickball = true;
                     skill1.kick();

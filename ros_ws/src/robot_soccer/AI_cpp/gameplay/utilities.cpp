@@ -55,6 +55,12 @@ void Utilities::moveToPoint(Robot robot, Point point, double theta){
     move(robot, point, theta);
 }
 
+void Utilities::initKick(Robot robot){
+    robot_soccer::controldata cmd;
+    cmd.cmdType = "initkick";
+    assignCmd(robot.tag, cmd);
+}
+
 void Utilities::kick(Robot robot){
     printf("ball kicked\n");
     robot_soccer::controldata cmd;

@@ -32,7 +32,7 @@ void Strategies::tick()
         if(fieldget::getRobotLoc(robot1Plays.allyNum).x != 0 &&
                 fieldget::getRobotLoc(robot1Plays.allyNum).x != 0 &&
                 fieldget::getRobot(robot1Plays.allyNum)->theta != 0){
-            strategy_st = strategy::start_st;
+            strategy_st = startStrategy;//strategy::start_st;
         }
         break;
     //state used to perform all necessary inits and start first strategy
@@ -58,7 +58,7 @@ void Strategies::tick()
     case strategy::SRGPlay_st:
         std::cout << "Strategies::tick() SRGPlay_st" << std::endl;
         break;
-    //GOALIE POWER STATES
+    //##### GOALIE POWER STATES #####//
     case strategy::GoaliePower_st:
         std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
         if(true/*bkcalc::ballThreat()*/){
@@ -68,7 +68,7 @@ void Strategies::tick()
         }else{
             std::cout << "Strategies::tick() rushingGoal"<< std::endl;
             strategy_st = strategy::GPRush_st;
-            //robot1Plays.rushGoal();
+            robot1Plays.rushGoal();
         }
         //robot2Plays.rushGoal();
 		break;
@@ -76,7 +76,7 @@ void Strategies::tick()
         std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
         if(false/*!bkcalc::ballThreat()*/){
             strategy_st = strategy::GPRush_st;
-            //robot1Plays.rushGoal();
+            robot1Plays.rushGoal();
         }
         break;
     case strategy::GPRush_st:
