@@ -3,21 +3,21 @@ from numpy import matlib
 
 # Troy's values
 
-kp_x	 = 0.01
-ki_x	 = 0.001
+kp_x	 = 0.02
+ki_x	 = 0.003
 kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
-kp_theta = 0.008
-ki_theta = 0.001
+kp_theta = 0.01
+ki_theta = 0.002
 kd_theta = 0.00
 
 xy_limit	 = 1.0#.4
 th_limit	 = 1.0#0.2 #5
 
-xy_thresh	 = 0#5
-theta_thresh = 5#5
+xy_thresh	 = 100#5
+theta_thresh = 100#5
 
 loop_rate = 50 # Hz (get value from publisher)
 Ts     = 1.00/loop_rate
