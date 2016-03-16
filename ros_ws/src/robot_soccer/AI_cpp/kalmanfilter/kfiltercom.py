@@ -11,17 +11,23 @@ from numpy.matlib import matrix
 
 
 global filteredData
-global newData
-newData = False
+global old_time
+global newData = False
+
+
+game_pieces = lpf.GamePieces()
 
 def filter(raw_data):
-    # print raw_data
-    temp = lpf.GamePiece()
-    temp.position = 5
-    global filteredData
-    global newData
-    filteredData = raw_data
+    if old_time != raw_data.time:
+        game_pieces.update_all(raw_data)
+    else:        
+        game_pieces.filter_all()
+    
     newData = True
+
+    filteredData = game_pieces.gen_msg()
+    
+    
 
 def filterData():
     #subscriber information setup
@@ -34,9 +40,7 @@ def filterData():
     ## Decisions ##
     while not rospy.is_shutdown():
         if newData:
-            global filteredData
-            publishData = filteredData
-            pub.publish(publishData)
+            pub.publish(filteredData)
             newData = False
         rate.sleep()
     return
