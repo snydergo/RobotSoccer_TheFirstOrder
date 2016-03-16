@@ -35,32 +35,32 @@ class Piece(object):
         self.vel = matlib.zeros((3,1))
 
 
-def utility_lpf_ball(ball):
+def lpf(piece):
 
 
-    ball.old_position_measurement = ball.position
+    piece.old_position_measurement = piece.position
     # dirty derivative coefficients
     a1 = (2*globals.tau-globals.camera_sample_rate)/(2*globals.tau+globals.camera_sample_rate)
     a2 = 2/(2*globals.tau+globals.camera_sample_rate)
 
     # compensates for camera delay and wall bounces (doesn't account for robot bounces)
 
-    if ball.camera_flag: # correction
+    if piece.camera_flag: # correction
         # low pass filter position       
-        ball.position_delayed = globals.lpf_alpha*ball.position_delayed + (1-globals.lpf_alpha)*ball.position_camera
+        piece.position_delayed = globals.lpf_alpha*piece.position_delayed + (1-globals.lpf_alpha)*piece.position_camera
         # compute velocity by dirty derivative of position
-        ball.vel = a1*ball.vel + a2*(ball.position_camera-ball.old_position_measurement)
-        ball.vel = utility_wall_bounce(ball.position_delayed,ball.vel)
-        ball.old_position_measurement = ball.position_camera;
+        piece.vel = a1*piece.vel + a2*(piece.position_camera-piece.old_position_measurement)
+        piece.vel = utility_wall_bounce(piece.position_delayed,piece.vel)
+        piece.old_position_measurement = piece.position_camera;
         # propagate up to current location
         for i in range(1,(globals.camera_sample_rate/globals.loop_rate)):
-            ball.position_delayed = ball.position_delayed + globals.loop_rate*ball.vel
-            ball.vel = utility_wall_bounce(ball.position_delayed,ball.vel)               
-        ball.position = ball.position_delayed
+            piece.position_delayed = piece.position_delayed + globals.loop_rate*piece.vel
+            piece.vel = utility_wall_bounce(piece.position_delayed,piece.vel)               
+        piece.position = piece.position_delayed
     else: # prediction
         # propagate prediction ahead one control sample time
-        ball.position = ball.position + globals.loop_rate*ball.vel
-        ball.vel = utility_wall_bounce(ball.position,ball.vel)
+        piece.position = piece.position + globals.loop_rate*piece.vel
+        piece.vel = utility_wall_bounce(piece.position,piece.vel)
 
 
 #------------------------------------------
