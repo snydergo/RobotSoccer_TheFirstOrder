@@ -1,7 +1,8 @@
 import numpy as np
 from numpy import matlib
 from numpy import matrix
-import globals_troy as globals
+# import globals_troy as globals
+import globals
 
 class ControlVar:
     def __init__(self):
@@ -46,7 +47,7 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     error = cmd_pos - pos
     # if abs(error) < thresh:
     #     error = 0
-    print("Error: " + str(error))
+    # print("Error: " + str(error))
     
     # update derivative of z
     ctrl_vars.velocity = (2*tau-Ts)/(2*tau+Ts)*ctrl_vars.velocity + 2/(2*tau+Ts)*(pos-ctrl_vars.prev_pos)
@@ -74,8 +75,10 @@ def sat(f,limit):
 
     if (f > limit):
         out = limit
+        print("sat at {}".format(limit))
     elif (f < -limit):
         out = -limit
+        print("sat at {}".format(limit))
     else:
         out = f
 
