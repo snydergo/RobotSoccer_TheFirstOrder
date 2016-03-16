@@ -4,7 +4,7 @@ from numpy import matlib
 # Troy's values
 
 kp_x	 = 0.20
-ki_x	 = 0.00
+ki_x	 = 0.01
 kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
