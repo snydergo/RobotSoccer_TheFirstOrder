@@ -36,9 +36,11 @@ S = np.diag([\
     (5*np.pi/180)**2,               # initial variance of angle of ownteam i 
     ]);
 
-camera_sigma_robot_position = 2
-camera_sigma_robot_position = 3
-camera_sigma_robot_angle = np.pi/9
+camera_sample_rate = 10*loop_rate
+# noise levels on the camera
+camera_sigma_ball = 0.01 # units are meters
+camera_sigma_robot_position = 0.01 # units are meters
+camera_sigma_robot_angle = 2*np.pi/180 # units are radians
 
 Q_ownteam = np.diag([1**2,1**2,(2*np.pi/180)**2])
 R_ownteam = np.diag([camera_sigma_robot_position**2, camera_sigma_robot_position**2, camera_sigma_robot_angle**2])
@@ -66,3 +68,28 @@ R_ownteam = np.diag([camera_sigma_robot_position**2, camera_sigma_robot_position
 
 # xy_thresh = 5
 # theta_thresh = 5
+
+
+# parameters for the Kalman filter
+Q_ownteam = np.diag([1**2,1**2,(2*np.pi/180)**2])
+R_ownteam = np.diag([camera_sigma_robot_position**2, camera_sigma_robot_position**2, camera_sigma_robot_angle**2])
+Q_opponent = 1*np.diag([.001**2, .001**2, .01**2, 0.1**2, 0.1**2, 0.1**2, 1**2,1**2,(2*np.pi/180)**2])
+R_opponent = np.diag([camera_sigma_robot_position**2, camera_sigma_robot_position**2, camera_sigma_robot_angle**2])
+Q_ball = 1*np.diag([.001**2,.001**2,.01**2,.01**2, .1**2, .1**2, 10**2, 10**2])
+R_ball = np.diag([camera_sigma_ball**2, camera_sigma_ball**2])
+
+
+# # parameters for opponent Kalman filter
+# A_opponent = np.zeros((9,9))
+
+# C_opponent = [np.eye(3), np.zeros((3,6))]
+
+# # parameters for ball Kalman filter
+# A_ball = [...
+#             zeros(2,2), eye(2), zeros(2,2), zeros(2,2);...
+#             zeros(2,2), zeros(2,2), eye(2), zeros(2,2);...
+#             zeros(2,2), zeros(2,2), zeros(2,2), eye(2);...
+#             zeros(2,2), zeros(2,2), zeros(2,2), zeros(2,2);...
+#             ];
+# C_ball = [eye(2), zeros(2,6)];
+

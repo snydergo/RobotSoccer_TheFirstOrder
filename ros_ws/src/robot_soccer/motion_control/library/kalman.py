@@ -16,7 +16,7 @@ def utility_kalman_filter_robot(robot,v_command):
     for i in range(1,N):
         f = matrix(v_command).reshape(3,1)
         robot.xhat = robot.xhat + (globals.loop_rate/N)*f
-        print robot.xhat
+        # print robot.xhat
         robot.S = robot.S + (globals.loop_rate/N)*(globals.Q_ownteam)
     
 
@@ -26,7 +26,7 @@ def utility_kalman_filter_robot(robot,v_command):
         L = np.diag(np.diag(robot.S)/np.diag(globals.R_ownteam+robot.S))
         robot.S = (np.eye(3)-L)*robot.S
         robot.xhat = robot.xhat + L*(matrix([robot.x,robot.y,robot.theta]).reshape(3,1)-y_pred)
-        print robot.x, robot.y, robot.theta
+        # print robot.x, robot.y, robot.theta
 
     # output current estimate of state
     xhat_array 	= robot.xhat.getA()
@@ -35,7 +35,7 @@ def utility_kalman_filter_robot(robot,v_command):
     robot.y 	= float(xhat_array[1])
     robot.theta = float(xhat_array[2])
 
-    print robot.x, robot.y, robot.theta
+    # print robot.x, robot.y, robot.theta
     # robot.S 	= globals.S
 
 
@@ -47,7 +47,7 @@ def utility_kalman_filter_robot(robot,v_command):
 def utility_kalman_filter_ball(ball):    
     
     if (t==0):  # initialize filter
-        ball.xhat = matlib.zeros(8,1)
+        ball.xhat = matlib.zeros((8,1))
         ball.xhat_delayed = ball.xhat
         ball.S = np.diag([\
             globals.field_width/2, 	# initial variance of x-position of ball
