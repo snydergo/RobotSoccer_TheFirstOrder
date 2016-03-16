@@ -3,15 +3,27 @@ from numpy import matlib
 
 # Troy's values
 
-kp_x	 = 0.02
-ki_x	 = 0.001
-kd_x	 = 0.0002
+kp_x	 = 0.008
+ki_x	 = 0#0.0001
+kd_x	 = 0.0
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
-kp_theta = 0.01#0.013
+kp_theta = .008#0.013
 ki_theta = 0.00
 kd_theta = 0.00
+
+# James' values
+
+# kp_x	 = 0.02
+# ki_x	 = 0.001
+# kd_x	 = 0.0005
+# kp_y	 = kp_x
+# ki_y	 = ki_x
+# kd_y	 = kd_x
+# kp_theta = 0.01#0.013
+# ki_theta = 0.00
+# kd_theta = 0.00
 
 xy_limit	 = 1.0#.4
 th_limit	 = 1.0#0.2 #5
