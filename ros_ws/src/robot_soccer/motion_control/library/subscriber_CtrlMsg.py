@@ -41,9 +41,9 @@ def callback1(data):
             mlib.stop()
     elif data.cmdType == 'kick':
         kick.kick()
-    elif data.cmdType == 'initkick'
+    elif data.cmdType == 'initkick':
         kick.init_kick()
-    elif data.cmdType == 'uninitkick'
+    elif data.cmdType == 'uninitkick':
         kick.uninit_kick()
     elif data.cmdType == 'idle':
 	mlib.stop()
