@@ -5,30 +5,18 @@
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
 #include "debug/subscriber_debugmsg.h"
+#include "kalmanfilter/getFilteredData.h"
 #include "gameplay/strategy.h"
 #include "types.h"
 #include "termios.h"
+
 #define OPTION 1
 #define XCMD 2
 #define YCMD 3
 #define THETACMD 4
 
 void checkCmd(robot_soccer::controldata &cmdRob1);
-
-// non blocking character acqusition
-int getch()
-{
-  static struct termios oldt, newt;
-  tcgetattr( STDIN_FILENO, &oldt);           // save old settings
-  newt = oldt;
-  newt.c_lflag &= ~(ICANON);                 // disable buffering
-  tcsetattr( STDIN_FILENO, TCSANOW, &newt);  // apply new settings
-
-  int c = getchar();  // read character (non-blocking)
-
-  tcsetattr( STDIN_FILENO, TCSANOW, &oldt);  // restore old settings
-  return c;
-}
+void debugOption();
 
 int main(int argc, char *argv[])
 {
@@ -41,11 +29,9 @@ int main(int argc, char *argv[])
     (void*)vision_subscriber;
 
     //PUBLISHER FOR MOTIONCONTROL
-
-
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 1000);
     ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 1000);
-    ros::Rate loop_rate(20);
+    ros::Rate loop_rate(TICKS_PER_SEC);
     int count = 0;
 
     bool dataInitialized = false;
@@ -55,7 +41,7 @@ int main(int argc, char *argv[])
     }catch(...){
             option = "none";
     }
-
+    
     //std::string x(argv[XCMD]);
     //std::string y(argv[YCMD]);
     //std::cout << option + " x = " + x + " y = " + y << std::endl;
@@ -98,11 +84,6 @@ int main(int argc, char *argv[])
                 }
             }
 
-            /*if(cmdRob1.cmdType.compare("move") == 0 && bkcalc::atLocation(robotType::ally1, dest) ||
-                    cmdRob1.cmdType.compare("kick") == 0 && !kickball){
-                skill1.idle();
-            }*/
-
             skill1.tick();
             if (sendCmd_Rob1) {
                 sendCmd_Rob1 = false;
@@ -116,24 +97,36 @@ int main(int argc, char *argv[])
             loop_rate.sleep();
         }
         return 0;
+    //### FILTER TEST OPTION ###//
+    }else if(option == "filter"){
+        ros::Subscriber filter_subscriber = n.subscribe("outputfilter", 1000, filterCallback);
+        ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 1000);
+        while(ros::ok()){
+            if (visionUpdated) {
+                visionUpdated = false;
+                dataInitialized = true;
+               field.updateStatus(visionStatus_msg);
+               filterCom.publish(vision_msg);
+            }
+            if (predictedUpdated){
+                std::cout << "robot_x == " << std::to_string(predicted.ally1.location.x) << std::endl
+                             << "robot_y == " << std::to_string(predicted.ally1.location.y) << std::endl
+                             << "robot_theta == " << std::to_string(predicted.ally1.theta) << std::endl;
+            }
+            ros::spinOnce();
+            loop_rate.sleep();
+        }
+        return 0;
     }
 
     ///### NORMAL MAINCONTROL ###///
 
-    //    //strategies STATEMACHINE
-        Strategies strategies;
-        strategies.init();
-
-    //    Plays play(robotType::ally1);
-    //    play.init();
-    //    play.start();
-    //    Skills skill2(robotType::ally2);
-    //    skill2.init();
+//strategies STATEMACHINE
+    Strategies strategies;
+    strategies.init();
     while (ros::ok())
     {
-
         count++;
-
         if (visionUpdated) {
             visionUpdated = false;
             dataInitialized = true;
@@ -170,4 +163,8 @@ void checkCmd(robot_soccer::controldata &cmdRob){
         cmdRob.cmdType = "idle";
 
     }
+}
+
+void debugOption(){
+
 }

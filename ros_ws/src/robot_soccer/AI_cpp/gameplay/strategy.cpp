@@ -40,7 +40,7 @@ void Strategies::tick()
     case strategy::start_st:
         std::cout << "Strategies::tick() start_st"<< std::endl;
         robot1Plays.start(start1Location);
-        robot2Plays.start(start2Location);
+        //robot2Plays.start(start2Location);
         if(bkcalc::atLocation(robot1Plays.allyNum, start1Location) /*&&
                 bkcalc::atLocation(robot2Plays.allyNum, start2Location)*/){
             std::cout << "at Start Location" << std::endl;
@@ -52,7 +52,7 @@ void Strategies::tick()
         if(true/*robot1Plays != NULL && robot2Plays != NULL*/){
             strategy_st = strategy::SRGPlay_st;
             robot1Plays.playGoalie();
-            robot2Plays.rushGoal();
+            //robot2Plays.rushGoal();
         }
         break;
     case strategy::SRGPlay_st:
@@ -61,27 +61,27 @@ void Strategies::tick()
     //GOALIE POWER STATES
     case strategy::GoaliePower_st:
         std::cout << "Strategies::tick() GoaliePower_st"<< std::endl;
-        if(bkcalc::ballThreat()){
+        if(true/*bkcalc::ballThreat()*/){
             std::cout << "Strategies::tick() playGoalie"<< std::endl;
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
         }else{
             std::cout << "Strategies::tick() rushingGoal"<< std::endl;
             strategy_st = strategy::GPRush_st;
-            robot1Plays.rushGoal();
+            //robot1Plays.rushGoal();
         }
-        robot2Plays.rushGoal();
+        //robot2Plays.rushGoal();
 		break;
     case strategy::GPGoalie_st:
         std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
-        if(!bkcalc::ballThreat()){
+        if(false/*!bkcalc::ballThreat()*/){
             strategy_st = strategy::GPRush_st;
-            robot1Plays.rushGoal();
+            //robot1Plays.rushGoal();
         }
         break;
     case strategy::GPRush_st:
         std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
-        if(bkcalc::ballThreat()){
+        if(true/*bkcalc::ballThreat()*/){
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
         }
@@ -93,7 +93,7 @@ void Strategies::tick()
 
     //need to tick the play statemachine depending on change that occured
     robot1Plays.tick();
-    robot2Plays.tick();
+    //robot2Plays.tick();
 }
 
 void Strategies::stop()

@@ -1,5 +1,11 @@
 #pragma once
-
+/* ---------------------------------------------------------------------------
+** bookkeeping.h
+** contains globals for the entire game. Also wrapper functions for the
+** mathfunctions file and uses the actual robots at play and being tested
+**
+** Author: Glade Snyder
+** -------------------------------------------------------------------------*/
 #include "gameplay/fieldcoord.h"
 #include "robot_soccer/controldata.h"
 #include "robot_soccer/visiondata.h"
@@ -21,7 +27,10 @@ extern Point enemyGoal;
 extern Point allyGoal;
 extern Point start1Location;
 extern Point start2Location;
+
+//vision globals
 extern bool visionUpdated;
+extern robot_soccer::visiondata vision_msg;
 extern GameStatus visionStatus_msg;
 
 //cmd globals
@@ -33,6 +42,11 @@ extern robot_soccer::controldata cmdRob2;
 //debug globals
 extern bool newDebugCmd;
 extern robot_soccer::controldata debugCmd;
+
+//filter globals
+extern GameStatus predicted;
+extern GameStatus predictedPositions_msg;
+extern bool predictedUpdated;
 
 //functions
 namespace fieldget {

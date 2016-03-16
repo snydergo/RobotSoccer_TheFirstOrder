@@ -33,6 +33,7 @@ include_directories( include
 catkin_install_python(PROGRAMS
 motion_control/library/subscriber_CtrlMsg.py
 motion_control/library/manual.py
+AI_cpp/kalmanfilter/kfiltercom.py
 DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 add_definitions(-std=c++11)
@@ -121,6 +122,8 @@ AI_cpp/ctrldata/publisher_ctrlmsg.h
 AI_cpp/ctrldata/publisher_ctrlmsg.cpp
 AI_cpp/debug/subscriber_debugmsg.cpp
 AI_cpp/debug/subscriber_debugmsg.h
+AI_cpp/kalmanfilter/getFilteredData.h
+AI_cpp/kalmanfilter/getFilteredData.cpp
 AI_cpp/bookkeeping.h
 AI_cpp/bookkeeping.cpp
 AI_cpp/types.h

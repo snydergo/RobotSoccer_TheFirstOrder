@@ -8,20 +8,11 @@ class Robot: public DefinedCVObject
 public:
 
   Robot()
-  : simpleDetection(true)
-  , front()
+  : front()
   , rear()
   {
   }
 
-  Robot(int frontSize, int rearSize, int distance)
-  : frontRefSize(frontSize)
-  , rearRefSize(rearSize)
-  , refDistance(distance)
-  , simpleDetection(false)
-  {
-  }
-  
   bool update(std::vector<UndefinedCVObject>& cvObjs) override;
   bool find(std::vector<UndefinedCVObject>& cvObjs) override;
 
@@ -42,15 +33,5 @@ private:
   UndefinedCVObject frontDelay;
   UndefinedCVObject rearDelay;
 
-  int frontRefSize;
-  int rearRefSize;
-  int refDistance;
-  bool simpleDetection;
-
-  const int rearRefSizeDelta = 60;
-  const int frontRefSizeDelta = 80;
-
   float theta;
 };
-
-std::vector<Robot> findRobots(std::vector<UndefinedCVObject>& cvObjs);
