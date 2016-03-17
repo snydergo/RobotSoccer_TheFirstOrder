@@ -1,6 +1,6 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Pose2D.h"
-#include "walle/SoccerPoses.h"
+#include "gazebo_sim/SoccerPoses.h"
 #include <image_transport/image_transport.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -118,7 +118,7 @@ void processImage(Mat frame)
 	Mat imgHsv;
 	cvtColor(frame, imgHsv, COLOR_BGR2HSV);
 
-	// walle::SoccerPoses soccerPoses;
+	// gazebo_sim::SoccerPoses soccerPoses;
 	robot_soccer::visiondata msg;
 
 	// geometry_msgs::Pose2D poseHome1;
@@ -167,7 +167,7 @@ int main(int argc, char **argv)
     visionDataPub = nh.advertise<robot_soccer::visiondata>("vision_data", 5);
 
 	
-	//soccer_pub = nh.advertise<walle::SoccerPoses>("/vision", 5);
+	//soccer_pub = nh.advertise<gazebo_sim::SoccerPoses>("/vision", 5);
 	ros::spin();
 	return 0;
 }

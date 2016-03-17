@@ -22,13 +22,13 @@
     <collision name="collision">
       <origin xyz="0 0 ${height/2+wheel_radius/4}" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://walle/meshes/soccer_robot.dae"/>
+        <mesh filename="package://gazebo_sim/meshes/soccer_robot.dae"/>
       </geometry>
     </collision>
     <visual name="visual">
       <origin xyz="0 0 ${height/2+wheel_radius/4}" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://walle/meshes/soccer_robot.dae"/>
+        <mesh filename="package://gazebo_sim/meshes/soccer_robot.dae"/>
       </geometry>
     </visual>
     <inertial>
@@ -74,7 +74,7 @@
   </joint>
 
   <!-- Wheels -->
-  <xacro:include filename="$(find walle)/urdf/wheel.xacro"/>
+  <xacro:include filename="$(find gazebo_sim)/urdf/wheel.xacro"/>
   <xacro:wheel namespace="${namespace}" parent="chassis" id="1" mass="${wheel_mass}" radius="${wheel_radius}" thickness=".01" xyz="${-wheel_dist}      0                    ${wheel_radius}" yaw="${PI}"/>
   <xacro:wheel namespace="${namespace}" parent="chassis" id="2" mass="${wheel_mass}" radius="${wheel_radius}" thickness=".01" xyz="${wheel_dist*COS60} ${-wheel_dist*SIN60} ${wheel_radius}" yaw="${-PI/3}"/>
   <xacro:wheel namespace="${namespace}" parent="chassis" id="3" mass="${wheel_mass}" radius="${wheel_radius}" thickness=".01" xyz="${wheel_dist*COS60} ${wheel_dist*SIN60}  ${wheel_radius}" yaw="${PI/3}"/>

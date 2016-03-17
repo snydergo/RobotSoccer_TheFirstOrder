@@ -6,7 +6,7 @@
       <pose>0 0 0 0 0 0</pose>
       <collision name="collision">
         <geometry>
-          <mesh><uri>$(find walle)/meshes/field9_collision.dae</uri></mesh>
+          <mesh><uri>$(find gazebo_sim)/meshes/field9_collision.dae</uri></mesh>
         </geometry>
         <surface>
           <friction>
@@ -19,7 +19,7 @@
       </collision>
       <visual name="visual">
         <geometry>
-          <mesh><uri>$(find walle)/meshes/field9_visual.dae</uri></mesh>
+          <mesh><uri>$(find gazebo_sim)/meshes/field9_visual.dae</uri></mesh>
         </geometry>
         <material>
           <ambient>.3 .3 .3 1</ambient>

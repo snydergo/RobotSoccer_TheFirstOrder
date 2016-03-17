@@ -2,7 +2,7 @@
 #include "geometry_msgs/Pose2D.h"
 #include "geometry_msgs/Vector3.h"
 #include "std_msgs/Float64.h"
-#include "walle/SoccerPoses.h"
+#include "gazebo_sim/SoccerPoses.h"
 #include "stdio.h"
 #include <eigen3/Eigen/Eigen>
 
@@ -175,7 +175,7 @@ void play_rushGoal(RobotPose robot, Vector2d ball, int robotId)
 		skill_goToPoint(robot, position, robotId);
 }
 
-void visionCallback(const walle::SoccerPoses& msg)
+void visionCallback(const gazebo_sim::SoccerPoses& msg)
 {
 	RobotPose player1;
 	RobotPose player2;

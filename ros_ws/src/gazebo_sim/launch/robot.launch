@@ -9,7 +9,7 @@
   <!-- Send the robot XML to param server -->
   <param name="$(arg robot_name)_description" command="
     $(find xacro)/xacro.py 
-    $(find walle)/urdf/robot.xacro 
+    $(find gazebo_sim)/urdf/robot.xacro 
     robot_name:=$(arg robot_name)
     jersey_color:=$(arg jersey_color)"/>
 

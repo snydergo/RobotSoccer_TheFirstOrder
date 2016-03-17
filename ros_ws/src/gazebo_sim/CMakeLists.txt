@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(walle)
+project(gazebo_sim)
 
 # Find catkin and any catkin packages
 find_package(catkin REQUIRED COMPONENTS roscpp gazebo_ros rospy std_msgs geometry_msgs message_generation cv_bridge genmsg image_transport sensor_msgs xacro)
@@ -27,12 +27,12 @@ DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 # Declare C++ executables
 add_executable(vision src/vision.cpp)
-add_dependencies(vision walle_generate_messages_cpp)
+add_dependencies(vision gazebo_sim_generate_messages_cpp)
 find_package( OpenCV REQUIRED )
 target_link_libraries(vision ${OpenCV_LIBS} ${catkin_LIBRARIES})
 
 add_executable(controller src/controller.cpp)
-add_dependencies(controller walle_generate_messages_cpp)
+add_dependencies(controller gazebo_sim_generate_messages_cpp)
 target_link_libraries(controller ${catkin_LIBRARIES})
 
 # Add plugins
