@@ -1,0 +1,8 @@
+green
+purple
+orange
+blue
+home
+0
+0
+1

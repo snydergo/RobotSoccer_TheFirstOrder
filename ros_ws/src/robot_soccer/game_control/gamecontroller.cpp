@@ -218,7 +218,8 @@ int main(int argc, char** argv)
         }
         if (paramValid) {
             gameStatePub.publish(gameParam);
-            ofstream cache("src/robot_soccer/game_control/values.txt", ofstream::out);
+            ofstream cache;
+            cache.open("src/robot_soccer/game_control/values.txt");
             if (cache.is_open()) {
                 cache << gameParam.ally1_color << "\n";
                 cache << gameParam.ally2_color.data() << "\n";

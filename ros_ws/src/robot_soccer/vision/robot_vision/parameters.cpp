@@ -29,6 +29,10 @@ void loadConfigData(int argc, char** argv)
 {
     config::ballArea = 50;
     config::ballColor = config::pink;
+    config::allyRobot1Color = config::green;
+    config::allyRobot2Color = config::purple;
+    config::enemyRobot1Color = config::orange;
+    config::enemyRobot2Color = config::blue;
     config::allyRobotCount = 1;
     config::enemyRobotCount = 0;
     config::cropTop = 0;
@@ -36,6 +40,7 @@ void loadConfigData(int argc, char** argv)
     config::cropLeft = 0;
     config::cropRight = 0;
     config::trackRobot = false;
+    config::showVideo = true;
     if (argc == 2) {
         try {
             int ip;
@@ -62,10 +67,6 @@ void loadConfigData(int argc, char** argv)
 }
 
 /*
- * std::string cameraUrl;
-cv::Point2f fieldCenter_px;
-double cmPerPixelConversionFactor;
-bool invertX;
     cout << "loading param file..." << endl;
     FILE* file;
     if (argc == 1) {

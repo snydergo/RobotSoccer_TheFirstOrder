@@ -1,6 +1,7 @@
 
 #include "robot.h"
 #include "utils.h"
+#include <iostream>
 
 // updates the position based on the previous position
 // return true is succeeded, false otherwise
@@ -29,12 +30,19 @@ bool Robot::update(std::vector<UndefinedCVObject>& cvObjs)
 }
 
 // if we do not have a last location we can try to find a robot anywhere on the field
-bool Robot::find(std::vector<UndefinedCVObject>& cvObjs) 
+bool Robot::find(std::vector<cv::Moments> &moments)
 {
-    if (cvObjs.size() < 4) return false;
+    std::vector<UndefinedCVObject> cvObjs;
+    for (int i = 0; i < moments.size(); i+=2) {
+        UndefinedCVObject obj(moments[i]);
+        cvObjs.push_back(obj);
+    }
+
+    if (cvObjs.size() < 2) return false;
+
     UndefinedCVObject newRear;
     UndefinedCVObject newFront;
-    for (int i = 0; i < cvObjs.size(); i+=2) {
+    for (int i = 0; i < cvObjs.size(); i++) {
         if (newRear.area <= cvObjs.at(i).area) {
            newFront = newRear;
            newRear = cvObjs.at(i);

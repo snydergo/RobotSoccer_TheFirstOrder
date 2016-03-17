@@ -9,6 +9,7 @@ bool invertX;
 bool homeIsInverted;
 
 bool trackRobot;
+bool showVideo;
 
 int cropTop;
 int cropBottom;

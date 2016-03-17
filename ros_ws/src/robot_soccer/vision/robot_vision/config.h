@@ -15,6 +15,7 @@ extern bool invertX;
 extern bool homeIsInverted;
 
 extern bool trackRobot;
+extern bool showVideo;
 
 extern int cropTop;
 extern int cropBottom;

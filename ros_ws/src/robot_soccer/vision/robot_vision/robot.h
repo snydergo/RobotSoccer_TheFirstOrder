@@ -3,7 +3,7 @@
 #include "undefinedcvobject.h"
 #include "definedcvobject.h"
 
-class Robot: public DefinedCVObject
+class Robot
 {
 public:
 
@@ -13,8 +13,8 @@ public:
   {
   }
 
-  bool update(std::vector<UndefinedCVObject>& cvObjs) override;
-  bool find(std::vector<UndefinedCVObject>& cvObjs) override;
+  bool update(std::vector<UndefinedCVObject>& cvObjs);
+  bool find(std::vector<cv::Moments> &moments);
 
   cv::Point2f getCenter()
   {
