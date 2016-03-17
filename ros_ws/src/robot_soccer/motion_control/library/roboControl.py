@@ -13,7 +13,7 @@ def roboControl(data):
 ## Decisions ##
     if data.cmdType == 'mov':
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
-        	count = 0
+       	    count = 0
             vx, vy, omega = pid.robot_ctrl(data)
            # store last valid values in case of NaN
             vx_valid = vx
@@ -25,10 +25,10 @@ def roboControl(data):
             # print("NaN - stopping")
             # mlib.stop()
             count = count + 1
-            if count > 50 # Only try and go backwards for a little bit
-            	mlib.goXYOmegaWorld(-vx_valid,-vy_valid,-omega_valid,mlib.deg2rad(data.theta))
-        	else # if you get NaNs for a while, just stop moving. There clearly a bigger issue.
-        		mlib.stop()
+            if count > 50: # Only try and go backwards for a little bit
+                mlib.goXYOmegaWorld(-vx_valid,-vy_valid,-omega_valid,mlib.deg2rad(data.theta))
+            else: # if you get NaNs for a while, just stop moving. There clearly a bigger issue.
+                mlib.stop()
 
 
     elif data.cmdType == 'kick':
