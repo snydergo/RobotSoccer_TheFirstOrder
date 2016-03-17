@@ -2,9 +2,8 @@
 import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import controldata
-import mlib
-import sample_pid as pid
-import globals
+import roboControl as rc
+
 
 class Param:
     def __init__(self):
@@ -17,42 +16,7 @@ class Param:
         self.theta_cmd = ''
         
 def callback1(data):
-#    print data
-    if data.cmdType == 'mov':
-
-        #scale factor
-        sf = .01
-        # threshhold for what is considered "close enough"
-        threshold = .05
-        ## Decisions ##
-        # if the commanded values are small enough, we are close enough. Just stop movement.
-#        data.x = 0; data.y = 0; data.theta = 90;
-    	#data.theta_cmd = 90; data.x_cmd = 0; data.y_cmd = 0;
-    #	print data
-        if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
-            vx, vy, omega = pid.robot_ctrl(data)
-	   # print("omega: " + str(omega))
-            # vx, vy, omega = tunePID.do_action(data)
-            mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
-           # print("\n")
-        else:
-            print("NaN - stopping")
-            mlib.stop()
-    elif data.cmdType == 'kick':
-        mlib.kick()
-    elif data.cmdType == 'kickinit':
-        mlib.init_kick()
-    elif data.cmdType == 'uninitkick':
-        mlib.uninit_kick()
-    elif data.cmdType == 'idle':
-	mlib.stop()
-    elif data.cmdType == 'pid':
-        for i in vars(data):
-            if i in vars(globals):
-                globals.i = eval('data.{}'.format(i))
-
-	
-    # print data
+    rc.roboControl(data)
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
     
