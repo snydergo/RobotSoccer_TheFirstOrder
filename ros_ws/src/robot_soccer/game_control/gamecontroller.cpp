@@ -3,6 +3,7 @@
 #include <sstream>
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include <ros/ros.h>
 
@@ -49,14 +50,32 @@ int main(int argc, char** argv)
 
     std_msgs::String gameCommand;
     robot_soccer::gameparam gameParam;
+    ifstream cache;
+    cache.open("src/robot_soccer/game_control/values.txt");
+    if (cache.is_open()) {
+        cout << "loading cached values" << endl;
+        cache >> gameParam.ally1_color;
+        cache >> gameParam.ally2_color;
+        cache >> gameParam.enemy1_color;
+        cache >> gameParam.enemy2_color;
+        cache >> gameParam.field_pos;
+        cache >> gameParam.ally_robot_count;
+        cache >> gameParam.enemy_robot_count;
+        int temp;
+        cache >> temp;
+        gameParam.show_video = temp != 0;
+        cache.close();
+    } else {
+        gameParam.ally1_color = string("green");
+        gameParam.ally2_color = string("purple");
+        gameParam.enemy1_color = string("orange");
+        gameParam.enemy2_color = string("blue");
+        gameParam.field_pos = string("home");
+        gameParam.ally_robot_count = 1;
+        gameParam.enemy_robot_count = 0;
+        gameParam.show_video = true;
+    }
 
-    gameParam.ally1_color = string("green");
-    gameParam.ally2_color = string("purple");
-    gameParam.enemy1_color = string("orange");
-    gameParam.enemy2_color = string("blue");
-    gameParam.field_pos = string("home");
-    gameParam.ally_robot_count = 1;
-    gameParam.enemy_robot_count = 0;
 
     while (ros::ok())
     {
@@ -73,13 +92,14 @@ int main(int argc, char** argv)
                     << "enemy2_color : green, blue, purple, red, orange, yellow" << endl
                     << "field_pos : home, away" << endl
                     << "ally_robot_count : [0-2]" << endl
-                    << "enemy_robot_count : [0-2]" << endl << endl
+                    << "enemy_robot_count : [0-2]" << endl
+                    << "show_video : true, t, false, f"<< endl << endl
                     << "--- valid commands ---" << endl
                     << "stop (stop robot)" << endl
                     << "start (begin AI state machine)" << endl
                     << "mark (move to starting mark)" << endl
                     << "update (force update of latest paramter values)" << endl << endl
-                    << "type 'quit' to quit" << endl << endl;
+                    << "type 'quit' or 'q' to quit" << endl << endl;
             } else if (parameterName == "ally1_color") {
                 string color = parseColor();
                 if (color != "") {
@@ -161,8 +181,25 @@ int main(int argc, char** argv)
                     std::cout << "### current configuration only supports 0-2 enemy robots ###\n";
                     continue;
                 }
+            } else if (parameterName == "show_video") {
+                string pos;
+                cin >> pos;
+                if (pos != ":") {
+                    cout << "### invalid assignment operator ###" << endl;
+                    continue;
+                }
+                cin >> pos;
+                if (pos == "true" || pos == "t") {
+                    gameParam.show_video = true;
+                    paramValid = true;
+                } else if (pos == "false" || pos == "f") {
+                    gameParam.show_video = false;
+                    paramValid = true;
+                } else {
+                    std::cout << "### show_video can only be true or false ###" << endl;
+                    continue;
+                }
             } else if (parameterName == "update") {
-
                 paramValid = true;
             } else if (parameterName == "stop") {
                 gameCommand.data = "stop";
@@ -173,7 +210,7 @@ int main(int argc, char** argv)
             } else if (parameterName == "mark") {
                 gameCommand.data = "mark";
                 cmdValid = true;
-            } else if (parameterName == "quit") {
+            } else if (parameterName == "quit" || parameterName == "q") {
                 return 0;
             } else {
                 cout << "### Invalid Parameter or Command ###" << endl;
@@ -181,6 +218,19 @@ int main(int argc, char** argv)
         }
         if (paramValid) {
             gameStatePub.publish(gameParam);
+            ofstream cache("src/robot_soccer/game_control/values.txt", ofstream::out);
+            if (cache.is_open()) {
+                cache << gameParam.ally1_color << "\n";
+                cache << gameParam.ally2_color.data() << "\n";
+                cache << gameParam.enemy1_color << "\n";
+                cache << gameParam.enemy2_color << "\n";
+                cache << gameParam.field_pos << "\n";
+                cache << gameParam.ally_robot_count << "\n";
+                cache << gameParam.enemy_robot_count << "\n";
+                cache << (int)gameParam.show_video << "\n";
+                cache.close();
+            }
+
             paramValid = false;
         }
 
