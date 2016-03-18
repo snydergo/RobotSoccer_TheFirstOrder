@@ -5,7 +5,7 @@ Point center(0,0);
 Point enemyGoal(GOAL_XLOCATION,0);
 Point allyGoal(-GOAL_XLOCATION,0);
 Point start1Location(-40,0);
-Point start2Location(-40,0);// = center;
+Point start2Location(-40,0);
 FieldCoord field;
 
 
@@ -192,15 +192,5 @@ bool bkcalc::ballAimed(robotType type){
 
 bool bkcalc::ballThreat(){
 //   std::cout << "####bkcalc::ballThreat####" << std::endl;
-//   std::cout << "ball.velocity.x == " + std::to_string(field.currentStatus.ball.velocity.x) << std::endl;
-//   std::cout << "ball.location.x == " + std::to_string(field.currentStatus.ball.location.x) << std::endl;
-//   if(field.currentStatus.ball.velocity.x < 0 &&
-//          field.currentStatus.ball.location.x < 0){
-//       std::cout << "BALL THREATENING" << std::endl;
-//       return true;
-//   }else{
-//       std::cout << "NO THREAT" << std::endl;
-//       return false;
-//   }(field.currentStatus.ball.location.x < -90)||
-    return ((field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0));
+return ((field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0));
 }
