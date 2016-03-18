@@ -16,6 +16,19 @@ Point calc::predictLocation(FieldObject myobj, double time){
                  myobj.location.y + myobj.velocity.y*time);
 }
 
+bool calc::withinField(Point point){
+    return (abs(point.x) < FIELD_XBORDER && abs(point.y) < FIELD_YBORDER);
+}
+
+Point calc::getNewPoint(Point point){
+    if(withinField(point)){
+        return point;
+    }else{
+        point.x = abs(point.x) > FIELD_XBORDER ? FIELD_XBORDER-2: point.x;
+        point.y = abs(point.y) > FIELD_YBORDER ? FIELD_YBORDER-2: point.y;
+    }
+}
+
 double calc::angleDifference(double currentTheta, double desiredTheta){
     double angle = currentTheta - desiredTheta;
     if (angle < -180) {

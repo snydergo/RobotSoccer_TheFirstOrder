@@ -169,7 +169,8 @@ Point bkcalc::kickPoint(robotType type){
             break;
     }
     dir = calc::directionToPoint(kickerLoc,field.currentStatus.ball.location);
-    result = Point(kickerLoc.x+KICK_FACTOR*dir.x,kickerLoc.y+KICK_FACTOR*dir.y);
+    //result = Point(kickerLoc.x+KICK_FACTOR*dir.x,kickerLoc.y+KICK_FACTOR*dir.y);
+    result = field.currentStatus.ball.location;
     return result;
 }
 
