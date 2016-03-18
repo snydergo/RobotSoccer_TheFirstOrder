@@ -1,35 +1,32 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
-from robot_soccer.msg import controldata
-import roboControl as rc
+from robot_soccer.msg import visiondata
 
-
-class Param:
-    def __init__(self):
-        self.cmdType = ''
-        self.x = ''
-        self.y = ''
-        self.theta = ''
-        self.x_cmd = ''
-        self.y_cmd = ''
-        self.theta_cmd = ''
+class Position(object):
+	def __init__(self):
+		self.raw = list()
+		self.fitlered = list()
+		
+P = Position()
         
-def callback1(data):
-    rc.roboControl(data)
+def plot(data):
     #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 
     
-def ControlListener1():
+def plotter():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
     # node are launched, the previous one is kicked off. The
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
-    rospy.init_node('robot1', anonymous=True)
+    rospy.init_node('plot', anonymous=True)
 
-    rospy.Subscriber("robot1Com", controldata, callback1)
+    # camera data
+    rospy.Subscriber("inputfilter", visiondata, plot)
+    # Filtered data
+    rospy.Subscriber("filterNode", visiondata, plot)
 
 
     ## Decisions ##
@@ -48,4 +45,4 @@ def ControlListener1():
     #rospy.spin()
 
 if __name__ == '__main__':
-    ControlListener1()
+    plotter()
