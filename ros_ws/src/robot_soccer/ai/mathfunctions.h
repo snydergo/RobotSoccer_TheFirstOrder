@@ -25,6 +25,8 @@ namespace calc {
     double getVectorAngle(Point vector);
 
     /*#### THRESHOLD PLAY FUNCTIONS ####*/
+    bool withinField(Point point);
+    Point getNewPoint(Point point);
     bool ballFetched(Robot ally, FieldObject ball);
     bool ballAimed(Robot ally, FieldObject ball, Point enemyGoal);
     bool ballKicked(Robot ally, Point kp);
