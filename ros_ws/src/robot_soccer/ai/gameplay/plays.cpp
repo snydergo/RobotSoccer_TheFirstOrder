@@ -2,13 +2,16 @@
 #include "plays.h"
 
 
-enum class play_state {idle_st, start_st, rushgoal_st, playgoalie_st } play_st;
+enum class play_state {idle_st, start_st, rushgoal_st, playgoalie_st, splitrush_st, splitdefense } play_st;
 
 enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
-    coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st} coord_st;
+    coordFollowball_st, coordFetchball_st, coordDribble_st, coordAim_st,
+    coordSplitFetchball_st} coord_st;
+
 
 //variable that is used for Kicking
 //Kick Point
+side myside = side::none;
 Point kp = center;
 Point startLocation = center;
 //performs all of the necessary inits and calls skills init
@@ -34,6 +37,16 @@ void Plays::playGoalie(){
     play_st = play_state::playgoalie_st;
 }
 
+void Plays::split_rushGoal(side gvnside){
+    myside = gvnside;
+    coord_st = coordSkills_st::coordSplitFetchball_st; //needs to be set when role switches
+    play_st = play_state::splitrush_st;
+}
+
+void Plays::playGoalie(){
+    coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches firstime
+    play_st = play_state::playgoalie_st;
+}
 void Plays::idle(){
     play_st = play_state::idle_st;
 }

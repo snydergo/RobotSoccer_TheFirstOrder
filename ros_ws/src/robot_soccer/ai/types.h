@@ -41,6 +41,6 @@
 
 //## NEEDED TYPES & OBJECTS ##//
 enum class robotType {ally1, ally2, enemy1, enemy2, ball, object, none};
-
+enum class side {left, right, none};
 
 #endif // TYPES_H

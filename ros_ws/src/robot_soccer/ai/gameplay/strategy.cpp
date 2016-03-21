@@ -43,10 +43,9 @@ void Strategies::tick()
 		break;
     case strategy::SeparateRushGoal_st:
         std::cout << "Strategies:: tick() SeparateRushGoal_st" << std::endl;
-        if(true/*robot1Plays != NULL && robot2Plays != NULL*/){
+        if(bkcalc::ballThreat()){
             strategy_st = strategy::SRGPlay_st;
             robot1Plays.playGoalie();
-            robot1Plays.uninitKicker();
             //robot2Plays.rushGoal();
         }
         break;
