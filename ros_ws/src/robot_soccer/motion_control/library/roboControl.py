@@ -11,6 +11,7 @@ count = 0; # For use in timeouts
 # Parses input 'data' and does appropriate action.
 def roboControl(data):
 ## Decisions ##
+    # print(data.cmdType)
     if data.cmdType == 'mov':
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
             count = 0
@@ -31,6 +32,7 @@ def roboControl(data):
         mlib.kick()
     elif data.cmdType == 'kickinit':
         mlib.init_kick()
+        print("kick inited")
     elif data.cmdType == 'kickuninit':
         mlib.uninit_kick()
     elif data.cmdType == 'idle' and (data.x != data.x or data.y != data.y):
