@@ -127,18 +127,11 @@ bool calc::atLocation(double robot_coord, double p_coord){
 }
 
 bool calc::ballFetched(Robot ally, FieldObject ball){
-    //Point dist = calc::directionToPoint(ally.location, ball.location);
     //ball should be less than 4cm in front of robot x check
     //ball should be in the center of the robot with error of 4
     //angle should be towards the ball
     Point fetchballpoint(ball.location.x-FETCHBALL_OFFSET,ball.location.y);
     return calc::atLocation(ally.location, fetchballpoint);
-
-//    if(dist.x > BALLFETCHED_ERR || dist.y > BALLFETCHED_ERR ||
-//            abs(calc::getVectorAngle(dist) - ally.theta) > ANGLE_ERR) {
-//        return false;
-//    }
-
 }
 
 bool calc::ballAimed(Robot ally, FieldObject ball, Point enemyGoal){

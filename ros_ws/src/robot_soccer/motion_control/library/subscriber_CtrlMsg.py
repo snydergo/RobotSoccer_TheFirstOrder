@@ -21,7 +21,7 @@ def callback1(data):
 
     
 def ControlListener1():
-
+    print("Listening started")
     # In ROS, nodes are uniquely named. If two nodes with the same
     # node are launched, the previous one is kicked off. The
     # anonymous=True flag means that rospy will choose a unique

@@ -15,11 +15,6 @@ void Strategies::init(){
     robot2Plays.init();
 }
 
-// bool strategy_shouldRushGoal()
-// {
-// 	return false;
-// }
-
 void Strategies::tick()
 {
 	switch (strategy_st)
@@ -27,7 +22,6 @@ void Strategies::tick()
     case strategy::idle_st:
     	//STATE USED TO WAIT UNTIL THE CAMERA DATA IS UPDATED
         std::cout << "Strategies::tick() idle_st"<< std::endl;
-        //issue with the data not being initialized the first time
         //it is assumed robot is not in the right position
         if(fieldget::getRobotLoc(robot1Plays.allyNum).x != 0 &&
                 fieldget::getRobotLoc(robot1Plays.allyNum).x != 0 &&
