@@ -31,7 +31,7 @@ def roboControl(data):
         mlib.kick()
     elif data.cmdType == 'kickinit':
         mlib.init_kick()
-    elif data.cmdType == 'uninitkick':
+    elif data.cmdType == 'kickuninit':
         mlib.uninit_kick()
     elif data.cmdType == 'idle' and (data.x != data.x or data.y != data.y):
         count = count + 1
