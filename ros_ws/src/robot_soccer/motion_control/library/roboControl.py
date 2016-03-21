@@ -23,7 +23,7 @@ def roboControl(data):
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else:
             # print("NaN - stopping")
-            # mlib.stop()
+            mlib.stop()
 
 
 
