@@ -52,6 +52,7 @@ void Strategies::tick()
         if(true/*robot1Plays != NULL && robot2Plays != NULL*/){
             strategy_st = strategy::SRGPlay_st;
             robot1Plays.playGoalie();
+            robot1Plays.uninitKicker();
             //robot2Plays.rushGoal();
         }
         break;
@@ -65,10 +66,12 @@ void Strategies::tick()
             std::cout << "Strategies::tick() playGoalie"<< std::endl;
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
+            robot1Plays.uninitKicker();
         }else{
             std::cout << "Strategies::tick() rushingGoal"<< std::endl;
             strategy_st = strategy::GPRush_st;
             robot1Plays.rushGoal();
+            robot1Plays.initKicker();
         }
         //robot2Plays.rushGoal();
 		break;
@@ -76,6 +79,7 @@ void Strategies::tick()
         std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
         if(!bkcalc::ballThreat()){
             strategy_st = strategy::GPRush_st;
+            robot1Plays.initKicker();
             robot1Plays.rushGoal();
         }
         break;
@@ -83,6 +87,7 @@ void Strategies::tick()
         std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
         if(bkcalc::ballThreat()){
             strategy_st = strategy::GPGoalie_st;
+            robot1Plays.uninitKicker();
             robot1Plays.playGoalie();
         }
         break;

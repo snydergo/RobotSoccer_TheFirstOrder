@@ -38,6 +38,14 @@ void Plays::idle(){
     play_st = play_state::idle_st;
 }
 
+void Plays::initKicker(){
+    skill.init_kick();
+}
+
+void Plays::uninitKicker(){
+    skill.uninit_kick();
+}
+
 //### END OF FUNCTIONS CALLED OUTSIDE ###//
 void Plays::tick(){
     //needed changes
@@ -79,7 +87,6 @@ void Plays::tick(){
                             aim_cnt = 0;
                             std::cout << "Plays::tick() BALL AIMED" << std::endl;
                             kp = bkcalc::kickPoint(allyNum);
-                            skill.init_kick();
                             coord_st = coordSkills_st::coordKick_st;
                         }
                         break;
@@ -88,7 +95,6 @@ void Plays::tick(){
                         skill.kick();
                         skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum,kp)){
-                            skill.uninit_kick();
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
                         }

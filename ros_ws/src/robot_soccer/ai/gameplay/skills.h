@@ -37,8 +37,8 @@ public:
     //FUNCTIONS THAT USE UTILITIES
     void continueIdle();
     void continueGoToPoint();
-    void continueInitKick();
-    void continueUninitKick();
+    void initKicker();
+    void uninitKicker();
     void continueKick();
     void continueFetchBall();
     void continueDribble();

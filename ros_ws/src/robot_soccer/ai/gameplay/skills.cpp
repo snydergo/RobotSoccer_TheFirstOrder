@@ -33,10 +33,12 @@ void Skills::kick(){
 
 void Skills::init_kick(){
     skill_st = skill_state::initkick_st;
+    initKicker();
 }
 
 void Skills::uninit_kick(){
     skill_st = skill_state::uninitkick_st;
+    uninitKicker();
 }
 
 void Skills::dribble(){
@@ -61,11 +63,11 @@ void Skills::continueGoToPoint(){
     utils.moveToPoint(*fieldget::getRobot(allyNum),dest,theta_cmd);
 }
 
-void Skills::continueInitKick(){
+void Skills::initKicker(){
     utils.initKick(*fieldget::getRobot(allyNum));
 }
 
-void Skills::continueUninitKick(){
+void Skills::uninitKicker(){
     utils.uninitKick(*fieldget::getRobot(allyNum));
 }
 
@@ -138,6 +140,12 @@ void Skills::tick(){
             break;
         case skill_state::aim_st:
             continueAim();
+            break;
+        case skill_state::initkick_st:
+            initKicker();
+            break;
+        case skill_state::uninitkick_st:
+            uninitKicker();
             break;
         default:
             //throw exception

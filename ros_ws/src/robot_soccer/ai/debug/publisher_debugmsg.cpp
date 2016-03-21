@@ -71,9 +71,10 @@ int main(int argc, char **argv)
             }else {cmdTypeValid = true;}
 
         }else if(cmdtype.compare("kick") == 0 || cmdtype.compare("kickinit") == 0 ||
-                    cmdtype.compare("idle") == 0){
-            msg.cmdType = cmdtype;
+                    cmdtype.compare("kickuninit") == 0){
             cmdTypeValid = true;
+            msg.cmdType = cmdtype;
+            std::cout << "cmdType == " + msg.cmdType << std::endl;
         }else if (cmdtype.compare("quit") == 0 ||
                   cmdtype.compare("q") == 0){
             exit(0);
@@ -87,6 +88,7 @@ int main(int argc, char **argv)
      * given as a template parameter to the advertise<>() call, as was done
      * in the constructor above.
      */
+
     chatter_pub.publish(msg);
 
     ros::spinOnce();
