@@ -15,6 +15,8 @@ def roboControl(data):
     if data.cmdType == 'mov':
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
             count = 0
+            theta_error = data.theta_cmd - data.theta
+            print("theta_error: ",theta_error)
             vx, vy, omega = pid.robot_ctrl(data)
            # store last valid values in case of NaN
             vx_valid = vx
@@ -32,7 +34,7 @@ def roboControl(data):
         mlib.kick()
     elif data.cmdType == 'kickinit':
         mlib.init_kick()
-        print("kick inited")
+        # print("kick inited")
     elif data.cmdType == 'kickuninit':
         mlib.uninit_kick()
     elif data.cmdType == 'idle' and (data.x != data.x or data.y != data.y):
