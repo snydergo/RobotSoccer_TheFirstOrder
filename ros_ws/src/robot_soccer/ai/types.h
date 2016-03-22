@@ -12,11 +12,11 @@
 #define GOAL_RADIUS GOAL_WIDTH/2
 #define GOAL_ANGLE_ERR 10
 #define FIELD_XBORDER 180
-#define FIELD_YBORDER 90
+#define FIELD_YBORDER 120
 #define PI 3.141592653
 
 //## THRESHOLD DEFINITIONS ##//
-#define ANGLE_ERR 25
+#define ANGLE_ERR 15
 #define AIM_MAX_CNT 15
 #define DISTANCE_ERR 36 // this is an error of 5cm
 #define PERIMETER_ERR 100
@@ -41,6 +41,6 @@
 
 //## NEEDED TYPES & OBJECTS ##//
 enum class robotType {ally1, ally2, enemy1, enemy2, ball, object, none};
-
+enum class side {left, right, none};
 
 #endif // TYPES_H

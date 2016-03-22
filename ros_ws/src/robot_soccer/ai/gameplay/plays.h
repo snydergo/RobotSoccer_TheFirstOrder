@@ -17,6 +17,8 @@ public:
     {
     }
 
+    void initKicker();
+    void uninitKicker();
     void rushGoal();
     void playGoalie();
     void idle();

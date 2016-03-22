@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     while(!cmdTypeValid){
         std::cout << "### NEW CMD ###\nINPUT CMDTYPE" << std::endl;
         std::cin >> cmdtype;
-        if(cmdtype.compare("move") == 0){
+        if(cmdtype == "move"){
             msg.cmdType = cmdtype;
             std::cout << "Enter xcmd\n";
             std::cin >> gvn_xcmd;
@@ -70,12 +70,13 @@ int main(int argc, char **argv)
                 }
             }else {cmdTypeValid = true;}
 
-        }else if(cmdtype.compare("kick") == 0 || cmdtype.compare("kickinit") == 0 ||
-                    cmdtype.compare("idle") == 0){
-            msg.cmdType = cmdtype;
+        }else if(cmdtype == "kick" || cmdtype == "kickinit"||
+                    cmdtype == "kickuninit"){
             cmdTypeValid = true;
-        }else if (cmdtype.compare("quit") == 0 ||
-                  cmdtype.compare("q") == 0){
+            msg.cmdType = cmdtype;
+            std::cout << "cmdType == " + msg.cmdType << std::endl;
+        }else if (cmdtype == "quit" ||
+                  cmdtype == "q"){
             exit(0);
         }else
             std::cout << "Not a valid CMD TYPE\n";
@@ -87,6 +88,7 @@ int main(int argc, char **argv)
      * given as a template parameter to the advertise<>() call, as was done
      * in the constructor above.
      */
+
     chatter_pub.publish(msg);
 
     ros::spinOnce();

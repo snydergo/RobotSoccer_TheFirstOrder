@@ -93,6 +93,8 @@ void debugSM(ros::NodeHandle &n)
     skill1.init();
     Point dest;
     bool kickball = false;
+    char kickCounter = 0;
+    bool kickCmd = false;
     while(ros::ok()){
 
         if (visionUpdated) {
@@ -114,7 +116,13 @@ void debugSM(ros::NodeHandle &n)
             } else if (cmdRob1.cmdType == "kick") {
                 kickball = true;
                 skill1.kick();
-            } else {
+            } else if (cmdRob1.cmdType == "kickinit"){
+                skill1.init_kick();
+                std::cout << "initing kicker" << std::endl;
+            } else if (cmdRob1.cmdType == "kickuninit"){
+                std::cout << "unit kicker" << std::endl;
+                skill1.uninit_kick();
+            } else{
                 skill1.idle();
             }
         }
@@ -123,7 +131,7 @@ void debugSM(ros::NodeHandle &n)
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
             checkCmd(cmdRob1);
-            std::cout << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd << " w: " << cmdRob1.theta_cmd << std::endl;
+            std::cout << "cmdType: "+ cmdRob1.cmdType << std::endl << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd << " w: " << cmdRob1.theta_cmd << std::endl;
             robo1Com.publish(cmdRob1);
 
         }

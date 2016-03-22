@@ -58,6 +58,7 @@ void Utilities::moveToPoint(Robot robot, Point point, double theta){
 void Utilities::initKick(Robot robot){
     robot_soccer::controldata cmd;
     cmd.cmdType = "kickinit";
+    std::cout << "Utilities::initKick()" << std::endl;
     assignCmd(robot.tag, cmd);
 }
 
