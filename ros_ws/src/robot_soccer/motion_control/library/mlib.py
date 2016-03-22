@@ -226,9 +226,9 @@ def stop():
 
 # Since we are using the roboclaw to source enough voltage for the kicker, we are using a roboclaw command to kick it
 def kick():
-	roboclaw.ForwardM2(addr2,0) # max power
+	roboclaw.ForwardM2(addr2,127) # max power
 	time.sleep(.1)
-	return roboclaw.ForwardM2(addr2,127)
+	return roboclaw.ForwardM2(addr2,0)
 
 
 def init_kick():
