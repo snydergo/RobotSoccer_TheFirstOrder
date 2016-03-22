@@ -75,10 +75,10 @@ def sat(f,limit):
 
     if (f > limit):
         out = limit
-        print("sat at {}".format(limit))
+        # print("sat at {}".format(limit))
     elif (f < -limit):
         out = -limit
-        print("sat at {}".format(limit))
+        # print("sat at {}".format(limit))
     else:
         out = f
 
