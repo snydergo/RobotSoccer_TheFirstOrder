@@ -14,6 +14,7 @@ enum class coordSkills_st {coordIdle_st, coordGotogoal_st, coordKick_st,
 side myside = side::none;
 Point kp = center;
 Point startLocation = center;
+
 //performs all of the necessary inits and calls skills init
 void Plays::init(){
     play_st = play_state::idle_st;
@@ -43,10 +44,6 @@ void Plays::split_rushGoal(side gvnside){
     play_st = play_state::splitrush_st;
 }
 
-void Plays::playGoalie(){
-    coord_st = coordSkills_st::coordGotogoal_st; //needs to be set when role switches firstime
-    play_st = play_state::playgoalie_st;
-}
 void Plays::idle(){
     play_st = play_state::idle_st;
 }
@@ -87,6 +84,7 @@ void Plays::tick(){
                        if(bkcalc::ballFetched(allyNum)){
                             std::cout << "Plays::tick() BALL FETCHED" << std::endl;
                             coord_st = coordSkills_st::coordAim_st;
+                            skill.initKicker();
                         }
                         break;
                     case coordSkills_st::coordAim_st:
@@ -105,11 +103,11 @@ void Plays::tick(){
                         break;
                     case coordSkills_st::coordKick_st:
                         std::cout << " kicking ball" << std::endl;
-                        skill.kick();
                         skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum,kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
+                            skill.kick();
                         }
                         break;
                     default:

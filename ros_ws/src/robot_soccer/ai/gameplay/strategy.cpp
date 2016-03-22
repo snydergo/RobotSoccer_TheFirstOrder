@@ -72,7 +72,6 @@ void Strategies::tick()
         std::cout << "Strategies::tick() GPGoalie_st (Playing Goalie)"<< std::endl;
         if(!bkcalc::ballThreat()){
             strategy_st = strategy::GPRush_st;
-            robot1Plays.initKicker();
             robot1Plays.rushGoal();
         }
         break;
@@ -80,7 +79,6 @@ void Strategies::tick()
         std::cout << "Strategies::tick() GPRush_st (rushing Goal)"<< std::endl;
         if(bkcalc::ballThreat()){
             strategy_st = strategy::GPGoalie_st;
-            robot1Plays.uninitKicker();
             robot1Plays.playGoalie();
         }
         break;

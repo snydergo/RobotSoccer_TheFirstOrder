@@ -10,36 +10,43 @@ import sample_lpf as lpf
 from numpy.matlib import matrix
 
 
-global filteredData
-global old_time
-global newData = False
+filteredData = visiondata
+old_time = visiondata.sys_time
+newData = False
 
 
 game_pieces = lpf.GamePieces()
 
 def filter(raw_data):
-    if old_time != raw_data.time:
+    global old_time
+    global game_pieces
+    global filteredData
+    global newData
+    if old_time != raw_data.sys_time:
+        print("old_time != raw_data.sys_time")
         game_pieces.update_all(raw_data)
     else:        
         game_pieces.filter_all()
     
     newData = True
-
     filteredData = game_pieces.gen_msg()
-    
+    print("filteredData generated")
     
 
 def filterData():
+    global filteredData
+    global newData
     #subscriber information setup
     rospy.init_node('filterNode', anonymous=True)
-    rospy.Subscriber("inputfilter", visiondata, filter)
+    rospy.Subscriber("vision_data", visiondata, filter)
     #publisher information setup
-    pub = rospy.Publisher('outputfilter', visiondata, queue_size=10)
-    rate = rospy.Rate(10) # 10hz
+    pub = rospy.Publisher('filteredvision_data', visiondata, queue_size=10)
+    rate = rospy.Rate(60) # 60hz
 
     ## Decisions ##
     while not rospy.is_shutdown():
         if newData:
+            print("newData received")
             pub.publish(filteredData)
             newData = False
         rate.sleep()

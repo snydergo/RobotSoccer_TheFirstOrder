@@ -17,6 +17,7 @@ public:
     {
     }
 
+    void split_rushGoal(side gvnside);
     void initKicker();
     void uninitKicker();
     void rushGoal();

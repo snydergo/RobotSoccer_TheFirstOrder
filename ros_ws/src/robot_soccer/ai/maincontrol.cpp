@@ -150,8 +150,8 @@ void filterSM(ros::NodeHandle &n)
     ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 5);
     while(ros::ok()){
         if (visionUpdated) {
-            visionUpdated = false;
-            dataInitialized = true;
+           visionUpdated = false;
+           dataInitialized = true;
            field.updateStatus(visionStatus_msg);
            filterCom.publish(vision_msg);
         }
@@ -162,6 +162,57 @@ void filterSM(ros::NodeHandle &n)
         }
         ros::spinOnce();
         loop_rate.sleep();
+    }
+}
+
+void predictSM(ros::NodeHandle &n)
+{
+    //PUBLISHER FOR MOTIONCONTROL
+    ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 5);
+    ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 5);
+
+    //SUBSCRIBER FROM FILTERED VISION
+    ros::Subscriber vision_subscriber = n.subscribe("filteredvision_data", 5, filterCallback);
+    (void*)vision_subscriber;
+
+    ros::Rate loop_rate(TICKS_PER_SEC);
+    int count = 0;
+
+    bool dataInitialized = false;
+
+//    ros::Subscriber filter_subscriber = n.subscribe("outputfilter", 1000, filterCallback);
+//    ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 1000);
+
+    ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
+    (void*)gameCmdSub;
+    Strategies strategies;
+    strategies.init();
+    while (ros::ok())
+    {
+        count++;
+        if (predictedUpdated) {
+            predictedUpdated = false;
+           // filterCom.publish(robot_soccer::visiondata(visionStatus_msg));
+            dataInitialized = true;
+            field.updateStatus(predicted);
+        }
+        strategies.tick();
+
+        if (sendCmd_Rob1) {
+            sendCmd_Rob1 = false;
+            checkCmd(cmdRob1);
+            robo1Com.publish(cmdRob1);
+        }
+        if (sendCmd_Rob2){
+            sendCmd_Rob2 = false;
+            checkCmd(cmdRob2);
+            robo2Com.publish(cmdRob2);
+        }
+
+        ros::spinOnce();
+
+        loop_rate.sleep();
+
     }
 }
 
@@ -183,6 +234,8 @@ int main(int argc, char *argv[])
         debugSM(n);
     } else if (option == "filter") {
         filterSM(n);
+    } else if(option == "predict"){
+        predictSM(n);
     } else {
         mainControlSM(n);
     }
