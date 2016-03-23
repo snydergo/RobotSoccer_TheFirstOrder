@@ -29,15 +29,13 @@ def roboControl(data):
             mlib.stop()
 
 
-
     elif data.cmdType == 'kick':
         print "kick"
         mlib.kick()
-    # elif data.cmdType == 'kickinit':
-    #     mlib.init_kick()
-    #     # print("kick inited")
-    # elif data.cmdType == 'kickuninit':
-    #     mlib.uninit_kick()
+    elif data.cmdType == 'fast':
+        globals.xy_limit = .7
+    elif data.cmdType == 'slow':
+        globals.xy_limit = .3
     elif data.cmdType == 'idle' and (data.x != data.x or data.y != data.y):
         count = count + 1
         if count > 50: # Only try and go backwards for a little bit
