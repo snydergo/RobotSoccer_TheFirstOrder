@@ -9,54 +9,72 @@ import globals
 # velocity = matlib.zeros(shape=(3,1))
 # old_position_measurement = matlib.zeros(shape=(3,1))
 
+def noNaNs(pos):
+    for i in pos:
+        if i != i:
+            return False
+    return True
+
+# def checkBounds(pos, floor, ceil):
+#     for c in pos:
+#         if c > ceil:
+#             print('out of bounds: ', c)
+#         if c < floor:
+#             print('out of bounds: ', c)
+
 class GamePieces(object):
     def __init__(self):
-        self.op0 = Piece('op0')
-        self.op1 = Piece('op1')
-        self.tm0 = Piece('tm0')
-        self.tm1 = Piece('tm1')
-        self.ball = Piece('ball')
+        piece_names = ['op0', 'op1', 'tm0', 'tm1', 'ball'] # names from visiondata data type
+        self.pieces = {name: Piece(name) for name in piece_names}
 
     def update_all(self, vision_msg):
-        # idx = {'x':0, 'y':1, 'w':2}
+        msg = vision_msg.__dict__
 
-        self.op0.position = matrix([vision_msg.op0_x, vision_msg.op0_y, vision_msg.op0_w]).reshape(3,1)
-        self.op0.camera_flag = 1
-        self.op1.position = matrix([vision_msg.op1_x, vision_msg.op1_y, vision_msg.op1_w]).reshape(3,1)
-        self.op1.camera_flag = 1
-        self.tm0.position = matrix([vision_msg.tm0_x, vision_msg.tm0_y, vision_msg.tm0_w]).reshape(3,1)
-        self.tm0.camera_flag = 1
-        self.tm1.position = matrix([vision_msg.tm1_x, vision_msg.tm1_y, vision_msg.tm1_w]).reshape(3,1)
-        self.tm1.camera_flag = 1
-        self.ball.position = matrix([vision_msg.ball_x, vision_msg.ball_y, 0]).reshape(3,1)
-        self.ball.camera_flag = 1
+        for name, piece in self.pieces:
+            pos_l = [msg['{}_x'.format(name)], msg['{}_y'.format(name)], msg['{}_w'.format(name)]]
+            pos = [round(i,3) for i in pos_l]
+            # checkBounds(pos)
+            if noNans(pos):
+                setattr(piece, 'position', matrix(pos).reshape(3,1))
+                setattr(piece, 'camera_flag', True)
 
-        # for var in vars(vision_msg):
-        #     name, p = var.split('_')
-        #     if p in idx:
-        #         exec("self.{0}.position[idx['{1}']] = vision_msg.{2}".format(name, p, var))
-        #     exec("self.{}.camera_flag = 1".format(name))
+        # self.op0.position = matrix([vision_msg.op0_x, vision_msg.op0_y, vision_msg.op0_w]).reshape(3,1)
+        # self.op0.camera_flag = 1
+        # self.op1.position = matrix([vision_msg.op1_x, vision_msg.op1_y, vision_msg.op1_w]).reshape(3,1)
+        # self.op1.camera_flag = 1
+        # self.tm0.position = matrix([vision_msg.tm0_x, vision_msg.tm0_y, vision_msg.tm0_w]).reshape(3,1)
+        # self.tm0.camera_flag = 1
+        # self.tm1.position = matrix([vision_msg.tm1_x, vision_msg.tm1_y, vision_msg.tm1_w]).reshape(3,1)
+        # self.tm1.camera_flag = 1
+        # self.ball.position = matrix([vision_msg.ball_x, vision_msg.ball_y, 0]).reshape(3,1)
+        # self.ball.camera_flag = 1
 
     def filter_all(self):
-        for var in vars(self):
-            lp_filter(eval("self.{}".format(var)))
+        for piece in self.pieces.values():
+            lp_filter(piece)
 
     def gen_msg(self):
-        msg = visiondata()        
-        msg.tm0_x = self.tm0.position[0]
-        msg.tm0_y = self.tm0.position[1]
-        msg.tm0_w = self.tm0.position[2]
-        msg.tm1_x = self.tm1.position[0]
-        msg.tm1_y = self.tm1.position[1]
-        msg.tm1_w = self.tm1.position[2]
-        msg.op0_x = self.op0.position[0]
-        msg.op0_y = self.op0.position[1]
-        msg.op0_w = self.op0.position[2]
-        msg.op1_x = self.op1.position[0]
-        msg.op1_y = self.op1.position[1]
-        msg.op1_w = self.op1.position[2]
-        msg.ball_x = self.ball.position[0]
-        msg.ball_y = self.ball.position[1]
+        msg = visiondata()
+
+        for name, piece in self.pieces.items():
+            setattr(msg, '{}_x'.format(name), piece.position[0])
+            setattr(msg, '{}_y'.format(name), piece.position[1])
+            setattr(msg, '{}_w'.format(name), piece.position[2])
+
+        # msg.tm0_x = self.tm0.position[0]
+        # msg.tm0_y = self.tm0.position[1]
+        # msg.tm0_w = self.tm0.position[2]
+        # msg.tm1_x = self.tm1.position[0]
+        # msg.tm1_y = self.tm1.position[1]
+        # msg.tm1_w = self.tm1.position[2]
+        # msg.op0_x = self.op0.position[0]
+        # msg.op0_y = self.op0.position[1]
+        # msg.op0_w = self.op0.position[2]
+        # msg.op1_x = self.op1.position[0]
+        # msg.op1_y = self.op1.position[1]
+        # msg.op1_w = self.op1.position[2]
+        # msg.ball_x = self.ball.position[0]
+        # msg.ball_y = self.ball.position[1]
 
         return msg              
 
