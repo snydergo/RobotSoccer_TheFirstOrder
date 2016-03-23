@@ -16,17 +16,17 @@ from numpy import matlib
 # James' values
 
 kp_x	 = 0.02
-ki_x	 = 0.002
-kd_x	 = 0.001
+ki_x	 = 0#.002
+kd_x	 = 0#.001
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
 kp_theta = 0.01#0.013
-ki_theta = 0.001
-kd_theta = 0.0005
+ki_theta = 0#.001
+kd_theta = 0#.0005
 
-xy_limit	 = 0.7#.4
-th_limit	 = 0.7#0.2 #5
+xy_limit	 = .3#0.7#.4
+th_limit	 = 0.3#0.2 #5
 
 xy_thresh	 = 100#5
 theta_thresh = 100#5
