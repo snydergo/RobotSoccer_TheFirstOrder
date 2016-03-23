@@ -28,6 +28,8 @@ class GamePieces(object):
         self.pieces = {name: Piece(name) for name in piece_names}
 
     def update_all(self, vision_msg):
+        vm = visiondata()
+        vm = vision_msg
         msg = vision_msg.__dict__
 
         for name, piece in self.pieces:
