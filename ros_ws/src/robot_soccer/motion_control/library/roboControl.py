@@ -16,7 +16,7 @@ def roboControl(data):
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
             count = 0
             theta_error = data.theta_cmd - data.theta
-            print("theta_error: ",theta_error)
+            # print("theta_error: ",theta_error)
             vx, vy, omega = pid.robot_ctrl(data)
            # store last valid values in case of NaN
             vx_valid = vx
