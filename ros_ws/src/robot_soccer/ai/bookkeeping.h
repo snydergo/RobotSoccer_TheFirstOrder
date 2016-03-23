@@ -27,7 +27,7 @@ extern Point enemyGoal;
 extern Point allyGoal;
 extern Point start1Location;
 extern Point start2Location;
-
+extern bool iskick;
 //vision globals
 extern bool visionUpdated;
 extern robot_soccer::visiondata vision_msg;

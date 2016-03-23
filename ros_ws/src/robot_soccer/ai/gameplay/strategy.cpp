@@ -59,12 +59,10 @@ void Strategies::tick()
             std::cout << "Strategies::tick() playGoalie"<< std::endl;
             strategy_st = strategy::GPGoalie_st;
             robot1Plays.playGoalie();
-            robot1Plays.uninitKicker();
         }else{
             std::cout << "Strategies::tick() rushingGoal"<< std::endl;
             strategy_st = strategy::GPRush_st;
             robot1Plays.rushGoal();
-            robot1Plays.initKicker();
         }
         //robot2Plays.rushGoal();
 		break;
