@@ -31,6 +31,7 @@ def roboControl(data):
 
 
     elif data.cmdType == 'kick':
+        print "kick"
         mlib.kick()
     elif data.cmdType == 'kickinit':
         mlib.init_kick()
