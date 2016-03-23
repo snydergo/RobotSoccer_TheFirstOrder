@@ -38,9 +38,6 @@ void mainControlSM(ros::NodeHandle &n)
 
     bool dataInitialized = false;
 
-    //    ros::Subscriber filter_subscriber = n.subscribe("outputfilter", 1000, filterCallback);
-    //    ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 1000);
-
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
     Strategies strategies;
@@ -50,7 +47,6 @@ void mainControlSM(ros::NodeHandle &n)
         count++;
         if (visionUpdated) {
             visionUpdated = false;
-           // filterCom.publish(robot_soccer::visiondata(visionStatus_msg));
             dataInitialized = true;
             field.updateStatus(visionStatus_msg);
         }
@@ -180,9 +176,6 @@ void predictSM(ros::NodeHandle &n)
 
     bool dataInitialized = false;
 
-//    ros::Subscriber filter_subscriber = n.subscribe("outputfilter", 1000, filterCallback);
-//    ros::Publisher filterCom = n.advertise<robot_soccer::visiondata>("inputfilter", 1000);
-
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
     Strategies strategies;
@@ -192,7 +185,6 @@ void predictSM(ros::NodeHandle &n)
         count++;
         if (predictedUpdated) {
             predictedUpdated = false;
-           // filterCom.publish(robot_soccer::visiondata(visionStatus_msg));
             dataInitialized = true;
             field.updateStatus(predicted);
         }
