@@ -253,7 +253,9 @@ void checkCmd(robot_soccer::controldata &cmdRob){
     if(cmdRob.x != cmdRob.x || cmdRob.x_cmd != cmdRob.x_cmd){
         std::cout << "maincontrol::checkCmd() ##nan's detected## reverting to IDLE" << std::endl;
         cmdRob.cmdType = "idle";
-
+    }else if(iskick){
+        cmdRob.cmdType = "kick";
+        iskick = false;
     }
 }
 

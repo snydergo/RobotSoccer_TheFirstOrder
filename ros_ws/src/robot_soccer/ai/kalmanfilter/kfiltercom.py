@@ -10,45 +10,51 @@ import sample_lpf as lpf
 from numpy.matlib import matrix
 
 
-filteredData = visiondata
-old_time = visiondata.sys_time
-newData = False
+filteredData = visiondata()
+lastVisionData = visiondata()
+newDataFlag = False
+gamePieces = lpf.GamePieces()
 
-
-game_pieces = lpf.GamePieces()
-
-def filter(raw_data):
-    global old_time
-    global game_pieces
+def filter(update):
+    global gamePieces
     global filteredData
-    global newData
-    if old_time != raw_data.sys_time:
-        print("old_time != raw_data.sys_time")
-        game_pieces.update_all(raw_data)
-    else:        
-        game_pieces.filter_all()
-    
-    newData = True
-    filteredData = game_pieces.gen_msg()
-    print("filteredData generated")
+    global lastVisionData
+    # print lastVisionData
+    if update:
+        gamePieces.update_all(lastVisionData)      
+    gamePieces.filter_all()
+    filteredData = gamePieces.gen_msg()
+    #print filteredData
+    # print("filteredData generated")
+
+def callback(new_data):
+    global newDataFlag
+    global lastVisionData
+    newDataFlag = True
+    lastVisionData = new_data
     
 
 def filterData():
     global filteredData
-    global newData
+    global newDataFlag
     #subscriber information setup
     rospy.init_node('filterNode', anonymous=True)
-    rospy.Subscriber("vision_data", visiondata, filter)
+    rospy.Subscriber("vision_data", visiondata, callback)
     #publisher information setup
     pub = rospy.Publisher('filteredvision_data', visiondata, queue_size=10)
-    rate = rospy.Rate(60) # 60hz
+    rate = rospy.Rate(globals.loop_rate) # 60hz
 
     ## Decisions ##
     while not rospy.is_shutdown():
-        if newData:
-            print("newData received")
-            pub.publish(filteredData)
-            newData = False
+        if newDataFlag:
+            filter(True)
+            # print("newData received")
+            newDataFlag = False
+        #else:
+            #filter(False)
+            #print("predicting...")
+
+        pub.publish(filteredData)           
         rate.sleep()
     return
 

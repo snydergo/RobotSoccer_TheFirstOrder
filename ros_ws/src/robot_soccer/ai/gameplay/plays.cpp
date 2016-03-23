@@ -84,7 +84,6 @@ void Plays::tick(){
                        if(bkcalc::ballFetched(allyNum)){
                             std::cout << "Plays::tick() BALL FETCHED" << std::endl;
                             coord_st = coordSkills_st::coordAim_st;
-                            skill.initKicker();
                         }
                         break;
                     case coordSkills_st::coordAim_st:
@@ -106,8 +105,10 @@ void Plays::tick(){
                         skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum,kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
+                            std::cout << "#############################################################################" << std::endl;
                             coord_st = coordSkills_st::coordFetchball_st;
                             skill.kick();
+                            iskick = true;
                         }
                         break;
                     default:

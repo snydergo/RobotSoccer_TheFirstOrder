@@ -7,7 +7,7 @@ Point allyGoal(-GOAL_XLOCATION,0);
 Point start1Location(-40,0);
 Point start2Location(-40,0);
 FieldCoord field;
-
+bool iskick = false;
 
 //## VISION DATA ##//
 bool visionUpdated;
