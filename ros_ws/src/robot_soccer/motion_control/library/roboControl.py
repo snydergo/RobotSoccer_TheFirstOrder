@@ -11,12 +11,28 @@ count = 0; # For use in timeouts
 # Parses input 'data' and does appropriate action.
 def roboControl(data):
 ## Decisions ##
-    # print(data.cmdType)
-    if data.cmdType == 'mov':
+    if data.cmdType == 'movefast':
+        globals.xy_limit = globals.fast_limit
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
             count = 0
-            theta_error = data.theta_cmd - data.theta
-            # print("theta_error: ",theta_error)
+            vx, vy, omega = pid.robot_ctrl(data)
+           # store last valid values in case of NaN
+            vx_valid = vx
+            vy_valid = vy
+            omega_valid = omega
+            # Go, baby, go
+            mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
+        else: # we got a NaN
+            count = count + 1
+            if count < 50: # Only try and go backwards for a little bit
+                mlib.goXYOmegaWorld(-vx_valid,-vy_valid,-omega_valid,mlib.deg2rad(data.theta))
+            else: # if you get NaNs for a while, just stop moving. There clearly a bigger issue.
+                mlib.stop()
+
+    elif data.cmdType == 'moveslow':
+        globals.xy_limit = globals.slow_limit
+        if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
+            count = 0
             vx, vy, omega = pid.robot_ctrl(data)
            # store last valid values in case of NaN
             vx_valid = vx
@@ -25,22 +41,14 @@ def roboControl(data):
             # Go, baby, go
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else:
-            # print("NaN - stopping")
-            mlib.stop()
-
+            count = count + 1
+            if count < 50: # Only try and go backwards for a little bit
+                mlib.goXYOmegaWorld(-vx_valid,-vy_valid,-omega_valid,mlib.deg2rad(data.theta))
+            else: # if you get NaNs for a while, just stop moving. There clearly a bigger issue.
+                mlib.stop()
 
     elif data.cmdType == 'kick':
-        print "kick"
+        #print "kick"
         mlib.kick()
-    elif data.cmdType == 'fast':
-        globals.xy_limit = .7
-    elif data.cmdType == 'slow':
-        globals.xy_limit = .3
-    elif data.cmdType == 'idle' and (data.x != data.x or data.y != data.y):
-        count = count + 1
-        if count > 50: # Only try and go backwards for a little bit
-            mlib.goXYOmegaWorld(-vx_valid,-vy_valid,-omega_valid,mlib.deg2rad(data.theta))
-        else: # if you get NaNs for a while, just stop moving. There clearly a bigger issue.
-            mlib.stop()
     elif data.cmdType == 'idle':
         mlib.stop()
