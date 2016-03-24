@@ -256,6 +256,8 @@ void checkCmd(robot_soccer::controldata &cmdRob){
     }else if(iskick){
         cmdRob.cmdType = "kick";
         iskick = false;
+    }else if (abs(cmdRob.x_cmd) > FIELD_XBORDER){
+        cmdRob.x_cmd = FIELD_XBORDER;
     }
 }
 

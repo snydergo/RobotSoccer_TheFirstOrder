@@ -195,5 +195,5 @@ bool bkcalc::ballAimed(robotType type){
 
 bool bkcalc::ballThreat(){
 //   std::cout << "####bkcalc::ballThreat####" << std::endl;
-return ((field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < 0));
+return ((field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < -20));
 }

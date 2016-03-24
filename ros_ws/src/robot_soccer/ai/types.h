@@ -17,7 +17,7 @@
 
 //## THRESHOLD DEFINITIONS ##//
 #define ANGLE_ERR 20
-#define AIM_MAX_CNT 200
+#define AIM_MAX_CNT 80
 #define DISTANCE_ERR 36 // this is an error of 5cm
 #define PERIMETER_ERR 100
 #define PERIMETER_XOFFSET 5

@@ -2,18 +2,31 @@
 import rospy
 from std_msgs.msg import String
 from robot_soccer.msg import visiondata
+from scipy import io
+import numpy as np
+import time
+import csv
 
-class Position(object):
-	def __init__(self):
-		self.raw = list()
-		self.fitlered = list()
+# class Position(object):
+# 	def __init__(self):
+# 		self.raw = list()
+# 		self.fitlered = list()
 		
-P = Position()
-        
-def plot(data):
-    #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+# P = Position()
 
-    
+# io.savemat('filter_ball.mat',{'time':np.zeros(2)})  # write
+# io.savemat('ball.mat',{'time':np.zeros(2)})  # write
+        
+def plot_vision(data):
+    with open("ball.csv", "a") as fp:
+        wr = csv.writer(fp, dialect='excel')
+        wr.writerow([data.ball_x, data.ball_y])
+
+def plot_filtered(data):
+    with open("filter_ball.csv", "a") as fp:
+        wr = csv.writer(fp, dialect='excel')
+        wr.writerow([data.ball_x, data.ball_y])
+        
 def plotter():
 
     # In ROS, nodes are uniquely named. If two nodes with the same
@@ -24,9 +37,9 @@ def plotter():
     rospy.init_node('plot', anonymous=True)
 
     # camera data
-    rospy.Subscriber("inputfilter", visiondata, plot)
+    rospy.Subscriber("vision_data", visiondata, plot_vision)
     # Filtered data
-    rospy.Subscriber("filterNode", visiondata, plot)
+    rospy.Subscriber("filteredvision_data", visiondata, plot_filtered)
 
 
     ## Decisions ##

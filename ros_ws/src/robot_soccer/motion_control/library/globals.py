@@ -31,13 +31,18 @@ th_limit	 = 0.7#0.2 #5
 xy_thresh	 = 100#5
 theta_thresh = 100#5
 
-loop_rate = 50 # Hz (get value from publisher)
-Ts     = 1.00/loop_rate
-tau    = 0.005
-camera_sample_rate = 33
-lpf_alpha          = 0.7 
-a1      = (2*tau-camera_sample_rate)/(2*tau-tau+camera_sample_rate)
-a2      = 2/(2*tau+camera_sample_rate)
+loop_rate 			= 60.0 # Hz (get value from publisher)
+loop_time			= 1.0/loop_rate
+Ts    			 	= 1.0/loop_rate
+
+camera_sample_rate 	= 30.0 # Hz
+camera_sample_time = 1.0/camera_sample_rate
+
+lpf_alpha          	= 0.7
+
+tau    				= camera_sample_time/5 #0.005
+a1 					= (2*tau-camera_sample_time)/(2*tau+camera_sample_time)
+a2 					= 2/(2*tau+camera_sample_time)
 
 # field characteristics
 field_length  = 3.048; # meters (5 ft)
@@ -50,7 +55,6 @@ S = np.diag([\
     (5*np.pi/180)**2,               # initial variance of angle of ownteam i 
     ]);
 
-camera_sample_rate = 10*loop_rate
 # noise levels on the camera
 camera_sigma_ball = 0.01 # units are meters
 camera_sigma_robot_position = 0.01 # units are meters
