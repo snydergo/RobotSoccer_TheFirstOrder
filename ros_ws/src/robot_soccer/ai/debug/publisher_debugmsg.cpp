@@ -51,7 +51,7 @@ int main(int argc, char **argv)
     while(!cmdTypeValid){
         std::cout << "### NEW CMD ###\nINPUT CMDTYPE" << std::endl;
         std::cin >> cmdtype;
-        if(cmdtype == "move"){
+        if(cmdtype == "movefast" || "moveslow"){
             msg.cmdType = cmdtype;
             std::cout << "Enter xcmd\n";
             std::cin >> gvn_xcmd;
@@ -70,8 +70,7 @@ int main(int argc, char **argv)
                 }
             }else {cmdTypeValid = true;}
 
-        }else if(cmdtype == "kick" || cmdtype == "kickinit"||
-                    cmdtype == "kickuninit"){
+        }else if(cmdtype == "kick" || cmdtype == "idle"){
             cmdTypeValid = true;
             msg.cmdType = cmdtype;
             std::cout << "cmdType == " + msg.cmdType << std::endl;

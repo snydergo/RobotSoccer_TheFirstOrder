@@ -21,8 +21,8 @@ class Utilities
     void rotate(double angle);
     void init(Robot robot);
     void idle(Robot robot);
-    void move(Robot robot, Point dir, double des_theta);
-    void moveToPoint(Robot robot, Point point, double theta);
+    void move(moveSpeed gvnSpeed, Robot robot, Point dir, double des_theta);
+    void moveToPoint(moveSpeed gvnSpeed, Robot robot, Point point, double theta);
     void initKick(Robot robot);
     void uninitKick(Robot robot);
     void kick(Robot robot);

@@ -25,10 +25,20 @@ void Utilities::rotate(double angle){
     printf("send command to move angle %f", angle);
 }
 
-void Utilities::move(Robot robot, Point dest, double des_theta){
+void Utilities::move(moveSpeed gvnSpeed, Robot robot, Point dest, double des_theta){
     std::cout << "UTILITIES:: sending mov command" << std::endl;
     robot_soccer::controldata cmd;
-    cmd.cmdType = "mov";
+    switch(gvnSpeed){
+        case moveSpeed::fast:
+            cmd.cmdType = "movefast";
+        break;
+        case moveSpeed::med:
+            cmd.cmdType = "moveslow";
+        break;
+        case moveSpeed::slow:
+            cmd.cmdType = "moveslow";
+        break;
+    }
     cmd.x = robot.location.x;
     cmd.y = robot.location.y;
     cmd.theta = robot.theta;
@@ -51,8 +61,8 @@ void Utilities::dribble(Robot robot){
     assignCmd(robot.tag, cmd);
 }
 
-void Utilities::moveToPoint(Robot robot, Point point, double theta){
-    move(robot, point, theta);
+void Utilities::moveToPoint(moveSpeed gvnSpeed, Robot robot, Point point, double theta){
+    move(gvnSpeed, robot, point, theta);
 }
 
 void Utilities::initKick(Robot robot){

@@ -22,6 +22,14 @@ void Skills::goToPoint(Point point, double dest_theta){
     skill_st = skill_state::gotopoint_st;
 }
 
+void Skills::goToPoint(moveSpeed gvnspeed, Point point, double dest_theta){
+    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
+    theta_cmd = dest_theta;
+    dest = point;
+    speed = gvnspeed;
+    skill_st = skill_state::gotopoint_st;
+}
+
 void Skills::fetchBall(){
     printf("SKILLS:: start fetch ball\n");
     skill_st = skill_state::fetchball_st;
@@ -60,7 +68,7 @@ void Skills::continueIdle(){
 }
 
 void Skills::continueGoToPoint(){
-    utils.moveToPoint(*fieldget::getRobot(allyNum),dest,theta_cmd);
+    utils.moveToPoint(speed, *fieldget::getRobot(allyNum),dest,theta_cmd);
 }
 
 void Skills::initKicker(){

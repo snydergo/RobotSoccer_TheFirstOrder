@@ -106,9 +106,15 @@ void debugSM(ros::NodeHandle &n)
             cmdRob1.y_cmd = debugCmd.y_cmd;
             cmdRob1.theta_cmd = debugCmd.theta_cmd;
 
-            if (cmdRob1.cmdType == "move") {
+            if (cmdRob1.cmdType == "moveslow" || cmdRob1.cmdType == "movefast") {
+                moveSpeed speed;
+                if(cmdRob1.cmdType == "moveslow"){
+                    speed = moveSpeed::slow;
+                }else
+                    speed = moveSpeed::fast;
+
                 dest = Point(cmdRob1.x_cmd,cmdRob1.y_cmd);
-                skill1.goToPoint(dest, cmdRob1.theta_cmd);
+                skill1.goToPoint(speed, dest, cmdRob1.theta_cmd);
             } else if (cmdRob1.cmdType == "kick") {
                 kickball = true;
                 skill1.kick();

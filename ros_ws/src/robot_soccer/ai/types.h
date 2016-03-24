@@ -19,6 +19,7 @@
 #define ANGLE_ERR 20
 #define AIM_MAX_CNT 80
 #define DISTANCE_ERR 36 // this is an error of 5cm
+#define MVSPDTHRESH 400
 #define PERIMETER_ERR 100
 #define PERIMETER_XOFFSET 5
 #define PERIMETER_YOFFSET 3
@@ -42,5 +43,5 @@
 //## NEEDED TYPES & OBJECTS ##//
 enum class robotType {ally1, ally2, enemy1, enemy2, ball, object, none};
 enum class side {left, right, none};
-
+enum class moveSpeed {fast, med, slow};
 #endif // TYPES_H
