@@ -28,9 +28,7 @@ class GamePieces(object):
         self.pieces = {name: Piece(name) for name in piece_names}
 
     def update_all(self, vision_msg):
-        vm = visiondata()
-        vm = vision_msg
-        msg = vm.__dict__
+        msg = {name: getattr(vision_msg, name) for name in vars(vision_msg)}
 
         for name, piece in self.pieces:
             pos_l = [msg['{}_x'.format(name)], msg['{}_y'.format(name)], msg['{}_w'.format(name)]]
