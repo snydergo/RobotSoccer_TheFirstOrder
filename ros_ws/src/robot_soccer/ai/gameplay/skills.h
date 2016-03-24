@@ -26,6 +26,7 @@ public:
     void idle();
     void goToPoint(Point point, double dest_theta);
     void goToPoint(moveSpeed gvnspeed, Point point, double dest_theta);
+    moveSpeed getSpeed();
     void fetchBall();
     void init_kick();
     void uninit_kick();
@@ -50,7 +51,7 @@ public:
     double theta_cmd;
     Utilities utils;
     robotType allyNum;
-    moveSpeed speed;
+    moveSpeed speed = moveSpeed::fast;
 };
 
 #endif /* SKILL_H_ */

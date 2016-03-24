@@ -86,11 +86,11 @@ void Utilities::kick(Robot robot){
 }
 
 void Utilities::moveToCenter(Robot robot, double theta){
-    move(robot, center, theta);
+    move(moveSpeed::fast, robot, center, theta);
 }
 
 void Utilities::followBall(FieldObject ball, Robot robot, double theta){
     printf("following ball\n");
-    move(robot, ball.location, theta);
+    move(moveSpeed::slow, robot, ball.location, theta);
 }
 

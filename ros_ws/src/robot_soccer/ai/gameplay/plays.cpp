@@ -102,7 +102,7 @@ void Plays::tick(){
                         break;
                     case coordSkills_st::coordKick_st:
                         std::cout << " kicking ball" << std::endl;
-                        skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
+                        skill.goToPoint(moveSpeed::fast, kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
                         if(bkcalc::ballKicked(allyNum,kp)){
                             std::cout << "Plays::tick() BALL KICKED" << std::endl;
                             std::cout << "#############################################################################" << std::endl;

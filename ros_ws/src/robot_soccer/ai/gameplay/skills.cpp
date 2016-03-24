@@ -4,6 +4,22 @@
 enum class skill_state {idle_st, gotopoint_st, kick_st, initkick_st, uninitkick_st,
     fetchball_st, dribble_st, aim_st} skill_st;
 
+inline moveSpeed Skills::getSpeed(){
+    Point robot = fieldget::getRobot(allyNum)->location;
+    double xValues = robot.x-dest.x;
+    xValues *= xValues;
+    double yValues = robot.y-dest.y;
+    yValues *= yValues;
+    double distance_sqrd = xValues+yValues;
+    if(distance_sqrd > MVSPD_FAST_THRESH){
+        std::cout << "moveSpeed::fast" << std::endl;
+        return moveSpeed::fast;
+    }else{
+        std::cout << "moveSpeed::slow" << std::endl;
+        return moveSpeed::slow;
+        }
+}
+
 void Skills::init(){
     skill_st = skill_state::idle_st;
     utils.init(*fieldget::getRobot(allyNum));
@@ -16,14 +32,15 @@ void Skills::idle(){
 }
 
 void Skills::goToPoint(Point point, double dest_theta){
-    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
+//    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
     theta_cmd = dest_theta;
     dest = point;
+    speed = getSpeed();
     skill_st = skill_state::gotopoint_st;
 }
 
 void Skills::goToPoint(moveSpeed gvnspeed, Point point, double dest_theta){
-    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
+//    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
     theta_cmd = dest_theta;
     dest = point;
     speed = gvnspeed;
@@ -89,7 +106,7 @@ void Skills::continueFetchBall(){
     Point ballP = fieldget::getBallLoc();
     Point fetchballpoint(ballP.x-FETCHBALL_OFFSET,ballP.y);
     double theta = bkcalc::getAngleTo(allyNum, ballP);
-    utils.moveToPoint(*fieldget::getRobot(allyNum),fetchballpoint,theta);
+    utils.moveToPoint(getSpeed(), *fieldget::getRobot(allyNum),fetchballpoint,theta);
 }
 
 void Skills::continueDribble(){
@@ -121,7 +138,7 @@ void Skills::continueAim(){
     Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
     double newTheta = calc::getVectorAngle(aimBallDir);
     std::cout << "SKILL::continueAim theta = " << std::to_string(newTheta)<< std::endl;
-    utils.moveToPoint(*fieldget::getRobot(allyNum), aimSpot ,newTheta);
+    utils.moveToPoint(moveSpeed::slow, *fieldget::getRobot(allyNum), aimSpot ,newTheta);
 }
 
 void Skills::stop(){
