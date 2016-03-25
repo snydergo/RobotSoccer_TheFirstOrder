@@ -1,8 +1,8 @@
-green
 purple
+green
 orange
 blue
-home
-0
+away
+2
 0
 1

@@ -30,7 +30,7 @@ bool Robot::update(std::vector<UndefinedCVObject>& cvObjs)
 }
 
 // if we do not have a last location we can try to find a robot anywhere on the field
-bool Robot::find(std::vector<cv::Moments> &moments)
+bool Robot::find(std::vector<cv::Moments> moments)
 {
     std::vector<UndefinedCVObject> cvObjs;
     for (int i = 0; i < moments.size(); i+=2) {

@@ -27,7 +27,7 @@ bool Ball::update(std::vector<UndefinedCVObject> &cvObjs) // find the closest oj
 
     return false;
 }
-bool Ball::find(std::vector<cv::Moments> &moments) // find the object closest in size on the field
+bool Ball::find(std::vector<cv::Moments> moments) // find the object closest in size on the field
 {
     std::vector<UndefinedCVObject> cvObjs;
     for (int i = 0; i < moments.size(); i+=2) {

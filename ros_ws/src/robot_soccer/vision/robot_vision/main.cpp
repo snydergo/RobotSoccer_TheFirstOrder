@@ -19,6 +19,7 @@
 #include <math.h>
 #include <thread>
 #include <mutex>
+#include <signal.h>
 
 using namespace std;
 using namespace cv;
@@ -30,7 +31,96 @@ Point2f transformWorldFrametoCameraFrame(const Point2f point);
 vector<UndefinedCVObject> getCVObjects(vector<cv::Moments> moments);
 void gameStateCallback(const robot_soccer::gameparam &msg);
 
+enum class FieldObject {
+    ball,
+    allyRobot1,
+    allyRobot2,
+    enemyRobot1,
+    enemyRobot2
+};
 
+//thread ally2Thread;
+//thread enemy1Thread;
+//thread enemy2Thread;
+
+
+vector<bool> signallers = {false, false, false, false, false};
+vector<vector<cv::Moments>> objectMoments(5);
+
+HsvColorSubSpace getColor(FieldObject obj) {
+    switch (obj) {
+    case FieldObject::ball:        return config::ballColor;
+    case FieldObject::allyRobot1:  return config::allyRobot1Color;
+    case FieldObject::allyRobot2:  return config::allyRobot2Color;
+    case FieldObject::enemyRobot1: return config::enemyRobot1Color;
+    case FieldObject::enemyRobot2: return config::enemyRobot2Color;
+    }
+}
+
+bool getSignaller(FieldObject obj) {
+    switch (obj) {
+    case FieldObject::ball:        return signallers[0];
+    case FieldObject::allyRobot1:  return signallers[1];
+    case FieldObject::allyRobot2:  return signallers[2];
+    case FieldObject::enemyRobot1: return signallers[3];
+    case FieldObject::enemyRobot2: return signallers[4];
+    }
+}
+
+void setSignaller(FieldObject obj, bool value) {
+    switch (obj) {
+    case FieldObject::ball:        signallers[0] = value; return;
+    case FieldObject::allyRobot1:  signallers[1] = value; return;
+    case FieldObject::allyRobot2:  signallers[2] = value; return;
+    case FieldObject::enemyRobot1: signallers[3] = value; return;
+    case FieldObject::enemyRobot2: signallers[4] = value; return;
+    }
+}
+
+//bool waitForThreads()
+//{
+//    while (signallers[0] ||
+//           signallers[1] ||
+//           signallers[2] ||
+//           signallers[3] ||
+//           signallers[4]){}
+
+
+//}
+
+vector<cv::Moments> getMoments(FieldObject obj) {
+    switch (obj) {
+    case FieldObject::ball:        return objectMoments[0];
+    case FieldObject::allyRobot1:  return objectMoments[1];
+    case FieldObject::allyRobot2:  return objectMoments[2];
+    case FieldObject::enemyRobot1: return objectMoments[3];
+    case FieldObject::enemyRobot2: return objectMoments[4];
+    }
+}
+
+void setMoments(FieldObject obj, vector<cv::Moments> value) {
+    switch (obj) {
+    case FieldObject::ball:        objectMoments[0] = value; return;
+    case FieldObject::allyRobot1:  objectMoments[1] = value; return;
+    case FieldObject::allyRobot2:  objectMoments[2] = value; return;
+    case FieldObject::enemyRobot1: objectMoments[3] = value; return;
+    case FieldObject::enemyRobot2: objectMoments[4] = value; return;
+    }
+}
+
+Mat frameHSV;
+bool terminateThreads = false;
+
+void processFrames(FieldObject obj)
+{
+    while (ros::ok()) {
+        if (getSignaller(obj)) {
+            setMoments(obj, locateCvObjects(frameHSV, getColor(obj)));
+            setSignaller(obj, false);
+        }
+    }
+
+}
 
 // takes an optional param file
 int main(int argc, char** argv)
@@ -47,7 +137,7 @@ int main(int argc, char** argv)
     Ball ball(config::ballArea);
     Robot robotAlly1;
     Robot robotAlly2;
-    
+
     int windowDestroyTimer = 0;
 
     VideoCapture camera(config::cameraUrl);
@@ -57,16 +147,9 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    Mat imgLines;
-    Point2f lastPos;
-    if (config::trackRobot) {
-        //Capture a temporary image from the camera
-        Mat imgTmp;
-        camera.read(imgTmp);
-
-        //Create a black image with the size as the camera output
-        imgLines = Mat::zeros( imgTmp.size(), CV_8UC3 );
-    }
+    thread ballThread(processFrames, FieldObject::ball);
+    thread ally1Thread(processFrames, FieldObject::allyRobot1);
+    thread ally2Thread(processFrames, FieldObject::allyRobot2);
 
     cout << "starting video feed" << endl;
 
@@ -81,34 +164,26 @@ int main(int argc, char** argv)
         }
 
         robot_soccer::visiondata msg;
-        msg.sys_time = ros::Time::now();
-        Mat frameHSV;
+        msg.sys_time = ros::Time::now(); // get the current time stamp
 
         cvtColor(frame, frameHSV, COLOR_BGR2HSV); //Convert the captured frame from BGR to HSV
+        setSignaller(FieldObject::ball, true);
+        if (config::allyRobotCount > 0) {
+            setSignaller(FieldObject::allyRobot1, true);
+        }
+        if (config::allyRobotCount > 1) {
+            setSignaller(FieldObject::allyRobot2, true);
+        }
 
         /// find our robots
         if (config::allyRobotCount > 0) {
-            vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::allyRobot1Color);
-            robotAlly1.find(teamMoments);
-            if (config::showVideo) {
-                for (auto m: teamMoments) {
-                    circle(frame, GetMomentCenter(m), 4, cvScalar(255,100,0), -1, 8, 0);
-                }
-            }
+            robotAlly1.find(getMoments(FieldObject::allyRobot1));
         }
         if (config::allyRobotCount > 1) {
-            vector<cv::Moments> teamMoments = locateCvObjects(frameHSV, config::allyRobot2Color);
-            robotAlly2.find(teamMoments);
-            if (config::showVideo) {
-                for (auto m: teamMoments) {
-                    circle(frame, GetMomentCenter(m), 4, cvScalar(0,100,255), -1, 8, 0);
-                }
-            }
-
+            robotAlly2.find(getMoments(FieldObject::allyRobot2));
         }
         /// find the ball
-        vector<cv::Moments> balls = locateCvObjects(frameHSV, config::ballColor);
-        ball.find(balls);
+        ball.find(getMoments(FieldObject::ball));
 
         msg.tm0_x = robotAlly1.getCenter().x;
         msg.tm0_y = robotAlly1.getCenter().y;
@@ -122,23 +197,6 @@ int main(int argc, char** argv)
         msg.ball_y = ball.getCenter().y;
 
         visionDataPub.publish(msg);
-
-
-        if (config::trackRobot) {
-            if (msg.tm0_x == msg.tm0_x && msg.tm0_x != 0.0) {
-
-                //calculate the position of the robot
-                Point2f pos = transformWorldFrametoCameraFrame(Point2f(msg.tm0_x, msg.tm0_y));
-                if (lastPos.x == 0.0)
-                    lastPos = pos;
-                //Draw a red line from the previous point to the current point
-                line(imgLines, pos, lastPos, Scalar(0,0,255), 2);
-                lastPos = pos;
-            } else {
-                lastPos.x = 0.0;
-            }
-            frame = frame + imgLines;
-        }
 
         if (config::showVideo) {
             std::string str(  " x: " + std::to_string(((int)std::round(msg.tm0_x)))
@@ -166,7 +224,10 @@ int main(int argc, char** argv)
         ros::spinOnce();
 //        cout << "time = " << (ros::Time::now() - timeStamp).toNSec() << endl;
     }
-    
+    ballThread.join();
+    ally1Thread.join();
+    ally2Thread.join();
+
     return 0;
 }
 

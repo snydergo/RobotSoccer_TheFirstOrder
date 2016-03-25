@@ -14,7 +14,7 @@ public:
   }
 
   bool update(std::vector<UndefinedCVObject>& cvObjs);
-  bool find(std::vector<cv::Moments> &moments);
+  bool find(std::vector<cv::Moments> moments);
 
   cv::Point2f getCenter()
   {
