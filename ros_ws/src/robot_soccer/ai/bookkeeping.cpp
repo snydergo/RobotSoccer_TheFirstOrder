@@ -30,116 +30,103 @@ GameStatus predicted;
 bool predictedUpdated(false);
 
 //#### FIELDGET FUNCTIONS ####//
-FieldObject* fieldget::getBall(){
-    return &field.currentStatus.ball;
+FieldObject fieldget::getBall()
+{
+    return field.currentStatus.ball;
 }
 
-Point fieldget::getBallLoc(){
+Point fieldget::getBallLoc()
+{
     return field.currentStatus.ball.location;
 }
 
-Robot* fieldget::getRobot(robotType type){
-    Robot *rob;
-    switch(type){
+Robot fieldget::getRobot(robotType type)
+{
+    switch (type) {
         case robotType::ally1:
-            rob = &field.currentStatus.ally1;
-            break;
+            return field.currentStatus.ally1;
         case robotType::ally2:
-            rob = &field.currentStatus.ally2;
-            break;
+            return field.currentStatus.ally2;
         case robotType::enemy1:
-            rob = &field.currentStatus.enemy1;
-            break;
+            return field.currentStatus.enemy1;
         case robotType::enemy2:
-            rob = &field.currentStatus.enemy2;
-            break;
+            return field.currentStatus.enemy2;
         default:
             printf("bookkeeping:atLocation:: ERR you didn't provide a valid robot\n");
-            break;
+            return Robot(robotType::none, Point(), Point(), 0.0);
     }
-    return rob;
 }
 
-Point fieldget::getRobotLoc(robotType type){
-    return fieldget::getRobot(type)->location;
+Point fieldget::getRobotLoc(robotType type)
+{
+    return fieldget::getRobot(type).location;
 }
 
 
 //#### BOOK KEEPING CALC FUNCTIONS ####//
-bool bkcalc::atLocation(robotType type, Point point){
-    bool atlocation = false;
-    switch(type){
+bool bkcalc::atLocation(robotType type, Point point)
+{
+
+    switch (type) {
         case robotType::ally1:
-            atlocation = calc::atLocation(field.currentStatus.ally1.location, point);
-            break;
+            return calc::atLocation(field.currentStatus.ally1.location, point);
         case robotType::ally2:
-            atlocation = calc::atLocation(field.currentStatus.ally2.location, point);
-            break;
+            return calc::atLocation(field.currentStatus.ally2.location, point);
         default:
             printf("bookkeeping:atLocation:: ERR you didn't provide a valid robot\n");
-            break;
+            return false;
     }
-    return atlocation;
 }
 
-bool bkcalc::ballKicked(robotType type, Point kp){
-    bool ballkicked = false;
-    switch(type){
+bool bkcalc::ballKicked(robotType type, Point kp)
+{
+    switch (type) {
         case robotType::ally1:
-            ballkicked = calc::ballKicked(field.currentStatus.ally1, kp);
-            break;
+            return calc::ballKicked(field.currentStatus.ally1, kp);
         case robotType::ally2:
-            ballkicked = calc::ballKicked(field.currentStatus.ally2, kp);
-            break;
+            return calc::ballKicked(field.currentStatus.ally2, kp);
         default:
             printf("bookkeeping:ballKicked: ERR you didn't provide a valid robot\n");
-            break;
+            return false;
     }
-    return ballkicked;
 }
 
-bool bkcalc::ballFetched(robotType type){
-    bool ballfetched = false;
-    switch(type){
+bool bkcalc::ballFetched(robotType type)
+{
+    switch (type) {
         case robotType::ally1:
-            ballfetched = calc::ballFetched(field.currentStatus.ally1, field.currentStatus.ball);
             std::cout << "ROBOT1" << std::endl;
-            break;
+            return calc::ballFetched(field.currentStatus.ally1, field.currentStatus.ball);
         case robotType::ally2:
-            ballfetched = calc::ballFetched(field.currentStatus.ally2, field.currentStatus.ball);
-            break;
+            return calc::ballFetched(field.currentStatus.ally2, field.currentStatus.ball);
         default:
             printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot %d\n", type);
-            break;
+            return false;
     }
-    return ballfetched;
 }
 
-bool bkcalc::ballKickZone(robotType type){
-    bool ballkickZone = false;
-    Point ball = field.currentStatus.ball.location;
-    switch(type){
+bool bkcalc::ballKickZone(robotType type)
+{
+    switch (type) {
         case robotType::ally1:
         {
             std::cout << "ballkickZone::ally1" << std::endl;
             Point perCenter(field.currentStatus.ally1.location.x+PERIMETER_XOFFSET,field.currentStatus.ally1.location.y);
-            ballkickZone = calc::withinPerimeter(perCenter, ball);
-            break;
+            return calc::withinPerimeter(perCenter, field.currentStatus.ball.location);
         }
         case robotType::ally2:
             std::cout << "ballkickZone::ally2" << std::endl;
-            ballkickZone = calc::withinPerimeter(field.currentStatus.ally2.location, ball);
-            break;
+            return calc::withinPerimeter(field.currentStatus.ally2.location, field.currentStatus.ball.location);
         default:
             printf("bookkeeping:atLocation:: ERR you didn't provide a valid robot\n");
-            break;
+            return false;
     }
-    return ballkickZone;
 }
 
-double bkcalc::getAngleTo(robotType type, Point point){
+double bkcalc::getAngleTo(robotType type, Point point)
+{
     Point dir;
-    switch(type){
+    switch (type) {
         case robotType::ally1:
             dir = calc::directionToPoint(field.currentStatus.ally1.location, point);
             break;
@@ -153,11 +140,12 @@ double bkcalc::getAngleTo(robotType type, Point point){
     return calc::getVectorAngle(dir);
 }
 
-Point bkcalc::kickPoint(robotType type){
+Point bkcalc::kickPoint(robotType type)
+{
     Point result;
     /*Point kickerLoc;
     Point dir;
-    switch(type){
+    switch(type) {
         case robotType::ally1:
             kickerLoc = field.currentStatus.ally1.location;
             break;
@@ -171,29 +159,30 @@ Point bkcalc::kickPoint(robotType type){
     dir = calc::directionToPoint(kickerLoc,field.currentStatus.ball.location);
     result = Point(kickerLoc.x+KICK_FACTOR*dir.x,kickerLoc.y+KICK_FACTOR*dir.y);*/
     result = field.currentStatus.ball.location;
-    if(!calc::withinField(result)){
+    if(!calc::withinField(result)) {
         result = calc::getNewPoint(result);
     }
     return result;
 }
 
-bool bkcalc::ballAimed(robotType type){
-    Robot* kicker;
-    switch(type){
+bool bkcalc::ballAimed(robotType type)
+{
+    Robot kicker;
+    switch (type) {
         case robotType::ally1:
-            kicker = &field.currentStatus.ally1;
+            kicker = field.currentStatus.ally1;
             break;
         case robotType::ally2:
-            kicker = &field.currentStatus.ally2;
+            kicker = field.currentStatus.ally2;
             break;
         default:
             printf("bookkeeping:ballfetched: ERR you didn't provide a valid robot\n");
             break;
     }
-    return calc::ballAimed(*kicker, field.currentStatus.ball, enemyGoal);
+    return calc::ballAimed(kicker, field.currentStatus.ball, enemyGoal);
 }
 
-bool bkcalc::ballThreat(){
+bool bkcalc::ballThreat() {
 //   std::cout << "####bkcalc::ballThreat####" << std::endl;
 return ((field.currentStatus.ball.velocity.x < 0 && field.currentStatus.ball.location.x < -20));
 }

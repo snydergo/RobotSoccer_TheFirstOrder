@@ -41,7 +41,6 @@ void mainControlSM(ros::NodeHandle &n)
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
     Strategies strategies;
-    strategies.init();
     while (ros::ok())
     {
         count++;
@@ -86,7 +85,6 @@ void debugSM(ros::NodeHandle &n)
     ros::Subscriber debug_subscriber = n.subscribe("debug", 5, debugCallback);
     (void*)debug_subscriber;
     Skills skill1(robotType::ally1);
-    skill1.init();
     Point dest;
     bool kickball = false;
     char kickCounter = 0;
@@ -133,7 +131,9 @@ void debugSM(ros::NodeHandle &n)
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
             checkCmd(cmdRob1);
-            std::cout << "cmdType: "+ cmdRob1.cmdType << std::endl << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd << " w: " << cmdRob1.theta_cmd << std::endl;
+            std::cout << "cmdType: "+ cmdRob1.cmdType << std::endl
+                      << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd
+                      << " w: " << cmdRob1.theta_cmd << std::endl;
             robo1Com.publish(cmdRob1);
 
         }
@@ -185,7 +185,6 @@ void predictSM(ros::NodeHandle &n)
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
     Strategies strategies;
-    strategies.init();
     while (ros::ok())
     {
         count++;
@@ -259,12 +258,14 @@ void checkCmd(robot_soccer::controldata &cmdRob){
     if(cmdRob.x != cmdRob.x || cmdRob.x_cmd != cmdRob.x_cmd){
         std::cout << "maincontrol::checkCmd() ##nan's detected## reverting to IDLE" << std::endl;
         cmdRob.cmdType = "idle";
-    }else if(iskick){
-        cmdRob.cmdType = "kick";
-        iskick = false;
     }else if (abs(cmdRob.x_cmd) > FIELD_XBORDER){
         cmdRob.x_cmd = FIELD_XBORDER;
     }
+
+    /*if(iskick){
+           cmdRob.cmdType = "kick";
+           iskick = false;
+       }else */
 }
 
 void debugOption(){

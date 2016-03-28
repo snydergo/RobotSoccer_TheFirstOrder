@@ -10,18 +10,13 @@ class Skills
 {
 public:
     Skills(robotType type)
-        : allyNum(type)
-        , utils(type)
-        , dest(0,0)
-    {
-
-    }
-
-    Skills()
-    : dest(0,0)
+    : allyNum(type)
+    , skill_st(SkillState::idle)
+    , dest(allyGoal)
+    , utils(type)
     {
     }
-    void init();
+
     void tick();
     void idle();
     void goToPoint(Point point, double dest_theta);
@@ -46,7 +41,21 @@ public:
     void continueDribble();
     void continueAim();
     void stop();
+
   private:
+
+    enum class SkillState {
+        idle,
+        gotoPoint,
+        kick,
+        initKick,
+        uninitKick,
+        fetchBall,
+        dribble,
+        aim
+    } skill_st;
+
+
     Point dest;
     double theta_cmd;
     Utilities utils;

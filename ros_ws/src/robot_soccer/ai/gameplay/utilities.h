@@ -11,10 +11,11 @@
 class Utilities
 {
  public:
-    Utilities(): type(robotType::ally1){}
+
     Utilities(robotType num)
     : type(num)
     {
+        idle(fieldget::getRobot(num));
     }
 
 
@@ -29,7 +30,9 @@ class Utilities
     void moveToCenter(Robot robot, double theta);
     void followBall(FieldObject ball, Robot robot, double theta);
     void dribble(Robot robot);
+
  private:
+
     robotType type;
 };
 

@@ -1,121 +1,130 @@
 #include "skills.h"
 
 
-enum class skill_state {idle_st, gotopoint_st, kick_st, initkick_st, uninitkick_st,
-    fetchball_st, dribble_st, aim_st} skill_st;
-
-inline moveSpeed Skills::getSpeed(){
-    Point robot = fieldget::getRobot(allyNum)->location;
+inline moveSpeed Skills::getSpeed()
+{
+    Point robot = fieldget::getRobot(allyNum).location;
     double xValues = robot.x-dest.x;
     xValues *= xValues;
     double yValues = robot.y-dest.y;
     yValues *= yValues;
     double distance_sqrd = xValues+yValues;
-    if(distance_sqrd > MVSPD_FAST_THRESH){
+    if (distance_sqrd > MVSPD_FAST_THRESH) {
         std::cout << "moveSpeed::fast" << std::endl;
         return moveSpeed::fast;
-    }else{
+    } else {
         std::cout << "moveSpeed::slow" << std::endl;
         return moveSpeed::slow;
-        }
-}
-
-void Skills::init(){
-    skill_st = skill_state::idle_st;
-    utils.init(*fieldget::getRobot(allyNum));
-    dest = allyGoal;
+    }
 }
 
 //FUNCTIONS CALLED BY PLAYS OR OUTSIDE TO DO SKILLS
-void Skills::idle(){
-    skill_st = skill_state::idle_st;
+void Skills::idle()
+{
+    skill_st = SkillState::idle;
 }
 
-void Skills::goToPoint(Point point, double dest_theta){
+void Skills::goToPoint(Point point, double dest_theta)
+{
 //    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
     theta_cmd = dest_theta;
     dest = point;
     speed = getSpeed();
-    skill_st = skill_state::gotopoint_st;
+    skill_st = SkillState::gotoPoint;
 }
 
-void Skills::goToPoint(moveSpeed gvnspeed, Point point, double dest_theta){
+void Skills::goToPoint(moveSpeed gvnspeed, Point point, double dest_theta)
+{
 //    std::cout << "Skills::goToPoint theta == " + std::to_string(dest_theta) << std::endl;
     theta_cmd = dest_theta;
     dest = point;
     speed = gvnspeed;
-    skill_st = skill_state::gotopoint_st;
+    skill_st = SkillState::gotoPoint;
 }
 
-void Skills::fetchBall(){
+void Skills::fetchBall()
+{
     printf("SKILLS:: start fetch ball\n");
-    skill_st = skill_state::fetchball_st;
+    skill_st = SkillState::fetchBall;
 }
 
-void Skills::kick(){
-    skill_st = skill_state::kick_st;
+void Skills::kick()
+{
+    skill_st = SkillState::kick;
 }
 
-void Skills::init_kick(){
-    skill_st = skill_state::initkick_st;
+void Skills::init_kick()
+{
+    skill_st = SkillState::initKick;
     initKicker();
 }
 
-void Skills::uninit_kick(){
-    skill_st = skill_state::uninitkick_st;
+void Skills::uninit_kick()
+{
+    skill_st = SkillState::uninitKick;
     uninitKicker();
 }
 
-void Skills::dribble(){
+void Skills::dribble()
+{
     printf("start dribble ball\n");
-    skill_st = skill_state::dribble_st;
+    skill_st = SkillState::dribble;
 }
 
 //function will get the robot to go to the ball
 //and aim position to aim at the goal
-void Skills::aim(){
+void Skills::aim()
+{
     printf("start aim ball\n");
-    skill_st = skill_state::aim_st;
+    skill_st = SkillState::aim;
 }
 
 //### FUNCTIONS THAT USE UTILITIES ###//
 
-void Skills::continueIdle(){
-    utils.idle(*fieldget::getRobot(allyNum));
+void Skills::continueIdle()
+{
+    utils.idle(fieldget::getRobot(allyNum));
 }
 
-void Skills::continueGoToPoint(){
-    utils.moveToPoint(speed, *fieldget::getRobot(allyNum),dest,theta_cmd);
+void Skills::continueGoToPoint()
+{
+    utils.moveToPoint(speed, fieldget::getRobot(allyNum),dest,theta_cmd);
 }
 
-void Skills::initKicker(){
-    utils.initKick(*fieldget::getRobot(allyNum));
+void Skills::initKicker()
+{
+    utils.initKick(fieldget::getRobot(allyNum));
 }
 
-void Skills::uninitKicker(){
-    utils.uninitKick(*fieldget::getRobot(allyNum));
+void Skills::uninitKicker()
+{
+    utils.uninitKick(fieldget::getRobot(allyNum));
 }
 
-void Skills::continueKick(){
-    utils.kick(*fieldget::getRobot(allyNum));
+void Skills::continueKick()
+{
+    utils.kick(fieldget::getRobot(allyNum));
 }
 
 //needs to be changed so it goes around ball to get to desired position
 //function that is used to go to a point that is behind the ball
-void Skills::continueFetchBall(){
+void Skills::continueFetchBall()
+{
     Point ballP = fieldget::getBallLoc();
     Point fetchballpoint(ballP.x-FETCHBALL_OFFSET,ballP.y);
     double theta = bkcalc::getAngleTo(allyNum, ballP);
-    utils.moveToPoint(getSpeed(), *fieldget::getRobot(allyNum),fetchballpoint,theta);
+    utils.moveToPoint(getSpeed(), fieldget::getRobot(allyNum),fetchballpoint,theta);
 }
 
-void Skills::continueDribble(){
-    utils.dribble(*fieldget::getRobot(allyNum));
+void Skills::continueDribble()
+{
+    utils.dribble(fieldget::getRobot(allyNum));
 }
 
 //function used for aiming. makes sure that the angle between the robot and the goal and
 //the angle between the robot and the ball are approximately the same.
-void Skills::continueAim(){
+void Skills::continueAim()
+{
     //need to calculate position
     Point ballLoc = fieldget::getBallLoc();
     Point robGoalDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), enemyGoal);
@@ -125,11 +134,11 @@ void Skills::continueAim(){
 
     double x_point = fieldget::getRobotLoc(allyNum).x + 2;
     double y_point = fieldget::getRobotLoc(allyNum).y;
-    if(robBallAngle > robGoalAngle ){
+    if (robBallAngle > robGoalAngle ) {
         //rotate CCW or move y+ and a little x+
         y_point += 2;
         std::cout << "ROTATE CCW" << std::endl;
-    }else{
+    } else {
         //rotate CW or move y- and a little x+
         y_point -= 2;
         std::cout << "ROTATE CW" << std::endl;
@@ -138,42 +147,44 @@ void Skills::continueAim(){
     Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
     double newTheta = calc::getVectorAngle(aimBallDir);
     std::cout << "SKILL::continueAim theta = " << std::to_string(newTheta)<< std::endl;
-    utils.moveToPoint(moveSpeed::slow, *fieldget::getRobot(allyNum), aimSpot ,newTheta);
+    utils.moveToPoint(moveSpeed::slow, fieldget::getRobot(allyNum), aimSpot ,newTheta);
 }
 
-void Skills::stop(){
+void Skills::stop()
+{
 
 }
 
-void Skills::tick(){
-    switch(skill_st){
-        case skill_state::idle_st:
-            continueIdle();
-            break;
-        case skill_state::gotopoint_st:
-            std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
-            continueGoToPoint();
-            break;
-        case skill_state::kick_st:
-            continueKick();
-            break;
-        case skill_state::fetchball_st:
-            continueFetchBall();
-            break;
-        case skill_state::dribble_st:
-            continueDribble();
-            break;
-        case skill_state::aim_st:
-            continueAim();
-            break;
-        case skill_state::initkick_st:
-            initKicker();
-            break;
-        case skill_state::uninitkick_st:
-            uninitKicker();
-            break;
-        default:
-            //throw exception
-            break;
-       }
+void Skills::tick()
+{
+    switch(skill_st) {
+    case SkillState::idle:
+        continueIdle();
+        break;
+    case SkillState::gotoPoint:
+        std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
+        continueGoToPoint();
+        break;
+    case SkillState::kick:
+        continueKick();
+        break;
+    case SkillState::fetchBall:
+        continueFetchBall();
+        break;
+    case SkillState::dribble:
+        continueDribble();
+        break;
+    case SkillState::aim:
+        continueAim();
+        break;
+    case SkillState::initKick:
+        initKicker();
+        break;
+    case SkillState::uninitKick:
+        uninitKicker();
+        break;
+    default:
+        //throw exception
+        break;
+    }
 }

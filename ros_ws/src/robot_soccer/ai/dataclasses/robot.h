@@ -20,6 +20,12 @@ public:
     {
     }
 
+    Robot()
+    : FieldObject(robotType::none, Point(), Point())
+    , theta(0)
+    {
+    }
+
     std::string toString();
 };
 

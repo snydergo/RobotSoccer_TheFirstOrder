@@ -50,8 +50,8 @@ extern bool predictedUpdated;
 
 //functions
 namespace fieldget {
-    FieldObject* getBall();
-    Robot* getRobot(robotType type);
+    FieldObject getBall();
+    Robot getRobot(robotType type);
     Point getBallLoc();
     Point getRobotLoc(robotType type);
 }
