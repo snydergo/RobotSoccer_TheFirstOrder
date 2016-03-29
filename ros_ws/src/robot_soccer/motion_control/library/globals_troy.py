@@ -7,17 +7,17 @@ kd_x	 = 0.001
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
-kp_theta = 0.013
-ki_theta = 0
+kp_theta = 0.04
+ki_theta = 0.001
 kd_theta = 0.005
 
-fast_limit = .7
+fast_limit = 1
 slow_limit = .3
-xy_limit	 = slow_limit#0.7#.4
-th_limit	 = slow_limit#0.2 #5
+xy_limit	 = fast_limit
+th_limit	 = 1000
 
-xy_thresh	 = 5#5
-theta_thresh = 100#5
+xy_thresh    = 5
+theta_thresh = 10
 
 loop_rate 			= 60.0 # Hz (get value from publisher)
 loop_time			= 1.0/loop_rate

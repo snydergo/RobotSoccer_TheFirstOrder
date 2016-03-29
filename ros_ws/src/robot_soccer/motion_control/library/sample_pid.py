@@ -1,8 +1,8 @@
 import numpy as np
 from numpy import matlib
 from numpy import matrix
-# import globals_troy as globals
-import globals
+import globals_troy as globals
+#import globals
 
 class ControlVar:
     def __init__(self):
@@ -32,7 +32,6 @@ def robot_ctrl(message):
 	angle = -angle
 
     theta_cmd = angle + theta
-    
     # compute the desired angled angle using the outer loop control
     vx  = PID(x_cmd,x,x_g,globals.kp_x,globals.ki_x,globals.kd_x,globals.xy_limit,globals.Ts,globals.tau,globals.xy_thresh)
     vy  = PID(y_cmd,y,y_g,globals.kp_y,globals.ki_y,globals.kd_y,globals.xy_limit,globals.Ts,globals.tau,globals.xy_thresh)
@@ -40,13 +39,31 @@ def robot_ctrl(message):
 
     return vx, vy, vth
 
+def reset():
+   x_g.velocity = 0
+   x_g.integrator = 0
+   x_g.prev_error = 0
+   x_g.prev_pos = 0
+   y_g.velocity = 0
+   y_g.integrator = 0
+   y_g.prev_error = 0
+   y_g.prev_pos = 0
+   theta_g.velocity = 0
+   theta_g.integrator = 0
+   theta_g.prev_error = 0
+   theta_g.prev_pos = 0
+    
 
 # PID control for position
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     # compute the error
     error = cmd_pos - pos
-    # if abs(error) < thresh:
-    #     error = 0
+    if abs(error) < thresh:
+        error = 0
+    elif error > 0:
+	error = error - thresh
+    else:
+	error = error + thresh
     # print("Error: " + str(error))
     
     # update derivative of z

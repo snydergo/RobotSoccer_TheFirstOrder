@@ -23,6 +23,7 @@ def roboControl(data):
             # Go, baby, go
             if vx != vx or vy != vy or omega != omega:
                 print("ERROR with NaN")
+		pid.reset()
                 return
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else: # we got a NaN
@@ -44,6 +45,7 @@ def roboControl(data):
             # Go, baby, go
             if vx != vx or vy != vy or omega != omega:
                 print("ERROR with NaN")
+		pid.reset()
                 return
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else:
