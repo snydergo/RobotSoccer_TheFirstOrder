@@ -21,6 +21,9 @@ def roboControl(data):
             vy_valid = vy
             omega_valid = omega
             # Go, baby, go
+            if vx != vx or vy != vy or omega != omega:
+                print("ERROR with NaN")
+                return
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else: # we got a NaN
             count = count + 1
@@ -39,6 +42,9 @@ def roboControl(data):
             vy_valid = vy
             omega_valid = omega
             # Go, baby, go
+            if vx != vx or vy != vy or omega != omega:
+                print("ERROR with NaN")
+                return
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else:
             count = count + 1
