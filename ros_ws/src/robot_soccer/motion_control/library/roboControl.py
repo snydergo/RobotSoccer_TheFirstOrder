@@ -48,7 +48,7 @@ def roboControl(data):
                 mlib.stop()
 
     elif data.cmdType == 'kick':
-        #print "kick"
-        mlib.kick()
+        if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
+            mlib.kick()
     elif data.cmdType == 'idle':
         mlib.stop()
