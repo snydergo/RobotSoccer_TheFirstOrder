@@ -30,7 +30,7 @@ class GamePieces(object):
     def update_all(self, vision_msg):
         msg = {name: getattr(vision_msg, name) for name in globals.vision_msg_fields}
 
-        for name, piece in self.pieces:
+        for name, piece in self.pieces.items():
             pos_l = [msg['{}_x'.format(name)], msg['{}_y'.format(name)], msg['{}_w'.format(name)]]
             pos = [round(i,3) for i in pos_l]
             # checkBounds(pos)
