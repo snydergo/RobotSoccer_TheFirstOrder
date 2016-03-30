@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string>
 
-#include <ros/callback_queue.h>
-
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
 #include "debug/subscriber_debugmsg.h"
@@ -41,10 +39,10 @@ void mainControlSM(ros::NodeHandle &n)
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
 //    Strategies strategies;
-    //Plays play(robotType::ally1);
-//    play.rushGoal();
-    Skills skill(robotType::ally1);
-    skill.fetchBall();
+    Plays play(RobotType::ally1);
+    play.rushGoal();
+//    Skills skill(RobotType::ally1);
+//    skill.fetchBall();
     while (ros::ok())
     {
         count++;
@@ -54,8 +52,8 @@ void mainControlSM(ros::NodeHandle &n)
             field.updateStatus(visionStatus_msg);
         }
 //        strategies.tick();
-        skill.tick();
-//        play.tick();
+//        skill.tick();
+        play.tick();
 
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
@@ -90,7 +88,7 @@ void debugSM(ros::NodeHandle &n)
 
     ros::Subscriber debug_subscriber = n.subscribe("debug", 5, debugCallback);
     (void*)debug_subscriber;
-    Skills skill1(robotType::ally1);
+    Skills skill1(RobotType::ally1);
     Point dest;
     bool kickball = false;
     char kickCounter = 0;
@@ -225,7 +223,7 @@ void predictSM(ros::NodeHandle &n)
 
 int main(int argc, char *argv[])
 {
-
+    stream::info.open("kickpoint.txt");
     std::string option;
     try{
         option = std::string(argv[OPTION]);
@@ -246,6 +244,7 @@ int main(int argc, char *argv[])
     } else {
         mainControlSM(n);
     }
+    stream::info.close();
     return 0;
 }
 

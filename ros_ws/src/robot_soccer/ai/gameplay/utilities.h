@@ -12,7 +12,7 @@ class Utilities
 {
  public:
 
-    Utilities(robotType num)
+    Utilities(RobotType num)
     : type(num)
     {
         idle(fieldget::getRobot(num));
@@ -33,7 +33,7 @@ class Utilities
 
  private:
 
-    robotType type;
+    RobotType type;
 };
 
 #endif // UTILITIES_H

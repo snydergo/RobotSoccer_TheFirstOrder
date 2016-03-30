@@ -12,19 +12,21 @@
 #define GOAL_RADIUS GOAL_WIDTH/2
 #define GOAL_ANGLE_ERR 10
 #define FIELD_XBORDER 180
-#define FIELD_YBORDER 120
+#define FIELD_YBORDER 110 //120
 #define PI 3.141592653
 
 //## THRESHOLD DEFINITIONS ##//
 #define ANGLE_ERR 20
-#define AIM_MAX_CNT 80
+#define AIM_MAX_CNT 200
+#define AIM_BALL_DIST 15
+#define KICK_INVALID_DIST 40
 #define DISTANCE_ERR 6 // this is an error of 6cm
 #define MVSPD_FAST_THRESH 400
 #define PERIMETER_ERR 100
 #define PERIMETER_XOFFSET 5
 #define PERIMETER_YOFFSET 3
 #define KICK_FACTOR 3
-#define BALLFETCHED_ERR 35
+#define BALLFETCHED_ERR 10
 #define FETCHBALL_OFFSET 20
 
 //## TIMING DEFINES ##//
@@ -41,7 +43,7 @@
 #define SAMPLENUM 300
 
 //## NEEDED TYPES & OBJECTS ##//
-enum class robotType {ally1, ally2, enemy1, enemy2, ball, object, none};
+enum class RobotType {ally1, ally2, enemy1, enemy2, ball, object, none};
 enum class side {left, right, none};
 enum class moveSpeed {fast, med, slow};
 #endif // TYPES_H

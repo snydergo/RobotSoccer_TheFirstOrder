@@ -29,7 +29,7 @@ void Strategies::tick()
         std::cout << "Strategies::tick() start"<< std::endl;
         robot1Plays.start(start1Location);
         //robot2Plays.start(start2Location);
-        if (bkcalc::atLocation(robot1Plays.allyNum, start1Location) /*&&
+        if (calc::atLocation(fieldget::getRobotLoc(robot1Plays.allyNum), start1Location) /*&&
                 bkcalc::atLocation(robot2Plays.allyNum, start2Location)*/) {
             std::cout << "at Start Location" << std::endl;
             strategy_st = startStrategy;

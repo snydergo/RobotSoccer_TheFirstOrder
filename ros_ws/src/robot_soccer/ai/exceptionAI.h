@@ -9,7 +9,7 @@
 #include <string>
 #include <cstddef>
 
-enum class errtype {parsedata, senddata, robotType, outofbounds, none};
+enum class errtype {parsedata, senddata, RobotType, outofbounds, none};
 
 class ExceptionAI
 {

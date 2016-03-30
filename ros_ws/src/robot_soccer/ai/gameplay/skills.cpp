@@ -127,26 +127,29 @@ void Skills::continueAim()
 {
     //need to calculate position
     Point ballLoc = fieldget::getBallLoc();
-    Point robGoalDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), enemyGoal);
-    Point robBallDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), ballLoc);
-    double robGoalAngle = calc::getVectorAngle(robGoalDir);
-    double robBallAngle = calc::getVectorAngle(robBallDir);
+//    Point robGoalDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), enemyGoal);
+//    Point robBallDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), ballLoc);
+    Point ballGoalDir = calc::directionToPoint(fieldget::getBall().location, enemyGoal);
+//    double robGoalAngle = calc::getVectorAngle(robGoalDir);
+//    double robBallAngle = calc::getVectorAngle(robBallDir);
+    double ballGoalAngle = calc::getVectorAngle(ballGoalDir);
+    double ballGoalRadians = calc::degToRad(ballGoalAngle);
 
-    double x_point = fieldget::getRobotLoc(allyNum).x + 2;
-    double y_point = fieldget::getRobotLoc(allyNum).y;
-    if (robBallAngle > robGoalAngle ) {
-        //rotate CCW or move y+ and a little x+
-        y_point += 2;
-        std::cout << "ROTATE CCW" << std::endl;
-    } else {
-        //rotate CW or move y- and a little x+
-        y_point -= 2;
-        std::cout << "ROTATE CW" << std::endl;
-    }
+    double x_point = fieldget::getBall().location.x - AIM_BALL_DIST*std::cos(ballGoalRadians);
+    double y_point = fieldget::getBall().location.y - AIM_BALL_DIST*std::sin(ballGoalRadians);
+//    if (robBallAngle > robGoalAngle ) {
+//        //rotate CCW or move y+ and a little x+
+//        y_point += 2;
+//        std::cout << "ROTATE CCW" << std::endl;
+//    } else {
+//        //rotate CW or move y- and a little x+
+//        y_point -= 2;
+//        std::cout << "ROTATE CW" << std::endl;
+//    }
+
     Point aimSpot(x_point, y_point);
-    Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
-    double newTheta = calc::getVectorAngle(aimBallDir);
-    std::cout << "SKILL::continueAim theta = " << std::to_string(newTheta)<< std::endl;
+    //Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
+    double newTheta = ballGoalAngle; //calc::getVectorAngle(aimBallDir);
     utils.moveToPoint(moveSpeed::slow, fieldget::getRobot(allyNum), aimSpot ,newTheta);
 }
 
@@ -162,7 +165,6 @@ void Skills::tick()
         continueIdle();
         break;
     case SkillState::gotoPoint:
-        std::cout << "SKILLS::tick() gottopoint_st"<< std::endl;
         continueGoToPoint();
         break;
     case SkillState::kick:

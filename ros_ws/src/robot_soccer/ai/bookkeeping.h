@@ -14,10 +14,10 @@
 #include <fstream>
 //Outputs
 
-/*namespace stream{
-    std::ofstream stateStatus;
-    std::ofstream info;
-}*/
+namespace stream{
+    extern std::ofstream stateStatus;
+    extern std::ofstream info;
+}
 
 
 // GLOBALS
@@ -51,20 +51,17 @@ extern bool predictedUpdated;
 //functions
 namespace fieldget {
     FieldObject getBall();
-    Robot getRobot(robotType type);
+    Robot getRobot(RobotType type);
     Point getBallLoc();
-    Point getRobotLoc(robotType type);
+    Point getRobotLoc(RobotType type);
 }
 
 namespace bkcalc{
-    extern double getAngleTo(robotType type, Point point);
-    extern bool atLocation(robotType type, Point point);
-    extern bool ballKicked(robotType type, Point kp);
-    extern bool ballKickZone(robotType type);
-    extern bool ballFetched(robotType type);
-    extern bool ballThreat();
-    extern bool ballAimed(robotType type);
-    extern Point kickPoint(robotType type);
+     double getAngleTo(RobotType type, Point point);
+     bool ballKickZone(RobotType type);
+     bool ballThreat();
+     bool ballAimed(RobotType type);
+     Point kickPoint(RobotType type);
 }
 
 

@@ -9,7 +9,7 @@
 class Skills
 {
 public:
-    Skills(robotType type)
+    Skills(RobotType type)
     : allyNum(type)
     , skill_st(SkillState::idle)
     , dest(allyGoal)
@@ -61,7 +61,7 @@ public:
     Point dest;
     double theta_cmd;
     Utilities utils;
-    robotType allyNum;
+    RobotType allyNum;
     moveSpeed speed = moveSpeed::fast;
 };
 
