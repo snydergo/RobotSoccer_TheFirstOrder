@@ -114,7 +114,7 @@ def lp_filter(piece):
             piece.position_delayed = piece.position_delayed + globals.loop_time*piece.vel
             piece.vel = utility_wall_bounce(piece.position_delayed,piece.vel)               
         piece.position = piece.position_delayed
-        peice.camera_flag = 0
+        piece.camera_flag = 0
     else: # prediction
         # propagate prediction ahead one control sample time
         piece.position = piece.position + globals.loop_time*piece.vel
