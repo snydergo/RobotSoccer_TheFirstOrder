@@ -9,8 +9,6 @@ import globals
 # velocity = matlib.zeros(shape=(3,1))
 # old_position_measurement = matlib.zeros(shape=(3,1))
 
-msg_fields = [tm0_x, tm0_y, tm0_w, tm1_x, tm1_y, tm1_w, op0_x, op0_y, op0_w, op1_x, op1_y, op1_w, ball_y, ball_x]
-
 def noNaNs(pos):
     for i in pos:
         if i != i:
@@ -30,7 +28,7 @@ class GamePieces(object):
         self.pieces = {name: Piece(name) for name in piece_names}
 
     def update_all(self, vision_msg):
-        msg = {name: getattr(vision_msg, name) for name in msg_fields}
+        msg = {name: getattr(vision_msg, name) for name in globals.vision_msg_fields}
 
         for name, piece in self.pieces:
             pos_l = [msg['{}_x'.format(name)], msg['{}_y'.format(name)], msg['{}_w'.format(name)]]
