@@ -74,7 +74,7 @@ R_opponent = np.diag([camera_sigma_robot_position**2, camera_sigma_robot_positio
 Q_ball = 1*np.diag([.001**2,.001**2,.01**2,.01**2, .1**2, .1**2, 10**2, 10**2])
 R_ball = np.diag([camera_sigma_ball**2, camera_sigma_ball**2])
 
-vision_msg_fields = [tm0_x, tm0_y, tm0_w, tm1_x, tm1_y, tm1_w, op0_x, op0_y, op0_w, op1_x, op1_y, op1_w, ball_y, ball_x]
+vision_msg_fields = ['tm0_x,' 'tm0_y,' 'tm0_w,' 'tm1_x,' 'tm1_y,' 'tm1_w,' 'op0_x,' 'op0_y,' 'op0_w,' 'op1_x,' 'op1_y,' 'op1_w,' 'ball_y,' 'ball_x']
 
 
 # # parameters for opponent Kalman filter
