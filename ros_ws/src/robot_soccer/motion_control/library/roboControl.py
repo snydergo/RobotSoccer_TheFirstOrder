@@ -18,7 +18,7 @@ def roboControl(data):
             vx, vy, omega = pid.robot_ctrl(data)
             if vx != vx or vy != vy or omega != omega:
                 print("ERROR with NaN")
-	    	    pid.reset()
+                pid.reset()
                 return
            # store last valid values in case of NaN
             vx_valid = vx
@@ -40,7 +40,7 @@ def roboControl(data):
             vx, vy, omega = pid.robot_ctrl(data)
             if vx != vx or vy != vy or omega != omega:
                 print("ERROR with NaN")
-		        pid.reset()
+                pid.reset()
                 return
            # store last valid values in case of NaN
             vx_valid = vx
