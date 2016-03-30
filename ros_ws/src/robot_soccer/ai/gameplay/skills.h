@@ -31,6 +31,10 @@ public:
     //and aim position to aim at the goal
     void aim();
 
+
+
+  private:
+
     //FUNCTIONS THAT USE UTILITIES
     void continueIdle();
     void continueGoToPoint();
@@ -41,8 +45,6 @@ public:
     void continueDribble();
     void continueAim();
     void stop();
-
-  private:
 
     enum class SkillState {
         idle,
