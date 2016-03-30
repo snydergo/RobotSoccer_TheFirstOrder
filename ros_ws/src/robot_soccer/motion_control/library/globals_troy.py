@@ -11,7 +11,7 @@ kp_theta = 0.04
 ki_theta = 0.001
 kd_theta = 0.005
 
-fast_limit = 1
+fast_limit = .7
 slow_limit = .3
 xy_limit	 = fast_limit
 th_limit	 = 1000
