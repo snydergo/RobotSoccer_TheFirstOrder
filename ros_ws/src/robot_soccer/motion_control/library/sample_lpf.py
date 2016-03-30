@@ -110,7 +110,7 @@ def lp_filter(piece):
         piece.vel = utility_wall_bounce(piece.position_delayed,piece.vel)
         piece.old_position_measurement = piece.position_camera;
         # propagate up to current location
-        for i in range(1,(globals.camera_sample_time/globals.loop_time)):
+        for i in range(1,int(globals.camera_sample_time/globals.loop_time)):
             piece.position_delayed = piece.position_delayed + globals.loop_time*piece.vel
             piece.vel = utility_wall_bounce(piece.position_delayed,piece.vel)               
         piece.position = piece.position_delayed
