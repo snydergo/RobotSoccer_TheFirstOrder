@@ -16,15 +16,15 @@ def roboControl(data):
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
             count = 0
             vx, vy, omega = pid.robot_ctrl(data)
+            if vx != vx or vy != vy or omega != omega:
+                print("ERROR with NaN")
+			    pid.reset()
+                return
            # store last valid values in case of NaN
             vx_valid = vx
             vy_valid = vy
             omega_valid = omega
             # Go, baby, go
-            if vx != vx or vy != vy or omega != omega:
-                print("ERROR with NaN")
-		pid.reset()
-                return
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else: # we got a NaN
             count = count + 1
@@ -38,15 +38,16 @@ def roboControl(data):
         if data.x == data.x and data.y == data.y and data.theta == data.theta: # check for NaN
             count = 0
             vx, vy, omega = pid.robot_ctrl(data)
+            if vx != vx or vy != vy or omega != omega:
+                print("ERROR with NaN")
+				pid.reset()
+                return
            # store last valid values in case of NaN
             vx_valid = vx
             vy_valid = vy
             omega_valid = omega
             # Go, baby, go
-            if vx != vx or vy != vy or omega != omega:
-                print("ERROR with NaN")
-		pid.reset()
-                return
+
             mlib.goXYOmegaWorld(vx,vy,omega,mlib.deg2rad(data.theta))
         else:
             count = count + 1
