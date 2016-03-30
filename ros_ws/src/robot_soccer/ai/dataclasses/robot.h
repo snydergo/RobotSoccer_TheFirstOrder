@@ -14,14 +14,14 @@ class Robot: public FieldObject
 public:
     double theta;
     //Constructors and other functions
-    Robot(robotType tag, Point loc, Point vel, double theta)
+    Robot(RobotType tag, Point loc, Point vel, double theta)
     : FieldObject(tag, loc, vel)
     , theta(theta)
     {
     }
 
     Robot()
-    : FieldObject(robotType::none, Point(), Point())
+    : FieldObject(RobotType::none, Point(), Point())
     , theta(0)
     {
     }

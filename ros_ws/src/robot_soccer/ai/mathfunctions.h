@@ -21,8 +21,10 @@ namespace calc {
     Point predictLocation(FieldObject myobj, double time);
     double angleDifference(double currentTheta, double desiredTheta);
     Point getVelocity(FieldObject obj1, FieldObject obj2);
+    double degToRad(double deg);
     double radToDeg(double radians);
     double getVectorAngle(Point vector);
+    double getDistance(Point robot, Point point);
 
     /*#### THRESHOLD PLAY FUNCTIONS ####*/
     bool withinField(Point point);
@@ -30,7 +32,7 @@ namespace calc {
     bool ballFetched(Robot ally, FieldObject ball);
     bool ballAimed(Robot ally, FieldObject ball, Point enemyGoal);
     bool ballKicked(Robot ally, Point kp);
-    bool atLocation(Point robot, Point point);
+    bool atLocation(Point robot, Point point, double err=DISTANCE_ERR);
     bool atLocation(double robot_coord, double p_coord);
     bool withinPerimeter(Point robot, Point ball);
 }

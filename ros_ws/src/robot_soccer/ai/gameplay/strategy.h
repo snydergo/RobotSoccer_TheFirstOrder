@@ -8,8 +8,8 @@ class Strategies{
 public:
 
     Strategies()
-    : robot1Plays(robotType::ally1)
-    , robot2Plays(robotType::ally2)
+    : robot1Plays(RobotType::ally1)
+    , robot2Plays(RobotType::ally2)
     , strategy_st(StrategyState::idle)
     , startStrategy(StrategyState::goaliePower)
     {

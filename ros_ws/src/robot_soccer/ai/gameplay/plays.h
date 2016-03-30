@@ -9,7 +9,7 @@ class Plays
 
 public:
 
-    Plays(robotType type)
+    Plays(RobotType type)
     : allyNum(type)
     , skill(type)
     , myside(side::none)
@@ -28,7 +28,7 @@ public:
     void tick();
     void init();
     void start(Point startLoc);
-    robotType allyNum;
+    RobotType allyNum;
 
 private:
     Skills skill;

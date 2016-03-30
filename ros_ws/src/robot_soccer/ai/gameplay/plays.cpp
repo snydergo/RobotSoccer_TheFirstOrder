@@ -44,26 +44,27 @@ void Plays::uninitKicker()
 
 void Plays::rushGoalTick()
 {
-    std::cout << "Plays::tick() rushGoal ";
+//    std::cout << "Plays::tick() rushGoal ";
     switch (coord_st) {
     case CoordSkillState::fetchBall:
         std::cout << " fetching ball" << std::endl;
         skill.fetchBall();
-        if (bkcalc::ballFetched(allyNum)) {
+        if (calc::ballFetched(fieldget::getRobot(allyNum), fieldget::getBall())) {
             std::cout << "Plays::tick() BALL FETCHED" << std::endl;
             coord_st = CoordSkillState::aim;
         }
         break;
     case CoordSkillState::aim:
-        static uint8_t aim_cnt = 1;
+        static uint16_t aim_cnt = 1;
         std::cout << " aiming ball::count == " << std::to_string(aim_cnt) << std::endl;
         skill.aim();
-        /*if (!bkcalc::ballFetched(allyNum)) {
+        /*if (!calc::ballFetched(fieldget::getRobot(allyNum))) {
              std::cout << "Plays::tick() BALL FETCHED" << std::endl;
              coord_st = CoordSkillsState::fetchBall;
         } else*/
-        if (bkcalc::ballAimed(allyNum) || aim_cnt++ == AIM_MAX_CNT) {
+        if (bkcalc::ballAimed(allyNum) || aim_cnt++ >= AIM_MAX_CNT) {
             aim_cnt = 0;
+  //          std::cout << "#############################################################################" << std::endl;
             std::cout << "Plays::tick() BALL AIMED" << std::endl;
             kp = bkcalc::kickPoint(allyNum);
             coord_st = CoordSkillState::kick;
@@ -72,11 +73,14 @@ void Plays::rushGoalTick()
     case CoordSkillState::kick:
         std::cout << " kicking ball" << std::endl;
         skill.goToPoint(moveSpeed::fast, kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
-        if (bkcalc::ballKicked(allyNum,kp)) {
+        if (calc::ballKicked(fieldget::getRobot(allyNum),kp)) {
             std::cout << "Plays::tick() BALL KICKED" << std::endl;
-            std::cout << "#############################################################################" << std::endl;
+//            std::cout << "#############################################################################" << std::endl;
             coord_st = CoordSkillState::fetchBall;
             skill.kick();
+        } else if (calc::getDistance(fieldget::getRobotLoc(allyNum), fieldget::getBall().location) >= KICK_INVALID_DIST){
+            std::cout << " not within kick range" << std::endl;
+            coord_st = CoordSkillState::fetchBall;
         }
         break;
     default:
@@ -93,7 +97,7 @@ void Plays::playGoalieTick()
     case CoordSkillState::gotoGoal:
         std::cout << "Skills::CoordSkillsState == gotogoal"<<std::endl;
         skill.goToPoint(allyGoal, 0);
-        if (bkcalc::atLocation(allyNum, allyGoal)) {
+        if (calc::atLocation(fieldget::getRobotLoc(allyNum), allyGoal)) {
             std::cout << "AT GOAL" << std::endl;
             coord_st = CoordSkillState::followBall;
         }
@@ -111,7 +115,7 @@ void Plays::playGoalieTick()
             //if ball is within goalie box
             if (abs(fieldget::getBallLoc().y) < GOAL_RADIUS) {
                 //std::cout << "ball is within Goal width" << std::endl;
-                //double y = 2*fieldget::getBallLoc().y - fieldget::getRobotLoc(robotType::ally1).y;
+                //double y = 2*fieldget::getBallLoc().y - fieldget::getRobotLoc(RobotType::ally1).y;
 
                 point = Point(allyGoal.x, fieldget::getBallLoc().y);
             } else{ //ball is outside of goalie box
@@ -133,7 +137,7 @@ void Plays::playGoalieTick()
         std::cout << "Skills::CoordSkillsState == kick_st"<<std::endl;
         skill.kick();
         skill.goToPoint(kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
-        if (bkcalc::ballKicked(allyNum, kp)) {
+        if (calc::ballKicked(fieldget::getRobot(allyNum), kp)) {
             std::cout << "Plays::tick() BALL KICKED" << std::endl;
             coord_st = CoordSkillState::gotoGoal;
         }

@@ -10,12 +10,12 @@ It consists of a Point, Velocity and Tag for identification */
 
 class FieldObject{
 public:
-  robotType tag;
+  RobotType tag;
   Point location;
   Point velocity;
 
   //FieldObject Functions
-  FieldObject(robotType tag, Point loc, Point vel)
+  FieldObject(RobotType tag, Point loc, Point vel)
   : tag(tag)
   , velocity(vel)
   , location(loc)

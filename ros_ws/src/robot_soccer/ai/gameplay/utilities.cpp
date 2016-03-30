@@ -1,19 +1,19 @@
 /*in charge of all of the functions that creates the commands that
 are sent to the robot to be executed*/
 #include "utilities.h"
-void assignCmd(robotType tag, robot_soccer::controldata cmd)
+void assignCmd(RobotType tag, robot_soccer::controldata cmd)
 {
     switch(tag) {
-    case robotType::ally1:
+    case RobotType::ally1:
         cmdRob1 = cmd;
         sendCmd_Rob1 = true;
         break;
-    case robotType::ally2:
+    case RobotType::ally2:
         cmdRob2 = cmd;
         sendCmd_Rob2 = true;
         break;
     default:
-        throw ExceptionAI(errtype::robotType);
+        throw ExceptionAI(errtype::RobotType);
         break;
     }
 }
@@ -25,7 +25,7 @@ void Utilities::rotate(double angle)
 
 void Utilities::move(moveSpeed gvnSpeed, Robot robot, Point dest, double des_theta)
 {
-    std::cout << "UTILITIES:: sending mov command" << std::endl;
+//    std::cout << "UTILITIES:: sending mov command" << std::endl;
     robot_soccer::controldata cmd;
     switch (gvnSpeed) {
     case moveSpeed::fast:

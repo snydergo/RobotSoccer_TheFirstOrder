@@ -77,8 +77,9 @@ int main(int argc, char **argv)
         }else if (cmdtype == "quit" ||
                   cmdtype == "q"){
             exit(0);
-        }else
+        }else {
             std::cout << "Not a valid CMD TYPE\n";
+        }
         std::cout << "\n";
     }
     /**

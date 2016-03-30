@@ -19,11 +19,11 @@ public:
     FieldObject ball;
     ros::Time time;
     GameStatus()
-    : ally1(robotType::ally1, Point(), Point(), 0)
-    , ally2(robotType::ally2, Point(), Point(), 0)
-    , enemy1(robotType::enemy1, Point(), Point(), 0)
-    , enemy2(robotType::enemy2, Point(), Point(), 0)
-    , ball(robotType::ball, Point(), Point())
+    : ally1(RobotType::ally1, Point(), Point(), 0)
+    , ally2(RobotType::ally2, Point(), Point(), 0)
+    , enemy1(RobotType::enemy1, Point(), Point(), 0)
+    , enemy2(RobotType::enemy2, Point(), Point(), 0)
+    , ball(RobotType::ball, Point(), Point())
     {
     }
 
