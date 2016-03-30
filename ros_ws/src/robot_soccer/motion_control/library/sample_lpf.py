@@ -34,7 +34,7 @@ class GamePieces(object):
             pos_l = [msg['{}_x'.format(name)], msg['{}_y'.format(name)], msg['{}_w'.format(name)]]
             pos = [round(i,3) for i in pos_l]
             # checkBounds(pos)
-            if noNans(pos):
+            if noNaNs(pos):
                 setattr(piece, 'position', matrix(pos).reshape(3,1))
                 setattr(piece, 'camera_flag', True)
 
