@@ -199,7 +199,7 @@ int main(int argc, char** argv)
                     std::cout << "### show_video can only be true or false ###" << endl;
                     continue;
                 }
-            } else if (parameterName == "update") {
+            } else if (parameterName == "update" || parameterName == "u") {
                 paramValid = true;
             } else if (parameterName == "stop") {
                 gameCommand.data = "stop";

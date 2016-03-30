@@ -15,7 +15,6 @@ public:
     , myside(side::none)
     , startLocation(center)
     , kp(center)
-    , coordSkill(*this)
     , play_st(PlayState::idle)
     {
     }
@@ -43,38 +42,19 @@ private:
         splitDefense
     } play_st;
 
-    class CoordSkills { // more detailed coordinated skills
-    public:
+    enum class CoordSkillState {
+        idle,
+        gotoGoal,
+        kick,
+        followBall,
+        fetchBall,
+        dribble,
+        aim,
+        splitFetchBall
+    } coord_st;
 
-        CoordSkills(Plays& parent)
-        : parent(parent)
-        {
-            rushGoalReset();
-            playGoalieReset();
-        }
-
-        void rushGoalReset();
-        void playGoalieReset();
-        void rushGoalTick();
-        void playGoalieTick();
-
-    private:
-
-        enum class CoordSkillState {
-            idle,
-            gotoGoal,
-            kick,
-            followBall,
-            fetchBall,
-            dribble,
-            aim,
-            splitFetchBall
-        } playGoalie_st, rushGoal_st;
-
-        Plays& parent;
-    };
-
-    CoordSkills coordSkill;
+    void rushGoalTick();
+    void playGoalieTick();
 
     //variables used for Kicking
     side myside;

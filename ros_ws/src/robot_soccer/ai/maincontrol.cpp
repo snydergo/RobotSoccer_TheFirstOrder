@@ -40,7 +40,11 @@ void mainControlSM(ros::NodeHandle &n)
 
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
-    Strategies strategies;
+//    Strategies strategies;
+    //Plays play(robotType::ally1);
+//    play.rushGoal();
+    Skills skill(robotType::ally1);
+    skill.fetchBall();
     while (ros::ok())
     {
         count++;
@@ -49,7 +53,9 @@ void mainControlSM(ros::NodeHandle &n)
             dataInitialized = true;
             field.updateStatus(visionStatus_msg);
         }
-        strategies.tick();
+//        strategies.tick();
+        skill.tick();
+//        play.tick();
 
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
@@ -97,13 +103,14 @@ void debugSM(ros::NodeHandle &n)
             field.updateStatus(visionStatus_msg);
         }
         if (newDebugCmd || init) {
+
             init = false;
             newDebugCmd = false;
             cmdRob1.cmdType = debugCmd.cmdType;
             cmdRob1.x_cmd = debugCmd.x_cmd;
             cmdRob1.y_cmd = debugCmd.y_cmd;
             cmdRob1.theta_cmd = debugCmd.theta_cmd;
-
+            std::cout << cmdRob1.x_cmd << " " << cmdRob1.y_cmd << std::endl;
             if (cmdRob1.cmdType == "moveslow" || cmdRob1.cmdType == "movefast") {
                 moveSpeed speed;
                 if(cmdRob1.cmdType == "moveslow"){
@@ -131,9 +138,12 @@ void debugSM(ros::NodeHandle &n)
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
             checkCmd(cmdRob1);
-            std::cout << "cmdType: "+ cmdRob1.cmdType << std::endl
-                      << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd
-                      << " w: " << cmdRob1.theta_cmd << std::endl;
+            if (cmdRob1.cmdType.data() == "move") {
+                cmdRob1.cmdType = "movefast";
+            }
+//            std::cout << "cmdType: "+ cmdRob1.cmdType << std::endl
+//                      << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd
+//                      << " w: " << cmdRob1.theta_cmd << std::endl;
             robo1Com.publish(cmdRob1);
 
         }

@@ -2,7 +2,7 @@ purple
 green
 orange
 blue
-away
+home
 2
 0
 1

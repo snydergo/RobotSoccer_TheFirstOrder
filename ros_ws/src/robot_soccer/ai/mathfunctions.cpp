@@ -85,7 +85,7 @@ double calc::getVectorAngle(Point vector){
 
 //####PLAY THRESHOLD FUNCTIONS####//
 bool calc::atLocation(Point robot, Point point){
-    if(robot.x != robot.x && robot.y != robot.y){return false;}
+    if(robot.x != robot.x || robot.y != robot.y){return false;}
 //    std::cout << "point.x == " << std::to_string(point.x) << std::endl;
 //    std::cout << "robot.x == " << std::to_string(robot.x) << std::endl;
     double xValues = robot.x-point.x;
@@ -94,12 +94,9 @@ bool calc::atLocation(Point robot, Point point){
     double yValues = robot.y-point.y;
 //    std::cout << "yValues == " << std::to_string(yValues) << std::endl;
     yValues *= yValues;
-    double distance_sqrd = xValues+yValues;
-    std::cout << "distance_sqrd == " << distance_sqrd << std::endl;
-    if(distance_sqrd > DISTANCE_ERR)
-        return false;
-    else
-        return true;
+    double distance = std::sqrt(xValues+yValues);
+    std::cout << "distance == " << distance << std::endl;
+    return (distance < DISTANCE_ERR);
 }
 
 bool calc::withinPerimeter(Point robot, Point ball){
@@ -118,12 +115,8 @@ bool calc::withinPerimeter(Point robot, Point ball){
 }
 
 bool calc::atLocation(double robot_coord, double p_coord){
-    double distance_sqrd = robot_coord - p_coord;
-    distance_sqrd *= distance_sqrd;
-    if(distance_sqrd > DISTANCE_ERR)
-        return false;
-    else
-        return true;
+    double distance = std::abs(robot_coord - p_coord);
+    return (distance < DISTANCE_ERR);
 }
 
 bool calc::ballFetched(Robot ally, FieldObject ball){

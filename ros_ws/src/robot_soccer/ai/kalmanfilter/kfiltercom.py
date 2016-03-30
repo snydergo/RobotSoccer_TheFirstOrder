@@ -15,13 +15,15 @@ lastVisionData = visiondata()
 newDataFlag = False
 gamePieces = lpf.GamePieces()
 
-def filter(update):
+def filter():
     global gamePieces
     global filteredData
     global lastVisionData
+    global newDataFlag
     # print lastVisionData
-    if update:
-        gamePieces.update_all(lastVisionData)      
+    if newDataFlag:
+        gamePieces.update_all(lastVisionData)
+        newDataFlag = False    
     gamePieces.filter_all()
     filteredData = gamePieces.gen_msg()
     #print filteredData
@@ -30,8 +32,8 @@ def filter(update):
 def callback(new_data):
     global newDataFlag
     global lastVisionData
-    newDataFlag = True
     lastVisionData = new_data
+    newDataFlag = True
     
 
 def filterData():
@@ -46,14 +48,7 @@ def filterData():
 
     ## Decisions ##
     while not rospy.is_shutdown():
-        if newDataFlag:
-            filter(True)
-            # print("newData received")
-            newDataFlag = False
-        #else:
-            #filter(False)
-            #print("predicting...")
-
+        filter()
         pub.publish(filteredData)           
         rate.sleep()
     return
