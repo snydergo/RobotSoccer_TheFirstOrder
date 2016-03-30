@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import matlib
 from numpy import matrix
-# from robot_soccer.msg import visiondata
+from robot_soccer.msg import visiondata
 import globals
 
 # position = matlib.zeros(shape=(3,1))
