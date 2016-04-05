@@ -9,9 +9,20 @@ using namespace std;
 /** @function main */
 int main(int argc, char** argv)
 {
-
-  /// Read the image
-  VideoCapture cap("http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg"); //capture the video from web cam
+    string cameraUrl = "http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg";
+    if (argc == 2) {
+        try {
+            int ip;
+            ip = stoi(argv[1]);
+            if (ip == 78) {
+                cout << "loading camera 192.168.1.78..." << endl;
+                cameraUrl = "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg";
+            } else {
+                cout << "loading camera 192.168.1.79..." << endl;
+            }
+        } catch(...) {}
+    }
+    VideoCapture cap(cameraUrl); //capture the video from web cam
 
     if (!cap.isOpened()) { // if not success, exit program 
         cout << "Cannot open the web cam" << endl;

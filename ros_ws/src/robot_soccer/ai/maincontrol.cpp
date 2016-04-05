@@ -28,33 +28,22 @@ void mainControlSM(ros::NodeHandle &n)
     ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 5);
 
     //SUBSCRIBER FROM VISION
-    ros::Subscriber vision_subscriber = n.subscribe("vision_data", 5, visionCallback);
+    ros::Subscriber vision_subscriber = n.subscribe("filteredvision_data", 5, visionCallback);
     (void*)vision_subscriber;
 
-    ros::Rate loop_rate(TICKS_PER_SEC);
-    int count = 0;
-
-    bool dataInitialized = false;
-
+//    ros::Rate loop_rate(TICKS_PER_SEC);
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
 //    Strategies strategies;
     Plays play(RobotType::ally1);
     play.rushGoal();
-//    Skills skill(RobotType::ally1);
-//    skill.fetchBall();
-    while (ros::ok())
-    {
-        count++;
+    while (ros::ok()) {
         if (visionUpdated) {
             visionUpdated = false;
-            dataInitialized = true;
             field.updateStatus(visionStatus_msg);
+//            strategies.tick();
+            play.tick();
         }
-//        strategies.tick();
-//        skill.tick();
-        play.tick();
-
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
             checkCmd(cmdRob1);
@@ -65,11 +54,8 @@ void mainControlSM(ros::NodeHandle &n)
             checkCmd(cmdRob2);
             robo2Com.publish(cmdRob2);
         }
-
-        ros::spinOnce();
-
-        loop_rate.sleep();
-
+//        ros::spinOnce();
+//        loop_rate.sleep();
     }
 }
 

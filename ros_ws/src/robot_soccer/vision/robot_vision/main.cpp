@@ -77,17 +77,6 @@ void setSignaller(FieldObject obj, bool value) {
     }
 }
 
-//bool waitForThreads()
-//{
-//    while (signallers[0] ||
-//           signallers[1] ||
-//           signallers[2] ||
-//           signallers[3] ||
-//           signallers[4]){}
-
-
-//}
-
 vector<cv::Moments> getMoments(FieldObject obj) {
     switch (obj) {
     case FieldObject::ball:        return objectMoments[0];
@@ -137,6 +126,8 @@ int main(int argc, char** argv)
     Ball ball(config::ballArea);
     Robot robotAlly1;
     Robot robotAlly2;
+    Robot robotEnemy1;
+    Robot robotEnemy2;
 
     int windowDestroyTimer = 0;
 
@@ -150,6 +141,8 @@ int main(int argc, char** argv)
     thread ballThread(processFrames, FieldObject::ball);
     thread ally1Thread(processFrames, FieldObject::allyRobot1);
     thread ally2Thread(processFrames, FieldObject::allyRobot2);
+    thread enemy1Thread(processFrames, FieldObject::enemyRobot1);
+    thread enemy2Thread(processFrames, FieldObject::enemyRobot2);
 
     cout << "starting video feed" << endl;
 
@@ -174,6 +167,12 @@ int main(int argc, char** argv)
         if (config::allyRobotCount > 1) {
             setSignaller(FieldObject::allyRobot2, true);
         }
+        if (config::allyRobotCount > 0) {
+            setSignaller(FieldObject::enemyRobot1, true);
+        }
+        if (config::allyRobotCount > 1) {
+            setSignaller(FieldObject::enemyRobot2, true);
+        }
 
         /// find our robots
         if (config::allyRobotCount > 0) {
@@ -181,6 +180,13 @@ int main(int argc, char** argv)
         }
         if (config::allyRobotCount > 1) {
             robotAlly2.find(getMoments(FieldObject::allyRobot2));
+        }
+        /// find their robots
+        if (config::enemyRobotCount > 0) {
+            robotEnemy1.find(getMoments(FieldObject::enemyRobot1));
+        }
+        if (config::enemyRobotCount > 1) {
+            robotEnemy2.find(getMoments(FieldObject::enemyRobot2));
         }
         /// find the ball
         ball.find(getMoments(FieldObject::ball));
@@ -192,6 +198,14 @@ int main(int argc, char** argv)
         msg.tm1_x = robotAlly2.getCenter().x;
         msg.tm1_y = robotAlly2.getCenter().y;
         msg.tm1_w = robotAlly2.getRotation();
+
+        msg.op0_x = robotEnemy1.getCenter().x;
+        msg.op0_y = robotEnemy1.getCenter().y;
+        msg.op0_w = robotEnemy1.getRotation();
+
+        msg.op1_x = robotEnemy2.getCenter().x;
+        msg.op1_y = robotEnemy2.getCenter().y;
+        msg.op1_w = robotEnemy2.getRotation();
 
         msg.ball_x = ball.getCenter().x;
         msg.ball_y = ball.getCenter().y;
@@ -227,6 +241,8 @@ int main(int argc, char** argv)
     ballThread.join();
     ally1Thread.join();
     ally2Thread.join();
+    enemy1Thread.join();
+    enemy2Thread.join();
 
     return 0;
 }
