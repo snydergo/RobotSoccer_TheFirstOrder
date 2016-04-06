@@ -28,14 +28,15 @@ void mainControlSM(ros::NodeHandle &n)
     ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 5);
 
     //SUBSCRIBER FROM VISION
-    ros::Subscriber vision_subscriber = n.subscribe("filteredvision_data", 5, visionCallback);
+    ros::Subscriber vision_subscriber = n.subscribe("vision_data", 5, visionCallback);
     (void*)vision_subscriber;
 
-//    ros::Rate loop_rate(TICKS_PER_SEC);
+    ros::Rate loop_rate(TICKS_PER_SEC);
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
 //    Strategies strategies;
     Plays play(RobotType::ally1);
+//    play.rushGoal();
     play.rushGoal();
     while (ros::ok()) {
         if (visionUpdated) {
@@ -54,8 +55,8 @@ void mainControlSM(ros::NodeHandle &n)
             checkCmd(cmdRob2);
             robo2Com.publish(cmdRob2);
         }
-//        ros::spinOnce();
-//        loop_rate.sleep();
+        ros::spinOnce();
+        loop_rate.sleep();
     }
 }
 
@@ -94,7 +95,6 @@ void debugSM(ros::NodeHandle &n)
             cmdRob1.x_cmd = debugCmd.x_cmd;
             cmdRob1.y_cmd = debugCmd.y_cmd;
             cmdRob1.theta_cmd = debugCmd.theta_cmd;
-            std::cout << cmdRob1.x_cmd << " " << cmdRob1.y_cmd << std::endl;
             if (cmdRob1.cmdType == "moveslow" || cmdRob1.cmdType == "movefast") {
                 moveSpeed speed;
                 if(cmdRob1.cmdType == "moveslow"){

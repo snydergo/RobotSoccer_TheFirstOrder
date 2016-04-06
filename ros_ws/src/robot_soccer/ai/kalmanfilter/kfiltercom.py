@@ -44,7 +44,7 @@ def filterData():
     rospy.Subscriber("vision_data", visiondata, callback)
     #publisher information setup
     pub = rospy.Publisher('filteredvision_data', visiondata, queue_size=10)
-    rate = rospy.Rate(globals.loop_rate) # 60hz
+    rate = rospy.Rate(60) # 60hz
 
     ## Decisions ##
     while not rospy.is_shutdown():
