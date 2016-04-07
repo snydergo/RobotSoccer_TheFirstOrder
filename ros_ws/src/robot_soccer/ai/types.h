@@ -9,7 +9,7 @@
 //## FIELD PARAMETERS ##//
 #define GOAL_XLOCATION          150 //160 real 130 gazebo
 #define GOAL_WIDTH              60
-#define GOAL_RADIUS             GOAL_WIDTH/2
+#define GOAL_RADIUS             (GOAL_WIDTH/2)
 #define GOAL_ANGLE_ERR          10
 #define FIELD_XBORDER           180
 #define FIELD_YBORDER           100
@@ -37,7 +37,8 @@
 
 #define SPLIT_OFFSET            20
 #define SPLIT_WAIT_XOFFSET      40
-#define SPLIT_WAIT_Y            FIELD_YBORDER/2
+#define SPLIT_WAIT_Y            (FIELD_YBORDER/2)
+
 //## TIMING DEFINES ##//
 #define TICKS_PER_SEC           60
 #define VELOCITY_THRESHOLD      .000001
