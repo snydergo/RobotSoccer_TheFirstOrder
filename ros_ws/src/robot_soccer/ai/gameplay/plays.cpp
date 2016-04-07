@@ -66,7 +66,6 @@ void Plays::rushGoalTick()
         } else*/
         if (bkcalc::ballAimed(allyNum) || aim_cnt++ >= AIM_MAX_CNT) {
             aim_cnt = 0;
-  //          std::cout << "#############################################################################" << std::endl;
             std::cout << "Plays::tick() BALL AIMED" << std::endl;
             kp = bkcalc::kickPoint(allyNum);
             coord_st = CoordSkillState::kick;
@@ -77,7 +76,6 @@ void Plays::rushGoalTick()
         skill.goToPoint(moveSpeed::fast, kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
         if (calc::ballKicked(fieldget::getRobot(allyNum),kp)) {
             std::cout << "Plays::tick() BALL KICKED" << std::endl;
-//            std::cout << "#############################################################################" << std::endl;
             coord_st = CoordSkillState::fetchBall;
             skill.kick();
         } else if (calc::getDistance(fieldget::getRobotLoc(allyNum), fieldget::getBall().location) >= KICK_INVALID_DIST){
@@ -121,7 +119,6 @@ void Plays::playGoalieTick()
 
                 point = Point(allyGoal.x, fieldget::getBallLoc().y);
             } else{ //ball is outside of goalie box
-                //std::cout << "ball is outside Goal width" << std::endl;
                 double y_coord = allyGoal.y;
                 if (fieldget::getBallLoc().y > 0)
                     y_coord += GOAL_RADIUS;
@@ -174,13 +171,6 @@ void Plays::splitRushTick(){
 //### END OF FUNCTIONS CALLED OUTSIDE ###//
 void Plays::tick()
 {
-    //needed changes
-    /*
-        Needed Changes
-            1. when roles/plays are assigned each state needs to be initialized appropriately
-            2. Need each time coord_st switch statement occurs that a function from skills is called
-            3. Need to add an exception code for when default case is reached in statemachines.
-    */
     switch (play_st) {
     case PlayState::idle:
         std::cout << "Plays::tick() idle_st"<< std::endl;
