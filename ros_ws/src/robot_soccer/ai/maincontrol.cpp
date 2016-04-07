@@ -1,14 +1,12 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
-
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
 #include "debug/subscriber_debugmsg.h"
 #include "kalmanfilter/getFilteredData.h"
 #include "gameplay/strategy.h"
 #include "types.h"
-
 #include "std_msgs/String.h"
 
 #define OPTION 1
@@ -237,6 +235,7 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+//function used by GameControl to set flags for change of strategy.
 void gameCmdCallback(const std_msgs::String &msg)
 {
     if (msg.data == "stop") {
@@ -253,6 +252,7 @@ void gameCmdCallback(const std_msgs::String &msg)
     }
 }
 
+//function that checks flags set by GameControl and changes strategies.
 void checkGCFlags(Strategies* strategies){
     if(gameControl_flags){
         if(gameControl_flags & START){
@@ -275,11 +275,6 @@ void checkCmd(robot_soccer::controldata &cmdRob){
     }else if (abs(cmdRob.x_cmd) > FIELD_XBORDER){
         cmdRob.x_cmd = FIELD_XBORDER;
     }
-
-    /*if(iskick){
-           cmdRob.cmdType = "kick";
-           iskick = false;
-       }else */
 }
 
 void debugOption(){
