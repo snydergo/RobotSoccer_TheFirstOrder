@@ -6,18 +6,18 @@ will change depending on the scores, opponent techniques and etc*/
 
 void Strategies::stop()
 {
-    printf("stop strategy\n");
+//    printf("stop strategy\n");
     strategy_st = StrategyState::idle;
 }
 void Strategies::start()
 {
-    printf("stop strategy\n");
+//    printf("start strategy\n");
     strategy_st = startStrategy;
 }
 
 void Strategies::mark()
 {
-    printf("stop strategy\n");
+//    printf("going to start Positions\n");
     strategy_st = StrategyState::mark;
 }
 
@@ -25,14 +25,10 @@ void Strategies::tick()
 {
     switch (strategy_st) {
     case StrategyState::idle:
-    	//STATE USED TO WAIT UNTIL THE CAMERA DATA IS UPDATED
         std::cout << "Strategies::tick() idle"<< std::endl;
-        //it is assumed robot is not in the right position
         robot1Plays.idle();
         robot2Plays.idle();
         break;
-    //state used to perform all necessary inits and start first strategy
-    //has the robot go to a specified location on map when the game is going to start
 
     case StrategyState::mark:
         std::cout << "Strategies::tick() start"<< std::endl;
@@ -42,7 +38,7 @@ void Strategies::tick()
 
     case StrategyState::start:
         strategy_st = startStrategy;
-		break;
+	break;
 
     case StrategyState::separateRushGoal:
         std::cout << "Strategies:: tick() SeparateRushGoal" << std::endl;
