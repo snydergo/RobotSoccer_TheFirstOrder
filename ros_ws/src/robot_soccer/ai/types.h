@@ -7,33 +7,33 @@
 ** Author: Glade Snyder
 ** -------------------------------------------------------------------------*/
 //## FIELD PARAMETERS ##//
-#define GOAL_XLOCATION 150 //160 real 130 gazebo
-#define GOAL_WIDTH 60
-#define GOAL_RADIUS GOAL_WIDTH/2
-#define GOAL_ANGLE_ERR 10
-#define FIELD_XBORDER 180
-#define FIELD_YBORDER 100
-#define PI 3.141592653
-#define STARTCENTER 60
+#define GOAL_XLOCATION          150 //160 real 130 gazebo
+#define GOAL_WIDTH              60
+#define GOAL_RADIUS             GOAL_WIDTH/2
+#define GOAL_ANGLE_ERR          10
+#define FIELD_XBORDER           180
+#define FIELD_YBORDER           100
+#define PI                      3.141592653
+#define STARTCENTER             60
 
 //## GAME CONTROL FLAGS ##//
-#define STOP 1
-#define START 2
-#define MARK 4
+#define STOP      1
+#define START     2
+#define MARK      4
 
 //## THRESHOLD DEFINITIONS ##//
-#define ANGLE_ERR 20
-#define AIM_MAX_CNT 200
-#define AIM_BALL_DIST 15
-#define KICK_INVALID_DIST 40
-#define DISTANCE_ERR 6 // this is an error of 6cm
-#define MVSPD_FAST_THRESH 400
-#define PERIMETER_ERR 100
-#define PERIMETER_XOFFSET 5
-#define PERIMETER_YOFFSET 3
-#define KICK_FACTOR 3
-#define BALLFETCHED_ERR 10
-#define FETCHBALL_OFFSET 20
+#define ANGLE_ERR               20
+#define AIM_MAX_CNT             200
+#define AIM_BALL_DIST           15
+#define KICK_INVALID_DIST       40
+#define DISTANCE_ERR            6 // this is an error of 6cm
+#define MVSPD_FAST_THRESH       400
+#define PERIMETER_ERR           100
+#define PERIMETER_XOFFSET       5
+#define PERIMETER_YOFFSET       3
+#define KICK_FACTOR             3
+#define BALLFETCHED_ERR         10
+#define FETCHBALL_OFFSET        20
 
 #define SPLIT_OFFSET 20
 #define SPLIT_WAIT_XOFFSET 40
