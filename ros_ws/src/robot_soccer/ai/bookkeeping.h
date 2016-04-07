@@ -38,7 +38,7 @@ extern bool sendCmd_Rob1;
 extern bool sendCmd_Rob2;
 extern robot_soccer::controldata cmdRob1;
 extern robot_soccer::controldata cmdRob2;
-
+extern u_int8_t gameControl_flags;
 //debug globals
 extern bool newDebugCmd;
 extern robot_soccer::controldata debugCmd;

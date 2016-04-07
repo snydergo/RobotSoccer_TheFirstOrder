@@ -5,6 +5,7 @@
 //###FUNCTIONS THAT ARE USED OUTSIDE TO SET WHICH PLAY TO PERFORM.###//
 void Plays::start(Point startLoc)
 {
+    stream::info << "PLAYS::start:: START LOCATION (" << startLoc.x << ", " << startLoc.y << ")\n";
     startLocation = startLoc;
     play_st = PlayState::start;
 }
@@ -21,8 +22,9 @@ void Plays::playGoalie()
     play_st = PlayState::playGoalie;
 }
 
-void Plays::split_rushGoal(side gvnSide)
+void Plays::rushSplit(side gvnSide)
 {
+    //boundary = (gvnSide == side::pos || gvnSide == side::left) ? -SPLIT_OFFSET: SPLIT_OFFSET;
     myside = gvnSide;
     play_st = PlayState::splitRush;
 }
@@ -147,6 +149,27 @@ void Plays::playGoalieTick()
         break;
     }
 }
+void Plays::splitRushTick(){
+    int ballx = fieldget::getBallLoc().x;
+    switch(myside){
+    case side::pos:
+    case side::left:
+        if(ballx > -SPLIT_OFFSET){
+            rushGoalTick();
+        }else{
+            skill.goToPoint(Point(ballx-SPLIT_WAIT_XOFFSET, SPLIT_WAIT_Y),0);
+        }
+        break;
+    case side::neg:
+    case side::right:
+        if(ballx < SPLIT_OFFSET){
+            rushGoalTick();
+        }else{
+            skill.goToPoint(Point(ballx-SPLIT_WAIT_XOFFSET, -SPLIT_WAIT_Y),0);
+        }
+        break;
+    }
+}
 
 //### END OF FUNCTIONS CALLED OUTSIDE ###//
 void Plays::tick()
@@ -173,6 +196,8 @@ void Plays::tick()
     case PlayState::playGoalie:
         playGoalieTick();
         break;
+    case PlayState::splitRush:
+        splitRushTick();
     default:
         //Throw Exception
         break;

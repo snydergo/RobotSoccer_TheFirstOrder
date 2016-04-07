@@ -20,9 +20,10 @@ void gameCmdCallback(const std_msgs::String &msg);
 
 void checkCmd(robot_soccer::controldata &cmdRob1);
 void debugOption();
-
+void checkGCFlags(Strategies* strategies);
 void mainControlSM(ros::NodeHandle &n)
 {
+    stream::info.open("info.txt");
     //PUBLISHER FOR MOTIONCONTROL
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 5);
     ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 5);
@@ -34,16 +35,18 @@ void mainControlSM(ros::NodeHandle &n)
     ros::Rate loop_rate(TICKS_PER_SEC);
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
-//    Strategies strategies;
-    Plays play(RobotType::ally1);
+    Strategies strategies;
+//    Plays play(RobotType::ally1);
 //    play.rushGoal();
-    play.rushGoal();
+//    play.rushGoal();
     while (ros::ok()) {
+        checkGCFlags(&strategies);
+
         if (visionUpdated) {
             visionUpdated = false;
             field.updateStatus(visionStatus_msg);
-//            strategies.tick();
-            play.tick();
+            strategies.tick();
+//            play.tick();
         }
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
@@ -238,16 +241,32 @@ void gameCmdCallback(const std_msgs::String &msg)
 {
     if (msg.data == "stop") {
         /// ----------------- send stop command to robot -------------------
+        gameControl_flags |= STOP;
     } else if (msg.data == "start") {
         /// ----------------- start the AI state machine -------------------
+        gameControl_flags |= START;
     } else if (msg.data == "mark") {
         /// ----------------- go to starting postion for match -------------
+        gameControl_flags |= MARK;
     } else {
         std::cout << "ERROR: Unknown game command: " << msg << std::endl;
     }
 }
 
-
+void checkGCFlags(Strategies* strategies){
+    if(gameControl_flags){
+        if(gameControl_flags & START){
+            gameControl_flags &= ~START;
+            strategies->start();
+        }else if(gameControl_flags & STOP){
+            gameControl_flags &= ~STOP;
+            strategies->stop();
+        }else if(gameControl_flags & MARK){
+            gameControl_flags &= ~MARK;
+            strategies->mark();
+        }
+    }
+}
 
 void checkCmd(robot_soccer::controldata &cmdRob){
     if(cmdRob.x != cmdRob.x || cmdRob.x_cmd != cmdRob.x_cmd){
