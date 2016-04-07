@@ -44,12 +44,12 @@
 #define VELOCITY_DIVIDER        (1/TICKS_PER_SEC)
 
 //# FILTER DEFINES #//
-#define DOSAMPLE    0
-#define BETASMOOTH0 .5 //main filter
-#define BETASMOOTH1 .35
-#define BETASMOOTH2 .5
-#define BETASMOOTH3 .75
-#define SAMPLENUM 300
+#define DOSAMPLE        0
+#define BETASMOOTH0     .5 //main filter
+#define BETASMOOTH1     .35
+#define BETASMOOTH2     .5
+#define BETASMOOTH3     .75
+#define SAMPLENUM       300
 
 //## NEEDED TYPES & OBJECTS ##//
 enum class RobotType {ally1, ally2, enemy1, enemy2, ball, object, none};
