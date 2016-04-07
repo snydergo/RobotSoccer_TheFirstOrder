@@ -27,9 +27,9 @@ def ControlListener1():
     # anonymous=True flag means that rospy will choose a unique
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
-    rospy.init_node('robot2', anonymous=True)
+    rospy.init_node('robot1', anonymous=True)
 
-    rospy.Subscriber("robot2Com", controldata, callback1)
+    rospy.Subscriber("robot1Com", controldata, callback1)
 
 
     ## Decisions ##
