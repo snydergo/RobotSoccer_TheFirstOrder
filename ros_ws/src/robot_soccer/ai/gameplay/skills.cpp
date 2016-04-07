@@ -71,8 +71,6 @@ void Skills::dribble()
     skill_st = SkillState::dribble;
 }
 
-//function will get the robot to go to the ball
-//and aim position to aim at the goal
 void Skills::aim()
 {
     printf("start aim ball\n");
@@ -80,7 +78,6 @@ void Skills::aim()
 }
 
 //### FUNCTIONS THAT USE UTILITIES ###//
-
 void Skills::continueIdle()
 {
     utils.idle(fieldget::getRobot(allyNum));
