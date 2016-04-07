@@ -1,14 +1,12 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
-
 #include "bookkeeping.h"
 #include "visiondata/subscriber_visionmsg.h"
 #include "debug/subscriber_debugmsg.h"
 #include "kalmanfilter/getFilteredData.h"
 #include "gameplay/strategy.h"
 #include "types.h"
-
 #include "std_msgs/String.h"
 
 #define OPTION 1
@@ -20,29 +18,33 @@ void gameCmdCallback(const std_msgs::String &msg);
 
 void checkCmd(robot_soccer::controldata &cmdRob1);
 void debugOption();
-
+void checkGCFlags(Strategies* strategies);
 void mainControlSM(ros::NodeHandle &n)
 {
+    stream::info.open("info.txt");
     //PUBLISHER FOR MOTIONCONTROL
     ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 5);
     ros::Publisher robo2Com = n.advertise<robot_soccer::controldata>("robot2Com", 5);
 
     //SUBSCRIBER FROM VISION
-    ros::Subscriber vision_subscriber = n.subscribe("filteredvision_data", 5, visionCallback);
+    ros::Subscriber vision_subscriber = n.subscribe("vision_data", 5, visionCallback);
     (void*)vision_subscriber;
 
-//    ros::Rate loop_rate(TICKS_PER_SEC);
+    ros::Rate loop_rate(TICKS_PER_SEC);
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
-//    Strategies strategies;
-    Plays play(RobotType::ally1);
-    play.rushGoal();
+    Strategies strategies;
+//    Plays play(RobotType::ally1);
+//    play.rushGoal();
+//    play.rushGoal();
     while (ros::ok()) {
+        checkGCFlags(&strategies);
+
         if (visionUpdated) {
             visionUpdated = false;
             field.updateStatus(visionStatus_msg);
-//            strategies.tick();
-            play.tick();
+            strategies.tick();
+//            play.tick();
         }
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
@@ -54,8 +56,8 @@ void mainControlSM(ros::NodeHandle &n)
             checkCmd(cmdRob2);
             robo2Com.publish(cmdRob2);
         }
-//        ros::spinOnce();
-//        loop_rate.sleep();
+        ros::spinOnce();
+        loop_rate.sleep();
     }
 }
 
@@ -94,7 +96,6 @@ void debugSM(ros::NodeHandle &n)
             cmdRob1.x_cmd = debugCmd.x_cmd;
             cmdRob1.y_cmd = debugCmd.y_cmd;
             cmdRob1.theta_cmd = debugCmd.theta_cmd;
-            std::cout << cmdRob1.x_cmd << " " << cmdRob1.y_cmd << std::endl;
             if (cmdRob1.cmdType == "moveslow" || cmdRob1.cmdType == "movefast") {
                 moveSpeed speed;
                 if(cmdRob1.cmdType == "moveslow"){
@@ -234,20 +235,38 @@ int main(int argc, char *argv[])
     return 0;
 }
 
+//function used by GameControl to set flags for change of strategy.
 void gameCmdCallback(const std_msgs::String &msg)
 {
     if (msg.data == "stop") {
         /// ----------------- send stop command to robot -------------------
+        gameControl_flags |= STOP;
     } else if (msg.data == "start") {
         /// ----------------- start the AI state machine -------------------
+        gameControl_flags |= START;
     } else if (msg.data == "mark") {
         /// ----------------- go to starting postion for match -------------
+        gameControl_flags |= MARK;
     } else {
         std::cout << "ERROR: Unknown game command: " << msg << std::endl;
     }
 }
 
-
+//function that checks flags set by GameControl and changes strategies.
+void checkGCFlags(Strategies* strategies){
+    if(gameControl_flags){
+        if(gameControl_flags & START){
+            gameControl_flags &= ~START;
+            strategies->start();
+        }else if(gameControl_flags & STOP){
+            gameControl_flags &= ~STOP;
+            strategies->stop();
+        }else if(gameControl_flags & MARK){
+            gameControl_flags &= ~MARK;
+            strategies->mark();
+        }
+    }
+}
 
 void checkCmd(robot_soccer::controldata &cmdRob){
     if(cmdRob.x != cmdRob.x || cmdRob.x_cmd != cmdRob.x_cmd){
@@ -256,11 +275,6 @@ void checkCmd(robot_soccer::controldata &cmdRob){
     }else if (abs(cmdRob.x_cmd) > FIELD_XBORDER){
         cmdRob.x_cmd = FIELD_XBORDER;
     }
-
-    /*if(iskick){
-           cmdRob.cmdType = "kick";
-           iskick = false;
-       }else */
 }
 
 void debugOption(){

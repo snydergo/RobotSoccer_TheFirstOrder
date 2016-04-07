@@ -27,9 +27,9 @@ int enemyRobotCount;
 HsvColorSubSpace enemyRobot1Color;
 HsvColorSubSpace enemyRobot2Color;
 
-const HsvColorSubSpace green({60,84},{30,120},{180,255});
-const HsvColorSubSpace blue({80,100},{30,235},{170,255});
-const HsvColorSubSpace purple({110,140},{30,90},{200,255});
+const HsvColorSubSpace green({50,84},{30,120},{180,255});
+const HsvColorSubSpace blue({80,100},{30,255},{190,255});
+const HsvColorSubSpace purple({110,140},{30,90},{180,255});
 const HsvColorSubSpace red({175,179},{30,200},{200,255});
 const HsvColorSubSpace orange({0,30},{50,255},{210,255});
 const HsvColorSubSpace pink({140,175},{30,150},{200,255});

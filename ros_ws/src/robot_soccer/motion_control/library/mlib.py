@@ -171,7 +171,18 @@ def readSpeedM(motor):
 	else:
 		raise mlibExcept(e_type.motorNumOff)
 
-
+# Prints out a bunch of roboclaw status stuff
+def roboclawStatus():
+	print("====Status for addr 128====\n")
+	print("Version: ", roboclaw.ReadVersion(addr1))
+	print("Battery: ", roboclaw.ReadMainBatteryVoltage(addr1))
+	print("Current: ", roboclaw.ReadCurrents(addr1))
+	print("Error: ", roboclaw.ReadError(addr1))
+	print("====Status for addr 129====\n")
+	print("Version: ", roboclaw.ReadVersion(addr2))
+	print("Battery: ", roboclaw.ReadMainBatteryVoltage(addr2))
+	print("Current: ", roboclaw.ReadCurrents(addr2))
+	print("Error: ", roboclaw.ReadError(addr2))
 
 
 # # Based on wheel speed instead of distance

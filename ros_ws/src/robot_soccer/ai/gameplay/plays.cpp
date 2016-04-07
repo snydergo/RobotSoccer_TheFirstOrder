@@ -5,6 +5,7 @@
 //###FUNCTIONS THAT ARE USED OUTSIDE TO SET WHICH PLAY TO PERFORM.###//
 void Plays::start(Point startLoc)
 {
+    stream::info << "PLAYS::start:: START LOCATION (" << startLoc.x << ", " << startLoc.y << ")\n";
     startLocation = startLoc;
     play_st = PlayState::start;
 }
@@ -21,8 +22,9 @@ void Plays::playGoalie()
     play_st = PlayState::playGoalie;
 }
 
-void Plays::split_rushGoal(side gvnSide)
+void Plays::rushSplit(side gvnSide)
 {
+    //boundary = (gvnSide == side::pos || gvnSide == side::left) ? -SPLIT_OFFSET: SPLIT_OFFSET;
     myside = gvnSide;
     play_st = PlayState::splitRush;
 }
@@ -64,7 +66,6 @@ void Plays::rushGoalTick()
         } else*/
         if (bkcalc::ballAimed(allyNum) || aim_cnt++ >= AIM_MAX_CNT) {
             aim_cnt = 0;
-  //          std::cout << "#############################################################################" << std::endl;
             std::cout << "Plays::tick() BALL AIMED" << std::endl;
             kp = bkcalc::kickPoint(allyNum);
             coord_st = CoordSkillState::kick;
@@ -75,7 +76,6 @@ void Plays::rushGoalTick()
         skill.goToPoint(moveSpeed::fast, kp,bkcalc::getAngleTo(allyNum,fieldget::getBallLoc()));
         if (calc::ballKicked(fieldget::getRobot(allyNum),kp)) {
             std::cout << "Plays::tick() BALL KICKED" << std::endl;
-//            std::cout << "#############################################################################" << std::endl;
             coord_st = CoordSkillState::fetchBall;
             skill.kick();
         } else if (calc::getDistance(fieldget::getRobotLoc(allyNum), fieldget::getBall().location) >= KICK_INVALID_DIST){
@@ -119,7 +119,6 @@ void Plays::playGoalieTick()
 
                 point = Point(allyGoal.x, fieldget::getBallLoc().y);
             } else{ //ball is outside of goalie box
-                //std::cout << "ball is outside Goal width" << std::endl;
                 double y_coord = allyGoal.y;
                 if (fieldget::getBallLoc().y > 0)
                     y_coord += GOAL_RADIUS;
@@ -147,17 +146,31 @@ void Plays::playGoalieTick()
         break;
     }
 }
+void Plays::splitRushTick(){
+    int ballx = fieldget::getBallLoc().x;
+    switch(myside){
+    case side::pos:
+    case side::left:
+        if(ballx > -SPLIT_OFFSET){
+            rushGoalTick();
+        }else{
+            skill.goToPoint(Point(ballx-SPLIT_WAIT_XOFFSET, SPLIT_WAIT_Y),0);
+        }
+        break;
+    case side::neg:
+    case side::right:
+        if(ballx < SPLIT_OFFSET){
+            rushGoalTick();
+        }else{
+            skill.goToPoint(Point(ballx-SPLIT_WAIT_XOFFSET, -SPLIT_WAIT_Y),0);
+        }
+        break;
+    }
+}
 
 //### END OF FUNCTIONS CALLED OUTSIDE ###//
 void Plays::tick()
 {
-    //needed changes
-    /*
-        Needed Changes
-            1. when roles/plays are assigned each state needs to be initialized appropriately
-            2. Need each time coord_st switch statement occurs that a function from skills is called
-            3. Need to add an exception code for when default case is reached in statemachines.
-    */
     switch (play_st) {
     case PlayState::idle:
         std::cout << "Plays::tick() idle_st"<< std::endl;
@@ -173,6 +186,8 @@ void Plays::tick()
     case PlayState::playGoalie:
         playGoalieTick();
         break;
+    case PlayState::splitRush:
+        splitRushTick();
     default:
         //Throw Exception
         break;

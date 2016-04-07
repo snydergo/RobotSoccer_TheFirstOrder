@@ -7,8 +7,8 @@ std::ofstream stream::info;
 Point center(0,0);
 Point enemyGoal(GOAL_XLOCATION,0);
 Point allyGoal(-GOAL_XLOCATION,0);
-Point start1Location(-40,0);
-Point start2Location(-40,0);
+Point start1Location(-STARTCENTER,0);
+Point start2Location = allyGoal;
 FieldCoord field;
 bool iskick = false;
 
@@ -22,6 +22,7 @@ bool sendCmd_Rob1(true);
 bool sendCmd_Rob2(false);
 robot_soccer::controldata cmdRob1;
 robot_soccer::controldata cmdRob2;
+u_int8_t gameControl_flags = 0x00;
 
 //## DEBUG DATA ##//
 bool newDebugCmd = false;

@@ -39,11 +39,6 @@ enum class FieldObject {
     enemyRobot2
 };
 
-//thread ally2Thread;
-//thread enemy1Thread;
-//thread enemy2Thread;
-
-
 vector<bool> signallers = {false, false, false, false, false};
 vector<vector<cv::Moments>> objectMoments(5);
 
@@ -167,10 +162,10 @@ int main(int argc, char** argv)
         if (config::allyRobotCount > 1) {
             setSignaller(FieldObject::allyRobot2, true);
         }
-        if (config::allyRobotCount > 0) {
+        if (config::enemyRobotCount > 0) {
             setSignaller(FieldObject::enemyRobot1, true);
         }
-        if (config::allyRobotCount > 1) {
+        if (config::enemyRobotCount > 1) {
             setSignaller(FieldObject::enemyRobot2, true);
         }
 

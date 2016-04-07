@@ -14,7 +14,8 @@ public:
     , startStrategy(StrategyState::goaliePower)
     {
     }
-
+    void mark();
+    void start();
     void stop();
     void tick();
 
@@ -25,13 +26,17 @@ private:
 
     enum class StrategyState {
         idle,
+        mark,
         start,
         goaliePower,
         gpGoalie,
         gpRush,
         rushSplitDefense,
+        rsdDefense,
+        rsdOffense,
         separateRushGoal,
-        srgPlay
+        srgOffense,
+        srgDefense
     } strategy_st, startStrategy;
 
 
