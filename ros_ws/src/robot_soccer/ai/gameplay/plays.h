@@ -20,7 +20,7 @@ public:
     }
 
     void rushSplit(side gvnSide);
-    void rushSplitTick();
+    void splitRushTick();
     void initKicker();
     void uninitKicker();
     void rushGoal();

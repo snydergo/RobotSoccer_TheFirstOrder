@@ -10,7 +10,7 @@
 #define GOAL_XLOCATION          150 //160 real 130 gazebo
 #define GOAL_WIDTH              60
 #define GOAL_RADIUS             (GOAL_WIDTH/2)
-#define GOAL_ANGLE_ERR          10
+#define GOAL_ANGLE_ERR          15
 #define FIELD_XBORDER           180
 #define FIELD_YBORDER           100
 #define PI                      3.141592653
@@ -24,7 +24,7 @@
 //## THRESHOLD DEFINITIONS ##//
 #define ANGLE_ERR               20
 #define AIM_MAX_CNT             200
-#define AIM_BALL_DIST           15
+#define AIM_BALL_DIST           25
 #define KICK_INVALID_DIST       40
 #define DISTANCE_ERR            6 // this is an error of 6cm
 #define MVSPD_FAST_THRESH       400
