@@ -16,16 +16,16 @@ from numpy import matlib
 # James' values
 
 kp_x	 = 0.02
-ki_x	 = 0#.002
+ki_x	 = .02#.002
 kd_x	 = 0#.001
 kp_y	 = kp_x
 ki_y	 = ki_x
 kd_y	 = kd_x
 kp_theta = 0.01#0.013
-ki_theta = 0#.001
+ki_theta = .01#.001
 kd_theta = 0#.0005
 
-fast_limit = .7
+fast_limit = .5
 slow_limit = .3
 xy_limit	 = slow_limit#0.7#.4
 th_limit	 = slow_limit#0.2 #5
