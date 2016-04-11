@@ -66,10 +66,13 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     error = cmd_pos - pos
     if abs(error) < thresh:
         error = 0
+        ctrl_vars.integrator = 0
     elif error > 0:
 	error = error - thresh
+        ctrl_vars.integrator = 0
     else:
 	error = error + thresh
+        ctrl_vars.integrator = 0
     # print("Error: " + str(error))
     
     # update derivative of z
