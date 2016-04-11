@@ -33,6 +33,9 @@ th_limit	 = slow_limit#0.2 #5
 xy_thresh	 = 100#5
 theta_thresh = 100#5
 
+# Bool to decide whether or not to print speeds
+print_speeds = True
+
 loop_rate 			= 60.0 # Hz (get value from publisher)
 loop_time			= 1.0/loop_rate
 Ts    			 	= 1.0/loop_rate
