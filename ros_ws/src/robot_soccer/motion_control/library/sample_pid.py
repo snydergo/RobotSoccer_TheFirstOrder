@@ -41,7 +41,7 @@ def robot_ctrl(message):
         print("==Speeds==")
         print("vx: ", vx)
         print("vy: ", vy)
-        print("om: ", omega)
+        print("vt: ", vth)
 
     return vx, vy, vth
 
