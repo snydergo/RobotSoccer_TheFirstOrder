@@ -64,12 +64,12 @@ def reset():
 def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     # compute the error
     error = cmd_pos - pos
- #    if abs(error) < thresh:
- #        error = 0
- #    elif error > 0:
-	# error = error - thresh
- #    else:
-	# error = error + thresh
+    if abs(error) < thresh:
+        error = 0
+    elif error > 0:
+	error = error - thresh
+    else:
+	error = error + thresh
     # print("Error: " + str(error))
     
     # update derivative of z
