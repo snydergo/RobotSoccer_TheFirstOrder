@@ -3,35 +3,35 @@ from numpy import matlib
 
 # Troy's values
 
-kp_x	 = 0.02
-ki_x	 = 0#0.0001
-kd_x	 = 0.001
-kp_y	 = kp_x
-ki_y	 = ki_x
-kd_y	 = kd_x
-kp_theta = .04#0.013
-ki_theta = 0.001
-kd_theta = 0.005
+#kp_x	 = 0.02
+#ki_x	 = 0#0.0001
+#kd_x	 = 0.001
+#kp_y	 = kp_x
+#ki_y	 = ki_x
+#kd_y	 = kd_x
+#kp_theta = .04#0.013
+#ki_theta = 0.001
+#kd_theta = 0.005
 
 # James' values
 
-# kp_x	 = 0.02
-# ki_x	 = .02#.002
-# kd_x	 = 0#.001
-# kp_y	 = kp_x
-# ki_y	 = ki_x
-# kd_y	 = kd_x
-# kp_theta = 0.01#0.013
-# ki_theta = .01#.001
-# kd_theta = 0#.0005
+kp_x	 = 0.01
+ki_x	 = .005#.002
+kd_x	 = 0#.001
+kp_y	 = kp_x
+ki_y	 = ki_x
+kd_y	 = kd_x
+kp_theta = 0.03#0.013
+ki_theta = 0#.01#.001
+kd_theta = 0#.0005
 
 fast_limit = .5
 slow_limit = .3
-xy_limit	 = slow_limit#0.7#.4
-th_limit	 = slow_limit#0.2 #5
+xy_limit	 = 100#slow_limit#0.7#.4
+th_limit	 = 100#fast_limit#slow_limit#0.2 #5
 
-xy_thresh	 = 100#5
-theta_thresh = 100#5
+xy_thresh	 = 5#5
+theta_thresh = 10#5
 
 # Bool to decide whether or not to print speeds
 print_speeds = True
