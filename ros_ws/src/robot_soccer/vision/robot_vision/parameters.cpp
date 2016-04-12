@@ -48,7 +48,7 @@ void loadConfigData(int argc, char** argv)
             if (ip == 78) {
                 cout << "loading camera 192.168.1.78..." << endl;
                 config::cameraUrl = "http://192.168.1.78:8080/stream?topic=/image&dummy=param.mjpg";
-                config::fieldCenter_px = Point2f(450, 212);
+                config::fieldCenter_px = Point2f(455, 235);
                 config::cmPerPixelConversionFactor = 154.2 / 276.0;
                 config::invertX = true; // we are home
                 config::homeIsInverted = true;
@@ -59,7 +59,7 @@ void loadConfigData(int argc, char** argv)
     // default
     cout << "loading camera 192.168.1.79..." << endl;
     config::cameraUrl = "http://192.168.1.79:8080/stream?topic=/image&dummy=param.mjpg";
-    config::fieldCenter_px = Point2f(422, 235);
+    config::fieldCenter_px = Point2f(403, 233);
     config::cmPerPixelConversionFactor = 100.0 / 179.0;
     config::invertX = false; // we are home
     config::homeIsInverted = false;

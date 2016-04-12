@@ -1,9 +1,9 @@
-purple
 green
+purple
 orange
 blue
 pink
-home
+away
 2
 0
 1

@@ -40,7 +40,8 @@ private:
         rushGoal,
         playGoalie,
         splitRush,
-        splitDefense
+        splitDefense,
+        attackCenter
     } play_st;
 
     enum class CoordSkillState {

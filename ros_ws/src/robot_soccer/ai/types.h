@@ -11,7 +11,7 @@
 #define GOAL_WIDTH              60
 #define GOAL_RADIUS             (GOAL_WIDTH/2)
 #define GOAL_ANGLE_ERR          15
-#define FIELD_XBORDER           180
+#define FIELD_XBORDER           165
 #define FIELD_YBORDER           100
 #define PI                      3.141592653
 #define STARTCENTER             60
@@ -27,7 +27,7 @@
 #define AIM_BALL_DIST           20
 #define KICK_INVALID_DIST       40
 #define DISTANCE_ERR            6 // this is an error of 6cm
-#define MVSPD_FAST_THRESH       400
+#define MVSPD_FAST_THRESH       40
 #define PERIMETER_ERR           100
 #define PERIMETER_XOFFSET       5
 #define PERIMETER_YOFFSET       3
@@ -36,12 +36,12 @@
 #define FETCHBALL_OFFSET        20
 #define IN_GOAL_X               175
 #define IN_GOAL_Y               (GOAL_WIDTH/2)
-#define SPLIT_OFFSET            20
-#define SPLIT_WAIT_XOFFSET      40
-#define SPLIT_WAIT_Y            (FIELD_YBORDER/2)
+#define SPLIT_OFFSET            0
+#define SPLIT_WAIT_XOFFSET      60
+#define SPLIT_WAIT_Y            (FIELD_YBORDER/3)
 #define KICKPOINTTHRESH         10
 //## TIMING DEFINES ##//
-#define TICKS_PER_SEC           60
+#define TICKS_PER_SEC           40
 #define VELOCITY_THRESHOLD      .000001
 #define VELOCITY_DIVIDER        (1/TICKS_PER_SEC)
 

@@ -13,6 +13,8 @@ void Strategies::start()
 {
     printf("start strategy\n");
     strategy_st = StrategyState::rushSplitDefense;//startStrategy;
+    robot2Plays.playGoalie();
+    robot1Plays.attackCenter();
 }
 
 void Strategies::mark()
@@ -25,13 +27,13 @@ void Strategies::tick()
 {
     switch (strategy_st) {
     case StrategyState::idle:
-//        std::cout << "Strategies::tick() idle"<< std::endl;
+        std::cout << "Strategies::tick() idle"<< std::endl;
         robot1Plays.idle();
         robot2Plays.idle();
         break;
 
     case StrategyState::mark:
-//        std::cout << "Strategies::tick() start"<< std::endl;
+        std::cout << "Strategies::tick() start"<< std::endl;
         robot1Plays.start(start1Location);
         robot2Plays.start(start2Location);
         break;
@@ -99,27 +101,42 @@ void Strategies::tick()
         break;
     //RUSH SPLIT DEFENSE STATES
     case StrategyState::rushSplitDefense:
-        if (bkcalc::ballThreat()) {
+        std::cout << "rushSplitDefense\n";
+        robot2Plays.attackCenter();
+        if(calc::atLocation(fieldget::getRobotLoc(robot1Plays.allyNum), Point(center.x+30, center.y), 20)){
             robot2Plays.rushGoal();
             robot1Plays.playGoalie();
             strategy_st = StrategyState::rsdDefense;
-        }else{
-            robot2Plays.rushSplit(side::pos);
-            robot1Plays.rushSplit(side::neg);
-            strategy_st = StrategyState::rsdOffense;
         }
+//        if (bkcalc::ballThreat()) {
+//            robot2Plays.rushGoal();
+//            robot1Plays.playGoalie();
+
+//        }else{
+//            robot2Plays.rushSplit(side::pos);
+//            robot1Plays.rushSplit(side::neg);
+//            strategy_st = StrategyState::rsdOffense;
+//        }
 		break;
     case StrategyState::rsdOffense:
+        std::cout << "rsdOffense\n";
         if (bkcalc::ballThreat()) {
-            robot2Plays.rushGoal();
-            robot1Plays.playGoalie();
+            robot2Plays.playGoalie();
+            robot1Plays.rushGoal();
             strategy_st = StrategyState::rsdDefense;
         }
         break;
     case StrategyState::rsdDefense:
+        std::cout << "rsdDefense\n";
         if (!bkcalc::ballThreat()) {
-            robot2Plays.rushSplit(side::pos);
-            robot1Plays.rushSplit(side::neg);
+            if (fieldget::getRobotLoc(RobotType::ally1).y > fieldget::getRobotLoc(RobotType::ally2).y) {
+                robot1Plays.rushSplit(side::pos);
+                robot2Plays.rushSplit(side::neg);
+            } else {
+                robot1Plays.rushSplit(side::neg);
+                robot2Plays.rushSplit(side::pos);
+            }
+
             strategy_st = StrategyState::rsdOffense;
         }
         break;

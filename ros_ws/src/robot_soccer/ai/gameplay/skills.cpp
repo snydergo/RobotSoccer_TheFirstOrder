@@ -8,8 +8,8 @@ inline moveSpeed Skills::getSpeed()
     xValues *= xValues;
     double yValues = robot.y-dest.y;
     yValues *= yValues;
-    double distance_sqrd = xValues+yValues;
-    if (distance_sqrd > MVSPD_FAST_THRESH) {
+    double distance = std::sqrt(xValues+yValues);
+    if (distance > MVSPD_FAST_THRESH) {
 //        std::cout << "moveSpeed::fast" << std::endl;
         return moveSpeed::fast;
     } else {
@@ -149,8 +149,11 @@ void Skills::continueAim()
     //Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
     double newTheta = ballGoalAngle; //calc::getVectorAngle(aimBallDir);
     if(ballLoc.x < robot.location.x){
-        aimSpot.y = (ballLoc.y < 0) ? aimSpot.y+30 : aimSpot.y-30;
-        aimSpot.x -= 10;
+        aimSpot.y += (ballLoc.y < 0) ? 30 : -30;
+        aimSpot.x -= 30;
+        aimSpot = calc::getNewPoint(aimSpot);
+        utils.moveToPoint(moveSpeed::fast, robot, aimSpot ,newTheta);
+        return;
     }
     utils.moveToPoint(moveSpeed::slow, robot, aimSpot ,newTheta);
 }

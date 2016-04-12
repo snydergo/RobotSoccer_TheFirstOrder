@@ -36,10 +36,10 @@ void mainControlSM(ros::NodeHandle &n)
 //    Strategies strategies;
 //    Skills skill(RobotType::ally2);
 //    skill.aim();
-      Plays play2(RobotType::ally2);
-      play2.rushGoal();
-//      Plays play1(RobotType::ally1);
-//      play1.playGoalie();
+//      Plays play2(RobotType::ally2);
+//      play2.playGoalie();
+      Plays play1(RobotType::ally1);
+      play1.rushGoal();
     while (ros::ok()) {
 //        checkGCFlags(strategies);
 
@@ -47,11 +47,8 @@ void mainControlSM(ros::NodeHandle &n)
             visionUpdated = false;
             field.updateStatus(visionStatus_msg);
 //            strategies.tick();
-            //play1.tick();
-            play2.tick();
-            if(bkcalc::ballInGoal()){
-//                std::cout << "#########################\n"<< "       BALL IN GOAL\n" << "########################\n";
-            }
+            play1.tick();
+//            play2.tick();
 //            skill.tick();
         }
         if (sendCmd_Rob1) {
@@ -243,15 +240,15 @@ void gameCmdCallback(const std_msgs::String &msg)
     if (msg.data == "stop") {
         /// ----------------- send stop command to robot -------------------
         gameControl_flags = STOP;
-//        std::cout << "Setting Stop Flag\n";
+        std::cout << "Setting Stop Flag\n";
     } else if (msg.data == "start") {
         /// ----------------- start the AI state machine -------------------
-//        std::cout << "Setting Start Flag\n";
+        std::cout << "Setting Start Flag\n";
         gameControl_flags = START;
     } else if (msg.data == "mark") {
         /// ----------------- go to starting postion for match -------------
         gameControl_flags = MARK;
-//        std::cout << "Setting Mark Flag\n";
+        std::cout << "Setting Mark Flag\n";
     } else {
         std::cout << "ERROR: Unknown game command: " << msg << std::endl;
     }
@@ -262,15 +259,15 @@ void checkGCFlags(Strategies& strategies){
     if(gameControl_flags){
         if(gameControl_flags == START){
             gameControl_flags = 0;
-//            std::cout << "responding To START flag\n";
+            std::cout << "responding To START flag\n";
             strategies.start();
         }else if(gameControl_flags == STOP){
             gameControl_flags = 0;
-//            std::cout << "responding To STOP flag\n";
+            std::cout << "responding To STOP flag\n";
             strategies.stop();
         }else if(gameControl_flags == MARK){
             gameControl_flags = 0;
-//            std::cout << "responding To MARK flag\n";
+            std::cout << "responding To MARK flag\n";
             strategies.mark();
         }
     }

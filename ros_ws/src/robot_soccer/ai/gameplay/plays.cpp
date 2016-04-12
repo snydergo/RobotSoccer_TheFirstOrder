@@ -11,7 +11,7 @@ void Plays::start(Point startLoc)
 }
 
 void Plays::attackCenter(){
-    skill.goToPoint(moveSpeed::fast, center, 0);
+    play_st = PlayState::attackCenter;
 }
 
 void Plays::rushGoal()
@@ -31,6 +31,8 @@ void Plays::rushSplit(side gvnSide)
     //boundary = (gvnSide == side::pos || gvnSide == side::left) ? -SPLIT_OFFSET: SPLIT_OFFSET;
     myside = gvnSide;
     play_st = PlayState::splitRush;
+    coord_st = CoordSkillState::aim;
+
 }
 
 void Plays::idle()
@@ -137,7 +139,6 @@ void Plays::playGoalieTick()
         //std::cout << "Skills::CoordSkillsState == gotogoal"<<std::endl;
         skill.goToPoint(allyGoal, 0);
         if (calc::atLocation(fieldget::getRobotLoc(allyNum), allyGoal)) {
-            std::cout << "AT GOAL" << std::endl;
             coord_st = CoordSkillState::followBall;
         }
         break;
@@ -152,24 +153,26 @@ void Plays::playGoalieTick()
         } else{ //if ball isn't close to robot
             FieldObject ball = fieldget::getBall();
             Point point;
+            double angle = calc::degToRad(calc::getVectorAngle(ball.velocity));
+            double y_offset = tan(angle)*(ball.location.x-enemyGoal.x);
             //if ball is within goalie box
             if (abs(fieldget::getBallLoc().y) < GOAL_RADIUS) {
                 //std::cout << "ball is within Goal width" << std::endl;
-                //double y = 2*fieldget::getBallLoc().y - fieldget::getRobotLoc(RobotType::ally1).y;
-                ball.velocity;
-                point = Point(allyGoal.x, ball.location.y);
+                double overshootY = fieldget::getBallLoc().y - fieldget::getRobotLoc(allyNum).y;
+                double y = fieldget::getBallLoc().y + ball.velocity.y*0.5;
+
+                point = Point(allyGoal.x, y/*ball.location.y*/);
             } else{ //ball is outside of goalie box
                 double y_coord = allyGoal.y;
                 if (fieldget::getBallLoc().y > 0)
                     y_coord += GOAL_RADIUS;
                 else
                     y_coord -= GOAL_RADIUS;
-                double yVelocity = ball.velocity.y;
 
                 point = Point(allyGoal.x,y_coord);
             }
             double cmdTheta = bkcalc::getAngleTo(allyNum,ball.location);
-            skill.goToPoint(point,cmdTheta);
+            skill.goToPoint(moveSpeed::fast, point,cmdTheta);
         }
     }
         break;
@@ -187,6 +190,7 @@ void Plays::playGoalieTick()
         break;
     }
 }
+
 void Plays::splitRushTick(){
     Point ball = fieldget::getBallLoc();
     switch(myside){
@@ -214,23 +218,34 @@ void Plays::tick()
 {
     switch (play_st) {
     case PlayState::idle:
-//        std::cout << "Plays::tick() idle_st"<< std::endl;
+        std::cout << "Plays::tick() idle_st"<< std::endl;
         skill.idle();
         break;
     case PlayState::start:
-//        std::cout << "Plays::tick() start_st"<< std::endl;
+        std::cout << "Plays::tick() start_st"<< std::endl;
         skill.goToPoint(startLocation, 0);
         break;
     case PlayState::rushGoal:
-        if(bkcalc::ballInGoal()) gameControl_flags = MARK;
+        std::cout << "Plays::tick() rushGoal"<< std::endl;
+//        if(bkcalc::ballInGoal()) gameControl_flags = MARK;
         rushGoalTick();
         break;
     case PlayState::playGoalie:
+        std::cout << "Plays::tick() playGoalie"<< std::endl;
         playGoalieTick();
         break;
     case PlayState::splitRush:
-        if(bkcalc::ballInGoal()) gameControl_flags = MARK;
+        std::cout << "Plays::tick() splitRush"<< std::endl;
+//        if(bkcalc::ballInGoal()) gameControl_flags = MARK;
         splitRushTick();
+        break;
+    case PlayState::attackCenter:
+    {
+//        if(bkcalc::ballInGoal()) gameControl_flags = MARK;
+        Point attackPoint = Point(center.x+30, center.y);
+        skill.goToPoint(moveSpeed::fast, attackPoint, 0);
+    }
+        break;
     default:
         //Throw Exception
         break;

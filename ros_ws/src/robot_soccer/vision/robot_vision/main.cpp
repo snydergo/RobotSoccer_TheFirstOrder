@@ -2,6 +2,7 @@
 #include "std_msgs/String.h"
 #include "robot_soccer/visiondata.h"
 #include "robot_soccer/gameparam.h"
+#include "robot_soccer/controldata.h"
 
 #include "parameters.h"
 #include "hsvcolorsubspace.h"
@@ -30,6 +31,16 @@ Point2f trasformCameraFrameToWorldFrame(const Point2f point);
 Point2f transformWorldFrametoCameraFrame(const Point2f point);
 vector<UndefinedCVObject> getCVObjects(vector<cv::Moments> moments);
 void gameStateCallback(const robot_soccer::gameparam &msg);
+void debug1Callback(const robot_soccer::controldata& msg);
+void debug2Callback(const robot_soccer::controldata& msg);
+void filteredVisionCallback(const robot_soccer::visiondata& msg);
+
+Point2f robot1Cmd;
+bool robot1CmdUpdated = false;
+Point2f robot2Cmd;
+bool robot2CmdUpdated = false;
+Point2f filteredBallLocation;
+bool filteredBallLocationUpdated = false;
 
 enum class FieldObject {
     ball,
@@ -114,8 +125,13 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "vision_data_pub");
     ros::NodeHandle n;
     ros::Publisher visionDataPub = n.advertise<robot_soccer::visiondata>("vision_data", 5);
-    ros::Subscriber gameStateSub = n.subscribe("game_state", 1000, gameStateCallback);
+    ros::Subscriber gameStateSub = n.subscribe("game_state", 5, gameStateCallback);
+    ros::Subscriber debug1Sub = n.subscribe("robot1Com", 5, debug1Callback);
+    ros::Subscriber debug2Sub = n.subscribe("robot2Com", 5, debug2Callback);
+    ros::Subscriber filteredVisionSub = n.subscribe("filteredvision_data", 5, filteredVisionCallback);
     (void*)gameStateSub;
+    (void*)debug1Sub;
+    (void*)debug2Sub;
 
 
     Ball ball(config::ballArea);
@@ -230,6 +246,21 @@ int main(int argc, char** argv)
             putText(frame, str3.c_str(), Point(30,30)
                 ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
 
+            if (robot1CmdUpdated) {
+                robot1CmdUpdated = false;
+                line(frame, transformWorldFrametoCameraFrame(robot1Cmd),
+                     transformWorldFrametoCameraFrame(robotAlly1.getCenter()), Scalar(0,0,255), 2);
+            }
+            if (robot2CmdUpdated) {
+                robot2CmdUpdated = false;
+                line(frame, transformWorldFrametoCameraFrame(robot2Cmd),
+                     transformWorldFrametoCameraFrame(robotAlly2.getCenter()), Scalar(0,0,255), 2);
+            }
+            if (filteredBallLocationUpdated) {
+                filteredBallLocationUpdated = false;
+                circle( frame, transformWorldFrametoCameraFrame(filteredBallLocation), 3, Scalar(0,255,0), -1, 8, 0 );
+            }
+
             imshow("robot view", frame);
             windowDestroyTimer = 0;
             waitKey(1);
@@ -300,6 +331,23 @@ void gameStateCallback(const robot_soccer::gameparam& msg) {
     } else if (msg.field_pos == "away") {
         config::invertX = !config::homeIsInverted;
     }
+}
+
+void debug1Callback(const robot_soccer::controldata& msg) {
+    robot1Cmd.x = msg.x_cmd;
+    robot1Cmd.y = msg.y_cmd;
+
+    robot1CmdUpdated = true;
+}
+void debug2Callback(const robot_soccer::controldata& msg) {
+    robot2Cmd.x = msg.x_cmd;
+    robot2Cmd.y = msg.y_cmd;
+    robot2CmdUpdated = true;
+}
+void filteredVisionCallback(const robot_soccer::visiondata& msg) {
+    filteredBallLocation.x = msg.ball_x;
+    filteredBallLocation.y = msg.ball_y;
+    filteredBallLocationUpdated = true;
 }
 
 // ros::Time timeStamp = ros::Time::now();
