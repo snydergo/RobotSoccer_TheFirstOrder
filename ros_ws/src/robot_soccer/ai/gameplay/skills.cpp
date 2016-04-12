@@ -10,10 +10,10 @@ inline moveSpeed Skills::getSpeed()
     yValues *= yValues;
     double distance_sqrd = xValues+yValues;
     if (distance_sqrd > MVSPD_FAST_THRESH) {
-        std::cout << "moveSpeed::fast" << std::endl;
+//        std::cout << "moveSpeed::fast" << std::endl;
         return moveSpeed::fast;
     } else {
-        std::cout << "moveSpeed::slow" << std::endl;
+//        std::cout << "moveSpeed::slow" << std::endl;
         return moveSpeed::slow;
     }
 }
@@ -44,7 +44,7 @@ void Skills::goToPoint(moveSpeed gvnspeed, Point point, double dest_theta)
 
 void Skills::fetchBall()
 {
-    printf("SKILLS:: start fetch ball\n");
+//    printf("SKILLS:: start fetch ball\n");
     skill_st = SkillState::fetchBall;
 }
 
@@ -67,13 +67,13 @@ void Skills::uninit_kick()
 
 void Skills::dribble()
 {
-    printf("start dribble ball\n");
+//    printf("start dribble ball\n");
     skill_st = SkillState::dribble;
 }
 
 void Skills::aim()
 {
-    printf("start aim ball\n");
+//    printf("start aim ball\n");
     skill_st = SkillState::aim;
 }
 
@@ -124,6 +124,7 @@ void Skills::continueAim()
 {
     //need to calculate position
     Point ballLoc = fieldget::getBallLoc();
+    Robot robot = fieldget::getRobot(allyNum);
 //    Point robGoalDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), enemyGoal);
 //    Point robBallDir = calc::directionToPoint(fieldget::getRobotLoc(allyNum), ballLoc);
     Point ballGoalDir = calc::directionToPoint(fieldget::getBall().location, enemyGoal);
@@ -132,8 +133,8 @@ void Skills::continueAim()
     double ballGoalAngle = calc::getVectorAngle(ballGoalDir);
     double ballGoalRadians = calc::degToRad(ballGoalAngle);
 
-    double x_point = fieldget::getBall().location.x - AIM_BALL_DIST*std::cos(ballGoalRadians);
-    double y_point = fieldget::getBall().location.y - AIM_BALL_DIST*std::sin(ballGoalRadians);
+    double x_point = ballLoc.x - AIM_BALL_DIST*std::cos(ballGoalRadians);
+    double y_point = ballLoc.y - AIM_BALL_DIST*std::sin(ballGoalRadians);
 //    if (robBallAngle > robGoalAngle ) {
 //        //rotate CCW or move y+ and a little x+
 //        y_point += 2;
@@ -147,7 +148,11 @@ void Skills::continueAim()
     Point aimSpot(x_point, y_point);
     //Point aimBallDir = calc::directionToPoint(aimSpot, ballLoc);
     double newTheta = ballGoalAngle; //calc::getVectorAngle(aimBallDir);
-    utils.moveToPoint(moveSpeed::slow, fieldget::getRobot(allyNum), aimSpot ,newTheta);
+    if(ballLoc.x < robot.location.x){
+        aimSpot.y = (ballLoc.y < 0) ? aimSpot.y+30 : aimSpot.y-30;
+        aimSpot.x -= 10;
+    }
+    utils.moveToPoint(moveSpeed::slow, robot, aimSpot ,newTheta);
 }
 
 void Skills::stop()
