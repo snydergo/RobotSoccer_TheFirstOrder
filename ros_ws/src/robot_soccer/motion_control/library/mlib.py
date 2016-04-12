@@ -19,6 +19,11 @@ addr2 = 0x81
 # Hold the kicker back
 # roboclaw.ForwardM2(addr2,127) # max power
 
+roboclaw.SetM1MaxCurrent(addr1, 1000)
+roboclaw.SetM2MaxCurrent(addr1, 1000)
+roboclaw.SetM1MaxCurrent(addr2, 1000)
+roboclaw.SetM2MaxCurrent(addr2, 1000)
+
 #Set (default) velocity pids
 roboclaw.SetM1VelocityPID(addr1,1,.5,.1,180000)
 roboclaw.SetM2VelocityPID(addr1,1,.5,.1,180000)
