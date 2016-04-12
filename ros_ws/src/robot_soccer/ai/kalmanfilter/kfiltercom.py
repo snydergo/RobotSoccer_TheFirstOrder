@@ -14,6 +14,7 @@ filteredData = visiondata()
 lastVisionData = visiondata()
 newDataFlag = False
 gamePieces = lpf.GamePieces()
+predictPieces = lpf.GamePieces()
 
 def filter():
     global gamePieces
@@ -25,7 +26,9 @@ def filter():
         gamePieces.update_all(lastVisionData)
         newDataFlag = False    
     gamePieces.filter_all()
-    filteredData = gamePieces.gen_msg()
+    predictPieces = gamePieces
+    predictPieces.predict_all()
+    filteredData = predictPieces.gen_msg()
     #print filteredData
     # print("filteredData generated")
 

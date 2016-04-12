@@ -56,6 +56,10 @@ class GamePieces(object):
         for piece in self.pieces.values():
             lp_filter(piece)
 
+    def predict_all(self):
+        for piece in self.pieces.values():
+            predict_forward(piece, 6)
+
     def gen_msg(self):
         msg = visiondata()
 
@@ -115,12 +119,14 @@ def lp_filter(piece):
             piece.vel = utility_wall_bounce(piece.position_delayed,piece.vel)               
         piece.position = piece.position_delayed
         piece.camera_flag = 0
-    # else: # prediction
-    #     # propagate prediction ahead one control sample time
-    #     for i in range(1,6):
-    #         piece.position = piece.position + globals.loop_time*piece.vel
-    #         piece.vel = utility_wall_bounce(piece.position,piece.vel)
-    for i in range(1,6):
+    else: # prediction
+        # propagate prediction ahead one control sample time
+        piece.position = piece.position + globals.loop_time*piece.vel
+        piece.vel = utility_wall_bounce(piece.position,piece.vel)
+
+
+def predict_forward(piece, samples):
+    for i in range(1, samples):
         piece.position = piece.position + globals.loop_time*piece.vel
         piece.vel = utility_wall_bounce(piece.position,piece.vel)
 
