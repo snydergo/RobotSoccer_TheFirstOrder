@@ -11,7 +11,7 @@ public:
     : robot1Plays(RobotType::ally1)
     , robot2Plays(RobotType::ally2)
     , strategy_st(StrategyState::idle)
-    , startStrategy(StrategyState::goaliePower)
+    , startStrategy(StrategyState::rushSplitDefense)
     {
     }
     void mark();

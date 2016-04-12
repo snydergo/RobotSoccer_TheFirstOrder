@@ -16,9 +16,9 @@
 
 void gameCmdCallback(const std_msgs::String &msg);
 
-void checkCmd(robot_soccer::controldata &cmdRob1);
+void checkCmd(robot_soccer::controldata &cmdRob);
 void debugOption();
-void checkGCFlags(Strategies* strategies);
+void checkGCFlags(Strategies &strategies);
 void mainControlSM(ros::NodeHandle &n)
 {
     stream::info.open("info.txt");
@@ -33,18 +33,26 @@ void mainControlSM(ros::NodeHandle &n)
     ros::Rate loop_rate(TICKS_PER_SEC);
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
-    Strategies strategies;
-//    Plays play(RobotType::ally1);
-//    play.rushGoal();
-//    play.rushGoal();
+//    Strategies strategies;
+//    Skills skill(RobotType::ally2);
+//    skill.aim();
+      Plays play2(RobotType::ally2);
+      play2.rushGoal();
+//      Plays play1(RobotType::ally1);
+//      play1.playGoalie();
     while (ros::ok()) {
-        checkGCFlags(&strategies);
+//        checkGCFlags(strategies);
 
         if (visionUpdated) {
             visionUpdated = false;
             field.updateStatus(visionStatus_msg);
-            strategies.tick();
-//            play.tick();
+//            strategies.tick();
+            //play1.tick();
+            play2.tick();
+            if(bkcalc::ballInGoal()){
+//                std::cout << "#########################\n"<< "       BALL IN GOAL\n" << "########################\n";
+            }
+//            skill.tick();
         }
         if (sendCmd_Rob1) {
             sendCmd_Rob1 = false;
@@ -64,7 +72,7 @@ void mainControlSM(ros::NodeHandle &n)
 void debugSM(ros::NodeHandle &n)
 {
     //PUBLISHER FOR MOTIONCONTROL
-    ros::Publisher robo1Com = n.advertise<robot_soccer::controldata>("robot1Com", 5);
+    ros::Publisher roboCom = n.advertise<robot_soccer::controldata>("robot2Com", 5);
 
     //SUBSCRIBER FROM VISION
     ros::Subscriber vision_subscriber = n.subscribe("vision_data", 5, visionCallback);
@@ -76,7 +84,7 @@ void debugSM(ros::NodeHandle &n)
 
     ros::Subscriber debug_subscriber = n.subscribe("debug", 5, debugCallback);
     (void*)debug_subscriber;
-    Skills skill1(RobotType::ally1);
+    Skills skill(RobotType::ally2);
     Point dest;
     bool kickball = false;
     char kickCounter = 0;
@@ -90,46 +98,41 @@ void debugSM(ros::NodeHandle &n)
         }
         if (newDebugCmd || init) {
 
+
             init = false;
             newDebugCmd = false;
-            cmdRob1.cmdType = debugCmd.cmdType;
-            cmdRob1.x_cmd = debugCmd.x_cmd;
-            cmdRob1.y_cmd = debugCmd.y_cmd;
-            cmdRob1.theta_cmd = debugCmd.theta_cmd;
-            if (cmdRob1.cmdType == "moveslow" || cmdRob1.cmdType == "movefast") {
+            cmdRob2.cmdType = debugCmd.cmdType;
+            cmdRob2.x_cmd = debugCmd.x_cmd;
+            cmdRob2.y_cmd = debugCmd.y_cmd;
+            cmdRob2.theta_cmd = debugCmd.theta_cmd;
+            if (cmdRob2.cmdType == "moveslow" || cmdRob2.cmdType == "movefast") {
                 moveSpeed speed;
-                if(cmdRob1.cmdType == "moveslow"){
+                if(cmdRob2.cmdType == "moveslow"){
                     speed = moveSpeed::slow;
-                }else
+                } else
                     speed = moveSpeed::fast;
 
-                dest = Point(cmdRob1.x_cmd,cmdRob1.y_cmd);
-                skill1.goToPoint(speed, dest, cmdRob1.theta_cmd);
-            } else if (cmdRob1.cmdType == "kick") {
+                dest = Point(cmdRob2.x_cmd,cmdRob2.y_cmd);
+                skill.goToPoint(speed, dest, cmdRob2.theta_cmd);
+            } else if (cmdRob2.cmdType == "kick") {
                 kickball = true;
-                skill1.kick();
-            } else if (cmdRob1.cmdType == "kickinit"){
-                skill1.init_kick();
+                skill.kick();
+            } else if (cmdRob2.cmdType == "kickinit"){
+                skill.init_kick();
                 std::cout << "initing kicker" << std::endl;
-            } else if (cmdRob1.cmdType == "kickuninit"){
+            } else if (cmdRob2.cmdType == "kickuninit"){
                 std::cout << "unit kicker" << std::endl;
-                skill1.uninit_kick();
+                skill.uninit_kick();
             } else{
-                skill1.idle();
+                skill.idle();
             }
         }
 
-        skill1.tick();
-        if (sendCmd_Rob1) {
-            sendCmd_Rob1 = false;
-            checkCmd(cmdRob1);
-            if (cmdRob1.cmdType.data() == "move") {
-                cmdRob1.cmdType = "movefast";
-            }
-//            std::cout << "cmdType: "+ cmdRob1.cmdType << std::endl
-//                      << "x: " << cmdRob1.x_cmd << " y: " << cmdRob1.y_cmd
-//                      << " w: " << cmdRob1.theta_cmd << std::endl;
-            robo1Com.publish(cmdRob1);
+        skill.tick();
+        if (sendCmd_Rob2) {
+            sendCmd_Rob2 = false;
+            checkCmd(cmdRob2);
+            roboCom.publish(cmdRob2);
 
         }
         ros::spinOnce();
@@ -179,34 +182,33 @@ void predictSM(ros::NodeHandle &n)
 
     ros::Subscriber gameCmdSub = n.subscribe("game_cmd", 5, gameCmdCallback);
     (void*)gameCmdSub;
-    Strategies strategies;
-    while (ros::ok())
-    {
-        count++;
-        if (predictedUpdated) {
-            predictedUpdated = false;
-            dataInitialized = true;
-            field.updateStatus(predicted);
-        }
-        strategies.tick();
+    Plays play(RobotType::ally2);
+    play.playGoalie();
+  while (ros::ok()) {
+//       checkGCFlags(strategies);
 
-        if (sendCmd_Rob1) {
-            sendCmd_Rob1 = false;
-            checkCmd(cmdRob1);
-            robo1Com.publish(cmdRob1);
-        }
-        if (sendCmd_Rob2){
-            sendCmd_Rob2 = false;
-            checkCmd(cmdRob2);
-            robo2Com.publish(cmdRob2);
-        }
+      if (predictedUpdated) {
+          predictedUpdated = false;
+          dataInitialized = true;
+          field.updateStatus(predicted);
+      }
+      play.tick();
 
-        ros::spinOnce();
-
-        loop_rate.sleep();
-
-    }
+      if (sendCmd_Rob1) {
+          sendCmd_Rob1 = false;
+          checkCmd(cmdRob1);
+          robo1Com.publish(cmdRob1);
+      }
+      if (sendCmd_Rob2){
+          sendCmd_Rob2 = false;
+          checkCmd(cmdRob2);
+          robo2Com.publish(cmdRob2);
+      }
+      ros::spinOnce();
+      loop_rate.sleep();
+  }
 }
+
 
 int main(int argc, char *argv[])
 {
@@ -240,30 +242,36 @@ void gameCmdCallback(const std_msgs::String &msg)
 {
     if (msg.data == "stop") {
         /// ----------------- send stop command to robot -------------------
-        gameControl_flags |= STOP;
+        gameControl_flags = STOP;
+//        std::cout << "Setting Stop Flag\n";
     } else if (msg.data == "start") {
         /// ----------------- start the AI state machine -------------------
-        gameControl_flags |= START;
+//        std::cout << "Setting Start Flag\n";
+        gameControl_flags = START;
     } else if (msg.data == "mark") {
         /// ----------------- go to starting postion for match -------------
-        gameControl_flags |= MARK;
+        gameControl_flags = MARK;
+//        std::cout << "Setting Mark Flag\n";
     } else {
         std::cout << "ERROR: Unknown game command: " << msg << std::endl;
     }
 }
 
 //function that checks flags set by GameControl and changes strategies.
-void checkGCFlags(Strategies* strategies){
+void checkGCFlags(Strategies& strategies){
     if(gameControl_flags){
-        if(gameControl_flags & START){
-            gameControl_flags &= ~START;
-            strategies->start();
-        }else if(gameControl_flags & STOP){
-            gameControl_flags &= ~STOP;
-            strategies->stop();
-        }else if(gameControl_flags & MARK){
-            gameControl_flags &= ~MARK;
-            strategies->mark();
+        if(gameControl_flags == START){
+            gameControl_flags = 0;
+//            std::cout << "responding To START flag\n";
+            strategies.start();
+        }else if(gameControl_flags == STOP){
+            gameControl_flags = 0;
+//            std::cout << "responding To STOP flag\n";
+            strategies.stop();
+        }else if(gameControl_flags == MARK){
+            gameControl_flags = 0;
+//            std::cout << "responding To MARK flag\n";
+            strategies.mark();
         }
     }
 }

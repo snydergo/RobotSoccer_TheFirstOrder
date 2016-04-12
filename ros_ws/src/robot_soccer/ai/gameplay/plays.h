@@ -18,9 +18,9 @@ public:
     , play_st(PlayState::idle)
     {
     }
-
+    void attackCenter();
     void rushSplit(side gvnSide);
-    void rushSplitTick();
+    void splitRushTick();
     void initKicker();
     void uninitKicker();
     void rushGoal();

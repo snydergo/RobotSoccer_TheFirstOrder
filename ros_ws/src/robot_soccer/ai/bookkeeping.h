@@ -59,6 +59,7 @@ namespace fieldget {
 namespace bkcalc{
      double getAngleTo(RobotType type, Point point);
      bool ballKickZone(RobotType type);
+     bool ballInGoal();
      bool ballThreat();
      bool ballAimed(RobotType type);
      Point kickPoint(RobotType type);

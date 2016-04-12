@@ -27,7 +27,8 @@ std::string parseColor() {
         newValue == "purple" ||
         newValue == "red" ||
         newValue == "orange" ||
-        newValue == "yellow") {
+        newValue == "yellow" ||
+        newValue == "pink") {
         return newValue;
     } else {
         cout << "### invalid color ###" << endl;
@@ -58,18 +59,20 @@ int main(int argc, char** argv)
         cache >> gameParam.ally2_color;
         cache >> gameParam.enemy1_color;
         cache >> gameParam.enemy2_color;
+        cache >> gameParam.ball_color;
         cache >> gameParam.field_pos;
         cache >> gameParam.ally_robot_count;
         cache >> gameParam.enemy_robot_count;
         int temp;
         cache >> temp;
-        gameParam.show_video = temp != 0;
+        gameParam.show_video = (temp != 0);
         cache.close();
     } else {
         gameParam.ally1_color = string("green");
         gameParam.ally2_color = string("purple");
         gameParam.enemy1_color = string("orange");
         gameParam.enemy2_color = string("blue");
+        gameParam.ball_color = string("pink");
         gameParam.field_pos = string("home");
         gameParam.ally_robot_count = 1;
         gameParam.enemy_robot_count = 0;
@@ -90,6 +93,7 @@ int main(int argc, char** argv)
                     << "ally2_color : green, blue, purple, red, orange, yellow" << endl
                     << "enemy1_color : green, blue, purple, red, orange, yellow" << endl
                     << "enemy2_color : green, blue, purple, red, orange, yellow" << endl
+                    << "ball_color : pink, yellow" << endl
                     << "field_pos : home, away" << endl
                     << "ally_robot_count : [0-2]" << endl
                     << "enemy_robot_count : [0-2]" << endl
@@ -122,6 +126,12 @@ int main(int argc, char** argv)
                 string color = parseColor();
                 if (color != "") {
                     gameParam.enemy2_color = color;
+                    paramValid = true;
+                }
+            } else if (parameterName == "ball_color") {
+                string color = parseColor();
+                if (color != "") {
+                    gameParam.ball_color = color;
                     paramValid = true;
                 }
             } else if (parameterName == "field_pos") {
@@ -225,6 +235,7 @@ int main(int argc, char** argv)
                 cache << gameParam.ally2_color.data() << "\n";
                 cache << gameParam.enemy1_color << "\n";
                 cache << gameParam.enemy2_color << "\n";
+                cache << gameParam.ball_color << "\n";
                 cache << gameParam.field_pos << "\n";
                 cache << gameParam.ally_robot_count << "\n";
                 cache << gameParam.enemy_robot_count << "\n";

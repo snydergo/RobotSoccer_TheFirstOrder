@@ -82,6 +82,15 @@ bool bkcalc::ballKickZone(RobotType type)
     }
 }
 
+bool bkcalc::ballInGoal(){
+    Point ball = field.currentStatus.ball.location;
+//    std::cout << "ball.x == " << ball.x << " ball.y == " << ball.y << std::endl;
+    if((abs(ball.x) > IN_GOAL_X) && (abs(ball.y) < IN_GOAL_Y)){
+        return true;
+    }else
+        return false;
+}
+
 double bkcalc::getAngleTo(RobotType type, Point point)
 {
     return calc::getVectorAngle(calc::directionToPoint(fieldget::getRobotLoc(type), point));

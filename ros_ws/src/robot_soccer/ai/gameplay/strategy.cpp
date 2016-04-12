@@ -6,18 +6,18 @@ will change depending on the scores, opponent techniques and etc*/
 
 void Strategies::stop()
 {
-//    printf("stop strategy\n");
+    printf("stop strategy\n");
     strategy_st = StrategyState::idle;
 }
 void Strategies::start()
 {
-//    printf("start strategy\n");
-    strategy_st = startStrategy;
+    printf("start strategy\n");
+    strategy_st = StrategyState::rushSplitDefense;//startStrategy;
 }
 
 void Strategies::mark()
 {
-//    printf("going to start Positions\n");
+    printf("going to start Positions\n");
     strategy_st = StrategyState::mark;
 }
 
@@ -25,13 +25,13 @@ void Strategies::tick()
 {
     switch (strategy_st) {
     case StrategyState::idle:
-        std::cout << "Strategies::tick() idle"<< std::endl;
+//        std::cout << "Strategies::tick() idle"<< std::endl;
         robot1Plays.idle();
         robot2Plays.idle();
         break;
 
     case StrategyState::mark:
-        std::cout << "Strategies::tick() start"<< std::endl;
+//        std::cout << "Strategies::tick() start"<< std::endl;
         robot1Plays.start(start1Location);
         robot2Plays.start(start2Location);
         break;
@@ -84,14 +84,14 @@ void Strategies::tick()
         //robot2Plays.rushGoal();
 		break;
     case StrategyState::gpGoalie:
-        std::cout << "Strategies::tick() GPGoalie (Playing Goalie)"<< std::endl;
+//        std::cout << "Strategies::tick() GPGoalie (Playing Goalie)"<< std::endl;
         if (!bkcalc::ballThreat()) {
             strategy_st = StrategyState::gpRush;
             robot1Plays.rushGoal();
         }
         break;
     case StrategyState::gpRush:
-        std::cout << "Strategies::tick() GPRush (rushing Goal)"<< std::endl;
+//        std::cout << "Strategies::tick() GPRush (rushing Goal)"<< std::endl;
         if (bkcalc::ballThreat()) {
             strategy_st = StrategyState::gpGoalie;
             robot1Plays.playGoalie();
@@ -123,7 +123,7 @@ void Strategies::tick()
             strategy_st = StrategyState::rsdOffense;
         }
         break;
-	}
+    }
 
     //need to tick the play statemachine depending on change that occured
     robot1Plays.tick();

@@ -1,8 +1,9 @@
 purple
 green
-green
-green
+orange
+blue
+pink
 home
-1
+2
 0
 1

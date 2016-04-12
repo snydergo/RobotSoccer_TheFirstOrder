@@ -117,7 +117,7 @@ bool calc::atLocation(Point robot, Point point, double err)
 //    std::cout << "yValues == " << std::to_string(yValues) << std::endl;
     yValues *= yValues;
     double distance = std::sqrt(xValues+yValues);
-    std::cout << "distance == " << distance << std::endl;
+//    std::cout << "distance == " << distance << std::endl;
     return (distance < err);
 }
 
@@ -149,7 +149,7 @@ bool calc::withinPerimeter(Point robot, Point ball)
     std::cout << "yValues == " << std::to_string(yValues) << std::endl;
     yValues *= yValues;
     double perimeter = xValues+yValues;
-    std::cout << "perimeter == " << perimeter << std::endl;
+//    std::cout << "perimeter == " << perimeter << std::endl;
     return (perimeter < PERIMETER_ERR);
 }
 
@@ -165,7 +165,10 @@ bool calc::ballFetched(Robot ally, FieldObject ball)
     //ball should be in the center of the robot with error of 4
     //angle should be towards the ball
     Point fetchballpoint(ball.location.x-FETCHBALL_OFFSET,ball.location.y);
-    return calc::atLocation(ally.location, fetchballpoint, BALLFETCHED_ERR);
+    return (abs(fetchballpoint.x-ally.location.x) < BALLFETCHED_ERR &&
+           abs(fetchballpoint.y-ally.location.y) < BALLFETCHED_ERR);
+
+    //return calc::atLocation(ally.location, fetchballpoint, BALLFETCHED_ERR);
 }
 
 bool calc::ballAimed(Robot ally, FieldObject ball, Point enemyGoal)
@@ -180,16 +183,33 @@ bool calc::ballAimed(Robot ally, FieldObject ball, Point enemyGoal)
         return true;
     }else
         return false;*/
-    Point ballGoalDir = calc::directionToPoint(ball.location, enemyGoal);
-    double ballGoalAngle = calc::getVectorAngle(ballGoalDir);
+//    Point ballGoalDir = calc::directionToPoint(ball.location, enemyGoal);
+//    double ballGoalAngle = calc::getVectorAngle(ballGoalDir);
+//    Point allyBallDir = calc::directionToPoint(ally.location, ball.location);
+//    double allyBallAngle = calc::getVectorAngle(allyBallDir);
+//    double diff = std::abs(allyBallAngle - ballGoalAngle);
+//    std::cout << "diff  == " << diff << std::endl;
+//    if (diff < GOAL_ANGLE_ERR)
+//        return true;
+//    else
+//        return false;
 
-    if (abs(ballGoalAngle)< GOAL_ANGLE_ERR)
-        return true;
-    else
-        return false;
+
+            Point ballLoc = ball.location;
+            Point robotLoc = ally.location;
+            Point ballGoalDir = calc::directionToPoint(ballLoc, enemyGoal);
+            double ballGoalAngle = calc::getVectorAngle(ballGoalDir);
+            double ballGoalRadians = calc::degToRad(ballGoalAngle);
+
+            double x_point = ballLoc.x - AIM_BALL_DIST*std::cos(ballGoalRadians);
+            double y_point = ballLoc.y - AIM_BALL_DIST*std::sin(ballGoalRadians);
+            Point destination = Point(x_point, y_point);
+            double distance = calc::getDistance(destination, robotLoc);
+
+            return distance < BALLFETCHED_ERR;
 }
 
 bool calc::ballKicked(Robot ally, Point kp)
 {
-    return calc::atLocation(ally.location, kp);
+    return calc::atLocation(ally.location, kp, KICKPOINTTHRESH);
 }

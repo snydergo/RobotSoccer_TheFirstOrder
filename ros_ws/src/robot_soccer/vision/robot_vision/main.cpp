@@ -136,8 +136,8 @@ int main(int argc, char** argv)
     thread ballThread(processFrames, FieldObject::ball);
     thread ally1Thread(processFrames, FieldObject::allyRobot1);
     thread ally2Thread(processFrames, FieldObject::allyRobot2);
-    thread enemy1Thread(processFrames, FieldObject::enemyRobot1);
-    thread enemy2Thread(processFrames, FieldObject::enemyRobot2);
+//    thread enemy1Thread(processFrames, FieldObject::enemyRobot1);
+//    thread enemy2Thread(processFrames, FieldObject::enemyRobot2);
 
     cout << "starting video feed" << endl;
 
@@ -162,12 +162,12 @@ int main(int argc, char** argv)
         if (config::allyRobotCount > 1) {
             setSignaller(FieldObject::allyRobot2, true);
         }
-        if (config::enemyRobotCount > 0) {
-            setSignaller(FieldObject::enemyRobot1, true);
-        }
-        if (config::enemyRobotCount > 1) {
-            setSignaller(FieldObject::enemyRobot2, true);
-        }
+//        if (config::enemyRobotCount > 0) {
+//            setSignaller(FieldObject::enemyRobot1, true);
+//        }
+//        if (config::enemyRobotCount > 1) {
+//            setSignaller(FieldObject::enemyRobot2, true);
+//        }
 
         /// find our robots
         if (config::allyRobotCount > 0) {
@@ -176,13 +176,13 @@ int main(int argc, char** argv)
         if (config::allyRobotCount > 1) {
             robotAlly2.find(getMoments(FieldObject::allyRobot2));
         }
-        /// find their robots
-        if (config::enemyRobotCount > 0) {
-            robotEnemy1.find(getMoments(FieldObject::enemyRobot1));
-        }
-        if (config::enemyRobotCount > 1) {
-            robotEnemy2.find(getMoments(FieldObject::enemyRobot2));
-        }
+//        /// find their robots
+//        if (config::enemyRobotCount > 0) {
+//            robotEnemy1.find(getMoments(FieldObject::enemyRobot1));
+//        }
+//        if (config::enemyRobotCount > 1) {
+//            robotEnemy2.find(getMoments(FieldObject::enemyRobot2));
+//        }
         /// find the ball
         ball.find(getMoments(FieldObject::ball));
 
@@ -208,17 +208,26 @@ int main(int argc, char** argv)
         visionDataPub.publish(msg);
 
         if (config::showVideo) {
-            std::string str(  " x: " + std::to_string(((int)std::round(msg.tm0_x)))
-                            + " y: " + std::to_string(((int)std::round(msg.tm0_y)))
-                            + " w: " + std::to_string(((int)std::round(msg.tm0_w)))
-                            );
-            putText(frame, str.c_str(), transformWorldFrametoCameraFrame(robotAlly1.getCenter())
-                ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
-
-            std::string str2(  "x: " + std::to_string(((int)std::round(msg.ball_x)))
+            if (config::allyRobotCount > 0) {
+                std::string str(  " x: " + std::to_string(((int)std::round(msg.tm0_x)))
+                                + " y: " + std::to_string(((int)std::round(msg.tm0_y)))
+                                + " w: " + std::to_string(((int)std::round(msg.tm0_w)))
+                                );
+                putText(frame, str.c_str(), transformWorldFrametoCameraFrame(robotAlly1.getCenter())
+                    ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
+            }
+            if (config::allyRobotCount > 1) {
+                std::string str2(  " x: " + std::to_string(((int)std::round(msg.tm1_x)))
+                                + " y: " + std::to_string(((int)std::round(msg.tm1_y)))
+                                + " w: " + std::to_string(((int)std::round(msg.tm1_w)))
+                                );
+                putText(frame, str2.c_str(), transformWorldFrametoCameraFrame(robotAlly2.getCenter())
+                    ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
+            }
+            std::string str3(  "x: " + std::to_string(((int)std::round(msg.ball_x)))
                             + " y: " + std::to_string(((int)std::round(msg.ball_y)))
                             );
-            putText(frame, str2.c_str(), Point(30,30)
+            putText(frame, str3.c_str(), Point(30,30)
                 ,FONT_HERSHEY_COMPLEX_SMALL, 0.8, cvScalar(200,50,250), 0.7, CV_AA);
 
             imshow("robot view", frame);
@@ -236,8 +245,8 @@ int main(int argc, char** argv)
     ballThread.join();
     ally1Thread.join();
     ally2Thread.join();
-    enemy1Thread.join();
-    enemy2Thread.join();
+//    enemy1Thread.join();
+//    enemy2Thread.join();
 
     return 0;
 }
@@ -281,6 +290,7 @@ void gameStateCallback(const robot_soccer::gameparam& msg) {
     config::allyRobot2Color = getColorSpace(msg.ally2_color);
     config::enemyRobot1Color = getColorSpace(msg.enemy1_color);
     config::enemyRobot2Color = getColorSpace(msg.enemy2_color);
+    config::ballColor = getColorSpace(msg.ball_color);
     config::allyRobotCount = msg.ally_robot_count;
     config::enemyRobotCount = msg.enemy_robot_count;
     config::showVideo = msg.show_video;
