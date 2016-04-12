@@ -8,6 +8,7 @@ from robot_soccer.msg import visiondata
 import globals
 import sample_lpf as lpf 
 from numpy.matlib import matrix
+import copy
 
 
 filteredData = visiondata()
@@ -26,7 +27,7 @@ def filter():
         gamePieces.update_all(lastVisionData)
         newDataFlag = False    
     gamePieces.filter_all()
-    predictPieces = gamePieces
+    predictPieces = copy.copy(gamePieces)
     predictPieces.predict_all()
     filteredData = predictPieces.gen_msg()
     #print filteredData
