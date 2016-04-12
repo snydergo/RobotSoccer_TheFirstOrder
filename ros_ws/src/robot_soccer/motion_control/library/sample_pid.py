@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import matlib
 from numpy import matrix
-import globals_troy as globals
+import globals
 #import globals
 
 class ControlVar:
@@ -37,6 +37,12 @@ def robot_ctrl(message):
     vy  = PID(y_cmd,y,y_g,globals.kp_y,globals.ki_y,globals.kd_y,globals.xy_limit,globals.Ts,globals.tau,globals.xy_thresh)
     vth = PID(theta_cmd,theta,theta_g,globals.kp_theta,globals.ki_theta,globals.kd_theta,globals.th_limit,globals.Ts,globals.tau,globals.theta_thresh)
 
+    if globals.print_speeds:
+        print("==Speeds==")
+        print("vx: ", vx)
+        print("vy: ", vy)
+        print("vt: ", vth)
+
     return vx, vy, vth
 
 def reset():
@@ -60,10 +66,13 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     error = cmd_pos - pos
     if abs(error) < thresh:
         error = 0
+        ctrl_vars.integrator = 0
     elif error > 0:
 	error = error - thresh
+        ctrl_vars.integrator = 0
     else:
 	error = error + thresh
+        ctrl_vars.integrator = 0
     # print("Error: " + str(error))
     
     # update derivative of z
@@ -80,6 +89,8 @@ def PID(cmd_pos,pos,ctrl_vars,kp,ki,kd,limit,Ts,tau,thresh):
     if abs(error) < 10:
         # update integral of error
         ctrl_vars.integrator = ctrl_vars.integrator + (Ts/2)*(error+ctrl_vars.prev_error)
+    else: # if we aren't close enough, don't use the integrator
+        ctrl_vars.integrator = 0
 
     # if (ki!=0):
     #     ctrl_vars.integrator = ctrl_vars.integrator + Ts/ki*(u-u_unsat)
